@@ -1,3 +1,5 @@
 [build]
-  command = ""
+  # Explicitly override any UI build command to prevent errors
+  command = "echo 'No build step, deploying static files'"
+  # Publish the root directory where HTML files are located
   publish = "."
