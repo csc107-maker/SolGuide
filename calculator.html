@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="태양광 발전 사업 수익 계산기 - 설치 용량과 지역만 입력하면 20년 수익을 즉시 계산">
+    <title>태양광 수익 계산기 | 솔라가이드</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/calculator.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <i class="fas fa-solar-panel"></i>
+                    <span>솔라가이드</span>
+                </div>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">홈</a></li>
+                    <li><a href="calculator.html" class="active">수익 계산기</a></li>
+                    <li><a href="finance.html">금융지원</a></li>
+                    <li><a href="business.html">비즈니스 모델</a></li>
+                    <li><a href="contractors.html">시공업체</a></li>
+                    <li><a href="equipment.html">기자재 정보</a></li>
+                    <li><a href="diy.html">DIY 가이드</a></li>
+                    <li><a href="investment.html">투자 정보</a></li>
+                    <li><a href="index.html#contact" class="btn-primary">무료 상담</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-calculator"></i> 태양광 수익 계산기</h1>
+            <p>설치 용량과 지역을 입력하면 20년 예상 수익을 즉시 확인하세요</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-layout">
+                <!-- Calculator Form -->
+                <div class="calculator-form">
+                    <h2>사업 정보 입력</h2>
+                    <form id="solarCalculator">
+                        <div class="form-group">
+                            <label for="capacity">
+                                <i class="fas fa-bolt"></i> 설치 용량 (kW)
+                            </label>
+                            <input type="number" id="capacity" name="capacity" 
+                                   min="1" max="10000" value="100" required>
+                            <small>권장: 100kW ~ 500kW</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="region">
+                                <i class="fas fa-map-marker-alt"></i> 설치 지역
+                            </label>
+                            <select id="region" name="region" required>
+                                <option value="3.8">서울/경기 (일조량 3.8h)</option>
+                                <option value="4.0" selected>강원/충청 (일조량 4.0h)</option>
+                                <option value="4.2">전라/경상 (일조량 4.2h)</option>
+                                <option value="4.5">제주 (일조량 4.5h)</option>
+                            </select>
+                            <small>지역별 평균 일조 시간</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="installType">
+                                <i class="fas fa-building"></i> 설치 유형
+                            </label>
+                            <select id="installType" name="installType" required>
+                                <option value="ground" selected>지상 설치</option>
+                                <option value="roof">지붕 설치 (경사)</option>
+                                <option value="flat">지붕 설치 (평지)</option>
+                                <option value="parking">주차장 설치</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="installCost">
+                                <i class="fas fa-won-sign"></i> 예상 설치 비용 (만원)
+                            </label>
+                            <input type="number" id="installCost" name="installCost" 
+                                   min="0" value="12000" required>
+                            <small>100kW 기준: 11,000 ~ 14,000만원</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-hand-holding-usd"></i> 금융지원 신청 여부
+                            </label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="financing" value="yes" checked>
+                                    <span>신청 (최대 80%)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="financing" value="no">
+                                    <span>미신청 (자가 투자)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="financingRateGroup">
+                            <label for="financingRate">
+                                <i class="fas fa-percent"></i> 지원 비율 (%)
+                            </label>
+                            <input type="number" id="financingRate" name="financingRate" 
+                                   min="0" max="80" value="75" step="5">
+                            <small>중소기업: 최대 80%, 중견기업: 최대 65%</small>
+                        </div>
+
+                        <button type="submit" class="btn-calculate">
+                            <i class="fas fa-calculator"></i> 수익 계산하기
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel" id="resultsPanel">
+                    <div class="results-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>정보를 입력하고<br>'수익 계산하기'를 클릭하세요</p>
+                    </div>
+
+                    <div class="results-content" id="resultsContent" style="display: none;">
+                        <h2>계산 결과</h2>
+                        
+                        <!-- Investment Summary -->
+                        <div class="result-card investment-card">
+                            <h3><i class="fas fa-coins"></i> 투자 정보</h3>
+                            <div class="result-row">
+                                <span>총 설치 비용</span>
+                                <strong id="totalCost">-</strong>
+                            </div>
+                            <div class="result-row">
+                                <span>금융지원 금액</span>
+                                <strong id="financingAmount" class="text-green">-</strong>
+                            </div>
+                            <div class="result-row highlight">
+                                <span>실제 투자 금액</span>
+                                <strong id="actualInvestment">-</strong>
+                            </div>
+                        </div>
+
+                        <!-- Revenue Summary -->
+                        <div class="result-card revenue-card">
+                            <h3><i class="fas fa-chart-pie"></i> 수익 정보</h3>
+                            <div class="result-row">
+                                <span>연간 발전량</span>
+                                <strong id="annualGeneration">-</strong>
+                            </div>
+                            <div class="result-row">
+                                <span>월 평균 수익</span>
+                                <strong id="monthlyRevenue" class="text-blue">-</strong>
+                            </div>
+                            <div class="result-row">
+                                <span>연간 수익</span>
+                                <strong id="annualRevenue" class="text-blue">-</strong>
+                            </div>
+                            <div class="result-row highlight">
+                                <span>20년 총 수익</span>
+                                <strong id="totalRevenue20">-</strong>
+                            </div>
+                        </div>
+
+                        <!-- ROI Info -->
+                        <div class="result-card roi-card">
+                            <h3><i class="fas fa-clock"></i> 투자 회수</h3>
+                            <div class="result-row">
+                                <span>손익분기점</span>
+                                <strong id="breakEvenPeriod" class="text-orange">-</strong>
+                            </div>
+                            <div class="result-row">
+                                <span>20년 순이익</span>
+                                <strong id="netProfit20" class="text-green">-</strong>
+                            </div>
+                            <div class="result-row">
+                                <span>연평균 수익률</span>
+                                <strong id="averageROI">-</strong>
+                            </div>
+                        </div>
+
+                        <!-- Chart -->
+                        <div class="result-card chart-card">
+                            <h3><i class="fas fa-chart-bar"></i> 연도별 누적 수익</h3>
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+
+                        <!-- Price Info -->
+                        <div class="result-card price-info">
+                            <h3><i class="fas fa-info-circle"></i> 계산 기준 (2026년)</h3>
+                            <div class="price-row">
+                                <span>SMP 평균 가격</span>
+                                <span>90원/kWh</span>
+                            </div>
+                            <div class="price-row">
+                                <span>REC 가격</span>
+                                <span>70,000원/REC</span>
+                            </div>
+                            <div class="price-row">
+                                <span>REC 가중치</span>
+                                <span>1.2 (100kW 미만 1.5)</span>
+                            </div>
+                            <div class="price-row">
+                                <span>시스템 효율</span>
+                                <span>85%</span>
+                            </div>
+                            <small class="disclaimer">
+                                * 실제 수익은 일조량, 설비 상태, 시장 가격 변동에 따라 달라질 수 있습니다.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explanation Section -->
+    <section class="explanation-section">
+        <div class="container">
+            <h2>계산 방법 설명</h2>
+            <div class="explanation-grid">
+                <div class="explanation-card">
+                    <div class="explanation-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>연간 발전량</h3>
+                    <p class="formula">설치 용량 (kW) × 지역 일조시간 × 365일 × 시스템 효율 (85%)</p>
+                    <p class="description">
+                        지역별 평균 일조 시간과 시스템 효율을 고려하여 연간 발전량을 계산합니다.
+                    </p>
+                </div>
+
+                <div class="explanation-card">
+                    <div class="explanation-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>SMP 수익</h3>
+                    <p class="formula">발전량 (kWh) × SMP 가격 (90원/kWh)</p>
+                    <p class="description">
+                        계통한계가격(SMP)은 전력 판매 수익입니다. 2026년 평균 90원/kWh 적용.
+                    </p>
+                </div>
+
+                <div class="explanation-card">
+                    <div class="explanation-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>REC 수익</h3>
+                    <p class="formula">발전량 (MWh) × REC 가중치 × REC 가격 (70,000원)</p>
+                    <p class="description">
+                        신재생에너지 공급인증서(REC) 수익. 100kW 미만은 가중치 1.5, 이상은 1.2 적용.
+                    </p>
+                </div>
+
+                <div class="explanation-card">
+                    <div class="explanation-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>손익분기점</h3>
+                    <p class="formula">실제 투자금액 ÷ 연간 수익</p>
+                    <p class="description">
+                        초기 투자금을 회수하는 데 걸리는 기간입니다. 금융지원을 받으면 크게 단축됩니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>더 정확한 수익 분석이 필요하신가요?</h2>
+                <p>전문가와 1:1 상담을 통해 맞춤형 사업 계획을 수립하세요</p>
+                <div class="cta-buttons">
+                    <a href="finance.html" class="btn-primary">
+                        <i class="fas fa-hand-holding-usd"></i> 금융지원 알아보기
+                    </a>
+                    <a href="index.html#contact" class="btn-secondary">
+                        <i class="fas fa-phone"></i> 전문가 상담 신청
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-solar-panel"></i>
+                        <span>솔라가이드</span>
+                    </div>
+                    <p class="footer-desc">태양광 사업의 모든 정보를<br>한 곳에서 제공하는<br>종합 정보 플랫폼</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="블로그"><i class="fas fa-blog"></i></a>
+                        <a href="#" aria-label="유튜브"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="카카오톡"><i class="fas fa-comment"></i></a>
+                        <a href="#" aria-label="인스타그램"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>주요 서비스</h4>
+                    <ul>
+                        <li><a href="calculator.html">수익 계산기</a></li>
+                        <li><a href="finance.html">금융지원 정보</a></li>
+                        <li><a href="contractors.html">시공업체 가이드</a></li>
+                        <li><a href="equipment.html">기자재 정보</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>가이드</h4>
+                    <ul>
+                        <li><a href="diy.html">DIY 설치 가이드</a></li>
+                        <li><a href="investment.html">투자 정보</a></li>
+                        <li><a href="#">사업 시작 가이드</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>고객지원</h4>
+                    <ul>
+                        <li><a href="index.html#contact">무료 상담</a></li>
+                        <li><a href="#">공지사항</a></li>
+                        <li><a href="#">개인정보처리방침</a></li>
+                        <li><a href="#">이용약관</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 솔라가이드. All rights reserved.</p>
+                <p class="footer-notice">본 사이트의 정보는 참고용이며, 실제 사업 진행 시 전문가 상담을 권장합니다.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" aria-label="맨 위로">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+    <!-- Calculator JS -->
+    <script src="js/calculator.js"></script>
+</body>
+</html>

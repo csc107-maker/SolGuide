@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="태양광 비즈니스 파트너십 - EPC 금융지원, 발전소 매매 중개, 설비 리스/렌탈">
+    <meta name="keywords" content="태양광 EPC, 발전소 매매, 리파이낸싱, 설비 리스, 태양광 파트너십">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="비즈니스 파트너십 | 솔라가이드">
+    <meta property="og:description" content="EPC 금융지원, 발전소 매매, 설비 리스 - 태양광 사업의 새로운 수익 모델">
+    <meta property="og:type" content="website">
+    
+    <title>비즈니스 파트너십 | 솔라가이드</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .business-hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDC830 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .business-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.3;
+        }
+        .business-hero .container { position: relative; z-index: 1; }
+        .business-hero h1 { font-size: 3rem; margin-bottom: 1.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        .business-hero .subtitle { font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.95; }
+        
+        .model-section { padding: 80px 0; }
+        .model-section:nth-child(even) { background: #F5F5F5; }
+        .model-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .model-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+        }
+        .model-header {
+            padding: 3rem;
+            background: linear-gradient(135deg, #1E88E5, #1565C0);
+            color: white;
+            position: relative;
+        }
+        .model-header.orange { background: linear-gradient(135deg, #FF6B35, #F7931E); }
+        .model-header.green { background: linear-gradient(135deg, #43A047, #2E7D32); }
+        .model-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .model-header .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+        .model-body { padding: 3rem; }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .feature-box {
+            background: #F8F9FA;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #1E88E5;
+        }
+        .feature-box.orange { border-left-color: #FF6B35; }
+        .feature-box.green { border-left-color: #43A047; }
+        .feature-box h4 {
+            color: #1E88E5;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .feature-box.orange h4 { color: #FF6B35; }
+        .feature-box.green h4 { color: #43A047; }
+        .revenue-list {
+            list-style: none;
+            padding: 0;
+        }
+        .revenue-list li {
+            padding: 1rem;
+            background: #E3F2FD;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .revenue-list li i {
+            color: #1E88E5;
+            font-size: 1.2rem;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            padding: 3rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 3rem;
+            border: 2px solid #FF9800;
+        }
+        .cta-box h3 {
+            color: #E65100;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1E88E5, #1565C0);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+        .step h4 {
+            color: #212121;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Blog Integration Section */
+        .blog-section {
+            background: #E3F2FD;
+            padding: 60px 0;
+            border-top: 4px solid #1E88E5;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .blog-card:hover { transform: translateY(-5px); }
+        .blog-card-image {
+            height: 180px;
+            background: linear-gradient(135deg, #1E88E5, #64B5F6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+        .blog-card-content {
+            padding: 1.5rem;
+        }
+        .blog-card-title {
+            font-size: 1.2rem;
+            color: #212121;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .blog-card-excerpt {
+            color: #757575;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .blog-card-link {
+            color: #1E88E5;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .blog-card-link:hover { gap: 0.8rem; }
+        
+        @media (max-width: 768px) {
+            .business-hero h1 { font-size: 2rem; }
+            .model-header h2 { font-size: 1.5rem; }
+            .feature-grid, .process-steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo"><i class="fas fa-solar-panel"></i><span>솔라가이드</span></div>
+                <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">홈</a></li>
+                    <li><a href="calculator.html">수익 계산기</a></li>
+                    <li><a href="finance.html">금융지원</a></li>
+                    <li><a href="business.html" class="active">비즈니스 모델</a></li>
+                    <li><a href="contractors.html">시공업체</a></li>
+                    <li><a href="equipment.html">기자재 정보</a></li>
+                    <li><a href="diy.html">DIY 가이드</a></li>
+                    <li><a href="investment.html">투자 정보</a></li>
+                    <li><a href="index.html#contact" class="btn-primary">무료 상담</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="business-hero">
+        <div class="container">
+            <h1><i class="fas fa-handshake"></i> 비즈니스 파트너십</h1>
+            <p class="subtitle">태양광 사업의 새로운 수익 모델 - 함께 성장하는 윈윈 전략</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+                <div style="background: rgba(255,255,255,0.2); padding: 1rem 2rem; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 2rem; font-weight: 900;">3가지</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">수익 모델</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 1rem 2rem; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 2rem; font-weight: 900;">1~3%</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">정률 수수료</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 1rem 2rem; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 2rem; font-weight: 900;">장기</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">안정 수익</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model 1: EPC Partnership -->
+    <section class="model-section">
+        <div class="container">
+            <div class="model-card">
+                <div class="model-header">
+                    <span class="badge">최우선 추천</span>
+                    <h2><i class="fas fa-building"></i> EPC·시공사 파트너십 플랫폼</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.95; margin-top: 1rem;">
+                        영업 강한 EPC/시공사를 귀하의 영업 조직으로 활용하는 구조
+                    </p>
+                </div>
+                <div class="model-body">
+                    <h3 style="color: #1E88E5; font-size: 1.8rem; margin-bottom: 1.5rem;">사업 개념</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #424242; margin-bottom: 2rem;">
+                        중소형 EPC/시공사의 가장 큰 고민인 <strong style="color: #1E88E5;">'자금 조달'</strong>을 해결해주는 대신, 
+                        프로젝트를 가져오게 만드는 <strong style="color: #43A047;">윈윈 구조</strong>입니다.
+                    </p>
+
+                    <div class="feature-grid">
+                        <div class="feature-box">
+                            <h4><i class="fas fa-box"></i> 표준 금융 패키지</h4>
+                            <ul style="color: #757575; line-height: 2;">
+                                <li>• 공사비 20~200억 규모 PF</li>
+                                <li>• 브릿지·중도금 전용 상품</li>
+                                <li>• 기자재+금융 결합 패키지</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-box">
+                            <h4><i class="fas fa-users"></i> 파트너 모집</h4>
+                            <p style="color: #757575; line-height: 1.8;">
+                                <strong>"프로젝트만 가져오시면<br>금융은 저희가 해결해드립니다"</strong>
+                            </p>
+                            <p style="margin-top: 1rem; color: #757575;">중소형 EPC/시공사 타깃</p>
+                        </div>
+
+                        <div class="feature-box">
+                            <h4><i class="fas fa-coins"></i> 수익 구조</h4>
+                            <ul style="color: #757575; line-height: 2;">
+                                <li>• PF 규모의 1~3% 정률 수수료</li>
+                                <li>• 기자재 유통 마진</li>
+                                <li>• 각종 자문료</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="background: #E3F2FD; padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+                        <h4 style="color: #1E88E5; margin-bottom: 1rem; font-size: 1.3rem;">
+                            <i class="fas fa-star"></i> 핵심 장점
+                        </h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div style="background: white; padding: 1rem; border-radius: 8px;">
+                                <strong style="color: #1E88E5;">✓ 영업 불필요</strong>
+                                <p style="font-size: 0.9rem; color: #757575; margin-top: 0.5rem;">직접 발주처 상대 안함</p>
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px;">
+                                <strong style="color: #1E88E5;">✓ 높은 수익성</strong>
+                                <p style="font-size: 0.9rem; color: #757575; margin-top: 0.5rem;">한 건당 3천만~6억 수수료</p>
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px;">
+                                <strong style="color: #1E88E5;">✓ 지속 가능</strong>
+                                <p style="font-size: 0.9rem; color: #757575; margin-top: 0.5rem;">파트너 확보 시 안정적 딜</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cta-box">
+                        <h3><i class="fas fa-rocket"></i> 지금 파트너십 시작하기</h3>
+                        <p style="font-size: 1.1rem; color: #424242; margin-bottom: 1.5rem;">
+                            20~200억 프로젝트 금융 해결 + 1~3% 수수료 수익
+                        </p>
+                        <a href="index.html#contact" class="btn-hero btn-primary" style="display: inline-block;">
+                            <i class="fas fa-phone"></i> 파트너 신청하기
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model 2: Power Plant Trading -->
+    <section class="model-section">
+        <div class="container">
+            <div class="model-card">
+                <div class="model-header orange">
+                    <span class="badge">운영 발전소</span>
+                    <h2><i class="fas fa-exchange-alt"></i> 발전소 매매 및 리파이낸싱 중개</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.95; margin-top: 1rem;">
+                        상업운전 중인 태양광 발전소 매매 중개 + 금융 구조 최적화
+                    </p>
+                </div>
+                <div class="model-body">
+                    <h3 style="color: #FF6B35; font-size: 1.8rem; margin-bottom: 1.5rem;">타깃 시장</h3>
+
+                    <div class="feature-grid">
+                        <div class="feature-box orange">
+                            <h4><i class="fas fa-user-tie"></i> 매도자</h4>
+                            <ul style="color: #757575; line-height: 2;">
+                                <li>• 원리금 상환 부담으로 매각 희망</li>
+                                <li>• 유동성 필요로 현금화 원하는 보유자</li>
+                                <li>• 투자금 회수 후 신규 사업 진행</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-box orange">
+                            <h4><i class="fas fa-chart-line"></i> 매수자</h4>
+                            <ul style="color: #757575; line-height: 2;">
+                                <li>• <strong>7~9% 안정 수익률</strong> 상품 찾는 투자자</li>
+                                <li>• 개인·법인 자산 다각화</li>
+                                <li>• 즉시 수익 발생 자산 선호</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-box orange">
+                            <h4><i class="fas fa-percent"></i> 리파이낸싱</h4>
+                            <ul style="color: #757575; line-height: 2;">
+                                <li>• 고금리 대출 사용 중인 발전소</li>
+                                <li>• 5% 이상 → 2~3%로 전환</li>
+                                <li>• 월 현금흐름 50% 이상 개선</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #FF6B35; font-size: 1.8rem; margin: 3rem 0 1.5rem;">수익 포인트</h3>
+                    <ul class="revenue-list">
+                        <li style="background: #FFE0B2;">
+                            <i class="fas fa-check-circle" style="color: #FF6B35;"></i>
+                            <strong>매도자/매수자 양쪽 중개 수수료</strong> (거래액의 1~2%)
+                        </li>
+                        <li style="background: #FFE0B2;">
+                            <i class="fas fa-check-circle" style="color: #FF6B35;"></i>
+                            <strong>리파이낸싱 대출 알선 수수료</strong> (대출액의 0.5~1%)
+                        </li>
+                        <li style="background: #FFE0B2;">
+                            <i class="fas fa-check-circle" style="color: #FF6B35;"></i>
+                            <strong>발전소 실사 및 가치평가 자문료</strong> (건당 500만~2천만 원)
+                        </li>
+                        <li style="background: #FFE0B2;">
+                            <i class="fas fa-check-circle" style="color: #FF6B35;"></i>
+                            <strong>기자재 교체(리파워링) 금융 연계</strong> (추가 수익)
+                        </li>
+                    </ul>
+
+                    <div style="background: #FFF3E0; padding: 2rem; border-radius: 12px; margin-top: 2rem; border-left: 4px solid #FF9800;">
+                        <h4 style="color: #E65100; margin-bottom: 1rem;">
+                            <i class="fas fa-lightbulb"></i> 수익 시뮬레이션
+                        </h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                            <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                                <div style="font-size: 0.9rem; color: #757575; margin-bottom: 0.5rem;">100kW 발전소 (1.2억)</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #FF6B35;">240~360만 원</div>
+                                <div style="font-size: 0.85rem; color: #757575; margin-top: 0.3rem;">중개 수수료 2~3%</div>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                                <div style="font-size: 0.9rem; color: #757575; margin-bottom: 0.5rem;">500kW 발전소 (6억)</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #FF6B35;">1,200~1,800만 원</div>
+                                <div style="font-size: 0.85rem; color: #757575; margin-top: 0.3rem;">중개 수수료 2~3%</div>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                                <div style="font-size: 0.9rem; color: #757575; margin-bottom: 0.5rem;">리파이낸싱 3억</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #FF6B35;">150~300만 원</div>
+                                <div style="font-size: 0.85rem; color: #757575; margin-top: 0.3rem;">알선 수수료 0.5~1%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cta-box">
+                        <h3><i class="fas fa-handshake"></i> 발전소 매매 시작하기</h3>
+                        <p style="font-size: 1.1rem; color: #424242; margin-bottom: 1.5rem;">
+                            운영 중인 발전소 매도/매수 + 리파이낸싱 전문 컨설팅
+                        </p>
+                        <a href="index.html#contact" class="btn-hero btn-primary" style="display: inline-block;">
+                            <i class="fas fa-calculator"></i> 무료 가치평가 신청
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model 3: Equipment Lease -->
+    <section class="model-section">
+        <div class="container">
+            <div class="model-card">
+                <div class="model-header green">
+                    <span class="badge">초기비용 0원</span>
+                    <h2><i class="fas fa-file-contract"></i> 설비 리스/렌탈 사업</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.95; margin-top: 1rem;">
+                        초기 투자 부담 없이 태양광 설비를 리스로 제공하는 장기 수익 모델
+                    </p>
+                </div>
+                <div class="model-body">
+                    <h3 style="color: #43A047; font-size: 1.8rem; margin-bottom: 1.5rem;">사업 개념</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #424242; margin-bottom: 2rem;">
+                        초기 투자 부담이 큰 소규모 사업자들에게 태양광 설비를 <strong style="color: #43A047;">리스로 제공</strong>하고 
+                        <strong style="color: #1E88E5;">월 사용료</strong>를 받는 구조입니다.
+                    </p>
+
+                    <h3 style="color: #43A047; font-size: 1.8rem; margin-bottom: 1.5rem;">차별화 포인트</h3>
+                    <div class="feature-grid">
+                        <div class="feature-box green">
+                            <h4><i class="fas fa-truck"></i> 조달 경쟁력</h4>
+                            <p style="color: #757575; line-height: 1.8;">
+                                기존 기자재 유통 경험을 활용한 <strong>설비 조달 원가 절감</strong>
+                            </p>
+                        </div>
+
+                        <div class="feature-box green">
+                            <h4><i class="fas fa-piggy-bank"></i> 자금 경쟁력</h4>
+                            <p style="color: #757575; line-height: 1.8;">
+                                금융 조달 능력 활용 → <strong>저비용 자금 확보</strong> (2~3% 수준)
+                            </p>
+                        </div>
+
+                        <div class="feature-box green">
+                            <h4><i class="fas fa-bolt"></i> 수익 설계</h4>
+                            <p style="color: #757575; line-height: 1.8;">
+                                초기 0원 + <strong>전기요금 절감분으로 리스료 상환</strong> 구조
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #43A047; font-size: 1.8rem; margin: 3rem 0 1.5rem;">리스 프로세스</h3>
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number" style="background: linear-gradient(135deg, #43A047, #2E7D32);">1</div>
+                            <h4>고객 발굴</h4>
+                            <p style="color: #757575; font-size: 0.9rem;">전기료 부담 큰<br>공장/건물 타깃</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number" style="background: linear-gradient(135deg, #43A047, #2E7D32);">2</div>
+                            <h4>수익성 분석</h4>
+                            <p style="color: #757575; font-size: 0.9rem;">전기료 절감액<br>시뮬레이션</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number" style="background: linear-gradient(135deg, #43A047, #2E7D32);">3</div>
+                            <h4>리스 계약</h4>
+                            <p style="color: #757575; font-size: 0.9rem;">7~10년<br>장기 계약</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number" style="background: linear-gradient(135deg, #43A047, #2E7D32);">4</div>
+                            <h4>설치 및 운영</h4>
+                            <p style="color: #757575; font-size: 0.9rem;">설치 + 유지보수<br>일괄 제공</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number" style="background: linear-gradient(135deg, #43A047, #2E7D32);">5</div>
+                            <h4>월 리스료 수취</h4>
+                            <p style="color: #757575; font-size: 0.9rem;">장기 안정<br>현금흐름</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #E8F5E9; padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+                        <h4 style="color: #2E7D32; margin-bottom: 1rem; font-size: 1.3rem;">
+                            <i class="fas fa-check-double"></i> 핵심 장점
+                        </h4>
+                        <ul style="color: #424242; line-height: 2.2; font-size: 1.05rem;">
+                            <li><strong>✓ 한번 계약 → 7~10년 장기 안정 현금흐름</strong></li>
+                            <li>✓ 영업보다는 수익성 시뮬레이션과 제안서로 승부하는 B2B 모델</li>
+                            <li>✓ 고객은 초기비용 0원, 전기료 절감 → 쌍방 만족</li>
+                            <li>✓ 계약 종료 후 설비 소유권 이전 or 재계약 가능</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #FFF3E0; padding: 2rem; border-radius: 12px; margin-top: 2rem; border-left: 4px solid #FF9800;">
+                        <h4 style="color: #E65100; margin-bottom: 1rem;">
+                            <i class="fas fa-calculator"></i> 수익 시뮬레이션 (50kW 리스 기준)
+                        </h4>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="background: white;">
+                                <td style="padding: 1rem; border-bottom: 1px solid #E0E0E0;"><strong>설비 조달 원가</strong></td>
+                                <td style="padding: 1rem; border-bottom: 1px solid #E0E0E0; text-align: right;">5,000만 원</td>
+                            </tr>
+                            <tr style="background: white;">
+                                <td style="padding: 1rem; border-bottom: 1px solid #E0E0E0;"><strong>월 리스료</strong></td>
+                                <td style="padding: 1rem; border-bottom: 1px solid #E0E0E0; text-align: right; color: #43A047; font-weight: 600;">80만 원</td>
+                            </tr>
+                            <tr style="background: white;">
+                                <td style="padding: 1rem; border-bottom: 1px solid #E0E0E0;"><strong>계약 기간</strong></td>
+                                <td style="padding: 1rem; border-bottom: 1px solid #E0E0E0; text-align: right;">10년 (120개월)</td>
+                            </tr>
+                            <tr style="background: white;">
+                                <td style="padding: 1rem; border-bottom: 1px solid #E0E0E0;"><strong>총 리스료 수입</strong></td>
+                                <td style="padding: 1rem; border-bottom: 1px solid #E0E0E0; text-align: right; font-weight: 600;">9,600만 원</td>
+                            </tr>
+                            <tr style="background: #E8F5E9;">
+                                <td style="padding: 1rem;"><strong>순이익 (10년)</strong></td>
+                                <td style="padding: 1rem; text-align: right; font-size: 1.3rem; color: #2E7D32; font-weight: 700;">4,600만 원</td>
+                            </tr>
+                        </table>
+                        <p style="margin-top: 1rem; color: #757575; font-size: 0.9rem;">
+                            * 유지보수비, 금융비용 등 제외 / 실제 수익률은 개별 조건에 따라 상이
+                        </p>
+                    </div>
+
+                    <div class="cta-box">
+                        <h3><i class="fas fa-rocket"></i> 리스 사업 시작하기</h3>
+                        <p style="font-size: 1.1rem; color: #424242; margin-bottom: 1.5rem;">
+                            초기비용 0원 리스 제안 + 10년 장기 현금흐름 확보
+                        </p>
+                        <a href="index.html#contact" class="btn-hero btn-primary" style="display: inline-block;">
+                            <i class="fas fa-chart-pie"></i> 수익성 분석 요청
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Integration -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" style="color: #1E88E5;">📝 관련 블로그 글</h2>
+                <p class="section-subtitle">비즈니스 모델별 실전 사례와 노하우</p>
+            </div>
+            
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-card-image">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title">EPC 파트너십으로 첫 달 3천만 원 수익 낸 방법</h3>
+                        <p class="blog-card-excerpt">
+                            중소 시공사와 금융 파트너십을 맺어 20억 프로젝트를 성사시킨 실제 사례를 공유합니다.
+                        </p>
+                        <a href="https://blog.naver.com/ecosolution1218" class="blog-card-link" target="_blank">
+                            블로그에서 읽기 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-card-image" style="background: linear-gradient(135deg, #FF6B35, #F7931E);">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title">500kW 발전소 매매 중개, 1,500만 원 수수료 실화</h3>
+                        <p class="blog-card-excerpt">
+                            운영 3년차 발전소 매매 과정과 리파이낸싱으로 추가 수익을 만든 노하우를 공개합니다.
+                        </p>
+                        <a href="https://blog.naver.com/ecosolution1218" class="blog-card-link" target="_blank">
+                            블로그에서 읽기 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-card-image" style="background: linear-gradient(135deg, #43A047, #2E7D32);">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title">리스 계약 하나로 10년간 월 80만 원 받는 법</h3>
+                        <p class="blog-card-excerpt">
+                            소규모 공장에 50kW 리스 제공 후 장기 안정 수익을 만든 리스 사업 가이드입니다.
+                        </p>
+                        <a href="https://blog.naver.com/ecosolution1218" class="blog-card-link" target="_blank">
+                            블로그에서 읽기 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="https://blog.naver.com/ecosolution1218" class="btn-outline" style="padding: 14px 32px; font-size: 1.1rem;" target="_blank">
+                    <i class="fas fa-blog"></i> 블로그 더 보기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section style="padding: 80px 0; background: linear-gradient(135deg, #1E88E5, #0D47A1); color: white; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">지금 바로 파트너십을 시작하세요</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95;">
+                3가지 수익 모델 중 귀하에게 가장 적합한 비즈니스를 제안해드립니다
+            </p>
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="index.html#contact" class="btn-cta">
+                    <i class="fas fa-phone"></i> 무료 상담 신청
+                </a>
+                <a href="calculator.html" class="btn-secondary" style="background: white; color: #1E88E5;">
+                    <i class="fas fa-calculator"></i> 수익 시뮬레이션
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo"><i class="fas fa-solar-panel"></i><span>솔라가이드</span></div>
+                    <p class="footer-desc">태양광 사업의 모든 정보를<br>한 곳에서 제공하는<br>종합 정보 플랫폼</p>
+                </div>
+                <div class="footer-col">
+                    <h4>비즈니스 모델</h4>
+                    <ul>
+                        <li><a href="business.html">EPC 파트너십</a></li>
+                        <li><a href="business.html">발전소 매매</a></li>
+                        <li><a href="business.html">설비 리스</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>주요 서비스</h4>
+                    <ul>
+                        <li><a href="calculator.html">수익 계산기</a></li>
+                        <li><a href="finance.html">금융지원 정보</a></li>
+                        <li><a href="contractors.html">시공업체 가이드</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 솔라가이드. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+    <script src="js/main.js"></script>
+</body>
+</html>

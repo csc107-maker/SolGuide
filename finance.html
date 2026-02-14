@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="2026년 태양광 금융지원 정보 - 최대 80% 설치비 지원, 1.75% 초저금리 대출">
+    <title>금융지원 정보 | 솔라가이드</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .page-header { padding: 120px 0 60px; background: linear-gradient(135deg, var(--primary-green), #2E7D32); color: var(--white); text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .page-header h1 i { color: var(--accent-yellow); }
+        
+        .finance-section { padding: 80px 0; background: var(--light-gray); }
+        .tabs { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; justify-content: center; }
+        .tab-button { padding: 14px 28px; background: var(--white); border: 2px solid var(--primary-blue); color: var(--primary-blue); border-radius: var(--radius-md); cursor: pointer; font-weight: 600; transition: var(--transition-fast); }
+        .tab-button.active { background: var(--primary-blue); color: var(--white); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .finance-card { background: var(--white); padding: 2.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); margin-bottom: 2rem; }
+        .finance-card h3 { color: var(--dark-blue); font-size: 1.8rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light-blue); }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .info-box { background: var(--light-gray); padding: 1.5rem; border-radius: var(--radius-md); border-left: 4px solid var(--primary-green); }
+        .info-box h4 { color: var(--dark-blue); margin-bottom: 0.5rem; }
+        .info-box p { color: var(--medium-gray); line-height: 1.6; }
+        .highlight-value { font-size: 1.5rem; font-weight: 700; color: var(--primary-blue); }
+        
+        .flowchart { background: var(--white); padding: 2rem; border-radius: var(--radius-lg); }
+        .flow-step { display: flex; align-items: center; margin-bottom: 1.5rem; }
+        .flow-number { width: 50px; height: 50px; background: var(--primary-blue); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; flex-shrink: 0; }
+        .flow-content { margin-left: 1.5rem; }
+        .flow-content h4 { color: var(--dark-blue); margin-bottom: 0.5rem; }
+        
+        .comparison-table { width: 100%; border-collapse: collapse; }
+        .comparison-table th { background: var(--primary-blue); color: var(--white); padding: 1rem; text-align: left; }
+        .comparison-table td { padding: 1rem; border-bottom: 1px solid #E0E0E0; }
+        .comparison-table tbody tr:hover { background: var(--light-blue); }
+        
+        @media (max-width: 768px) {
+            .tabs { flex-direction: column; }
+            .tab-button { width: 100%; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo"><i class="fas fa-solar-panel"></i><span>솔라가이드</span></div>
+                <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">홈</a></li>
+                    <li><a href="calculator.html">수익 계산기</a></li>
+                    <li><a href="finance.html" class="active">금융지원</a></li>
+                    <li><a href="business.html">비즈니스 모델</a></li>
+                    <li><a href="contractors.html">시공업체</a></li>
+                    <li><a href="equipment.html">기자재 정보</a></li>
+                    <li><a href="diy.html">DIY 가이드</a></li>
+                    <li><a href="investment.html">투자 정보</a></li>
+                    <li><a href="index.html#contact" class="btn-primary">무료 상담</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-hand-holding-usd"></i> 금융지원 종합 안내</h1>
+            <p>2026년 최대 80% 설치비 지원 | 1.75% 초저금리 | 20년 장기 융자</p>
+        </div>
+    </section>
+
+    <section class="finance-section">
+        <div class="container">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="industrial">산업단지 태양광</button>
+                <button class="tab-button" data-tab="rural">농어촌 태양광</button>
+                <button class="tab-button" data-tab="urban">도심 시설물</button>
+                <button class="tab-button" data-tab="green">녹색혁신금융</button>
+            </div>
+
+            <!-- Industrial Tab -->
+            <div class="tab-content active" id="industrial">
+                <div class="finance-card">
+                    <h3><i class="fas fa-industry"></i> 산업단지 태양광 금융지원</h3>
+                    <div class="info-grid">
+                        <div class="info-box">
+                            <h4>지원 대상</h4>
+                            <p>산업단지 내 건축물 또는 부지에 태양광 설비를 설치하는 사업자</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>지원 비율</h4>
+                            <p>중소기업: <span class="highlight-value">최대 80%</span><br>중견기업: 최대 65%</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>대출 금리</h4>
+                            <p><span class="highlight-value">1.75%</span> (2026년 1분기 변동금리)</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>대출 기간</h4>
+                            <p>최대 <span class="highlight-value">20년</span> (거치기간 포함)</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">✅ 주요 특징</h4>
+                        <ul style="line-height: 2; color: var(--medium-gray);">
+                            <li>• 부지 확보 부담 적음</li>
+                            <li>• 지자체 이격거리 규제로부터 자유로움</li>
+                            <li>• 임차 부지도 신청 가능 (금융기관 심사 필요)</li>
+                            <li>• 우선지원 대상 시 지원비율 5%p 추가 상향</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="finance-card">
+                    <h3>신청 절차</h3>
+                    <div class="flowchart">
+                        <div class="flow-step">
+                            <div class="flow-number">1</div>
+                            <div class="flow-content">
+                                <h4>사업 계획 수립</h4>
+                                <p>설치 용량, 예상 비용, 수익성 분석</p>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">2</div>
+                            <div class="flow-content">
+                                <h4>발전사업 허가 취득</h4>
+                                <p>한국전력 또는 지자체 발전사업 허가</p>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">3</div>
+                            <div class="flow-content">
+                                <h4>금융지원 신청</h4>
+                                <p>한국에너지공단 신재생에너지센터 접수</p>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">4</div>
+                            <div class="flow-content">
+                                <h4>금융기관 대출 심사</h4>
+                                <p>신용평가 및 담보 심사</p>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-number">5</div>
+                            <div class="flow-content">
+                                <h4>대출 실행 및 사업 진행</h4>
+                                <p>설치 공사 착공 및 준공</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rural Tab -->
+            <div class="tab-content" id="rural">
+                <div class="finance-card">
+                    <h3><i class="fas fa-tractor"></i> 농어촌 태양광 금융지원</h3>
+                    <div class="info-grid">
+                        <div class="info-box">
+                            <h4>지원 대상</h4>
+                            <p>농·축산·어업인의 소득 증대를 위한 태양광 발전 사업자</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>지원 비율</h4>
+                            <p><span class="highlight-value">최대 80%</span></p>
+                        </div>
+                        <div class="info-box">
+                            <h4>대출 금리</h4>
+                            <p><span class="highlight-value">1.75%</span> (특별 정책 자금)</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>지원 규모</h4>
+                            <p>100kW ~ 1MW 권장</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">📋 필수 조건</h4>
+                        <ul style="line-height: 2; color: var(--medium-gray);">
+                            <li>• 농어업인 자격 보유 (주민등록상 거주지 확인)</li>
+                            <li>• 설치 농지 인근 거주 요건</li>
+                            <li>• 지목에 따른 설치 제한 확인 (임야 등)</li>
+                            <li>• 농지법, 산지관리법 등 관련 법규 준수</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Urban Tab -->
+            <div class="tab-content" id="urban">
+                <div class="finance-card">
+                    <h3><i class="fas fa-city"></i> 도심 시설물 금융지원</h3>
+                    <div class="info-grid">
+                        <div class="info-box">
+                            <h4>지원 대상</h4>
+                            <p>상가, 주택, 주차장 등 도심 건축물 및 부속 시설</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>지원 비율</h4>
+                            <p>중소기업: <span class="highlight-value">최대 75%</span></p>
+                        </div>
+                        <div class="info-box">
+                            <h4>우선 지원</h4>
+                            <p>BIPV, 공공주차장 임차 사업 우대</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>제외 대상</h4>
+                            <p>동·식물, 농·어업 관련 시설</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">🏢 주요 설치 유형</h4>
+                        <ul style="line-height: 2; color: var(--medium-gray);">
+                            <li>• 건물일체형 태양광 (BIPV): 지붕, 외벽 일체 설계</li>
+                            <li>• 지붕형: 공장, 물류센터, 상가 지붕</li>
+                            <li>• 주차장형: 공공/민간 주차장 캐노피</li>
+                            <li>• 벽면형: 건축물 외벽 활용</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Green Finance Tab -->
+            <div class="tab-content" id="green">
+                <div class="finance-card">
+                    <h3><i class="fas fa-leaf"></i> 녹색혁신금융사업 (녹색보증)</h3>
+                    <div class="info-grid">
+                        <div class="info-box">
+                            <h4>지원 개요</h4>
+                            <p>신용 부족 사업자를 위한 정부 보증 지원</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>보증 비율</h4>
+                            <p><span class="highlight-value">최대 95%</span></p>
+                        </div>
+                        <div class="info-box">
+                            <h4>지원 한도</h4>
+                            <p>중소기업 <span class="highlight-value">최대 100억 원</span></p>
+                        </div>
+                        <div class="info-box">
+                            <h4>평가 기준</h4>
+                            <p>환경 기여도 평가로 한도 증액 가능</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">⚠️ 주의사항</h4>
+                        <ul style="line-height: 2; color: var(--medium-gray);">
+                            <li>• 임차 토지/건물은 지원 대상 제외</li>
+                            <li>• 자가 소유 부지/건물만 신청 가능</li>
+                            <li>• 금융기관별 심사 기준 상이</li>
+                            <li>• 환경성 평가에 따라 우대 금리 적용</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Info -->
+            <div class="finance-card" style="margin-top: 3rem; background: linear-gradient(135deg, var(--light-blue), var(--white));">
+                <h3><i class="fas fa-chart-line"></i> 2026년 금융지원 예산</h3>
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 3rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 1rem;">
+                        6,480억 원
+                    </div>
+                    <p style="font-size: 1.2rem; color: var(--medium-gray);">
+                        전년 대비 <strong style="color: var(--primary-green);">+98.6% 증가</strong>
+                    </p>
+                    <p style="margin-top: 1rem; color: var(--medium-gray);">
+                        보조금 중심에서 융자 중심으로 정책 대전환
+                    </p>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="finance-card" style="margin-top: 2rem;">
+                <h3><i class="fas fa-table"></i> 유형별 비교</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>구분</th>
+                            <th>산업단지</th>
+                            <th>농어촌</th>
+                            <th>도심 시설물</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>지원 비율</strong></td>
+                            <td>중소 80% / 중견 65%</td>
+                            <td>최대 80%</td>
+                            <td>최대 75%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>금리</strong></td>
+                            <td>1.75%</td>
+                            <td>1.75%</td>
+                            <td>1.75%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>장점</strong></td>
+                            <td>규제 자유, 부지 확보 용이</td>
+                            <td>특별 정책 자금, 소득 증대</td>
+                            <td>도심 활용, BIPV 우대</td>
+                        </tr>
+                        <tr>
+                            <td><strong>제한사항</strong></td>
+                            <td>산업단지 내만 가능</td>
+                            <td>농어업인 자격 필요</td>
+                            <td>농어업 시설 제외</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" style="padding: 60px 0; background: var(--primary-blue); color: var(--white); text-align: center;">
+        <div class="container">
+            <h2 style="margin-bottom: 1rem;">금융지원 신청, 전문가와 상담하세요</h2>
+            <p style="margin-bottom: 2rem;">복잡한 서류와 절차, 맞춤형 컨설팅으로 해결합니다</p>
+            <a href="index.html#contact" class="btn-cta">무료 상담 신청하기</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo"><i class="fas fa-solar-panel"></i><span>솔라가이드</span></div>
+                    <p class="footer-desc">태양광 사업의 모든 정보를<br>한 곳에서 제공하는<br>종합 정보 플랫폼</p>
+                </div>
+                <div class="footer-col">
+                    <h4>주요 서비스</h4>
+                    <ul>
+                        <li><a href="calculator.html">수익 계산기</a></li>
+                        <li><a href="finance.html">금융지원 정보</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 솔라가이드. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
