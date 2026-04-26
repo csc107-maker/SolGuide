@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK하이닉스 종목 분석 — PER·PBR·ROE 전문 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #F4F3EE;
+  --surface:   #FFFFFF;
+  --border:    #E2DFD6;
+  --muted:     #9A9690;
+  --text:      #1A1918;
+  --sub:       #58564F;
+  --green:     #156F42;
+  --green-bg:  #E8F5EE;
+  --green-lt:  #C5E8D3;
+  --red:       #AE2B1C;
+  --red-bg:    #FDEBE9;
+  --amber:     #B87200;
+  --amber-bg:  #FFF2D4;
+  --blue:      #1650A0;
+  --blue-bg:   #E5ECFA;
+  --purple:    #6633A0;
+  --purple-bg: #EEE5FF;
+  --teal:      #0C6E80;
+  --teal-bg:   #DEF4F8;
+  --navy:      #0C2340;
+  --navy2:     #122E52;
+  --gold:      #CC9A10;
+  --gold-bg:   #FFF5DC;
+  --hynix:     #0D3B7C;   /* SK하이닉스 브랜드 컬러 */
+  --hynix2:    #1652B0;
+  --radius:    12px;
+  --shadow:    0 2px 14px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.10);
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sa-wrap { max-width: 780px; margin: 0 auto; padding: 0 0 32px; }
+
+/* ─── 헤더 ─── */
+.sa-header {
+  background: linear-gradient(135deg, var(--hynix) 0%, var(--navy2) 55%, #0A1C35 100%);
+  padding: 26px 26px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.sa-header::before {
+  content: '';
+  position: absolute;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  top: -80px; right: -50px;
+  background: radial-gradient(circle, rgba(22,82,176,0.35) 0%, transparent 70%);
+}
+.sa-header::after {
+  content: '000660';
+  position: absolute;
+  right: 20px; bottom: -16px;
+  font-size: 60px; font-weight: 900;
+  font-family: 'DM Mono', monospace;
+  color: rgba(255,255,255,0.04);
+  letter-spacing: -2px; line-height: 1;
+}
+.sa-header-top {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px; flex-wrap: wrap; gap: 8px;
+}
+.sa-badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.sa-badge {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px;
+}
+.sa-badge.blue  { background: rgba(22,82,176,0.25); color: #7BB4FF; border: 1px solid rgba(22,82,176,0.4); }
+.sa-badge.gold  { background: rgba(204,154,16,0.20); color: var(--gold); border: 1px solid rgba(204,154,16,0.35); }
+.sa-badge.green { background: rgba(21,111,66,0.22); color: #5DE09A; border: 1px solid rgba(21,111,66,0.35); }
+.sa-date { font-family: 'DM Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.38); letter-spacing: 1px; }
+.sa-ticker { font-family: 'DM Mono', monospace; font-size: 11px; color: #7BB4FF; margin-bottom: 4px; letter-spacing: 2px; }
+.sa-title { font-size: 20px; font-weight: 900; color: #FFF; line-height: 1.3; letter-spacing: -0.3px; }
+.sa-title em { color: #7BB4FF; font-style: normal; }
+.sa-subtitle { margin-top: 5px; font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 300; }
+
+/* ─── 주가 스냅샷 ─── */
+.sa-snapshot {
+  margin: 16px 16px 0;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.sa-snapshot-top {
+  background: linear-gradient(135deg, var(--hynix) 0%, var(--hynix2) 100%);
+  padding: 18px 20px;
+  display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.sa-price-block {}
+.sa-price-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+.sa-price-val { font-family: 'DM Mono', monospace; font-size: 34px; font-weight: 500; color: #FFF; line-height: 1; }
+.sa-price-unit { font-size: 16px; color: rgba(255,255,255,0.6); }
+.sa-price-chg { font-size: 13px; font-weight: 700; color: #5DE09A; margin-top: 4px; }
+.sa-price-range { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 3px; font-family: 'DM Mono', monospace; }
+
+.sa-snap-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+.sa-snap-stat { text-align: right; }
+.sa-snap-stat-label { font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; font-weight: 600; }
+.sa-snap-stat-val { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: #FFF; }
+.sa-snap-stat-val.gold { color: var(--gold); }
+.sa-snap-stat-val.green { color: #5DE09A; }
+
+.sa-snapshot-bottom {
+  padding: 14px 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.sa-snap-kv {
+  background: var(--surface);
+  padding: 12px 14px;
+}
+.sa-snap-kv-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 5px; }
+.sa-snap-kv-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--text); }
+.sa-snap-kv-val.green { color: var(--green); }
+.sa-snap-kv-val.amber { color: var(--amber); }
+.sa-snap-kv-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+/* ─── 섹션 라벨 ─── */
+.sa-section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  padding: 20px 20px 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sa-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ─── 핵심 밸류에이션 3종 카드 ─── */
+.sa-val-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; padding: 0 16px;
+}
+.sa-val-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.sa-val-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+}
+.sa-val-card.blue::before   { background: linear-gradient(90deg, var(--hynix), var(--hynix2)); }
+.sa-val-card.green::before  { background: linear-gradient(90deg, var(--green), #27AE60); }
+.sa-val-card.purple::before { background: linear-gradient(90deg, var(--purple), #9B59B6); }
+
+.sa-val-card-head {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.sa-val-name { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.sa-val-fullname { font-size: 11px; color: var(--sub); font-weight: 400; margin-bottom: 10px; }
+.sa-val-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 32px; font-weight: 500;
+  line-height: 1; color: var(--text);
+}
+.sa-val-unit { font-size: 14px; color: var(--muted); }
+.sa-val-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 4px;
+  margin-top: 6px;
+}
+.sa-val-badge.underval  { background: var(--green-bg); color: var(--green); }
+.sa-val-badge.fairval   { background: var(--blue-bg);  color: var(--blue); }
+.sa-val-badge.highval   { background: var(--amber-bg); color: var(--amber); }
+
+.sa-val-card-body { padding: 12px 16px 14px; }
+.sa-val-compare-row {
+  display: flex; justify-content: space-between;
+  align-items: center; font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.sa-val-compare-row:last-child { border-bottom: none; }
+.sa-val-cmp-name { color: var(--sub); font-weight: 400; }
+.sa-val-cmp-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; font-weight: 500;
+  color: var(--text);
+}
+.sa-val-cmp-badge {
+  font-size: 9px; font-weight: 700;
+  padding: 1px 5px; border-radius: 3px;
+  margin-left: 4px;
+}
+.sa-val-cmp-badge.cheap { background: var(--green-bg); color: var(--green); }
+.sa-val-cmp-badge.exp   { background: var(--red-bg);   color: var(--red); }
+
+/* ─── 영업이익률 비교 바 차트 ─── */
+.sa-bar-wrap {
+  margin: 0 16px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 20px 20px;
+  box-shadow: var(--shadow);
+}
+.sa-bar-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+.sa-bar-rows { display: flex; flex-direction: column; gap: 14px; }
+.sa-bar-row {}
+.sa-bar-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.sa-bar-company { font-size: 13px; font-weight: 600; color: var(--text); }
+.sa-bar-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.sa-bar-track {
+  height: 10px; background: #EDECE7;
+  border-radius: 999px; overflow: hidden;
+  position: relative;
+}
+.sa-bar-fill {
+  height: 100%; border-radius: 999px;
+  transition: width 1s ease;
+  position: relative;
+}
+.sa-bar-row.hynix .sa-bar-fill  { background: linear-gradient(90deg, var(--hynix) 0%, #3A7EFF 100%); }
+.sa-bar-row.micron .sa-bar-fill  { background: linear-gradient(90deg, #2C7BE5 0%, #5A9CF5 100%); }
+.sa-bar-row.nvidia .sa-bar-fill  { background: linear-gradient(90deg, #228B22 0%, #3CB371 100%); }
+.sa-bar-row.tsmc .sa-bar-fill    { background: linear-gradient(90deg, #C67B0B 0%, #E09B30 100%); }
+.sa-bar-row.samsung .sa-bar-fill { background: linear-gradient(90deg, #A0341C 0%, #D45030 100%); }
+
+.sa-bar-row.hynix .sa-bar-pct .num  { color: var(--hynix2); font-weight: 700; font-size: 14px; }
+.sa-bar-note { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+/* ─── 종합 재무 분석 테이블 ─── */
+.sa-table-wrap {
+  margin: 0 16px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.sa-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.sa-table thead { background: #F0EFE9; border-bottom: 2px solid var(--border); }
+.sa-table th {
+  padding: 11px 14px; text-align: left;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--muted);
+}
+.sa-table th:not(:first-child) { text-align: right; }
+.sa-table td {
+  padding: 12px 14px; color: var(--text);
+  border-bottom: 1px solid #F0EFE9;
+  vertical-align: middle;
+}
+.sa-table td:not(:first-child) { text-align: right; }
+.sa-table tr:last-child td { border-bottom: none; }
+.sa-table tr:hover td { background: #FAFAF7; }
+.sa-table .row-head { font-weight: 600; color: var(--text); }
+.sa-table .row-sub  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.sa-table .val-mono { font-family: 'DM Mono', monospace; font-weight: 500; font-size: 13px; }
+.sa-table .pill {
+  display: inline-block; padding: 2px 7px;
+  border-radius: 4px; font-size: 11px; font-weight: 700;
+}
+.sa-table .pill.g  { background: var(--green-bg);  color: var(--green); }
+.sa-table .pill.b  { background: var(--blue-bg);   color: var(--blue); }
+.sa-table .pill.a  { background: var(--amber-bg);  color: var(--amber); }
+.sa-table .pill.r  { background: var(--red-bg);    color: var(--red); }
+.sa-table .pill.hy { background: var(--blue-bg);   color: var(--hynix); }
+
+/* 구분선 행 */
+.sa-table tr.divider td {
+  padding: 4px 14px;
+  background: #F5F4EF;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); text-align: left !important;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ─── 목표주가 분포 카드 ─── */
+.sa-tp-wrap {
+  margin: 0 16px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.sa-tp-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.sa-tp-track-wrap { position: relative; margin-bottom: 8px; }
+.sa-tp-track {
+  height: 10px; background: var(--bg);
+  border-radius: 999px; overflow: visible;
+  position: relative;
+  border: 1px solid var(--border);
+}
+.sa-tp-range-fill {
+  position: absolute;
+  top: -1px; height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(21,111,66,0.25) 0%, rgba(22,80,160,0.25) 50%, rgba(204,154,16,0.25) 100%);
+  border: 1px solid rgba(22,80,160,0.3);
+}
+/* Current price marker */
+.sa-tp-marker {
+  position: absolute; top: -6px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--hynix);
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transform: translateX(-50%);
+  z-index: 2;
+}
+/* Target avg marker */
+.sa-tp-avg-marker {
+  position: absolute; top: -4px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.sa-tp-labels {
+  display: flex; justify-content: space-between;
+  margin-top: 6px;
+}
+.sa-tp-label { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--muted); }
+
+.sa-tp-analysts {
+  margin-top: 14px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.sa-tp-analyst-card {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+}
+.sa-tp-firm { font-size: 10px; font-weight: 700; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.5px; }
+.sa-tp-price { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--text); }
+.sa-tp-updown { font-size: 10px; font-weight: 700; margin-top: 2px; }
+.sa-tp-updown.up { color: var(--green); }
+.sa-tp-opinion { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+.sa-tp-summary {
+  margin-top: 14px;
+  display: flex; gap: 10px;
+}
+.sa-tp-sum-stat {
+  flex: 1; background: var(--bg);
+  border-radius: 8px; padding: 10px 12px;
+  border: 1px solid var(--border); text-align: center;
+}
+.sa-tp-sum-label { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.sa-tp-sum-val { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; }
+.sa-tp-sum-val.blue   { color: var(--hynix2); }
+.sa-tp-sum-val.gold   { color: var(--gold); }
+.sa-tp-sum-val.green  { color: var(--green); }
+.sa-tp-sum-val.red    { color: var(--red); }
+
+/* ─── 투자 판단 카드 ─── */
+.sa-verdict {
+  margin: 0 16px;
+  background: linear-gradient(135deg, var(--hynix) 0%, #0A2038 100%);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  position: relative; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.sa-verdict::before {
+  content: '★';
+  position: absolute; right: 16px; top: -8px;
+  font-size: 90px; color: rgba(255,255,255,0.04); line-height: 1;
+}
+.sa-verdict-tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.sa-verdict-title { font-size: 17px; font-weight: 900; color: #FFF; margin-bottom: 12px; line-height: 1.35; }
+.sa-verdict-title em { color: #7BB4FF; font-style: normal; }
+.sa-verdict-items { display: flex; flex-direction: column; gap: 8px; }
+.sa-verdict-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 13px; color: rgba(255,255,255,0.82); line-height: 1.6; font-weight: 300;
+}
+.sa-verdict-item-icon { flex-shrink: 0; font-size: 14px; margin-top: 2px; }
+.sa-verdict-item strong { color: #FFF; font-weight: 700; }
+
+/* ─── 푸터 ─── */
+.sa-footer {
+  margin: 16px 16px 0;
+  padding: 14px 16px;
+  background: #EEEDEA;
+  border-radius: 8px;
+  border-left: 3px solid var(--border);
+}
+.sa-footer p { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+/* ─── 반응형 ─── */
+@media (max-width: 600px) {
+  .sa-val-grid { grid-template-columns: 1fr; }
+  .sa-snapshot-bottom { grid-template-columns: repeat(2, 1fr); }
+  .sa-tp-analysts { grid-template-columns: repeat(2, 1fr); }
+  .sa-title { font-size: 17px; }
+  .sa-price-val { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<div class="sa-wrap">
+
+<!-- ─── 헤더 ─── -->
+<div class="sa-header">
+  <div class="sa-header-top">
+    <div class="sa-badge-row">
+      <span class="sa-badge blue">📊 Stock Analysis</span>
+      <span class="sa-badge gold">HBM 선두</span>
+      <span class="sa-badge green">AI 슈퍼사이클</span>
+    </div>
+    <span class="sa-date">2026.04.25 기준</span>
+  </div>
+  <div class="sa-ticker">KRX : 000660 · KOSPI</div>
+  <div class="sa-title">SK하이닉스 <em>종목 분석</em></div>
+  <div class="sa-subtitle">PER · PBR · ROE 전문 밸류에이션 리포트 | 1Q 2026 역대 최대 실적 반영</div>
+</div>
+
+<!-- ─── 주가 스냅샷 ─── -->
+<div class="sa-snapshot">
+  <div class="sa-snapshot-top">
+    <div class="sa-price-block">
+      <div class="sa-price-label">현재 주가</div>
+      <div class="sa-price-val">1,222,000<span class="sa-price-unit">원</span></div>
+      <div class="sa-price-chg">▼ 3,000원 (-0.24%) · 4월 25일 종가</div>
+      <div class="sa-price-range">52주 범위: 176,700원 ~ 1,267,000원</div>
+    </div>
+    <div class="sa-snap-stats">
+      <div class="sa-snap-stat">
+        <div class="sa-snap-stat-label">시가총액</div>
+        <div class="sa-snap-stat-val">약 890조</div>
+      </div>
+      <div class="sa-snap-stat">
+        <div class="sa-snap-stat-label">목표주가 평균</div>
+        <div class="sa-snap-stat-val gold">1,440,000원</div>
+      </div>
+      <div class="sa-snap-stat">
+        <div class="sa-snap-stat-label">상승여력</div>
+        <div class="sa-snap-stat-val green">+17.8%</div>
+      </div>
+    </div>
+  </div>
+  <div class="sa-snapshot-bottom">
+    <div class="sa-snap-kv">
+      <div class="sa-snap-kv-label">선행 PER</div>
+      <div class="sa-snap-kv-val green">5.6배</div>
+      <div class="sa-snap-kv-sub">vs TSMC 20배 · 극저평가</div>
+    </div>
+    <div class="sa-snap-kv">
+      <div class="sa-snap-kv-label">PBR</div>
+      <div class="sa-snap-kv-val amber">3.8배</div>
+      <div class="sa-snap-kv-sub">적정 4.08배 (교보증권)</div>
+    </div>
+    <div class="sa-snap-kv">
+      <div class="sa-snap-kv-label">ROE (2026E)</div>
+      <div class="sa-snap-kv-val green">44.4%</div>
+      <div class="sa-snap-kv-sub">2026~2030 평균 전망</div>
+    </div>
+    <div class="sa-snap-kv">
+      <div class="sa-snap-kv-label">영업이익률 1Q</div>
+      <div class="sa-snap-kv-val green">72.0%</div>
+      <div class="sa-snap-kv-sub">TSMC 58% · 역대 최고</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 핵심 3대 밸류에이션 ─── -->
+<div class="sa-section-label">핵심 밸류에이션 3종 지표</div>
+
+<div class="sa-val-grid">
+
+  <!-- PER -->
+  <div class="sa-val-card blue">
+    <div class="sa-val-card-head">
+      <div class="sa-val-name">PER</div>
+      <div class="sa-val-fullname">주가수익비율 (선행 12개월)</div>
+      <div class="sa-val-num">5.6<span class="sa-val-unit">배</span></div>
+      <div class="sa-val-badge underval">✅ 극저평가 구간</div>
+    </div>
+    <div class="sa-val-card-body">
+      <div style="font-size:11px;color:var(--sub);margin-bottom:8px;font-weight:400;">글로벌 반도체 경쟁사 PER 비교</div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">SK하이닉스</span>
+        <span class="sa-val-cmp-val" style="color:var(--hynix);font-weight:700;">5.6배<span class="sa-val-cmp-badge cheap">저평가</span></span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">삼성전자</span>
+        <span class="sa-val-cmp-val">6.2배<span class="sa-val-cmp-badge cheap">저평가</span></span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">마이크론</span>
+        <span class="sa-val-cmp-val">8.5배</span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">TSMC</span>
+        <span class="sa-val-cmp-val">20.0배<span class="sa-val-cmp-badge exp">고평가</span></span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">엔비디아</span>
+        <span class="sa-val-cmp-val">32.0배<span class="sa-val-cmp-badge exp">고평가</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PBR -->
+  <div class="sa-val-card green">
+    <div class="sa-val-card-head">
+      <div class="sa-val-name">PBR</div>
+      <div class="sa-val-fullname">주가순자산비율 (현재)</div>
+      <div class="sa-val-num">3.8<span class="sa-val-unit">배</span></div>
+      <div class="sa-val-badge fairval">🔵 적정 ~ 소폭 저평가</div>
+    </div>
+    <div class="sa-val-card-body">
+      <div style="font-size:11px;color:var(--sub);margin-bottom:8px;font-weight:400;">PBR 밴드 & 증권사 적정가</div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">역사적 저점 PBR</span>
+        <span class="sa-val-cmp-val">1.2배 (2023)</span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">현재 PBR</span>
+        <span class="sa-val-cmp-val" style="color:var(--hynix);font-weight:700;">3.8배</span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">교보증권 적정 PBR</span>
+        <span class="sa-val-cmp-val">4.08배<span class="sa-val-cmp-badge cheap">목표초과</span></span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">역사적 고점 PBR</span>
+        <span class="sa-val-cmp-val">4.5배 (AI 리레이팅)</span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">TSMC PBR</span>
+        <span class="sa-val-cmp-val">7.8배<span class="sa-val-cmp-badge exp">고평가</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROE -->
+  <div class="sa-val-card purple">
+    <div class="sa-val-card-head">
+      <div class="sa-val-name">ROE</div>
+      <div class="sa-val-fullname">자기자본이익률 (2026E 평균)</div>
+      <div class="sa-val-num">44.4<span class="sa-val-unit">%</span></div>
+      <div class="sa-val-badge underval">✅ 세계 최고 수준</div>
+    </div>
+    <div class="sa-val-card-body">
+      <div style="font-size:11px;color:var(--sub);margin-bottom:8px;font-weight:400;">2026~2030 ROE 전망 & 경쟁 비교</div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">SK하이닉스 (2026~2030 평균)</span>
+        <span class="sa-val-cmp-val" style="color:var(--purple);font-weight:700;">44.4%</span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">1Q 2026 순이익률</span>
+        <span class="sa-val-cmp-val">77%</span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">삼성전자 ROE</span>
+        <span class="sa-val-cmp-val">약 35%</span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">TSMC ROE</span>
+        <span class="sa-val-cmp-val">약 38%</span>
+      </div>
+      <div class="sa-val-compare-row">
+        <span class="sa-val-cmp-name">ROE 정당 PBR (= PER × ROE)</span>
+        <span class="sa-val-cmp-val">2.5~4.0배</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── 영업이익률 글로벌 비교 바 ─── -->
+<div class="sa-section-label" style="margin-top:16px;">1Q 2026 영업이익률 — 글로벌 반도체 1위 비교</div>
+
+<div class="sa-bar-wrap">
+  <div class="sa-bar-title">📊 반도체 Big 5 영업이익률 비교 (2026년 1분기 기준)</div>
+  <div class="sa-bar-rows">
+
+    <div class="sa-bar-row hynix">
+      <div class="sa-bar-meta">
+        <span class="sa-bar-company">🇰🇷 SK하이닉스 <span style="font-size:10px;color:var(--muted);font-weight:400;">(HBM 세계 1위)</span></span>
+        <span class="sa-bar-pct"><span class="num">72.0%</span> <span style="font-size:10px;font-weight:700;color:var(--green);background:var(--green-bg);padding:2px 6px;border-radius:3px;">🏆 1위</span></span>
+      </div>
+      <div class="sa-bar-track"><div class="sa-bar-fill" style="width:72%;"></div></div>
+      <div class="sa-bar-note">TSMC·엔비디아·마이크론 모두 상회 · 창사 최고 영업이익률</div>
+    </div>
+
+    <div class="sa-bar-row micron">
+      <div class="sa-bar-meta">
+        <span class="sa-bar-company">🇺🇸 마이크론 <span style="font-size:10px;color:var(--muted);font-weight:400;">(D램 3위)</span></span>
+        <span class="sa-bar-pct"><span style="font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--blue);">67.6%</span></span>
+      </div>
+      <div class="sa-bar-track"><div class="sa-bar-fill" style="width:67.6%;"></div></div>
+      <div class="sa-bar-note">FY2026 2Q 기준 · HBM 시장 점유율 확대 중</div>
+    </div>
+
+    <div class="sa-bar-row nvidia">
+      <div class="sa-bar-meta">
+        <span class="sa-bar-company">🇺🇸 엔비디아 <span style="font-size:10px;color:var(--muted);font-weight:400;">(GPU 팹리스)</span></span>
+        <span class="sa-bar-pct"><span style="font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--green);">65.0%</span></span>
+      </div>
+      <div class="sa-bar-track"><div class="sa-bar-fill" style="width:65%;"></div></div>
+      <div class="sa-bar-note">FY2026 4Q 기준 · 설계 팹리스 대비 제조사 SK하이닉스 마진이 압도</div>
+    </div>
+
+    <div class="sa-bar-row tsmc">
+      <div class="sa-bar-meta">
+        <span class="sa-bar-company">🇹🇼 TSMC <span style="font-size:10px;color:var(--muted);font-weight:400;">(파운드리 1위)</span></span>
+        <span class="sa-bar-pct"><span style="font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--amber);">58.1%</span></span>
+      </div>
+      <div class="sa-bar-track"><div class="sa-bar-fill" style="width:58.1%;"></div></div>
+      <div class="sa-bar-note">1Q 2026 기준 · PER 20배 vs SK하이닉스 5.6배 — 심각한 밸류에이션 디스카운트</div>
+    </div>
+
+    <div class="sa-bar-row samsung">
+      <div class="sa-bar-meta">
+        <span class="sa-bar-company">🇰🇷 삼성전자 <span style="font-size:10px;color:var(--muted);font-weight:400;">(D램 1위)</span></span>
+        <span class="sa-bar-pct"><span style="font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--red);">43.0%</span></span>
+      </div>
+      <div class="sa-bar-track"><div class="sa-bar-fill" style="width:43%;"></div></div>
+      <div class="sa-bar-note">1Q 2026 기준 · 메모리+파운드리 혼합 → SK하이닉스 대비 이익률 29%p 낮음</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── 종합 재무 분석 테이블 ─── -->
+<div class="sa-section-label" style="margin-top:16px;">SK하이닉스 종합 재무 분석표</div>
+
+<div class="sa-table-wrap">
+  <table class="sa-table">
+    <thead>
+      <tr>
+        <th>지표 / 항목</th>
+        <th>2025 연간</th>
+        <th>1Q 2026</th>
+        <th>2026E 연간</th>
+        <th>평가</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="divider"><td colspan="5">📌 수익성 지표</td></tr>
+
+      <tr>
+        <td>
+          <div class="row-head">매출액</div>
+          <div class="row-sub">전년 대비 성장률</div>
+        </td>
+        <td><span class="val-mono">약 66조</span></td>
+        <td><span class="val-mono">52.6조</span><br><span style="font-size:10px;color:var(--green);">+198% YoY</span></td>
+        <td><span class="val-mono">~200조+</span></td>
+        <td><span class="pill g">폭발적</span></td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="row-head">영업이익</div>
+          <div class="row-sub">영업이익률</div>
+        </td>
+        <td><span class="val-mono">47.2조</span></td>
+        <td><span class="val-mono">37.6조</span><br><span style="font-size:10px;color:var(--green);">OPM 72%</span></td>
+        <td><span class="val-mono">~150조</span><br><span style="font-size:10px;color:var(--green);">+218% YoY</span></td>
+        <td><span class="pill g">역대 최고</span></td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="row-head">순이익</div>
+          <div class="row-sub">순이익률</div>
+        </td>
+        <td><span class="val-mono">~38조</span></td>
+        <td><span class="val-mono">40.3조</span><br><span style="font-size:10px;color:var(--green);">NPM 77%</span></td>
+        <td><span class="val-mono">~160조</span></td>
+        <td><span class="pill g">단분기 1년치</span></td>
+      </tr>
+
+      <tr class="divider"><td colspan="5">📌 밸류에이션 지표</td></tr>
+
+      <tr>
+        <td>
+          <div class="row-head">PER (선행)</div>
+          <div class="row-sub">주가수익비율</div>
+        </td>
+        <td><span class="val-mono">—</span></td>
+        <td><span class="val-mono" style="color:var(--hynix);font-weight:700;">5.6배</span></td>
+        <td><span class="val-mono">5.6배</span></td>
+        <td><span class="pill g">TSMC 대비 1/3</span></td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="row-head">PBR</div>
+          <div class="row-sub">주가순자산비율</div>
+        </td>
+        <td><span class="val-mono">—</span></td>
+        <td><span class="val-mono" style="color:var(--hynix);font-weight:700;">3.8배</span></td>
+        <td><span class="val-mono">~4.0배</span></td>
+        <td><span class="pill b">적정 수준</span></td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="row-head">ROE</div>
+          <div class="row-sub">자기자본이익률</div>
+        </td>
+        <td><span class="val-mono">약 42%</span></td>
+        <td><span class="val-mono" style="color:var(--purple);font-weight:700;">44.4%E</span></td>
+        <td><span class="val-mono">44.4%</span></td>
+        <td><span class="pill g">글로벌 최고</span></td>
+      </tr>
+
+      <tr class="divider"><td colspan="5">📌 재무 건전성</td></tr>
+
+      <tr>
+        <td>
+          <div class="row-head">현금성 자산</div>
+          <div class="row-sub">1Q 말 기준</div>
+        </td>
+        <td><span class="val-mono">34.9조</span></td>
+        <td><span class="val-mono" style="color:var(--green);font-weight:700;">54.3조</span><br><span style="font-size:10px;color:var(--green);">분기 +19.4조</span></td>
+        <td><span class="val-mono">~100조</span></td>
+        <td><span class="pill g">급격 개선</span></td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="row-head">순현금 규모</div>
+          <div class="row-sub">현금 - 차입금</div>
+        </td>
+        <td><span class="val-mono">12.7조</span></td>
+        <td><span class="val-mono" style="color:var(--green);font-weight:700;">35.0조</span><br><span style="font-size:10px;color:var(--green);">전분기比 +2.75배</span></td>
+        <td><span class="val-mono">~80조E</span></td>
+        <td><span class="pill g">재무 안전</span></td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="row-head">차입금</div>
+          <div class="row-sub">1Q 말 기준</div>
+        </td>
+        <td><span class="val-mono">22.2조</span></td>
+        <td><span class="val-mono">19.3조</span><br><span style="font-size:10px;color:var(--green);">-2.9조 감소</span></td>
+        <td><span class="val-mono">~15조E</span></td>
+        <td><span class="pill g">부채 감소</span></td>
+      </tr>
+
+      <tr class="divider"><td colspan="5">📌 애널리스트 컨센서스</td></tr>
+
+      <tr>
+        <td>
+          <div class="row-head">목표주가 평균</div>
+          <div class="row-sub">37명 기준</div>
+        </td>
+        <td><span class="val-mono">—</span></td>
+        <td><span class="val-mono" style="color:var(--gold);font-weight:700;">1,440,000원</span></td>
+        <td><span class="val-mono">상승 추세</span></td>
+        <td><span class="pill hy">+17.8% 상승여력</span></td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="row-head">투자의견</div>
+          <div class="row-sub">37명 집계</div>
+        </td>
+        <td><span class="val-mono">—</span></td>
+        <td><span class="val-mono" style="color:var(--green);font-weight:700;">36매수 · 1매도</span></td>
+        <td><span class="val-mono">적극 매수</span></td>
+        <td><span class="pill g">97% 매수</span></td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<!-- ─── 목표주가 분포 ─── -->
+<div class="sa-section-label" style="margin-top:16px;">주요 증권사 목표주가 분포</div>
+
+<div class="sa-tp-wrap">
+  <div class="sa-tp-title">🎯 목표주가 스펙트럼 (기준: 2026.04.25 현재가 1,222,000원)</div>
+
+  <!-- 트랙 바 -->
+  <div class="sa-tp-track-wrap" style="height:30px;position:relative;margin-bottom:6px;">
+    <div class="sa-tp-track" style="position:absolute;top:10px;left:0;right:0;">
+      <!-- 목표주가 범위 채움: 최저 105만 ~ 최고 250만 중 비율로 표현 -->
+      <!-- 전체 트랙 = 105만(0%) ~ 250만(100%) = 145만 범위 -->
+      <!-- 최저 105만 → 0%, 최고 250만 → 100% -->
+      <!-- 일반 목표주가 범위 130만~200만 = (25만/145만)~(95만/145만) = 17%~65% -->
+      <div class="sa-tp-range-fill" style="left:17%;width:48%;"></div>
+      <!-- 현재가 122.2만: (122.2-105)/145 = 11.9% -->
+      <div class="sa-tp-marker" style="left:11.9%;"></div>
+      <!-- 목표 평균 144만: (144-105)/145 = 26.9% -->
+      <div class="sa-tp-avg-marker" style="left:26.9%;"></div>
+    </div>
+  </div>
+  <div class="sa-tp-labels">
+    <span class="sa-tp-label">최저 1,050,000원</span>
+    <span style="font-size:10px;color:var(--hynix);font-weight:700;font-family:'DM Mono',monospace;">▲ 현재 1,222,000원</span>
+    <span style="font-size:10px;color:var(--gold);font-weight:700;font-family:'DM Mono',monospace;">★ 평균목표 1,440,000원</span>
+    <span class="sa-tp-label">노무라 2,340,000원</span>
+  </div>
+
+  <!-- 증권사별 목표주가 -->
+  <div class="sa-tp-analysts">
+    <div class="sa-tp-analyst-card">
+      <div class="sa-tp-firm">노무라증권 🇯🇵</div>
+      <div class="sa-tp-price">2,340,000원</div>
+      <div class="sa-tp-updown up">+91.5% ↑</div>
+      <div class="sa-tp-opinion">최고 목표주가 · LTA 모델 기반</div>
+    </div>
+    <div class="sa-tp-analyst-card">
+      <div class="sa-tp-firm">교보증권</div>
+      <div class="sa-tp-price">1,200,000원</div>
+      <div class="sa-tp-updown up">-1.8% (PBR 4.08배)</div>
+      <div class="sa-tp-opinion">PBR 방법론 · 적정 밸류</div>
+    </div>
+    <div class="sa-tp-analyst-card">
+      <div class="sa-tp-firm">컨센서스 평균</div>
+      <div class="sa-tp-price">1,440,000원</div>
+      <div class="sa-tp-updown up">+17.8% ↑</div>
+      <div class="sa-tp-opinion">37개사 평균 · 적극 매수</div>
+    </div>
+    <div class="sa-tp-analyst-card">
+      <div class="sa-tp-firm">최저 목표주가</div>
+      <div class="sa-tp-price">1,050,000원</div>
+      <div class="sa-tp-updown" style="color:var(--red);">-14.1% ↓</div>
+      <div class="sa-tp-opinion">사이클 리스크 반영 · 소수의견</div>
+    </div>
+  </div>
+
+  <!-- 요약 수치 -->
+  <div class="sa-tp-summary">
+    <div class="sa-tp-sum-stat">
+      <div class="sa-tp-sum-label">적극 매수 의견</div>
+      <div class="sa-tp-sum-val green">36명</div>
+    </div>
+    <div class="sa-tp-sum-stat">
+      <div class="sa-tp-sum-label">매도 의견</div>
+      <div class="sa-tp-sum-val red">1명</div>
+    </div>
+    <div class="sa-tp-sum-stat">
+      <div class="sa-tp-sum-label">목표 최고</div>
+      <div class="sa-tp-sum-val gold">234만원</div>
+    </div>
+    <div class="sa-tp-sum-stat">
+      <div class="sa-tp-sum-label">상승여력 평균</div>
+      <div class="sa-tp-sum-val blue">+17.8%</div>
+    </div>
+    <div class="sa-tp-sum-stat">
+      <div class="sa-tp-sum-label">다음 실적 발표</div>
+      <div class="sa-tp-sum-val blue">7.29</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 투자 판단 종합 ─── -->
+<div class="sa-section-label" style="margin-top:16px;">애널리스트 종합 투자 판단</div>
+
+<div class="sa-verdict">
+  <div class="sa-verdict-tag">📋 Analyst Consensus · Investment View</div>
+  <div class="sa-verdict-title">PER 5.6배 — <em>TSMC의 1/3 수준에 불과한 역설적 저평가</em></div>
+  <div class="sa-verdict-items">
+    <div class="sa-verdict-item">
+      <span class="sa-verdict-item-icon">💡</span>
+      <span><strong>밸류에이션 역설:</strong> 영업이익률 72%로 TSMC(58%)를 압도하면서도 PER은 TSMC(20배)의 1/3인 5.6배에 그칩니다. 시장이 아직도 SK하이닉스를 '경기 사이클 주'로 분류하는 데서 비롯된 코리아 디스카운트가 핵심 원인입니다.</span>
+    </div>
+    <div class="sa-verdict-item">
+      <span class="sa-verdict-item-icon">🏆</span>
+      <span><strong>HBM 독점 지위 지속:</strong> HBM이 DRAM 캐파를 3~4배 잠식하는 구조이기에 공급은 비탄력적이고, SK하이닉스의 MR-MUF 공법 기술 초격차가 중단기 점유율을 보장합니다. '에이전틱 AI 시대'로의 전환이 수요의 구조적 확대를 뒷받침합니다.</span>
+    </div>
+    <div class="sa-verdict-item">
+      <span class="sa-verdict-item-icon">💰</span>
+      <span><strong>재무 체력 급격 개선:</strong> 1분기 말 순현금 35조 원(전분기 대비 +2.75배)은 자본 배분 유연성을 대폭 높입니다. 노무라증권은 LTA(장기공급계약) 확대가 고수익성의 중장기 지속을 보장할 근거라며 목표주가를 234만 원으로 상향했습니다.</span>
+    </div>
+    <div class="sa-verdict-item">
+      <span class="sa-verdict-item-icon">⚠️</span>
+      <span><strong>주요 리스크 요인:</strong> 삼성전자 파업 등 공급망 불확실성, 메모리 사이클 전환 시점 불확실, DRAM 범용 가격 하락 가능성, 반도체 단일 업종 쏠림에 따른 차익실현 물량 상존. 2분기 이후 실적 모멘텀 유지 여부가 핵심 관건입니다.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 면책 고지 ─── -->
+<div class="sa-footer">
+  <p>📌 본 분석 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 재무 수치는 2026년 4월 25일 기준이며 일부는 추정치입니다. 출처: SK하이닉스 IR, 노무라증권, 교보증권, Investing.com, 키움증권, 이콘밍글. 투자 결정에 대한 책임은 투자자 본인에게 있으며, 반드시 전문 금융 투자 상담을 받으시길 권고합니다.</p>
+</div>
+
+</div>
+
+</body>
+</html>
