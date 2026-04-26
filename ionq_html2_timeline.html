@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IonQ 타임라인</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background: #f8faff; padding: 20px; }
+  .wrapper { max-width: 760px; margin: 0 auto; }
+  h2 { text-align: center; font-size: 20px; font-weight: 800; color: #1e1e2e; margin-bottom: 6px; }
+  .sub { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 32px; }
+
+  .timeline { position: relative; padding-left: 20px; }
+  .timeline::before { content: ''; position: absolute; left: 28px; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, #4f46e5, #0ea5e9, #10b981); border-radius: 2px; }
+
+  .tl-item { display: flex; gap: 16px; margin-bottom: 24px; position: relative; }
+  .tl-dot { width: 18px; height: 18px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 3px; flex-shrink: 0; margin-top: 4px; z-index: 1; }
+  .dot-purple { background: #4f46e5; box-shadow: 0 0 0 3px #4f46e5; }
+  .dot-blue { background: #0ea5e9; box-shadow: 0 0 0 3px #0ea5e9; }
+  .dot-green { background: #10b981; box-shadow: 0 0 0 3px #10b981; }
+  .dot-orange { background: #f59e0b; box-shadow: 0 0 0 3px #f59e0b; }
+  .dot-red { background: #ef4444; box-shadow: 0 0 0 3px #ef4444; }
+
+  .tl-content { background: white; border-radius: 14px; padding: 16px 20px; flex: 1; box-shadow: 0 2px 10px rgba(0,0,0,0.07); border-left: 4px solid; }
+  .tl-item:nth-child(1) .tl-content { border-color: #4f46e5; }
+  .tl-item:nth-child(2) .tl-content { border-color: #4f46e5; }
+  .tl-item:nth-child(3) .tl-content { border-color: #0ea5e9; }
+  .tl-item:nth-child(4) .tl-content { border-color: #0ea5e9; }
+  .tl-item:nth-child(5) .tl-content { border-color: #f59e0b; }
+  .tl-item:nth-child(6) .tl-content { border-color: #ef4444; }
+  .tl-item:nth-child(7) .tl-content { border-color: #10b981; }
+  .tl-item:nth-child(8) .tl-content { border-color: #10b981; }
+  .tl-item:nth-child(9) .tl-content { border-color: #8b5cf6; }
+
+  .tl-year { font-size: 11px; font-weight: 700; color: #6b7280; letter-spacing: 1px; margin-bottom: 4px; }
+  .tl-title { font-size: 15px; font-weight: 700; color: #1e1e2e; margin-bottom: 5px; }
+  .tl-desc { font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .tl-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 10px; margin-top: 6px; }
+  .b-purple { background: #ede9fe; color: #7c3aed; }
+  .b-blue { background: #e0f2fe; color: #0284c7; }
+  .b-green { background: #d1fae5; color: #059669; }
+  .b-orange { background: #fef3c7; color: #d97706; }
+  .b-red { background: #fee2e2; color: #dc2626; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h2>⏳ 아이온큐 성장 타임라인</h2>
+  <p class="sub">2015년 탄생부터 2026년 현재까지 — 핵심 이정표 총정리</p>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot dot-purple"></div>
+      <div class="tl-content">
+        <div class="tl-year">2014–2015</div>
+        <div class="tl-title">🔬 창업의 씨앗 — 논문에서 기업으로</div>
+        <div class="tl-desc">크리스 먼로 교수가 이온트랩 양자 컴퓨터 논문 발표. NEA(New Enterprise Associates)가 주목해 투자 제안. 2015년 먼로 교수·김정상 교수와 함께 <strong>IonQ 창업</strong>. NEA 초기 투자 유치.</div>
+        <span class="tl-badge b-purple">창업</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-purple"></div>
+      <div class="tl-content">
+        <div class="tl-year">2017</div>
+        <div class="tl-title">💸 구글·아마존 투자 유치</div>
+        <div class="tl-desc">GV(구글 벤처스)와 NEA 주도 2,000만 달러 시리즈 B 투자 유치. GV의 최초 양자컴퓨팅 투자 사례. AWS Braket, Microsoft Azure, Google Cloud와 클라우드 파트너십 구축 시작.</div>
+        <span class="tl-badge b-purple">시리즈 B</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-blue"></div>
+      <div class="tl-content">
+        <div class="tl-year">2021년 10월</div>
+        <div class="tl-title">🎉 NYSE 상장 — 세계 최초 순수 양자 컴퓨팅 상장사</div>
+        <div class="tl-desc">SPAC(기업인수목적회사) 합병 방식으로 뉴욕증권거래소 상장. 티커: IONQ. 전 세계 첫 번째 순수 양자 컴퓨팅 공개 기업으로 역사에 이름을 올림. 소프트뱅크 비전펀드2 투자.</div>
+        <span class="tl-badge b-blue">NYSE 상장</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-blue"></div>
+      <div class="tl-content">
+        <div class="tl-year">2022–2023</div>
+        <div class="tl-title">🤝 국방·항공우주 수주 러시</div>
+        <div class="tl-desc">미 공군연구소(AFRL)와 이온트랩 양자컴퓨터 공급 계약(2022). 스위스 QuantumBasel에 35AQ·64AQ 수주 약 2,800만 달러(2023). AFRL에 64AQ 2대 선주문 약 2,550만 달러. 에어버스 항공 적재 최적화 적용.</div>
+        <span class="tl-badge b-blue">정부·방위 수주</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-orange"></div>
+      <div class="tl-content">
+        <div class="tl-year">2023년 5월</div>
+        <div class="tl-title">⚡ IonQ Forte 조기 공개 (29AQ) — 공매도 논란 종식</div>
+        <div class="tl-desc">스콜피온 캐피탈의 "폰지 사기" 공매도 리포트로 주가 급락했으나, 29AQ IonQ Forte를 목표 대비 7개월 조기 달성해 공개. 법원도 개인 소송에서 IonQ 손을 들어줌. 기술력 논란 완전 종식.</div>
+        <span class="tl-badge b-orange">기술 입증</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-orange"></div>
+      <div class="tl-content">
+        <div class="tl-year">2025년 1월</div>
+        <div class="tl-title">📉 젠슨 황 발언 충격 — 40% 급락</div>
+        <div class="tl-desc">엔비디아 CEO 젠슨 황이 "양자 컴퓨터는 30년 뒤에나 가능한 일"이라고 발언. 아이온큐 포함 양자 컴퓨팅 업계 전체에 직격탄. 주가 40% 가까이 폭락.</div>
+        <span class="tl-badge b-red">주가 충격</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-green"></div>
+      <div class="tl-content">
+        <div class="tl-year">2025년 9월</div>
+        <div class="tl-title">🏭 역대 최대 M&A — Oxford·Vector 인수</div>
+        <div class="tl-desc">영국 옥스포드 아이오닉스(약 10억 7,500만 달러)와 미국 벡터 아토믹(약 2억 5,000만 달러) 동시 인수 발표. 양자 컴퓨팅 산업 역사상 최대 규모 인수 중 하나. 미국 에너지부와 양자 기술 협력 MOU 체결.</div>
+        <span class="tl-badge b-green">대형 M&A</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-green"></div>
+      <div class="tl-content">
+        <div class="tl-year">2026년 2월</div>
+        <div class="tl-title">🏆 매출 1억 달러 돌파 — 업계 최초</div>
+        <div class="tl-desc">FY2025 연간 매출 1억 3,000만 달러 기록. 상장 양자 컴퓨팅 기업 최초 GAAP 기준 1억 달러 돌파. 4분기 매출 예상치 55% 초과 달성. SkyWater Technology 18억 달러 인수 계약 발표. FY2026 가이던스 2억 3,500만 달러 제시.</div>
+        <span class="tl-badge b-green">역사적 이정표</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-green"></div>
+      <div class="tl-content">
+        <div class="tl-year">2026년 4월</div>
+        <div class="tl-title">🛡 DARPA 계약 + 엔비디아 협력 — 이틀 연속 +20%</div>
+        <div class="tl-desc">DARPA HARQ 프로그램 계약 수주로 +20% 급등(4/14). 다음날 엔비디아 양자AI 오픈소스 모델 공개로 추가 +21% 급등(4/15). 이틀 연속 대형 호재. 미 상무부의 양자 기업 지분 투자 협상 보도.</div>
+        <span class="tl-badge b-green">2026년 현재</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
