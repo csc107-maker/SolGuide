@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LFP vs NMC 배터리 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f7f4;
+    padding: 32px 16px;
+  }
+
+  .wrapper {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #d0f0e3;
+    color: #166534;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .main-title {
+    font-size: 21px;
+    font-weight: 900;
+    color: #1a2332;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .main-title span { color: #15803d; }
+
+  .sub {
+    font-size: 13px;
+    color: #6b7a8d;
+    line-height: 1.6;
+  }
+
+  /* Hero 버튼형 카드 */
+  .hero-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 480px) {
+    .hero-cards { grid-template-columns: 1fr; }
+  }
+
+  .hero-card {
+    border-radius: 16px;
+    padding: 22px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-card.lfp {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+  }
+
+  .hero-card.nmc {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  }
+
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .hero-card-name {
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.8;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .hero-card-full {
+    font-size: 11px;
+    opacity: 0.65;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .hero-card-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 4px;
+  }
+
+  .hero-card-keyword {
+    font-size: 19px;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-top: 10px;
+  }
+
+  /* 비교 테이블 */
+  .table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    background: #f8fafc;
+  }
+
+  th {
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #475569;
+    text-align: center;
+    border-bottom: 2px solid #e8edf3;
+  }
+
+  th:first-child { text-align: left; color: #94a3b8; }
+
+  td {
+    padding: 13px 16px;
+    font-size: 13px;
+    color: #2d3748;
+    border-bottom: 1px solid #f0f4f8;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td:first-child {
+    font-weight: 700;
+    color: #475569;
+    text-align: left;
+    background: #fafbfc;
+    font-size: 12px;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: #f7fdf9; }
+  tr:hover td:first-child { background: #f0f9f4; }
+
+  .win { color: #16a34a; font-weight: 800; }
+  .neutral { color: #64748b; }
+  .lose { color: #2563eb; font-weight: 600; }
+
+  .bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .bar {
+    height: 8px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .bar-lfp { background: #16a34a; }
+  .bar-nmc { background: #2563eb; }
+
+  .star { color: #f59e0b; font-size: 14px; }
+  .star-empty { color: #e2e8f0; font-size: 14px; }
+
+  /* 추천 시나리오 */
+  .recommend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 480px) {
+    .recommend-grid { grid-template-columns: 1fr; }
+  }
+
+  .rec-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  }
+
+  .rec-card h4 {
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rec-card.lfp-rec h4 { color: #16a34a; }
+  .rec-card.nmc-rec h4 { color: #2563eb; }
+
+  .rec-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  .lfp-rec .rec-tag { background: #d0f0e3; color: #166534; }
+  .nmc-rec .rec-tag { background: #dbeafe; color: #1d4ed8; }
+
+  .rec-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .rec-list li {
+    font-size: 12px;
+    color: #4a5568;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .rec-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+
+  .lfp-rec .rec-list li::before { color: #16a34a; }
+  .nmc-rec .rec-list li::before { color: #2563eb; }
+
+  .note {
+    margin-top: 18px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #78350f;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="badge">🔋 3편 미리보기 — 배터리 선택 가이드</div>
+    <div class="main-title">LFP vs NMC — <span>어떤 배터리가 맞나요?</span></div>
+    <div class="sub">초기 단가만 보고 선택하면 10년 뒤 후회합니다. 설치 목적과 환경에 따라 달라집니다.</div>
+  </div>
+
+  <!-- Hero 카드 -->
+  <div class="hero-cards">
+    <div class="hero-card lfp">
+      <div class="hero-card-name">LFP</div>
+      <div class="hero-card-full">리튬인산철 (LiFePO₄)<br>Lithium Iron Phosphate</div>
+      <div class="hero-card-tag">📌 ESS · 대용량</div>
+      <div class="hero-card-keyword">안전성 & 장수명<br>국내 점유↑</div>
+    </div>
+    <div class="hero-card nmc">
+      <div class="hero-card-name">NMC</div>
+      <div class="hero-card-full">니켈망간코발트<br>Nickel Manganese Cobalt</div>
+      <div class="hero-card-tag">📌 고밀도 · 소형화</div>
+      <div class="hero-card-keyword">에너지밀도 우수<br>공간 효율 높음</div>
+    </div>
+  </div>
+
+  <!-- 비교 테이블 -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:26%">비교 항목</th>
+          <th style="width:37%">🟢 LFP (리튬인산철)</th>
+          <th style="width:37%">🔵 NMC (니켈망간코발트)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>에너지 밀도</td>
+          <td class="neutral">
+            <div class="bar-wrap">
+              <div class="bar bar-lfp" style="width:44px"></div>
+              <span>낮음</span>
+            </div>
+          </td>
+          <td class="win">
+            <div class="bar-wrap">
+              <div class="bar bar-nmc" style="width:68px"></div>
+              <span>높음 ✓</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>사이클 수명</td>
+          <td class="win">
+            <span class="star">★★★★★</span><br>
+            <small>4,000~6,000회</small>
+          </td>
+          <td class="neutral">
+            <span class="star">★★★</span><span class="star-empty">★★</span><br>
+            <small>1,500~3,000회</small>
+          </td>
+        </tr>
+        <tr>
+          <td>열 안전성</td>
+          <td class="win">우수 ✓<br><small>열폭주 위험 낮음</small></td>
+          <td class="neutral">보통<br><small>관리 시스템 필수</small></td>
+        </tr>
+        <tr>
+          <td>초기 단가</td>
+          <td class="win">상대적 낮음 ✓</td>
+          <td class="neutral">상대적 높음</td>
+        </tr>
+        <tr>
+          <td>공간 효율</td>
+          <td class="neutral">낮음</td>
+          <td class="win">높음 ✓<br><small>같은 공간에 더 많은 용량</small></td>
+        </tr>
+        <tr>
+          <td>저온 성능</td>
+          <td class="neutral">취약<br><small>추운 지역 주의</small></td>
+          <td class="win">상대적 우수 ✓</td>
+        </tr>
+        <tr>
+          <td>국내 ESS 채택</td>
+          <td class="win">점유율 급상승 중 ✓</td>
+          <td class="neutral">기존 주력 → 감소 추세</td>
+        </tr>
+        <tr>
+          <td>10년 TCO*</td>
+          <td class="win">유리 (교체 횟수 ↓) ✓</td>
+          <td class="neutral">교체 비용 고려 필요</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">⚠️ *TCO(총소유비용) = 초기 구매비 + 운영비 + 교체비. LFP는 초기 단가가 낮고 수명이 길어 장기 운영 시 유리한 경우가 많습니다.</div>
+
+  <!-- 추천 시나리오 -->
+  <div style="margin-top: 20px; margin-bottom: 12px; font-size: 13px; font-weight: 800; color: #475569; letter-spacing: 1px; text-transform: uppercase;">📌 설치 환경별 추천</div>
+
+  <div class="recommend-grid">
+    <div class="rec-card lfp-rec">
+      <h4>🟢 LFP 추천 <span class="rec-tag">ESS 주력</span></h4>
+      <ul class="rec-list">
+        <li>100kW 이상 대용량 ESS 구축</li>
+        <li>장기 운영(10년+) 발전소</li>
+        <li>온난한 지역 옥외 설치</li>
+        <li>REC 수익 중심 운영</li>
+      </ul>
+    </div>
+    <div class="rec-card nmc-rec">
+      <h4>🔵 NMC 추천 <span class="rec-tag">소형·고밀도</span></h4>
+      <ul class="rec-list">
+        <li>설치 공간이 협소한 건물형</li>
+        <li>저온 환경 (북부·고지대)</li>
+        <li>소형 상업용 (100kW 미만)</li>
+        <li>단기 회수가 우선인 사업</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
