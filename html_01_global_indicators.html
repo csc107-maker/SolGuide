@@ -1,782 +1,232 @@
+<!-- [삽입 위치] VIX 섹션 직후 (## VIX 공포지수 분석 섹션 아래) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>글로벌 선행지표 대시보드 — 2026.04.25</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>글로벌 지표 대시보드 - 2026.04.27</title>
 <style>
-/* ─── 리셋 & 기본 ─── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: #f0f6ff;
+    padding: 24px 16px;
+  }
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .dashboard-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a2d5a;
+    margin-bottom: 6px;
+  }
+  .dashboard-header p {
+    font-size: 0.85rem;
+    color: #6b7a99;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-left: 5px solid #aaa;
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); }
+  .card.vix    { border-color: #34d399; }
+  .card.wti    { border-color: #f97316; }
+  .card.krw    { border-color: #3b82f6; }
+  .card.dxy    { border-color: #8b5cf6; }
+  .card.bond   { border-color: #f59e0b; }
+  .card.ewy    { border-color: #10b981; }
 
-:root {
-  --bg:        #F7F6F2;
-  --surface:   #FFFFFF;
-  --border:    #E4E2DA;
-  --muted:     #9A9690;
-  --text:      #1C1B18;
-  --sub:       #5C5A55;
-  --green:     #1A7A4A;
-  --green-bg:  #EAF5EF;
-  --red:       #C0392B;
-  --red-bg:    #FDECEA;
-  --amber:     #C97A00;
-  --amber-bg:  #FFF3DA;
-  --blue:      #1A5DAD;
-  --blue-bg:   #E8F0FB;
-  --navy:      #0F2749;
-  --gold:      #D4A017;
-  --radius:    12px;
-  --shadow:    0 2px 16px rgba(0,0,0,0.07);
-}
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .card-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #6b7a99;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .badge.down  { background: #d1fae5; color: #065f46; }
+  .badge.up    { background: #fee2e2; color: #991b1b; }
+  .badge.neutral { background: #e0e7ff; color: #3730a3; }
 
-body {
-  background: var(--bg);
-  font-family: 'Noto Sans KR', sans-serif;
-  color: var(--text);
-  padding: 0;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-}
+  .card-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a2d5a;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .card-sub {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+  .card-desc {
+    font-size: 0.8rem;
+    color: #475569;
+    line-height: 1.5;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  .signal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .signal-label { font-size: 0.75rem; color: #6b7a99; font-weight: 600; }
+  .signal-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .signal-dot.green  { background: #34d399; }
+  .signal-dot.orange { background: #f97316; }
+  .signal-dot.yellow { background: #fbbf24; }
+  .signal-dot.blue   { background: #3b82f6; }
 
-/* ─── 전체 래퍼 ─── */
-.gid-wrap {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 0 0 32px;
-  background: var(--bg);
-}
-
-/* ─── 헤더 배너 ─── */
-.gid-header {
-  background: var(--navy);
-  padding: 28px 28px 22px;
-  position: relative;
-  overflow: hidden;
-}
-.gid-header::before {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 180px; height: 180px;
-  border-radius: 50%;
-  background: rgba(212, 160, 23, 0.12);
-}
-.gid-header::after {
-  content: '';
-  position: absolute;
-  bottom: -30px; left: 30%;
-  width: 120px; height: 120px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.04);
-}
-.gid-header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-.gid-badge {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--gold);
-  background: rgba(212,160,23,0.15);
-  border: 1px solid rgba(212,160,23,0.3);
-  border-radius: 4px;
-  padding: 4px 10px;
-  text-transform: uppercase;
-}
-.gid-date {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 1px;
-}
-.gid-title {
-  font-size: 22px;
-  font-weight: 900;
-  color: #FFFFFF;
-  line-height: 1.3;
-  letter-spacing: -0.3px;
-}
-.gid-title span { color: var(--gold); }
-.gid-subtitle {
-  margin-top: 6px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.55);
-  font-weight: 300;
-}
-
-/* ─── 위험도 종합 바 ─── */
-.gid-risk-bar-wrap {
-  background: var(--surface);
-  margin: 16px 16px 0;
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-.gid-risk-label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.gid-risk-title {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-.gid-risk-score {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-}
-.gid-risk-score .num {
-  font-family: 'DM Mono', monospace;
-  font-size: 28px;
-  font-weight: 500;
-  color: var(--green);
-  line-height: 1;
-}
-.gid-risk-score .denom {
-  font-size: 13px;
-  color: var(--muted);
-}
-.gid-risk-track {
-  height: 8px;
-  background: #EEEDE8;
-  border-radius: 999px;
-  overflow: hidden;
-  position: relative;
-}
-.gid-risk-fill {
-  height: 100%;
-  width: 32%;
-  background: linear-gradient(90deg, #1A7A4A 0%, #27AE60 100%);
-  border-radius: 999px;
-  transition: width 1s ease;
-}
-.gid-risk-ticks {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 6px;
-}
-.gid-risk-tick {
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-}
-.gid-risk-status {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--green);
-  background: var(--green-bg);
-  border-radius: 6px;
-  padding: 6px 0;
-}
-
-/* ─── 지표 그리드 ─── */
-.gid-section-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding: 20px 20px 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.gid-section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.gid-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-  padding: 0 16px;
-}
-
-.gid-card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 16px 14px;
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.gid-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.1);
-}
-.gid-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-}
-.gid-card.green::before { background: var(--green); }
-.gid-card.red::before   { background: var(--red); }
-.gid-card.amber::before { background: var(--amber); }
-.gid-card.blue::before  { background: var(--blue); }
-.gid-card.navy::before  { background: var(--navy); }
-
-.gid-card-name {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.gid-card-value {
-  font-family: 'DM Mono', monospace;
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--text);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.gid-card-value.big { font-size: 20px; }
-.gid-card-change {
-  font-size: 12px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  border-radius: 4px;
-  padding: 2px 6px;
-  margin-bottom: 8px;
-}
-.gid-card-change.up   { color: var(--green); background: var(--green-bg); }
-.gid-card-change.down { color: var(--red);   background: var(--red-bg); }
-.gid-card-change.flat { color: var(--amber); background: var(--amber-bg); }
-
-.gid-status-dot {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--sub);
-}
-.gid-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-}
-.gid-dot.green { background: var(--green); box-shadow: 0 0 0 2px var(--green-bg); }
-.gid-dot.red   { background: var(--red);   box-shadow: 0 0 0 2px var(--red-bg); }
-.gid-dot.amber { background: var(--amber); box-shadow: 0 0 0 2px var(--amber-bg); }
-.gid-dot.blue  { background: var(--blue);  box-shadow: 0 0 0 2px var(--blue-bg); }
-
-/* ─── 미니 바 ─── */
-.gid-mini-bar-wrap { margin-top: 10px; }
-.gid-mini-bar-track {
-  height: 4px;
-  background: #EEEDE8;
-  border-radius: 999px;
-  overflow: hidden;
-}
-.gid-mini-bar-fill {
-  height: 100%;
-  border-radius: 999px;
-  transition: width 1s ease;
-}
-.gid-mini-bar-fill.green { background: var(--green); }
-.gid-mini-bar-fill.red   { background: var(--red); }
-.gid-mini-bar-fill.amber { background: var(--amber); }
-.gid-mini-bar-fill.blue  { background: var(--blue); }
-.gid-mini-bar-label {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 3px;
-}
-.gid-mini-bar-label span {
-  font-size: 9px;
-  color: var(--muted);
-  font-family: 'DM Mono', monospace;
-}
-
-/* ─── 분석 테이블 ─── */
-.gid-table-wrap {
-  margin: 0 16px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-.gid-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-.gid-table thead {
-  background: #F2F1ED;
-  border-bottom: 1px solid var(--border);
-}
-.gid-table th {
-  padding: 10px 14px;
-  text-align: left;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.gid-table th:last-child,
-.gid-table td:last-child { text-align: right; }
-.gid-table td {
-  padding: 11px 14px;
-  color: var(--text);
-  font-size: 13px;
-  border-bottom: 1px solid #F0EFE9;
-  vertical-align: middle;
-}
-.gid-table tr:last-child td { border-bottom: none; }
-.gid-table tr:hover td { background: #FAFAF7; }
-.gid-table .ind-name { font-weight: 600; color: var(--text); }
-.gid-table .ind-val {
-  font-family: 'DM Mono', monospace;
-  font-weight: 500;
-  font-size: 14px;
-}
-.gid-pill {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 700;
-}
-.gid-pill.green { background: var(--green-bg); color: var(--green); }
-.gid-pill.red   { background: var(--red-bg);   color: var(--red); }
-.gid-pill.amber { background: var(--amber-bg); color: var(--amber); }
-.gid-pill.blue  { background: var(--blue-bg);  color: var(--blue); }
-
-/* ─── 핵심 인사이트 박스 ─── */
-.gid-insight {
-  margin: 16px 16px 0;
-  background: var(--navy);
-  border-radius: var(--radius);
-  padding: 20px 22px;
-  position: relative;
-  overflow: hidden;
-}
-.gid-insight::before {
-  content: '"';
-  position: absolute;
-  top: -10px; right: 16px;
-  font-size: 100px;
-  color: rgba(255,255,255,0.05);
-  font-family: Georgia, serif;
-  line-height: 1;
-}
-.gid-insight-tag {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.gid-insight-text {
-  font-size: 14px;
-  color: rgba(255,255,255,0.88);
-  line-height: 1.75;
-  font-weight: 300;
-}
-.gid-insight-text strong {
-  color: #FFFFFF;
-  font-weight: 700;
-}
-
-/* ─── 외국인 수급 타임라인 ─── */
-.gid-timeline {
-  margin: 0 16px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  padding: 18px 20px;
-  box-shadow: var(--shadow);
-}
-.gid-timeline-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.gid-timeline-items { display: flex; flex-direction: column; gap: 0; }
-.gid-tl-item {
-  display: flex;
-  gap: 14px;
-  padding-bottom: 16px;
-  position: relative;
-}
-.gid-tl-item:not(:last-child)::before {
-  content: '';
-  position: absolute;
-  left: 14px; top: 30px;
-  width: 1px; bottom: 0;
-  background: var(--border);
-}
-.gid-tl-dot-wrap {
-  flex-shrink: 0;
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
-  position: relative; z-index: 1;
-}
-.gid-tl-dot-wrap.red   { background: var(--red-bg);   color: var(--red); }
-.gid-tl-dot-wrap.green { background: var(--green-bg); color: var(--green); }
-.gid-tl-dot-wrap.amber { background: var(--amber-bg); color: var(--amber); }
-.gid-tl-dot-wrap.blue  { background: var(--blue-bg);  color: var(--blue); }
-.gid-tl-content { flex: 1; padding-top: 4px; }
-.gid-tl-date {
-  font-size: 10px;
-  font-family: 'DM Mono', monospace;
-  color: var(--muted);
-  margin-bottom: 2px;
-}
-.gid-tl-desc {
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.55;
-}
-.gid-tl-desc strong { font-weight: 700; }
-.gid-tl-val {
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--sub);
-}
-
-/* ─── 푸터 노트 ─── */
-.gid-footer {
-  margin: 16px 16px 0;
-  padding: 14px 16px;
-  background: #F0EFE9;
-  border-radius: 8px;
-  border-left: 3px solid var(--border);
-}
-.gid-footer p {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-/* ─── 반응형 ─── */
-@media (max-width: 560px) {
-  .gid-grid { grid-template-columns: 1fr 1fr; }
-  .gid-title { font-size: 18px; }
-  .gid-card-value { font-size: 18px; }
-}
-@media (max-width: 380px) {
-  .gid-grid { grid-template-columns: 1fr; }
-}
+  .divider {
+    text-align: center;
+    margin: 16px 0 8px;
+    font-size: 0.78rem;
+    color: #94a3b8;
+  }
+  .footer-note {
+    text-align: center;
+    font-size: 0.73rem;
+    color: #94a3b8;
+    margin-top: 20px;
+  }
 </style>
 </head>
 <body>
 
-<div class="gid-wrap">
+<div class="dashboard-header">
+  <h2>📊 2026.04.27 글로벌 시장 지표 대시보드</h2>
+  <p>한국 증시 개장 전 핵심 6개 지표 현황 (기준: 2026.04.24~25 종가)</p>
+</div>
 
-  <!-- ─── 헤더 ─── -->
-  <div class="gid-header">
-    <div class="gid-header-top">
-      <span class="gid-badge">📊 Global Indicators</span>
-      <span class="gid-date">2026.04.25 (FRI) CLOSE</span>
+<div class="grid">
+
+  <!-- VIX -->
+  <div class="card vix">
+    <div class="card-top">
+      <span class="card-label">😨 VIX 공포지수</span>
+      <span class="badge down">▼ 3.11%</span>
     </div>
-    <div class="gid-title">글로벌 선행지표 <span>종합 분석</span></div>
-    <div class="gid-subtitle">외국인 매도 위험도 · VIX · WTI · 원달러 · 코스피 실시간 대시보드</div>
-  </div>
-
-  <!-- ─── 위험도 종합 ─── -->
-  <div class="gid-risk-bar-wrap">
-    <div class="gid-risk-label-row">
-      <span class="gid-risk-title">🛡 외국인 매도 위험도 종합</span>
-      <div class="gid-risk-score">
-        <span class="num">32</span>
-        <span class="denom">/ 100</span>
-      </div>
-    </div>
-    <div class="gid-risk-track">
-      <div class="gid-risk-fill" style="width:32%;"></div>
-    </div>
-    <div class="gid-risk-ticks">
-      <span class="gid-risk-tick">0 · 안전</span>
-      <span class="gid-risk-tick">25 · 주의</span>
-      <span class="gid-risk-tick">50 · 경보</span>
-      <span class="gid-risk-tick">75 · 위험</span>
-      <span class="gid-risk-tick">100</span>
-    </div>
-    <div class="gid-risk-status">✅ 낮은 위험 — 전쟁 리스크 둔화 + 외국인 순매수 4조원 지속</div>
-  </div>
-
-  <!-- ─── 핵심 6대 지표 그리드 ─── -->
-  <div class="gid-section-label">핵심 선행지표 6종</div>
-
-  <div class="gid-grid">
-
-    <!-- VIX -->
-    <div class="gid-card green">
-      <div class="gid-card-name">VIX 공포지수</div>
-      <div class="gid-card-value">19.78</div>
-      <div class="gid-card-change down">▼ -2.8%</div>
-      <div class="gid-status-dot">
-        <span class="gid-dot green"></span>안전 구간
-      </div>
-      <div class="gid-mini-bar-wrap">
-        <div class="gid-mini-bar-track">
-          <div class="gid-mini-bar-fill green" style="width:39%;"></div>
-        </div>
-        <div class="gid-mini-bar-label">
-          <span>10</span><span>19.78</span><span>50</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- WTI -->
-    <div class="gid-card amber">
-      <div class="gid-card-name">WTI 유가 ($/배럴)</div>
-      <div class="gid-card-value">$86.80</div>
-      <div class="gid-card-change up">▲ +5.1%</div>
-      <div class="gid-status-dot">
-        <span class="gid-dot amber"></span>주의 — 90$ 하회
-      </div>
-      <div class="gid-mini-bar-wrap">
-        <div class="gid-mini-bar-track">
-          <div class="gid-mini-bar-fill amber" style="width:55%;"></div>
-        </div>
-        <div class="gid-mini-bar-label">
-          <span>$55</span><span>$86.80</span><span>$120</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- USD/KRW -->
-    <div class="gid-card green">
-      <div class="gid-card-name">달러-원 환율</div>
-      <div class="gid-card-value big">1,481</div>
-      <div class="gid-card-change down">▼ -6.8원</div>
-      <div class="gid-status-dot">
-        <span class="gid-dot green"></span>원화 강세 진행
-      </div>
-      <div class="gid-mini-bar-wrap">
-        <div class="gid-mini-bar-track">
-          <div class="gid-mini-bar-fill green" style="width:48%;"></div>
-        </div>
-        <div class="gid-mini-bar-label">
-          <span>1,300</span><span>1,481</span><span>1,600</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- KOSPI -->
-    <div class="gid-card blue">
-      <div class="gid-card-name">코스피 종가</div>
-      <div class="gid-card-value big">6,487</div>
-      <div class="gid-card-change up">▲ 사상 최고</div>
-      <div class="gid-status-dot">
-        <span class="gid-dot blue"></span>장중 6,500 돌파
-      </div>
-      <div class="gid-mini-bar-wrap">
-        <div class="gid-mini-bar-track">
-          <div class="gid-mini-bar-fill blue" style="width:85%;"></div>
-        </div>
-        <div class="gid-mini-bar-label">
-          <span>5,000</span><span>6,487</span><span>7,000</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- US 10Y -->
-    <div class="gid-card green">
-      <div class="gid-card-name">美 10년 국채금리</div>
-      <div class="gid-card-value">4.31%</div>
-      <div class="gid-card-change flat">— 보합</div>
-      <div class="gid-status-dot">
-        <span class="gid-dot green"></span>안전 — 안정 유지
-      </div>
-      <div class="gid-mini-bar-wrap">
-        <div class="gid-mini-bar-track">
-          <div class="gid-mini-bar-fill green" style="width:43%;"></div>
-        </div>
-        <div class="gid-mini-bar-label">
-          <span>3.0%</span><span>4.31%</span><span>6.0%</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 외국인 순매수 -->
-    <div class="gid-card blue">
-      <div class="gid-card-name">외국인 4월 누적</div>
-      <div class="gid-card-value big">+4.3조</div>
-      <div class="gid-card-change up">▲ 순매수 전환</div>
-      <div class="gid-status-dot">
-        <span class="gid-dot blue"></span>3월 -35조 → 회복
-      </div>
-      <div class="gid-mini-bar-wrap">
-        <div class="gid-mini-bar-track">
-          <div class="gid-mini-bar-fill blue" style="width:65%;"></div>
-        </div>
-        <div class="gid-mini-bar-label">
-          <span>순매도</span><span>+4.3조</span><span>+10조</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ─── 전체 지표 비교 테이블 ─── -->
-  <div class="gid-section-label">지표 상세 비교표</div>
-
-  <div class="gid-table-wrap">
-    <table class="gid-table">
-      <thead>
-        <tr>
-          <th>지표</th>
-          <th>현재값</th>
-          <th>경보 기준</th>
-          <th>상태</th>
-          <th>코스피 영향</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="ind-name">VIX 공포지수</span></td>
-          <td><span class="ind-val">19.78</span></td>
-          <td><span style="color:var(--muted);font-size:12px;">25 이상↑</span></td>
-          <td><span class="gid-pill green">✅ 안전</span></td>
-          <td><span style="font-size:12px;color:var(--green);">외국인 매수 우호</span></td>
-        </tr>
-        <tr>
-          <td><span class="ind-name">WTI 국제유가</span></td>
-          <td><span class="ind-val">$86.80</span></td>
-          <td><span style="color:var(--muted);font-size:12px;">$100 이상↑</span></td>
-          <td><span class="gid-pill amber">⚠ 주의</span></td>
-          <td><span style="font-size:12px;color:var(--amber);">수입물가 부담 유지</span></td>
-        </tr>
-        <tr>
-          <td><span class="ind-name">달러-원 환율</span></td>
-          <td><span class="ind-val">1,481원</span></td>
-          <td><span style="color:var(--muted);font-size:12px;">1,500원 이상↑</span></td>
-          <td><span class="gid-pill green">✅ 안전</span></td>
-          <td><span style="font-size:12px;color:var(--green);">원화 강세 = 외인 유입</span></td>
-        </tr>
-        <tr>
-          <td><span class="ind-name">美 10년 국채</span></td>
-          <td><span class="ind-val">4.31%</span></td>
-          <td><span style="color:var(--muted);font-size:12px;">4.5% 이상↑</span></td>
-          <td><span class="gid-pill green">✅ 안전</span></td>
-          <td><span style="font-size:12px;color:var(--green);">밸류에이션 압박 없음</span></td>
-        </tr>
-        <tr>
-          <td><span class="ind-name">EWY (한국 ETF)</span></td>
-          <td><span class="ind-val">+2.4%</span></td>
-          <td><span style="color:var(--muted);font-size:12px;">-1% 이하↓</span></td>
-          <td><span class="gid-pill blue">📈 강세</span></td>
-          <td><span style="font-size:12px;color:var(--blue);">패시브 자금 유입 중</span></td>
-        </tr>
-        <tr>
-          <td><span class="ind-name">美-이란 휴전</span></td>
-          <td><span class="ind-val">무기한</span></td>
-          <td><span style="color:var(--muted);font-size:12px;">협상 결렬↓</span></td>
-          <td><span class="gid-pill green">✅ 안전</span></td>
-          <td><span style="font-size:12px;color:var(--green);">지정학 리스크 완화</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ─── 핵심 인사이트 ─── -->
-  <div class="gid-insight" style="margin-top:16px;">
-    <div class="gid-insight-tag">💡 Today's Key Insight</div>
-    <div class="gid-insight-text">
-      4월 25일(금) 코스피는 <strong>장중 사상 처음으로 6,500선을 돌파</strong>하며 신고가를 경신했습니다.
-      미·이란 <strong>무기한 휴전 연장</strong>으로 지정학 리스크가 완화되고, SK하이닉스 1분기 영업이익
-      <strong>37.6조 원(역대 최대)</strong>이 반도체 실적 서프라이즈를 확인시켰습니다.
-      VIX 19.78·원달러 1,481원·WTI $86달러대는 모두 <strong>'안전~주의' 구간</strong>에 위치,
-      외국인 4월 누적 순매수는 <strong>4조 3천억 원</strong>으로 본격적인 수급 개선이 진행 중입니다.
+    <div class="card-value">18.71</div>
+    <div class="card-sub">CBOE Volatility Index</div>
+    <div class="card-desc">19 아래로 하락 — "정상 변동성" 구간 진입. 3월 27일 고점 31.05에서 크게 하락. 외국인 리스크온 매수 우호 환경.</div>
+    <div class="signal-bar">
+      <div class="signal-dot green"></div>
+      <span class="signal-label">코스피 신호: 긍정 (외국인 매수 기대)</span>
     </div>
   </div>
 
-  <!-- ─── 수급 흐름 타임라인 ─── -->
-  <div class="gid-section-label" style="margin-top:16px;">외국인 수급 흐름 타임라인</div>
-
-  <div class="gid-timeline">
-    <div class="gid-timeline-title">📅 2026년 수급 흐름 요약</div>
-    <div class="gid-timeline-items">
-
-      <div class="gid-tl-item">
-        <div class="gid-tl-dot-wrap red">🔻</div>
-        <div class="gid-tl-content">
-          <div class="gid-tl-date">2026.02.28</div>
-          <div class="gid-tl-desc"><strong>미·이란 전쟁 발발</strong> — 호르무즈 봉쇄, VIX 30+ 급등</div>
-          <div class="gid-tl-val">코스피 -25% / 외국인 -35조 순매도</div>
-        </div>
-      </div>
-
-      <div class="gid-tl-item">
-        <div class="gid-tl-dot-wrap red">📉</div>
-        <div class="gid-tl-content">
-          <div class="gid-tl-date">2026.03 전체</div>
-          <div class="gid-tl-desc"><strong>패닉 매도 극점</strong> — 외국인 역대 최대 순매도 기록</div>
-          <div class="gid-tl-val">외국인 누적 -35조 / WTI $111 / 원달러 1,505원</div>
-        </div>
-      </div>
-
-      <div class="gid-tl-item">
-        <div class="gid-tl-dot-wrap amber">🔄</div>
-        <div class="gid-tl-content">
-          <div class="gid-tl-date">2026.04.08</div>
-          <div class="gid-tl-desc"><strong>파키스탄 중재 + 이란 협상 개시</strong> — 외국인 순매수 전환</div>
-          <div class="gid-tl-val">VIX 25.78 → 하락 전환</div>
-        </div>
-      </div>
-
-      <div class="gid-tl-item">
-        <div class="gid-tl-dot-wrap amber">📊</div>
-        <div class="gid-tl-content">
-          <div class="gid-tl-date">2026.04.21</div>
-          <div class="gid-tl-desc"><strong>삼성전자 1분기 실적 서프라이즈</strong> — 반도체 수요 재확인</div>
-          <div class="gid-tl-val">코스피 +2.72% / 코스피 6,388 신고가</div>
-        </div>
-      </div>
-
-      <div class="gid-tl-item">
-        <div class="gid-tl-dot-wrap green">🚀</div>
-        <div class="gid-tl-content">
-          <div class="gid-tl-date">2026.04.25 (오늘)</div>
-          <div class="gid-tl-desc"><strong>코스피 장중 6,500 돌파 · 사상 최고치 마감</strong></div>
-          <div class="gid-tl-val">SK하이닉스 영업이익 37.6조 / 무기한 휴전 / EWY +2.4%</div>
-        </div>
-      </div>
-
+  <!-- WTI -->
+  <div class="card wti">
+    <div class="card-top">
+      <span class="card-label">🛢️ WTI 유가</span>
+      <span class="badge up">▲ 주간 +13%</span>
+    </div>
+    <div class="card-value">$94.40</div>
+    <div class="card-sub">West Texas Intermediate (배럴당)</div>
+    <div class="card-desc">중동 지정학 리스크(미-이란 긴장)로 주간 +13% 급등. 에너지·조선 수혜 vs 정유·항공 비용 압박. 반도체 섹터 영향은 제한적.</div>
+    <div class="signal-bar">
+      <div class="signal-dot orange"></div>
+      <span class="signal-label">코스피 신호: 혼재 (섹터별 차별화)</span>
     </div>
   </div>
 
-  <!-- ─── 면책 고지 ─── -->
-  <div class="gid-footer">
-    <p>📌 본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 지표 데이터는 2026년 4월 25일 종가 기준이며 일부 지연이 있을 수 있습니다. 투자 결과에 대한 책임은 투자자 본인에게 있습니다.</p>
+  <!-- USD/KRW -->
+  <div class="card krw">
+    <div class="card-top">
+      <span class="card-label">💱 USD/KRW 환율</span>
+      <span class="badge down">▼ 원화 강세</span>
+    </div>
+    <div class="card-value">1,475</div>
+    <div class="card-sub">원·달러 (최근: 1,475.19 ₩/USD)</div>
+    <div class="card-desc">최근 고점 1,487원에서 원화 강세 전환. 외국인 투자자 환차익 기대 상승. DXY 약세와 연동되어 신흥국 자금 유입 흐름.</div>
+    <div class="signal-bar">
+      <div class="signal-dot green"></div>
+      <span class="signal-label">코스피 신호: 긍정 (외국인 수급 개선)</span>
+    </div>
   </div>
 
+  <!-- DXY -->
+  <div class="card dxy">
+    <div class="card-top">
+      <span class="card-label">💵 DXY 달러인덱스</span>
+      <span class="badge down">▼ 0.29%</span>
+    </div>
+    <div class="card-value">98.51</div>
+    <div class="card-sub">ICE US Dollar Index</div>
+    <div class="card-desc">99선 이탈, 달러 약세 기조 지속. 신흥국 주식·채권으로 자금 이동 패턴. 코스피 외국인 순매수 지속 가능성 높음.</div>
+    <div class="signal-bar">
+      <div class="signal-dot green"></div>
+      <span class="signal-label">코스피 신호: 긍정 (신흥국 자금 유입)</span>
+    </div>
+  </div>
+
+  <!-- 10Y YIELD -->
+  <div class="card bond">
+    <div class="card-top">
+      <span class="card-label">📈 미국 10년물 금리</span>
+      <span class="badge neutral">안정</span>
+    </div>
+    <div class="card-value">4.33%</div>
+    <div class="card-sub">US 10-Year Treasury Yield</div>
+    <div class="card-desc">4.33% 수준 유지. 4.5% 아래에서는 주식 시장에 큰 위협 없음. 실적 성장 속도가 금리 부담 상쇄. 연준 동향 지속 모니터링 필요.</div>
+    <div class="signal-bar">
+      <div class="signal-dot yellow"></div>
+      <span class="signal-label">코스피 신호: 중립 (4.5% 돌파 시 주의)</span>
+    </div>
+  </div>
+
+  <!-- EWY -->
+  <div class="card ewy">
+    <div class="card-top">
+      <span class="card-label">🇰🇷 EWY (한국 ETF)</span>
+      <span class="badge neutral">안정</span>
+    </div>
+    <div class="card-value">$153.85</div>
+    <div class="card-sub">iShares MSCI South Korea ETF</div>
+    <div class="card-desc">일중 범위 $152.41~$155.58. $152 하방 지지 확인. 외국인의 한국 주식 매수 기조 유지 중. YTD 수익률 코스피 랠리 반영.</div>
+    <div class="signal-bar">
+      <div class="signal-dot green"></div>
+      <span class="signal-label">코스피 신호: 긍정 ($152 지지선 유지)</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  ※ 본 지표는 투자 정보 제공 목적으로 작성되었으며 투자 권유가 아닙니다. 기준: 2026.04.24~25 종가 기준<br>
+  투자 판단의 최종 책임은 투자자 본인에게 있습니다.
 </div>
 
 </body>
