@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IonQ 경쟁사 비교</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background: #faf5ff; padding: 20px; }
+  .wrapper { max-width: 860px; margin: 0 auto; }
+  h2 { text-align: center; font-size: 20px; font-weight: 800; color: #1e1e2e; margin-bottom: 6px; }
+  .sub { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 28px; }
+
+  .table-wrap { overflow-x: auto; background: white; border-radius: 18px; box-shadow: 0 2px 14px rgba(0,0,0,0.08); }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  thead { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; }
+  thead th { padding: 14px 16px; font-size: 12px; font-weight: 700; text-align: center; }
+  thead th:first-child { text-align: left; padding-left: 20px; }
+  tbody tr { border-bottom: 1px solid #f3f4f6; transition: background 0.2s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #faf5ff; }
+  tbody tr.ionq-row { background: #ede9fe; }
+  tbody tr.ionq-row:hover { background: #ddd6fe; }
+  td { padding: 13px 16px; font-size: 12px; color: #374151; text-align: center; }
+  td:first-child { text-align: left; font-weight: 700; font-size: 13px; padding-left: 20px; }
+  .company-name { color: #1e1e2e; }
+  .ionq-name { color: #4f46e5; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+  .t-pure { background: #ede9fe; color: #7c3aed; }
+  .t-big { background: #e0f2fe; color: #0284c7; }
+  .t-startup { background: #dcfce7; color: #15803d; }
+  .good { color: #16a34a; font-weight: 700; }
+  .bad { color: #dc2626; font-weight: 700; }
+  .neutral { color: #d97706; font-weight: 700; }
+  .star { color: #f59e0b; }
+
+  .tech-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 18px; }
+  .tech-card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .tech-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+  .tech-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #f3f4f6; font-size: 12px; }
+  .tech-row:last-child { border-bottom: none; }
+  .tech-row .k { color: #6b7280; }
+  .tech-row .v { font-weight: 600; color: #1e1e2e; }
+
+  @media (max-width: 600px) {
+    .tech-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h2">🔬 양자 컴퓨팅 기업 경쟁 구도 비교</h2>
+  <p class="sub">아이온큐 vs 빅테크 vs 순수 양자 스타트업 — 기술·전략·재무 비교</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>기업</th>
+          <th>유형</th>
+          <th>기술 방식</th>
+          <th>큐비트 수(최대)</th>
+          <th>게이트 충실도</th>
+          <th>클라우드 접근</th>
+          <th>상업화 수준</th>
+          <th>연간 매출</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="ionq-row">
+          <td><span class="ionq-name">⭐ IonQ (아이온큐)</span></td>
+          <td><span class="tag t-pure">순수 양자</span></td>
+          <td>이온트랩</td>
+          <td class="good">36AQ(현재)</td>
+          <td class="good">99.99%</td>
+          <td class="good">AWS·Azure·GCP 3사</td>
+          <td class="good">★★★★☆</td>
+          <td class="good">$130M</td>
+        </tr>
+        <tr>
+          <td><span class="company-name">IBM</span></td>
+          <td><span class="tag t-big">빅테크</span></td>
+          <td>초전도</td>
+          <td>1,121큐비트+</td>
+          <td class="neutral">99.5%대</td>
+          <td>IBM Quantum</td>
+          <td class="good">★★★★★</td>
+          <td>N/A (양자 분리 불가)</td>
+        </tr>
+        <tr>
+          <td><span class="company-name">Google (구글)</span></td>
+          <td><span class="tag t-big">빅테크</span></td>
+          <td>초전도</td>
+          <td>Willow 105큐비트</td>
+          <td class="neutral">99%대</td>
+          <td>Google Cloud</td>
+          <td class="neutral">★★★☆☆</td>
+          <td>N/A</td>
+        </tr>
+        <tr>
+          <td><span class="company-name">Microsoft</span></td>
+          <td><span class="tag t-big">빅테크</span></td>
+          <td>토포로지컬</td>
+          <td>Majorana 1</td>
+          <td class="neutral">개발 중</td>
+          <td>Azure Quantum</td>
+          <td class="neutral">★★☆☆☆</td>
+          <td>N/A</td>
+        </tr>
+        <tr>
+          <td><span class="company-name">Rigetti (RGTI)</span></td>
+          <td><span class="tag t-startup">순수 양자</span></td>
+          <td>초전도</td>
+          <td>84큐비트</td>
+          <td class="bad">98%대</td>
+          <td>AWS·Azure</td>
+          <td class="bad">★★☆☆☆</td>
+          <td>~$12M</td>
+        </tr>
+        <tr>
+          <td><span class="company-name">D-Wave (QBTS)</span></td>
+          <td><span class="tag t-startup">순수 양자</span></td>
+          <td>양자 어닐링</td>
+          <td>5,000+큐비트</td>
+          <td>어닐링 특화</td>
+          <td>클라우드 제공</td>
+          <td class="neutral">★★★☆☆</td>
+          <td>~$9M</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tech-cards">
+    <div class="tech-card">
+      <h3>⚛ 이온트랩 기술의 강점</h3>
+      <div class="tech-row"><span class="k">에러율</span><span class="v good">매우 낮음 (99.99%)</span></div>
+      <div class="tech-row"><span class="k">큐비트 안정성</span><span class="v good">높음</span></div>
+      <div class="tech-row"><span class="k">큐비트 연결성</span><span class="v good">완전 연결</span></div>
+      <div class="tech-row"><span class="k">동작 온도</span><span class="v good">상온 가능</span></div>
+      <div class="tech-row"><span class="k">연산 속도</span><span class="v bad">느림 (단점)</span></div>
+      <div class="tech-row"><span class="k">확장성</span><span class="v neutral">개발 진행 중</span></div>
+    </div>
+    <div class="tech-card">
+      <h3">🔵 초전도 방식의 특성 (IBM·구글)</h3>
+      <div class="tech-row"><span class="k">에러율</span><span class="v neutral">이온트랩 대비 다소 높음</span></div>
+      <div class="tech-row"><span class="k">큐비트 수</span><span class="v good">1,000개+ (현재 선두)</span></div>
+      <div class="tech-row"><span class="k">연산 속도</span><span class="v good">빠름 (장점)</span></div>
+      <div class="tech-row"><span class="k">동작 온도</span><span class="v bad">절대영도 근처 필요</span></div>
+      <div class="tech-row"><span class="k">큐비트 연결성</span><span class="v bad">인접 연결만 가능</span></div>
+      <div class="tech-row"><span class="k">제조 기술</span><span class="v good">반도체 공정 활용 가능</span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
