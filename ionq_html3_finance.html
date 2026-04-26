@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IonQ 재무 실적</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background: #f0fdf4; padding: 20px; }
+  .wrapper { max-width: 820px; margin: 0 auto; }
+  h2 { text-align: center; font-size: 20px; font-weight: 800; color: #1e1e2e; margin-bottom: 6px; }
+  .sub { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 28px; }
+
+  .revenue-bar { background: white; border-radius: 18px; padding: 28px 24px; box-shadow: 0 2px 14px rgba(0,0,0,0.08); margin-bottom: 18px; }
+  .section-title { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .section-title span { background: #dcfce7; color: #15803d; padding: 3px 10px; border-radius: 10px; font-size: 11px; }
+
+  .bar-row { display: grid; grid-template-columns: 80px 1fr 90px; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .bar-label { font-size: 12px; font-weight: 600; color: #374151; text-align: right; }
+  .bar-track { height: 22px; background: #f3f4f6; border-radius: 11px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 11px; display: flex; align-items: center; padding-left: 10px; font-size: 11px; font-weight: 700; color: white; }
+  .bar-value { font-size: 13px; font-weight: 800; color: #1e1e2e; }
+
+  .b-2022 { background: linear-gradient(90deg, #93c5fd, #60a5fa); width: 20%; }
+  .b-2023 { background: linear-gradient(90deg, #34d399, #10b981); width: 33%; }
+  .b-2024 { background: linear-gradient(90deg, #4ade80, #22c55e); width: 50%; }
+  .b-2025 { background: linear-gradient(90deg, #16a34a, #15803d); width: 80%; }
+  .b-2026g { background: linear-gradient(90deg, #f59e0b, #d97706); width: 100%; }
+
+  .growth-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 8px; border-radius: 8px; margin-left: 6px; }
+  .gb-up { background: #dcfce7; color: #15803d; }
+  .gb-proj { background: #fef3c7; color: #d97706; }
+
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
+  .metric-card { background: white; border-radius: 16px; padding: 20px 16px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .metric-icon { font-size: 24px; margin-bottom: 8px; }
+  .metric-value { font-size: 22px; font-weight: 800; color: #1e1e2e; }
+  .metric-label { font-size: 11px; color: #6b7280; margin-top: 4px; }
+  .metric-sub { font-size: 11px; font-weight: 700; margin-top: 6px; }
+  .good { color: #16a34a; }
+  .warn { color: #d97706; }
+
+  .guidance-box { background: linear-gradient(135deg, #1a1f6e, #2d3bcc); border-radius: 18px; padding: 24px; color: white; }
+  .guidance-title { font-size: 14px; font-weight: 700; margin-bottom: 16px; opacity: 0.9; }
+  .guidance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .g-card { background: rgba(255,255,255,0.12); border-radius: 12px; padding: 14px; }
+  .g-period { font-size: 11px; opacity: 0.7; margin-bottom: 4px; }
+  .g-value { font-size: 20px; font-weight: 800; }
+  .g-range { font-size: 11px; opacity: 0.6; margin-top: 2px; }
+
+  .mix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+  .mix-card { background: white; border-radius: 16px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .mix-title { font-size: 12px; color: #6b7280; font-weight: 600; margin-bottom: 12px; }
+  .pie-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .pie-bar { height: 8px; border-radius: 4px; }
+  .pie-label { font-size: 12px; color: #374151; flex: 1; }
+  .pie-pct { font-size: 13px; font-weight: 700; color: #1e1e2e; }
+  .comm { background: #4f46e5; }
+  .govt { background: #0ea5e9; }
+  .domestic { background: #10b981; }
+  .overseas { background: #f59e0b; }
+
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    .guidance-grid { grid-template-columns: 1fr; }
+    .mix-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h2>📊 아이온큐 재무 실적 리포트</h2>
+  <p class="sub">FY2025 역사적 이정표 달성 · FY2026 더 큰 도약 예고</p>
+
+  <div class="revenue-bar">
+    <div class="section-title">📈 연간 매출 성장 추이 <span>단위: 백만 달러</span></div>
+
+    <div class="bar-row">
+      <div class="bar-label">2022</div>
+      <div class="bar-track"><div class="bar-fill b-2022">$11M</div></div>
+      <div class="bar-value">$11M</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2023 <span class="growth-badge gb-up">+97%</span></div>
+      <div class="bar-track"><div class="bar-fill b-2023">$22M</div></div>
+      <div class="bar-value">$22M</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2024 <span class="growth-badge gb-up">+95%</span></div>
+      <div class="bar-track"><div class="bar-fill b-2024">$43M</div></div>
+      <div class="bar-value">$43M</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label" style="color:#15803d;font-weight:800;">2025 <span class="growth-badge gb-up">+202%</span></div>
+      <div class="bar-track"><div class="bar-fill b-2025">$130M ★</div></div>
+      <div class="bar-value" style="color:#15803d;font-weight:800;">$130M</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label" style="color:#d97706;">2026E <span class="growth-badge gb-proj">가이던스</span></div>
+      <div class="bar-track"><div class="bar-fill b-2026g">$225M~$245M</div></div>
+      <div class="bar-value" style="color:#d97706;">$235M</div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="metric-card">
+      <div class="metric-icon">⚡</div>
+      <div class="metric-value">+429%</div>
+      <div class="metric-label">Q4 2025 매출 YoY 성장률</div>
+      <div class="metric-sub good">$61.9M (예상치 +55% 초과)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">📉</div>
+      <div class="metric-value">-$0.20</div>
+      <div class="metric-label">Q4 2025 조정 EPS</div>
+      <div class="metric-sub good">예상치 -$0.51 대비 대폭 개선</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">💵</div>
+      <div class="metric-value">$3.3B</div>
+      <div class="metric-label">보유 현금</div>
+      <div class="metric-sub warn">M&A 재원 충분</div>
+    </div>
+  </div>
+
+  <div class="guidance-box">
+    <div class="guidance-title">🎯 FY2026 경영진 매출 가이던스</div>
+    <div class="guidance-grid">
+      <div class="g-card">
+        <div class="g-period">Q1 2026</div>
+        <div class="g-value">$48M~$51M</div>
+        <div class="g-range">중간값 $49.5M</div>
+      </div>
+      <div class="g-card">
+        <div class="g-period">Q2 2026</div>
+        <div class="g-value">$43M</div>
+        <div class="g-range">가이던스 제시</div>
+      </div>
+      <div class="g-card">
+        <div class="g-period">FY2026 연간</div>
+        <div class="g-value">$225M~$245M</div>
+        <div class="g-range">중간값 $235M · YoY +81%</div>
+      </div>
+      <div class="g-card">
+        <div class="g-period">다음 실적 발표</div>
+        <div class="g-value">2026.05.06</div>
+        <div class="g-range">Q1 2026 실적 예정</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mix-grid">
+    <div class="mix-card">
+      <div class="mix-title">🏢 매출 고객 유형 비중 (FY2025)</div>
+      <div class="pie-row">
+        <div class="pie-bar comm" style="width:62px;"></div>
+        <div class="pie-label">기업 상업 고객</div>
+        <div class="pie-pct" style="color:#4f46e5;">60%+</div>
+      </div>
+      <div class="pie-row">
+        <div class="pie-bar govt" style="width:38px;"></div>
+        <div class="pie-label">정부·연구 기관</div>
+        <div class="pie-pct" style="color:#0ea5e9;">40%-</div>
+      </div>
+      <p style="font-size:11px;color:#9ca3af;margin-top:10px;">상업화 진행 중 — 기업 고객 비중 지속 확대</p>
+    </div>
+    <div class="mix-card">
+      <div class="mix-title">🌍 매출 지역 비중 (FY2025)</div>
+      <div class="pie-row">
+        <div class="pie-bar domestic" style="width:70px;"></div>
+        <div class="pie-label">미국 국내</div>
+        <div class="pie-pct" style="color:#10b981;">70%-</div>
+      </div>
+      <div class="pie-row">
+        <div class="pie-bar overseas" style="width:30px;"></div>
+        <div class="pie-label">해외 (유럽·아시아)</div>
+        <div class="pie-pct" style="color:#f59e0b;">30%+</div>
+      </div>
+      <p style="font-size:11px;color:#9ca3af;margin-top:10px;">신규: Singtel(싱가포르), CERN(유럽) 등</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
