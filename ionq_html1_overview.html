@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IonQ 회사 개요</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background: #f0f4ff; padding: 20px; }
+  .wrapper { max-width: 860px; margin: 0 auto; }
+
+  .hero { background: linear-gradient(135deg, #1a1f6e 0%, #2d3bcc 50%, #0ea5e9 100%); border-radius: 20px; padding: 36px 32px; color: white; margin-bottom: 20px; position: relative; overflow: hidden; }
+  .hero::before { content: '⚛'; position: absolute; right: 30px; top: 20px; font-size: 100px; opacity: 0.1; }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 30px; padding: 5px 16px; font-size: 12px; font-weight: 600; letter-spacing: 1px; margin-bottom: 14px; }
+  .hero-title { font-size: 32px; font-weight: 800; margin-bottom: 6px; }
+  .hero-sub { font-size: 14px; opacity: 0.8; margin-bottom: 20px; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: rgba(255,255,255,0.15); border-radius: 20px; padding: 4px 14px; font-size: 12px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  .kpi-card { background: white; border-radius: 16px; padding: 22px 18px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.07); border-top: 4px solid; }
+  .kpi-card:nth-child(1) { border-color: #4f46e5; }
+  .kpi-card:nth-child(2) { border-color: #0ea5e9; }
+  .kpi-card:nth-child(3) { border-color: #10b981; }
+  .kpi-card:nth-child(4) { border-color: #f59e0b; }
+  .kpi-card:nth-child(5) { border-color: #ef4444; }
+  .kpi-card:nth-child(6) { border-color: #8b5cf6; }
+  .kpi-icon { font-size: 22px; margin-bottom: 6px; }
+  .kpi-value { font-size: 26px; font-weight: 800; color: #1e1e2e; }
+  .kpi-label { font-size: 11px; color: #6b7280; margin-top: 4px; font-weight: 500; }
+  .kpi-change { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: 6px; }
+  .up { background: #d1fae5; color: #059669; }
+  .neutral { background: #e0e7ff; color: #4f46e5; }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .info-card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  .info-card h3 { font-size: 13px; color: #6b7280; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .info-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #f3f4f6; }
+  .info-row:last-child { border-bottom: none; }
+  .info-row .k { font-size: 12px; color: #6b7280; }
+  .info-row .v { font-size: 13px; font-weight: 700; color: #1e1e2e; }
+
+  .cloud-bar { background: white; border-radius: 16px; padding: 20px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-top: 14px; }
+  .cloud-bar h3 { font-size: 13px; color: #6b7280; margin-bottom: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .cloud-logos { display: flex; justify-content: space-around; align-items: center; }
+  .cloud-item { text-align: center; }
+  .cloud-dot { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 6px; }
+  .aws { background: #fff3e0; }
+  .azure { background: #e3f2fd; }
+  .gcp { background: #fce4ec; }
+  .cloud-name { font-size: 11px; font-weight: 600; color: #374151; }
+  .cloud-badge { font-size: 10px; color: #10b981; font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .info-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="hero">
+    <div class="hero-badge">NYSE: IONQ · 양자컴퓨팅</div>
+    <div class="hero-title">IonQ · 아이온큐</div>
+    <div class="hero-sub">세계 최초 상장 순수 양자 컴퓨팅 기업 · 설립 2015 · 본사 메릴랜드, 미국</div>
+    <div class="hero-tags">
+      <span class="tag">⚛ 이온트랩 기술</span>
+      <span class="tag">☁️ QaaS 클라우드</span>
+      <span class="tag">🛡 방위 계약</span>
+      <span class="tag">🌍 글로벌 풀스택</span>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-value">$1.3억</div>
+      <div class="kpi-label">FY2025 연간 매출</div>
+      <div class="kpi-change up">+202% YoY</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📈</div>
+      <div class="kpi-value">$47.36</div>
+      <div class="kpi-label">현재 주가 (2026.04.23)</div>
+      <div class="kpi-change neutral">52주 범위 $25.89~$84.64</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">🏦</div>
+      <div class="kpi-value">$17.35B</div>
+      <div class="kpi-label">시가총액</div>
+      <div class="kpi-change neutral">NYSE 상장</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">🎯</div>
+      <div class="kpi-value">$2.35억</div>
+      <div class="kpi-label">FY2026 매출 가이던스</div>
+      <div class="kpi-change up">+81% 성장 목표</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">⚡</div>
+      <div class="kpi-value">99.99%</div>
+      <div class="kpi-label">2큐비트 게이트 충실도</div>
+      <div class="kpi-change up">업계 최고 수준</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-value">1,132명</div>
+      <div class="kpi-label">임직원 수</div>
+      <div class="kpi-change neutral">2026년 기준</div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>🏢 기업 기본 정보</h3>
+      <div class="info-row"><span class="k">설립</span><span class="v">2015년 6월</span></div>
+      <div class="info-row"><span class="k">CEO</span><span class="v">니콜로 데 마시</span></div>
+      <div class="info-row"><span class="k">공동창업자</span><span class="v">크리스 먼로 · 김정상</span></div>
+      <div class="info-row"><span class="k">본사</span><span class="v">칼리지파크, 메릴랜드</span></div>
+      <div class="info-row"><span class="k">상장</span><span class="v">2021년 10월 (SPAC)</span></div>
+      <div class="info-row"><span class="k">유럽 법인</span><span class="v">IonQ GmbH (독일)</span></div>
+    </div>
+    <div class="info-card">
+      <h3>🔬 핵심 기술 스펙</h3>
+      <div class="info-row"><span class="k">방식</span><span class="v">이온트랩(Trapped-Ion)</span></div>
+      <div class="info-row"><span class="k">현재 플래그십</span><span class="v">Forte Enterprise (36AQ)</span></div>
+      <div class="info-row"><span class="k">2025년 목표</span><span class="v">64AQ (IonQ Tempo)</span></div>
+      <div class="info-row"><span class="k">2030년 목표</span><span class="v">8만 논리 큐비트</span></div>
+      <div class="info-row"><span class="k">게이트 충실도</span><span class="v">99.99% (2큐비트)</span></div>
+      <div class="info-row"><span class="k">M&A 전략</span><span class="v">SkyWater·Oxford·Vector</span></div>
+    </div>
+  </div>
+
+  <div class="cloud-bar">
+    <h3>☁️ 클라우드 플랫폼 3사 모두 입점 — 업계 유일</h3>
+    <div class="cloud-logos">
+      <div class="cloud-item">
+        <div class="cloud-dot aws">☁️</div>
+        <div class="cloud-name">AWS Braket</div>
+        <div class="cloud-badge">✓ 입점</div>
+      </div>
+      <div class="cloud-item">
+        <div class="cloud-dot azure">🔷</div>
+        <div class="cloud-name">Microsoft Azure</div>
+        <div class="cloud-badge">✓ 입점</div>
+      </div>
+      <div class="cloud-item">
+        <div class="cloud-dot gcp">🌐</div>
+        <div class="cloud-name">Google Cloud</div>
+        <div class="cloud-badge">✓ 입점</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
