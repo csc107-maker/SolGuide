@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK하이닉스 성장 전망 & 투자 결론 — 2026.04.25</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --bg:       #F3F2ED;
+  --surface:  #FFFFFF;
+  --border:   #E1DED6;
+  --muted:    #9B9890;
+  --text:     #1A1917;
+  --sub:      #5A5852;
+  --green:    #14703F;
+  --green-bg: #E6F5EE;
+  --green-lt: #BEE5D0;
+  --red:      #AC2B1A;
+  --red-bg:   #FDECE9;
+  --amber:    #B57200;
+  --amber-bg: #FFF2D2;
+  --blue:     #154EA0;
+  --blue-bg:  #E4EBFA;
+  --teal:     #0B6B7C;
+  --teal-bg:  #DCF2F7;
+  --sky:      #1278C0;
+  --sky-bg:   #E0F1FB;
+  --navy:     #0B2240;
+  --navy2:    #112E56;
+  --gold:     #C99A10;
+  --gold-bg:  #FFF4D8;
+  --hynix:    #0C3A7A;
+  --hynix2:   #145DB0;
+  --radius:   12px;
+  --sh:       0 2px 14px rgba(0,0,0,0.07);
+  --sh-md:    0 4px 24px rgba(0,0,0,0.10);
+}
+
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;}
+
+.gf-wrap{max-width:780px;margin:0 auto;padding:0 0 32px;}
+
+/* ─── 헤더 ─── */
+.gf-header{
+  background:linear-gradient(135deg,#0A1F3C 0%,#0C3A7A 50%,#0E4590 100%);
+  padding:26px 26px 20px;position:relative;overflow:hidden;
+}
+.gf-header::before{
+  content:'';position:absolute;
+  width:300px;height:300px;border-radius:50%;
+  top:-120px;right:-80px;
+  background:radial-gradient(circle,rgba(20,93,176,0.4) 0%,transparent 65%);
+}
+.gf-header::after{
+  content:'2026 → 2027';
+  position:absolute;right:16px;bottom:-14px;
+  font-size:52px;font-weight:900;font-family:'DM Mono',monospace;
+  color:rgba(255,255,255,0.04);letter-spacing:-1px;line-height:1;
+}
+.gf-hd-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.gf-badges{display:flex;gap:8px;flex-wrap:wrap;}
+.gf-badge{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
+.gf-badge.blue  {background:rgba(20,93,176,0.25);color:#80B8FF;border:1px solid rgba(20,93,176,0.4);}
+.gf-badge.gold  {background:rgba(201,154,16,0.20);color:var(--gold);border:1px solid rgba(201,154,16,0.35);}
+.gf-badge.green {background:rgba(20,112,63,0.22);color:#5DE09A;border:1px solid rgba(20,112,63,0.35);}
+.gf-date{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.36);letter-spacing:1px;}
+.gf-ticker{font-family:'DM Mono',monospace;font-size:11px;color:#80B8FF;margin-bottom:5px;letter-spacing:2px;}
+.gf-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#FFF;line-height:1.3;}
+.gf-title em{color:#FFD060;font-style:normal;}
+.gf-subtitle{margin-top:5px;font-size:12px;color:rgba(255,255,255,0.44);font-weight:300;}
+
+/* ─── 섹션 라벨 ─── */
+.gf-sl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+  padding:20px 20px 8px;display:flex;align-items:center;gap:8px;}
+.gf-sl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ─── 성장 드라이버 카드 4종 ─── */
+.gf-driver-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 16px;}
+.gf-driver{
+  background:var(--surface);border-radius:var(--radius);
+  border:1px solid var(--border);overflow:hidden;
+  box-shadow:var(--sh);position:relative;
+  transition:transform .2s,box-shadow .2s;
+}
+.gf-driver:hover{transform:translateY(-2px);box-shadow:var(--sh-md);}
+.gf-driver-strip{height:3px;}
+.gf-driver.d1 .gf-driver-strip{background:linear-gradient(90deg,var(--hynix),var(--hynix2));}
+.gf-driver.d2 .gf-driver-strip{background:linear-gradient(90deg,var(--green),#27AE60);}
+.gf-driver.d3 .gf-driver-strip{background:linear-gradient(90deg,var(--amber),#E0A020);}
+.gf-driver.d4 .gf-driver-strip{background:linear-gradient(90deg,var(--teal),#20A0B0);}
+
+.gf-driver-top{padding:14px 16px 10px;display:flex;align-items:flex-start;gap:12px;}
+.gf-driver-icon{
+  width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.gf-driver.d1 .gf-driver-icon{background:var(--blue-bg);}
+.gf-driver.d2 .gf-driver-icon{background:var(--green-bg);}
+.gf-driver.d3 .gf-driver-icon{background:var(--amber-bg);}
+.gf-driver.d4 .gf-driver-icon{background:var(--teal-bg);}
+
+.gf-driver-name{font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:3px;}
+.gf-driver-headline{font-size:14px;font-weight:700;color:var(--text);line-height:1.35;}
+
+.gf-driver-body{padding:0 16px 14px;}
+.gf-driver-desc{font-size:12px;color:var(--sub);line-height:1.65;font-weight:300;margin-bottom:10px;}
+.gf-driver-kpi{display:flex;gap:6px;flex-wrap:wrap;}
+.gf-kpic{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:5px;}
+.gf-driver.d1 .gf-kpic{background:var(--blue-bg);color:var(--hynix2);}
+.gf-driver.d2 .gf-kpic{background:var(--green-bg);color:var(--green);}
+.gf-driver.d3 .gf-kpic{background:var(--amber-bg);color:var(--amber);}
+.gf-driver.d4 .gf-kpic{background:var(--teal-bg);color:var(--teal);}
+
+/* ─── 분기별 이익 추이 바 ─── */
+.gf-qbar-wrap{margin:0 16px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:20px;box-shadow:var(--sh);}
+.gf-qbar-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.gf-qbar-rows{display:flex;flex-direction:column;gap:12px;}
+.gf-qbar-row{display:flex;align-items:center;gap:12px;}
+.gf-qbar-label{flex-shrink:0;width:60px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);font-weight:500;text-align:right;}
+.gf-qbar-track{flex:1;height:22px;background:#EDECE7;border-radius:6px;overflow:hidden;position:relative;}
+.gf-qbar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;color:#FFF;font-family:'DM Mono',monospace;transition:width 1s ease;}
+.gf-qbar-row.past .gf-qbar-fill{background:linear-gradient(90deg,#6B90C0 0%,#8AAEDD 100%);}
+.gf-qbar-row.q1   .gf-qbar-fill{background:linear-gradient(90deg,var(--hynix) 0%,var(--hynix2) 100%);}
+.gf-qbar-row.q2e  .gf-qbar-fill{background:linear-gradient(90deg,var(--green) 0%,#27AE60 100%);opacity:.85;}
+.gf-qbar-row.est  .gf-qbar-fill{background:repeating-linear-gradient(45deg,var(--amber-bg),var(--amber-bg) 4px,rgba(201,154,16,.4) 4px,rgba(201,154,16,.4) 8px);color:var(--amber);}
+.gf-qbar-est-tag{flex-shrink:0;font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:var(--amber-bg);color:var(--amber);}
+.gf-qbar-est-tag.g{background:var(--green-bg);color:var(--green);}
+.gf-qbar-note{font-size:10px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);}
+
+/* ─── 연간 이익 전망 테이블 ─── */
+.gf-table-wrap{margin:0 16px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:var(--sh);}
+.gf-table{width:100%;border-collapse:collapse;font-size:13px;}
+.gf-table thead{background:linear-gradient(135deg,var(--hynix) 0%,var(--navy2) 100%);}
+.gf-table th{padding:11px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.65);}
+.gf-table th.hl{color:#FFD060;}
+.gf-table th:not(:first-child){text-align:right;}
+.gf-table td{padding:11px 14px;color:var(--text);border-bottom:1px solid #F0EFE9;vertical-align:middle;}
+.gf-table td:not(:first-child){text-align:right;font-family:'DM Mono',monospace;font-weight:500;}
+.gf-table tr:last-child td{border-bottom:none;}
+.gf-table tr:hover td{background:#FAFAF7;}
+.gf-table .row-h{font-weight:600;}
+.gf-table .row-s{font-size:11px;color:var(--muted);margin-top:2px;}
+.gf-table td.hl-col{background:#F5F9FF;border-left:2px solid var(--hynix2);border-right:2px solid var(--hynix2);}
+.gf-table thead th.hl-col{background:rgba(255,208,96,.15);border-left:2px solid rgba(255,208,96,.3);border-right:2px solid rgba(255,208,96,.3);}
+.gf-table tfoot td{background:#F5F4EF;border-top:2px solid var(--border);font-size:12px;color:var(--sub);}
+.gf-table tfoot td.hl-col{background:#EBF0FA;}
+
+.pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:700;font-family:'Noto Sans KR',sans-serif;}
+.pill.g{background:var(--green-bg);color:var(--green);}
+.pill.b{background:var(--blue-bg);color:var(--hynix2);}
+.pill.a{background:var(--amber-bg);color:var(--amber);}
+.pill.r{background:var(--red-bg);color:var(--red);}
+.pill.t{background:var(--teal-bg);color:var(--teal);}
+
+/* ─── 증권사 이익 전망 비교 ─── */
+.gf-est-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px;}
+.gf-est-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:16px;box-shadow:var(--sh);}
+.gf-est-firm{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;margin-bottom:8px;}
+.gf-est-tp{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--hynix2);margin-bottom:4px;}
+.gf-est-upside{font-size:11px;font-weight:700;color:var(--green);margin-bottom:8px;}
+.gf-est-rows{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--border);padding-top:8px;}
+.gf-est-row{display:flex;justify-content:space-between;font-size:11px;}
+.gf-est-key{color:var(--muted);}
+.gf-est-val{font-family:'DM Mono',monospace;font-weight:500;color:var(--text);}
+
+/* ─── 투자 결론 ─── */
+.gf-verdict-wrap{margin:0 16px;display:flex;flex-direction:column;gap:10px;}
+
+/* 최종 결론 헤더 카드 */
+.gf-conclusion{
+  background:linear-gradient(135deg,#0A1F3C 0%,#0D3A7A 60%,#0A2A5C 100%);
+  border-radius:var(--radius);padding:22px 22px 18px;
+  position:relative;overflow:hidden;
+  border:1px solid rgba(255,255,255,0.08);
+}
+.gf-conclusion::before{
+  content:'BUY';
+  position:absolute;right:-8px;top:-10px;
+  font-size:80px;font-weight:900;font-family:'Playfair Display',serif;
+  color:rgba(255,255,255,0.04);letter-spacing:-2px;line-height:1;
+}
+.gf-conclusion-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FFD060;margin-bottom:10px;}
+.gf-conclusion-rating{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(20,112,63,0.2);border:1px solid rgba(20,112,63,0.35);
+  border-radius:8px;padding:10px 16px;margin-bottom:14px;
+}
+.gf-conclusion-rating-icon{font-size:20px;}
+.gf-conclusion-rating-text{font-size:18px;font-weight:900;color:#5DE09A;letter-spacing:.5px;}
+.gf-conclusion-rating-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;}
+
+.gf-reason-list{display:flex;flex-direction:column;gap:8px;}
+.gf-reason{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:rgba(255,255,255,0.82);line-height:1.6;font-weight:300;}
+.gf-reason-num{
+  flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);
+  font-family:'DM Mono',monospace;margin-top:1px;
+}
+.gf-reason strong{color:#FFF;font-weight:700;}
+
+/* 체크리스트 카드 (2열) */
+.gf-checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.gf-cl-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:var(--sh);}
+.gf-cl-header{padding:12px 14px 10px;border-bottom:1px solid var(--border);}
+.gf-cl-header.pos{background:var(--green-bg);}
+.gf-cl-header.neg{background:var(--red-bg);}
+.gf-cl-htitle{font-size:11px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:6px;}
+.gf-cl-header.pos .gf-cl-htitle{color:var(--green);}
+.gf-cl-header.neg .gf-cl-htitle{color:var(--red);}
+.gf-cl-body{padding:12px 14px;}
+.gf-cl-item{display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--sub);line-height:1.55;}
+.gf-cl-item:last-child{border-bottom:none;}
+.gf-cl-icon{flex-shrink:0;font-size:13px;margin-top:1px;}
+
+/* 타겟 구간 카드 */
+.gf-target-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:18px 20px;box-shadow:var(--sh);}
+.gf-target-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.gf-target-track-wrap{position:relative;height:36px;margin-bottom:10px;}
+.gf-target-bg{
+  position:absolute;top:13px;left:0;right:0;height:10px;
+  background:#EDECE7;border-radius:999px;overflow:hidden;
+}
+.gf-target-zone{
+  position:absolute;top:13px;height:10px;border-radius:999px;
+  background:linear-gradient(90deg,rgba(20,112,63,.25) 0%,rgba(20,93,176,.2) 50%,rgba(201,154,16,.25) 100%);
+  border:1px solid rgba(20,93,176,.2);
+}
+/* markers as absolute positioned within relative container */
+.gf-marker{
+  position:absolute;top:6px;width:24px;height:24px;border-radius:50%;
+  transform:translateX(-50%);border:3px solid white;
+  display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FFF;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);z-index:2;
+}
+.gf-marker.cur{background:var(--hynix);}
+.gf-marker.avg{background:var(--gold);}
+.gf-marker.high{background:var(--green);}
+
+.gf-target-labels{display:flex;justify-content:space-between;margin-top:4px;}
+.gf-target-label-item{font-size:10px;font-family:'DM Mono',monospace;}
+.gf-target-label-item.cur{color:var(--hynix2);font-weight:700;}
+.gf-target-label-item.avg{color:var(--gold);font-weight:700;}
+.gf-target-label-item.high{color:var(--green);font-weight:700;}
+.gf-target-label-item.low{color:var(--muted);}
+
+.gf-target-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;}
+.gf-ts{background:var(--bg);border-radius:8px;padding:10px 12px;border:1px solid var(--border);text-align:center;}
+.gf-ts-label{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.gf-ts-val{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;}
+.gf-ts-val.b{color:var(--hynix2);}
+.gf-ts-val.g{color:var(--green);}
+.gf-ts-val.a{color:var(--gold);}
+.gf-ts-val.r{color:var(--red);}
+
+/* 면책 고지 */
+.gf-footer{margin:16px 16px 0;padding:14px 16px;background:#EEEDEA;border-radius:8px;border-left:3px solid var(--border);}
+.gf-footer p{font-size:11px;color:var(--muted);line-height:1.6;}
+
+/* ─── 반응형 ─── */
+@media(max-width:580px){
+  .gf-driver-grid,.gf-est-grid,.gf-checklist-grid{grid-template-columns:1fr;}
+  .gf-target-stat-row{grid-template-columns:repeat(2,1fr);}
+  .gf-title{font-size:18px;}
+}
+</style>
+</head>
+<body>
+
+<div class="gf-wrap">
+
+<!-- ─── 헤더 ─── -->
+<div class="gf-header">
+  <div class="gf-hd-top">
+    <div class="gf-badges">
+      <span class="gf-badge blue">📈 Growth Outlook</span>
+      <span class="gf-badge gold">+492% YoY</span>
+      <span class="gf-badge green">슈퍼사이클</span>
+    </div>
+    <span class="gf-date">2026.04.25 기준</span>
+  </div>
+  <div class="gf-ticker">KRX 000660 · SK하이닉스</div>
+  <div class="gf-title">성장 전망 <em>&amp; 투자 결론</em></div>
+  <div class="gf-subtitle">2026~2027 이익 전망 테이블 · 성장 드라이버 4종 · 증권사 컨센서스 · 최종 투자 판단</div>
+</div>
+
+<!-- ─── 성장 드라이버 4종 ─── -->
+<div class="gf-sl">성장 드라이버 4대 축</div>
+
+<div class="gf-driver-grid">
+
+  <!-- D1 HBM -->
+  <div class="gf-driver d1">
+    <div class="gf-driver-strip"></div>
+    <div class="gf-driver-top">
+      <div class="gf-driver-icon">🧠</div>
+      <div>
+        <div class="gf-driver-name">Driver 01</div>
+        <div class="gf-driver-headline">HBM 기술 독점 지위 — AI 데이터센터 핵심 부품</div>
+      </div>
+    </div>
+    <div class="gf-driver-body">
+      <div class="gf-driver-desc">
+        엔비디아 GPU 1개당 HBM 용량이 지속 확대됨에 따라 단가·수량 동반 상승 중. SK하이닉스의 MR-MUF 공법은 삼성전자 대비 기술 초격차를 확보했으며, HBM4E(2027 양산)까지 로드맵이 확정됐다. 빅테크 5년 LTA(장기공급계약) 체결로 중장기 수익 가시성도 크게 향상됐다.
+      </div>
+      <div class="gf-driver-kpi">
+        <span class="gf-kpic">HBM4 하반기 샘플</span>
+        <span class="gf-kpic">HBM4E 2027 양산</span>
+        <span class="gf-kpic">엔비디아 LTA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- D2 D램 가격 -->
+  <div class="gf-driver d2">
+    <div class="gf-driver-strip"></div>
+    <div class="gf-driver-top">
+      <div class="gf-driver-icon">💾</div>
+      <div>
+        <div class="gf-driver-name">Driver 02</div>
+        <div class="gf-driver-headline">D램 ASP 수직 상승 — 1Q +60% 중반, 2Q +51% 추가</div>
+      </div>
+    </div>
+    <div class="gf-driver-body">
+      <div class="gf-driver-desc">
+        AI 서버용 128GB+ 고용량 D램 모듈 수요가 폭발적으로 증가하며 D램 전체 ASP(평균판매가격)가 분기마다 큰 폭으로 상승하고 있다. 노무라는 2026년 연간 D램 가격 상승률을 175%로 전망한다. 신규 팹 증설 리드타임(2~3년) 감안 시 공급 비탄력성이 2027년까지 지속된다.
+      </div>
+      <div class="gf-driver-kpi">
+        <span class="gf-kpic">1Q ASP +60% 중반</span>
+        <span class="gf-kpic">노무라 연간 +175%</span>
+        <span class="gf-kpic">서버 D램 주도</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- D3 낸드 -->
+  <div class="gf-driver d3">
+    <div class="gf-driver-strip"></div>
+    <div class="gf-driver-top">
+      <div class="gf-driver-icon">💿</div>
+      <div>
+        <div class="gf-driver-name">Driver 03</div>
+        <div class="gf-driver-headline">낸드 가격 급등 — eSSD 중심 믹스 개선 전략</div>
+      </div>
+    </div>
+    <div class="gf-driver-body">
+      <div class="gf-driver-desc">
+        1Q 낸드 ASP는 전 제품 강세로 70% 중반 상승했다. 노무라 낸드 연간 상승률 전망 +280%. SK하이닉스는 세계 최초 321단 QLC 낸드 고객 인증을 완료, AI 스토리지(KV캐시) 수요 확대에 고용량 eSSD로 선제 대응한다. 범용 출하보다 고부가 제품 믹스 강화로 이익률이 40~60%대로 회복했다.
+      </div>
+      <div class="gf-driver-kpi">
+        <span class="gf-kpic">1Q ASP +70% 중반</span>
+        <span class="gf-kpic">321단 QLC 세계 최초</span>
+        <span class="gf-kpic">eSSD 믹스 강화</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- D4 에이전틱 AI -->
+  <div class="gf-driver d4">
+    <div class="gf-driver-strip"></div>
+    <div class="gf-driver-top">
+      <div class="gf-driver-icon">🤖</div>
+      <div>
+        <div class="gf-driver-name">Driver 04</div>
+        <div class="gf-driver-headline">에이전틱 AI 시대 — 수요 기반이 전방위로 확대</div>
+      </div>
+    </div>
+    <div class="gf-driver-body">
+      <div class="gf-driver-desc">
+        AI가 '학습'에서 '실시간 추론'으로 진화하며 HBM뿐 아니라 D램·낸드 전반의 수요가 확산되고 있다. AI PC·AI 스마트폰(2026년 대규모 출시)이 엣지 디바이스 수요까지 견인하는 새로운 구조가 형성됐다. 교수들은 이를 '메모리 사이클'이 아닌 'AI 사이클'로 재규정한다.
+      </div>
+      <div class="gf-driver-kpi">
+        <span class="gf-kpic">AI PC·스마트폰 확산</span>
+        <span class="gf-kpic">KV캐시 폭증</span>
+        <span class="gf-kpic">엣지 수요 신규</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── 분기별 영업이익 추이 바 ─── -->
+<div class="gf-sl" style="margin-top:16px;">분기별 영업이익 추이 & 전망</div>
+
+<div class="gf-qbar-wrap">
+  <div class="gf-qbar-title">📊 분기별 영업이익 (조원) — 실적 + 전망</div>
+  <div class="gf-qbar-rows">
+
+    <div class="gf-qbar-row past">
+      <div class="gf-qbar-label">2025 4Q</div>
+      <div class="gf-qbar-track">
+        <div class="gf-qbar-fill" style="width:28%;">19.2조</div>
+      </div>
+      <span style="font-size:10px;color:var(--muted);white-space:nowrap;">OPM 58%</span>
+    </div>
+
+    <div class="gf-qbar-row q1">
+      <div class="gf-qbar-label">2026 1Q</div>
+      <div class="gf-qbar-track">
+        <div class="gf-qbar-fill" style="width:55%;">37.6조 ★역대최대</div>
+      </div>
+      <span style="font-size:10px;color:var(--hynix2);font-weight:700;white-space:nowrap;">OPM 72%</span>
+    </div>
+
+    <div class="gf-qbar-row q2e">
+      <div class="gf-qbar-label">2026 2Q<span style="font-size:9px;">(E)</span></div>
+      <div class="gf-qbar-track">
+        <div class="gf-qbar-fill" style="width:100%;">68조 전망 (노무라) — 1Q比 +79%</div>
+      </div>
+      <span class="gf-qbar-est-tag g" style="white-space:nowrap;">전망치</span>
+    </div>
+
+    <div class="gf-qbar-row est">
+      <div class="gf-qbar-label">2026 연간<span style="font-size:9px;">(E)</span></div>
+      <div class="gf-qbar-track">
+        <div class="gf-qbar-fill" style="width:100%;color:var(--amber);">251조(KB) ~ 280조(노무라) 전망</div>
+      </div>
+      <span class="gf-qbar-est-tag" style="white-space:nowrap;">추정</span>
+    </div>
+
+    <div class="gf-qbar-row est">
+      <div class="gf-qbar-label">2027 연간<span style="font-size:9px;">(E)</span></div>
+      <div class="gf-qbar-track">
+        <div class="gf-qbar-fill" style="width:100%;color:var(--amber);">358조(KB) ~ 379조(노무라) 전망</div>
+      </div>
+      <span class="gf-qbar-est-tag" style="white-space:nowrap;">추정</span>
+    </div>
+
+  </div>
+  <div class="gf-qbar-note">※ 2026 2Q 이후 수치는 노무라·KB증권 전망치이며 실제와 다를 수 있습니다. D램·낸드 가격 및 AI 수요 변화에 따라 변동.</div>
+</div>
+
+<!-- ─── 연간 이익 전망 테이블 ─── -->
+<div class="gf-sl" style="margin-top:16px;">연간 이익 전망 테이블 (2024~2027E)</div>
+
+<div class="gf-table-wrap">
+  <table class="gf-table">
+    <thead>
+      <tr>
+        <th>구분</th>
+        <th>2024A</th>
+        <th>2025A</th>
+        <th class="hl hl-col">2026E ★</th>
+        <th>2027E</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="row-h">매출액</div><div class="row-s">단위: 조원</div></td>
+        <td>약 38조</td>
+        <td>97.1조</td>
+        <td class="hl-col"><strong>~200조+</strong></td>
+        <td>~280조+</td>
+      </tr>
+      <tr>
+        <td><div class="row-h">전년 대비 성장률</div><div class="row-s">매출 YoY</div></td>
+        <td>—</td>
+        <td>+155%</td>
+        <td class="hl-col"><span class="pill g">+106%E</span></td>
+        <td><span class="pill t">+40%E</span></td>
+      </tr>
+      <tr>
+        <td><div class="row-h">영업이익</div><div class="row-s">KB·노무라 컨센서스 평균</div></td>
+        <td>약 14조</td>
+        <td>47.2조</td>
+        <td class="hl-col"><strong>251 ~ 280조</strong></td>
+        <td>358 ~ 379조</td>
+      </tr>
+      <tr>
+        <td><div class="row-h">영업이익 YoY</div><div class="row-s">전년 대비</div></td>
+        <td>—</td>
+        <td>+236%</td>
+        <td class="hl-col"><span class="pill g">+492%E</span></td>
+        <td><span class="pill g">+36%E</span></td>
+      </tr>
+      <tr>
+        <td><div class="row-h">영업이익률 (OPM)</div><div class="row-s">연간 기준</div></td>
+        <td>약 37%</td>
+        <td>48.7%</td>
+        <td class="hl-col"><span class="pill g">70%+ E</span></td>
+        <td><span class="pill g">70%+ E</span></td>
+      </tr>
+      <tr>
+        <td><div class="row-h">순이익</div><div class="row-s">추정치</div></td>
+        <td>약 11조</td>
+        <td>약 38조</td>
+        <td class="hl-col"><strong>~160조 E</strong></td>
+        <td>~250조 E</td>
+      </tr>
+      <tr>
+        <td><div class="row-h">D램 ASP 변동률</div><div class="row-s">노무라 전망</div></td>
+        <td>—</td>
+        <td>+140%</td>
+        <td class="hl-col"><span class="pill g">+175% E</span></td>
+        <td><span class="pill b">+30% E</span></td>
+      </tr>
+      <tr>
+        <td><div class="row-h">낸드 ASP 변동률</div><div class="row-s">노무라 전망</div></td>
+        <td>—</td>
+        <td>+120%</td>
+        <td class="hl-col"><span class="pill g">+280% E</span></td>
+        <td><span class="pill b">+25% E</span></td>
+      </tr>
+      <tr>
+        <td><div class="row-h">순현금</div><div class="row-s">기말 기준</div></td>
+        <td>12.7조</td>
+        <td>12.7조</td>
+        <td class="hl-col"><strong>~80조 E</strong></td>
+        <td>~180조 E</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">※ 2024A = 추정치 · 2025A = SK하이닉스 IR 공식 발표</td>
+        <td class="hl-col" colspan="1">★ 2026 투자 핵심 구간</td>
+        <td>※ 2027E = 노무라·KB증권 전망 범위</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<!-- ─── 증권사 별 전망 비교 ─── -->
+<div class="gf-sl" style="margin-top:16px;">주요 증권사 이익 전망 비교</div>
+
+<div class="gf-est-grid">
+
+  <div class="gf-est-card" style="border-top:3px solid var(--red);">
+    <div class="gf-est-firm">🇯🇵 노무라증권 (가장 낙관)</div>
+    <div class="gf-est-tp">2,340,000원</div>
+    <div class="gf-est-upside">목표가 +91.5% ↑</div>
+    <div class="gf-est-rows">
+      <div class="gf-est-row"><span class="gf-est-key">2026E 영업이익</span><span class="gf-est-val">280조</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">2027E 영업이익</span><span class="gf-est-val">379조</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">2Q26 영업이익</span><span class="gf-est-val">68조</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">D램 가격 상승</span><span class="gf-est-val">+175%</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">낸드 가격 상승</span><span class="gf-est-val">+280%</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">투자의견</span><span class="gf-est-val" style="color:var(--green);">적극 매수</span></div>
+    </div>
+  </div>
+
+  <div class="gf-est-card" style="border-top:3px solid var(--blue);">
+    <div class="gf-est-firm">🇰🇷 KB증권</div>
+    <div class="gf-est-tp">~2,000,000원</div>
+    <div class="gf-est-upside">목표가 +63.7% ↑</div>
+    <div class="gf-est-rows">
+      <div class="gf-est-row"><span class="gf-est-key">2026E 영업이익</span><span class="gf-est-val">251조</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">2027E 영업이익</span><span class="gf-est-val">358조</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">중국 경쟁 리스크</span><span class="gf-est-val" style="color:var(--amber);">주시 필요</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">HBM4 일정</span><span class="gf-est-val">핵심 변수</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">투자의견</span><span class="gf-est-val" style="color:var(--green);">매수</span></div>
+    </div>
+  </div>
+
+  <div class="gf-est-card" style="border-top:3px solid var(--green);">
+    <div class="gf-est-firm">📊 컨센서스 평균 (37개사)</div>
+    <div class="gf-est-tp">1,440,000원</div>
+    <div class="gf-est-upside">현재가比 +17.8% ↑</div>
+    <div class="gf-est-rows">
+      <div class="gf-est-row"><span class="gf-est-key">매수 의견</span><span class="gf-est-val" style="color:var(--green);">36명 (97%)</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">매도 의견</span><span class="gf-est-val" style="color:var(--red);">1명 (3%)</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">최고 목표가</span><span class="gf-est-val">234만원</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">최저 목표가</span><span class="gf-est-val">105만원</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">다음 실적</span><span class="gf-est-val">2026.07.29</span></div>
+      <div class="gf-est-row"><span class="gf-est-key">전체 등급</span><span class="gf-est-val" style="color:var(--green);">적극 매수</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── 투자 결론 ─── -->
+<div class="gf-sl" style="margin-top:16px;">최종 투자 결론</div>
+
+<div class="gf-verdict-wrap">
+
+  <!-- 결론 헤더 -->
+  <div class="gf-conclusion">
+    <div class="gf-conclusion-tag">📋 Final Investment Verdict · 2026.04.25</div>
+    <div class="gf-conclusion-rating">
+      <span class="gf-conclusion-rating-icon">🟢</span>
+      <div>
+        <div class="gf-conclusion-rating-text">적극 매수 (Strong Buy)</div>
+        <div class="gf-conclusion-rating-sub">97% 애널리스트 동의 · 12개월 목표 1,440,000원</div>
+      </div>
+    </div>
+    <div class="gf-reason-list">
+      <div class="gf-reason">
+        <span class="gf-reason-num">1</span>
+        <span><strong>극저평가 + 폭발적 이익:</strong> PER 5.6배로 TSMC(20배)의 1/3 수준임에도 영업이익률(72%)은 TSMC를 14%p 상회합니다. 이익이 이미 검증된 상황에서 밸류에이션 디스카운트는 '코리아 디스카운트' 제거 시 강력한 리레이팅 트리거가 됩니다.</span>
+      </div>
+      <div class="gf-reason">
+        <span class="gf-reason-num">2</span>
+        <span><strong>2026년 영업이익 +492% 성장:</strong> 1분기(37.6조)만으로 2025년 연간(47.2조)의 80%를 달성했습니다. 노무라는 2Q에만 68조, 연간 280조를 전망합니다. 2027년에는 379조까지 이익 확장이 예상되어 단순 호황이 아닌 구조적 이익 레벨업 국면입니다.</span>
+      </div>
+      <div class="gf-reason">
+        <span class="gf-reason-num">3</span>
+        <span><strong>HBM 기술 독점 + LTA 계약:</strong> HBM4(2026 하반기 샘플), HBM4E(2027 양산)까지 기술 로드맵이 명확합니다. 빅테크와의 5년 장기계약(LTA)이 수익 가시성을 보장하며, 에이전틱 AI 시대 전환으로 D램·낸드 전방위 수요가 구조적으로 확대됩니다.</span>
+      </div>
+      <div class="gf-reason">
+        <span class="gf-reason-num">4</span>
+        <span><strong>재무 건전성 급격 개선:</strong> 순현금 35조(1Q 말 기준, 전분기 대비 +2.75배)는 자사주·배당·투자 모두 여력이 있음을 의미합니다. 목표 순현금 100조(삼성전자 수준) 달성 시 밸류에이션 추가 리레이팅이 예상됩니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 매수·리스크 체크리스트 -->
+  <div class="gf-checklist-grid">
+
+    <div class="gf-cl-card">
+      <div class="gf-cl-header pos">
+        <div class="gf-cl-htitle">✅ 매수 근거 체크리스트</div>
+      </div>
+      <div class="gf-cl-body">
+        <div class="gf-cl-item"><span class="gf-cl-icon">✅</span><span>PER 5.6배 — 글로벌 반도체 중 최저 수준</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">✅</span><span>영업이익률 72% — TSMC·엔비디아 압도</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">✅</span><span>연간 영업이익 +492% 성장 전망</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">✅</span><span>HBM 기술 초격차 + LTA 장기계약</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">✅</span><span>ROE 44.4% — 세계 최고 수준 지속 전망</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">✅</span><span>순현금 35조 → 자본배분 유연성 확보</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">✅</span><span>97% 애널리스트 매수, 36명 전원 동의</span></div>
+      </div>
+    </div>
+
+    <div class="gf-cl-card">
+      <div class="gf-cl-header neg">
+        <div class="gf-cl-htitle">⚠ 주요 리스크 체크리스트</div>
+      </div>
+      <div class="gf-cl-body">
+        <div class="gf-cl-item"><span class="gf-cl-icon">⚠</span><span>삼성전자 파업 → 공급망·고객사 심리 영향</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">⚠</span><span>메모리 사이클 전환 시점 불확실 (2028~?)</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">⚠</span><span>중국 CXMT 추격 — 기술 격차 유지 여부</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">⚠</span><span>WTI 유가 재급등 → 전반적 위험 선호 약화</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">⚠</span><span>단기 차익실현 대기 — 6,500선 이상 저항</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">⚠</span><span>반도체 쏠림 → 포트폴리오 집중 리스크</span></div>
+        <div class="gf-cl-item"><span class="gf-cl-icon">⚠</span><span>HBM4 공급 일정 차질 시 가이던스 하향</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 목표가 구간 카드 -->
+  <div class="gf-target-card">
+    <div class="gf-target-title">🎯 3단계 목표가 구간 — 시나리오별 목표주가</div>
+
+    <!-- 트랙 바 -->
+    <!-- 전체 범위: 105만(0%) ~ 234만(100%) = 129만 -->
+    <!-- 현재가 122.2만: (122.2-105)/129 = 13.3% -->
+    <!-- 컨센 평균 144만: (144-105)/129 = 30.2% -->
+    <!-- 노무라 234만: (234-105)/129 = 100% -->
+    <div class="gf-target-track-wrap" style="height:36px;position:relative;">
+      <div class="gf-target-bg"></div>
+      <div class="gf-target-zone" style="left:0%;width:100%;"></div>
+      <div class="gf-marker cur" style="left:13.3%;" title="현재가">現</div>
+      <div class="gf-marker avg" style="left:30.2%;" title="컨센서스 평균">★</div>
+      <div class="gf-marker high" style="left:100%;" title="노무라 최고">高</div>
+    </div>
+    <div class="gf-target-labels">
+      <span class="gf-target-label-item low">최저 1,050,000원</span>
+      <span class="gf-target-label-item cur">▲현재 1,222,000원</span>
+      <span class="gf-target-label-item avg">★컨센 1,440,000원</span>
+      <span class="gf-target-label-item high">↑노무라 2,340,000원</span>
+    </div>
+
+    <div class="gf-target-stat-row">
+      <div class="gf-ts">
+        <div class="gf-ts-label">현재가</div>
+        <div class="gf-ts-val b">122.2만</div>
+      </div>
+      <div class="gf-ts">
+        <div class="gf-ts-label">1단계 목표 (컨센)</div>
+        <div class="gf-ts-val g">144만원<br><span style="font-size:10px;color:var(--green);">+17.8%</span></div>
+      </div>
+      <div class="gf-ts">
+        <div class="gf-ts-label">2단계 목표 (낙관)</div>
+        <div class="gf-ts-val a">200만원<br><span style="font-size:10px;color:var(--gold);">+63.7%</span></div>
+      </div>
+      <div class="gf-ts">
+        <div class="gf-ts-label">3단계 목표 (최낙관)</div>
+        <div class="gf-ts-val g">234만원<br><span style="font-size:10px;color:var(--green);">+91.5%</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.gf-verdict-wrap -->
+
+<!-- ─── 면책 고지 ─── -->
+<div class="gf-footer">
+  <p>📌 본 자료는 정보 제공 목적이며 투자 권유 또는 투자 조언이 아닙니다. 제시된 수치는 2026년 4월 25일 기준이며, 전망치는 노무라증권·KB증권·컨센서스 추정치로 실제와 다를 수 있습니다. 출처: SK하이닉스 IR, 노무라증권, KB증권, Investing.com, 이투데이, 리포테라. 모든 투자 결정과 결과에 대한 책임은 투자자 본인에게 있으며, 반드시 전문 금융투자 자문을 받으시기 바랍니다.</p>
+</div>
+
+</div><!-- /.gf-wrap -->
+</body>
+</html>
