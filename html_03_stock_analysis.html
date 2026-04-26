@@ -1,0 +1,299 @@
+<!-- [삽입 위치] 추천 종목 기업 분석 섹션 직후 (밸류에이션 표 아래) -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성전자 종목 분석 카드 - 2026.04.27</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: #faf5ff;
+    padding: 24px 16px;
+  }
+  .card-wrap {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .main-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(109,40,217,0.08);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .card-hero {
+    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 60%, #2563eb 100%);
+    color: white;
+    padding: 24px 28px;
+  }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .stock-name {
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+  .stock-ticker {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+  .price-badge {
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 8px 14px;
+    text-align: right;
+  }
+  .price-label { font-size: 0.73rem; opacity: 0.8; }
+  .price-val { font-size: 1.2rem; font-weight: 800; }
+  .price-chg { font-size: 0.8rem; color: #86efac; font-weight: 700; }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .htag {
+    background: rgba(255,255,255,0.18);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .card-body {
+    padding: 24px 28px;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #7c3aed;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  /* Valuation Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+  th {
+    background: #f5f3ff;
+    color: #5b21b6;
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 2px solid #e9d5ff;
+    font-size: 0.78rem;
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #f3f0ff;
+    color: #374151;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #faf5ff; }
+  .val-highlight {
+    font-weight: 800;
+    color: #4f46e5;
+  }
+  .val-good { color: #059669; font-weight: 700; }
+  .val-up   { color: #dc2626; font-weight: 700; }
+
+  /* Tags Grid */
+  .tags-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .tag-box {
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .tag-box.buy { background: #dcfce7; }
+  .tag-box.risk { background: #fee2e2; }
+  .tag-box-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .tag-box.buy .tag-box-label  { color: #166534; }
+  .tag-box.risk .tag-box-label { color: #991b1b; }
+  .tag-list { list-style: none; padding: 0; }
+  .tag-list li {
+    font-size: 0.8rem;
+    color: #374151;
+    padding: 3px 0;
+    line-height: 1.4;
+  }
+  .tag-list li::before { content: '• '; }
+
+  .footer-note {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #94a3b8;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrap">
+
+  <div class="main-card">
+
+    <!-- Hero Header -->
+    <div class="card-hero">
+      <div class="hero-top">
+        <div>
+          <div class="stock-name">삼성전자</div>
+          <div class="stock-ticker">Samsung Electronics | KRX: 005930</div>
+        </div>
+        <div class="price-badge">
+          <div class="price-label">최근 주가 (52주 고가)</div>
+          <div class="price-val">₩223,000</div>
+          <div class="price-chg">▲ 52주 수익률 +215.96%</div>
+        </div>
+      </div>
+      <div class="hero-tags">
+        <span class="htag">AI 메모리</span>
+        <span class="htag">HBM4</span>
+        <span class="htag">반도체 대장주</span>
+        <span class="htag">코스피 시총 1위</span>
+        <span class="htag">글로벌 외국인 수급</span>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body">
+
+      <!-- Valuation Table -->
+      <div class="section-label">📊 핵심 밸류에이션 지표</div>
+      <table>
+        <thead>
+          <tr>
+            <th>지표</th>
+            <th>수치</th>
+            <th>평가</th>
+            <th>비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12개월 선행 PER</td>
+            <td class="val-highlight">약 8~10x</td>
+            <td class="val-good">저평가</td>
+            <td>글로벌 피어 대비 할인</td>
+          </tr>
+          <tr>
+            <td>12개월 선행 PBR</td>
+            <td class="val-highlight">약 1.2~1.4x</td>
+            <td class="val-good">적정 수준</td>
+            <td>코리아디스카운트 해소 중</td>
+          </tr>
+          <tr>
+            <td>ROE (자기자본이익률)</td>
+            <td class="val-highlight">10.78%</td>
+            <td class="val-good">개선 중</td>
+            <td>2024년 대비 크게 상승</td>
+          </tr>
+          <tr>
+            <td>ROIC</td>
+            <td class="val-highlight">12.12%</td>
+            <td class="val-good">양호</td>
+            <td>투하자본 효율 회복</td>
+          </tr>
+          <tr>
+            <td>Altman Z-Score</td>
+            <td class="val-highlight">4.27</td>
+            <td class="val-good">재무 건전</td>
+            <td>파산 위험 거의 없음 (2.99 이상)</td>
+          </tr>
+          <tr>
+            <td>Piotroski F-Score</td>
+            <td class="val-highlight">5 / 9</td>
+            <td>보통 이상</td>
+            <td>재무 건전성 종합 점수</td>
+          </tr>
+          <tr>
+            <td>52주 고가</td>
+            <td class="val-highlight">₩223,000</td>
+            <td class="val-up">신고가 경신</td>
+            <td>연초 대비 약 4배 상승</td>
+          </tr>
+          <tr>
+            <td>52주 저가</td>
+            <td>₩52,900</td>
+            <td>저점 탈출</td>
+            <td>2025년 실적 저점 구간</td>
+          </tr>
+          <tr>
+            <td>52주 수익률</td>
+            <td class="val-highlight">+215.96%</td>
+            <td class="val-good">압도적 성과</td>
+            <td>코스피 YTD +47~51% 대비 아웃퍼폼</td>
+          </tr>
+          <tr>
+            <td>코스피 선행 PER</td>
+            <td class="val-highlight">약 7.5x</td>
+            <td class="val-good">아시아 최저 수준</td>
+            <td>MSCI 아태 15.4x 대비 절반</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Buy/Risk Tags -->
+      <div class="section-label">🎯 매수 근거 & 리스크 요인</div>
+      <div class="tags-grid">
+        <div class="tag-box buy">
+          <div class="tag-box-label">✅ 매수 근거</div>
+          <ul class="tag-list">
+            <li>AI HBM4 고객사 납품 확대 기대</li>
+            <li>DXY 약세 → 외국인 순매수 지속</li>
+            <li>VIX 하락 → 대형주 리스크온 수혜</li>
+            <li>글로벌 IB 코스피 목표 8,000 상향</li>
+            <li>MSCI 피어 대비 여전히 할인 거래</li>
+            <li>1분기 GDP 서프라이즈 펀더멘털 지지</li>
+          </ul>
+        </div>
+        <div class="tag-box risk">
+          <div class="tag-box-label">⚠️ 리스크 요인</div>
+          <ul class="tag-list">
+            <li>중동 지정학 → VIX 재반등 가능성</li>
+            <li>미 10년물 4.5% 돌파 시 부담</li>
+            <li>HBM 경쟁 심화 (SK하이닉스, 마이크론)</li>
+            <li>원화 강세 가속 시 수출 실적 압박</li>
+            <li>단기 과열 후 차익 실현 매물 출현</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-note">
+    ※ 본 내용은 투자 정보 제공 목적이며 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.<br>
+    밸류에이션 수치는 시장 컨센서스 기반 추정치로 실제와 다를 수 있습니다.
+  </div>
+
+</div>
+
+</body>
+</html>
