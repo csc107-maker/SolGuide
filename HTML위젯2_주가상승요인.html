@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쿠쿠홀딩스 주가 상승 요인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { margin:0;padding:0;box-sizing:border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #FFFBF4;
+    padding: 28px 20px;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .header .tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6B35, #F7931E);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+
+  .header h2 {
+    font-size: 17px;
+    font-weight: 800;
+    color: #1A1A1A;
+  }
+
+  .factors {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .factor {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-left: 5px solid transparent;
+    transition: transform 0.2s;
+  }
+
+  .factor:hover { transform: translateX(4px); }
+
+  .factor:nth-child(1) { border-left-color: #3B82F6; }
+  .factor:nth-child(2) { border-left-color: #10B981; }
+  .factor:nth-child(3) { border-left-color: #F59E0B; }
+  .factor:nth-child(4) { border-left-color: #EC4899; }
+  .factor:nth-child(5) { border-left-color: #8B5CF6; }
+
+  .factor-num {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 900;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .factor:nth-child(1) .factor-num { background: #3B82F6; }
+  .factor:nth-child(2) .factor-num { background: #10B981; }
+  .factor:nth-child(3) .factor-num { background: #F59E0B; }
+  .factor:nth-child(4) .factor-num { background: #EC4899; }
+  .factor:nth-child(5) .factor-num { background: #8B5CF6; }
+
+  .factor-body {}
+
+  .factor-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+  }
+
+  .factor-desc {
+    font-size: 12.5px;
+    color: #4B5563;
+    line-height: 1.6;
+  }
+
+  .highlight {
+    display: inline-block;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .h-blue  { background:#EFF6FF; color:#1D4ED8; }
+  .h-green { background:#F0FDF4; color:#15803D; }
+  .h-amber { background:#FFFBEB; color:#B45309; }
+  .h-pink  { background:#FDF2F8; color:#BE185D; }
+  .h-purple{ background:#F5F3FF; color:#6D28D9; }
+
+  .footer {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #9CA3AF;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="tag">📈 주가 상승 핵심 드라이버</div>
+    <h2>쿠쿠홀딩스 주가가 오른 5가지 이유</h2>
+  </div>
+
+  <div class="factors">
+    <div class="factor">
+      <div class="factor-num">1</div>
+      <div class="factor-body">
+        <div class="factor-title">🍚 프리미엄 IH압력밥솥 — 볼륨 줄고 단가 올랐다</div>
+        <div class="factor-desc">
+          전기밥솥 시장은 수요 둔화지만 <span class="highlight h-blue">고가 IH압력밥솥 비중 확대</span>로 영업이익률이 개선됐습니다.
+          2025년 3Q 누적 영업이익 증가율(+18.1%)이 매출 증가율(+13.3%)을 크게 상회하는 게 증거입니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="factor">
+      <div class="factor-num">2</div>
+      <div class="factor-body">
+        <div class="factor-title">🧹 파워클론 효과 — 청소기 판매 +36% 폭증</div>
+        <div class="factor-desc">
+          2024년 7월 파워클론 슬림 론칭 이후 <span class="highlight h-green">2025년 청소기 판매량 전년 대비 36% 증가</span>.
+          무선·핸디·로봇청소기 전 라인업 고성장으로 가전 포트폴리오 다변화에 성공했습니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="factor">
+      <div class="factor-num">3</div>
+      <div class="factor-body">
+        <div class="factor-title">🌏 해외 3각 편대 — 중국·미국·동남아 동시 성장</div>
+        <div class="factor-desc">
+          4Q25 해외 매출 <span class="highlight h-amber">644억원(+9.3% YoY)</span> 추정.
+          중국 유통망 확대(266억원), 미국 채널 신규 개척, 동남아시아 매출 확대가 동시에 진행 중입니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="factor">
+      <div class="factor-num">4</div>
+      <div class="factor-body">
+        <div class="factor-title">💰 배당 매력 극대화 — 비과세 배당에 소각까지</div>
+        <div class="factor-desc">
+          자본준비금 1,892억원 감액으로 <span class="highlight h-pink">비과세 배당 재원 확보</span>.
+          2025년 DPS 1,400원 예상(배당수익률 4.6%). 자사주 6.1% 소각 가능성까지 더해져 주주환원 매력이 급등했습니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="factor">
+      <div class="factor-num">5</div>
+      <div class="factor-body">
+        <div class="factor-title">🏦 외국인·기관 동시 순매수 — 스마트머니가 들어왔다</div>
+        <div class="factor-desc">
+          외국인 <span class="highlight h-purple">8일 연속 순매수</span>, 기관 7일 연속 순매수 포착.
+          52주 신고가 경신 당시에도 기관 수급이 뒷받침됐다는 점에서 단순 테마 매수가 아닌 구조적 매수입니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">2026.04 | 출처: 이데일리, 헤럴드경제, 씽크풀, NH투자증권</div>
+</div>
+</body>
+</html>
