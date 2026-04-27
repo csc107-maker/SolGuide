@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK온 자금조달 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 32px 16px;
+  }
+
+  .widget {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #0f2c5e 0%, #1a4a9e 60%, #2563eb 100%);
+    padding: 28px 32px;
+    color: #fff;
+  }
+
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 6px;
+  }
+
+  .header h2 {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.3;
+  }
+
+  .header p {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #bfdbfe;
+    line-height: 1.6;
+  }
+
+  .body { padding: 28px 32px; }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #2563eb, #dbeafe);
+    border-radius: 2px;
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .tl-item:nth-child(1){ animation-delay:0.05s }
+  .tl-item:nth-child(2){ animation-delay:0.15s }
+  .tl-item:nth-child(3){ animation-delay:0.25s }
+  .tl-item:nth-child(4){ animation-delay:0.35s }
+  .tl-item:nth-child(5){ animation-delay:0.45s }
+  .tl-item:nth-child(6){ animation-delay:0.55s }
+  .tl-item:nth-child(7){ animation-delay:0.65s }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(14px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -24px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #2563eb;
+  }
+
+  .tl-dot.red    { box-shadow: 0 0 0 2px #ef4444; background: #ef4444; }
+  .tl-dot.green  { box-shadow: 0 0 0 2px #16a34a; background: #16a34a; }
+  .tl-dot.orange { box-shadow: 0 0 0 2px #f59e0b; background: #f59e0b; }
+  .tl-dot.blue   { background: #2563eb; }
+  .tl-dot.navy   { box-shadow: 0 0 0 2px #0f2c5e; background: #0f2c5e; }
+
+  .tl-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .tl-card {
+    background: #f8faff;
+    border: 1px solid #e0eaff;
+    border-left: 4px solid #2563eb;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .tl-card.alert { border-left-color: #ef4444; background: #fff8f8; }
+  .tl-card.success { border-left-color: #16a34a; background: #f0faf4; }
+  .tl-card.warn { border-left-color: #f59e0b; background: #fffbf0; }
+  .tl-card.dark { border-left-color: #0f2c5e; background: #f0f4ff; }
+
+  .tl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e3a6e;
+    margin-bottom: 5px;
+    line-height: 1.4;
+  }
+
+  .tl-card.alert .tl-title { color: #b91c1c; }
+  .tl-card.success .tl-title { color: #15803d; }
+  .tl-card.warn .tl-title { color: #d97706; }
+
+  .tl-desc {
+    font-size: 12.5px;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+
+  .amount-badge {
+    display: inline-block;
+    background: #2563eb;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .amount-badge.red { background: #ef4444; }
+  .amount-badge.green { background: #16a34a; }
+  .amount-badge.orange { background: #f59e0b; color: #1c0; }
+
+  .summary-box {
+    margin-top: 28px;
+    background: linear-gradient(135deg, #0f2c5e, #1a4a9e);
+    border-radius: 14px;
+    padding: 20px 24px;
+    color: #fff;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .sum-item { flex: 1; min-width: 140px; }
+  .sum-label { font-size: 11px; color: #93c5fd; letter-spacing: 1px; margin-bottom: 4px; }
+  .sum-value { font-size: 22px; font-weight: 900; }
+  .sum-unit { font-size: 13px; font-weight: 400; color: #bfdbfe; margin-left: 4px; }
+
+  .footer-note {
+    margin-top: 16px;
+    font-size: 11px;
+    color: #9ca3af;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="header">
+    <div class="header-label">📊 자금조달 히스토리</div>
+    <h2>SK온 프리IPO 자금 조달 타임라인</h2>
+    <p>2023년 프리IPO 착수부터 2026년 글로벌 본드 추진까지 — 돈의 흐름을 한눈에</p>
+  </div>
+  <div class="body">
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot blue"></div>
+        <div class="tl-date">2023년 11월</div>
+        <div class="tl-card">
+          <div class="tl-title">1차 프리IPO — 한투PE·이스트브릿지 컨소시엄
+            <span class="amount-badge">~1.2조원</span>
+          </div>
+          <div class="tl-desc">보통주 방식 거부, 전환우선주(CPS) 방식 수용. 기업가치 22조원 확정 (당초 기대치 30~50조원 대비 절반 수준). IPO 미이행 시 풋옵션 조항 포함.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot blue"></div>
+        <div class="tl-date">2023년 12월</div>
+        <div class="tl-card warn">
+          <div class="tl-title">2차 프리IPO — MBK컨소시엄(블랙록·카타르투자청)
+            <span class="amount-badge orange">~1.24조원</span>
+          </div>
+          <div class="tl-desc">조건 강화: 2026년까지 Q-IPO 불이행 시 드래그얼롱(동반매도청구권) + 풋옵션 행사 권리 확보. 투자자 입김이 IPO 조건 결정에도 영향.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot blue"></div>
+        <div class="tl-date">2023년 이후</div>
+        <div class="tl-card success">
+          <div class="tl-title">SK이노베이션 유상증자 참여
+            <span class="amount-badge green">2조원</span>
+          </div>
+          <div class="tl-desc">모회사 SK이노베이션이 직접 2조 원 유상증자로 자금 투입. 총 프리IPO 목표액 중 절반 이상을 모회사가 충당.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2024년 말</div>
+        <div class="tl-card success">
+          <div class="tl-title">美 DOE 대출 승인 — 블루오벌SK
+            <span class="amount-badge green">96.3억달러(~14조원)</span>
+          </div>
+          <div class="tl-desc">미 에너지부 ATVM 프로그램으로 SK온·포드 합작사 블루오벌SK에 정책 자금 확정. 자금 조달 최대 불확실성 해소. 켄터키·테네시 공장 타임라인 확보.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot orange"></div>
+        <div class="tl-date">2025년 4Q</div>
+        <div class="tl-card alert">
+          <div class="tl-title">블루오벌SK 구조 재편·자산 손상 인식
+            <span class="amount-badge red">4.2조원 손상</span>
+          </div>
+          <div class="tl-desc">포드 JV 청산 결정. 켄터키 공장 포드 이관, 테네시 공장 SK온 100% 단독 운영. 4조2000억원 손상 인식 (현금 유출 없음, 회계 조정). 연간 영업손실 9,319억원 확정.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot navy"></div>
+        <div class="tl-date">2026년 4월</div>
+        <div class="tl-card dark">
+          <div class="tl-title">신한은행 신용보강 업무협약 체결
+            <span class="amount-badge">5억달러 보증</span>
+          </div>
+          <div class="tl-desc">신한은행이 SK온 발행 5억달러 글로벌 본드에 신용보강 제공. 무디스 Ba1 (투기등급) 현실에서 신한은행 신용도 차용. 기존 차입금 상환 + 해외 생산 투자 활용 예정.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2026년 말 (데드라인)</div>
+        <div class="tl-card alert">
+          <div class="tl-title">⏰ Q-IPO 마감 기한 — 투자자 풋옵션 트리거 시점</div>
+          <div class="tl-desc">MBK컨소시엄 등 투자자들의 드래그얼롱·풋옵션 행사 가능 시점. 미이행 시 SK이노베이션의 SK온 지분 매각 위기. IPO 성패가 그룹 재무 구조를 뒤바꿀 최대 변수.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="summary-box">
+      <div class="sum-item">
+        <div class="sum-label">총 외부 자금 조달</div>
+        <div class="sum-value">~4.97조<span class="sum-unit">원</span></div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-label">모회사 지원 포함</div>
+        <div class="sum-value">~6.97조<span class="sum-unit">원</span></div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-label">글로벌 본드 추가</div>
+        <div class="sum-value">5억<span class="sum-unit">달러</span></div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-label">IPO 데드라인</div>
+        <div class="sum-value">2026<span class="sum-unit">년 말</span></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      ※ 금액은 공시 및 언론 보도 기준이며, 실제 집행 금액과 차이가 있을 수 있습니다.<br>
+      ※ 본 자료는 정보 제공 목적으로 작성되었으며 투자 권유가 아닙니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
