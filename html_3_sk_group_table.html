@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK그룹 계열사 재무 현황</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 28px 16px;
+  }
+
+  .widget {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  .w-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a6e 70%, #2563eb 100%);
+    padding: 24px 28px;
+    color: #fff;
+  }
+
+  .w-label { font-size: 11px; letter-spacing: 2px; color: #93c5fd; margin-bottom: 5px; }
+  .w-title { font-size: 20px; font-weight: 900; }
+  .w-sub   { font-size: 12.5px; color: #bfdbfe; margin-top: 5px; line-height: 1.5; }
+
+  /* 스코어카드 그리드 */
+  .scorecard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  @media(max-width:640px){
+    .scorecard-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .sc-item {
+    padding: 18px 20px;
+    border-right: 1px solid #e5e7eb;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .sc-item:last-child, .sc-item:nth-child(3) { border-right: none; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .sc-item:nth-child(1){ animation-delay:.05s }
+  .sc-item:nth-child(2){ animation-delay:.1s }
+  .sc-item:nth-child(3){ animation-delay:.15s }
+  .sc-item:nth-child(4){ animation-delay:.2s }
+  .sc-item:nth-child(5){ animation-delay:.25s }
+  .sc-item:nth-child(6){ animation-delay:.3s }
+
+  .sc-label { font-size: 11px; color: #6b7280; margin-bottom: 4px; font-weight: 600; }
+  .sc-value { font-size: 22px; font-weight: 900; color: #0f172a; line-height: 1; }
+  .sc-unit  { font-size: 13px; color: #6b7280; margin-left: 3px; }
+  .sc-note  { font-size: 11px; color: #9ca3af; margin-top: 3px; }
+
+  .sc-value.red  { color: #dc2626; }
+  .sc-value.green{ color: #16a34a; }
+  .sc-value.blue { color: #2563eb; }
+
+  /* 계열사 테이블 */
+  .table-wrap {
+    overflow-x: auto;
+    padding: 20px 24px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  thead th {
+    background: #f8faff;
+    color: #1e3a6e;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    padding: 11px 14px;
+    border-bottom: 2px solid #dbeafe;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background .15s;
+  }
+
+  tbody tr:hover { background: #f8faff; }
+  tbody tr:last-child { border-bottom: none; }
+
+  td {
+    font-size: 13px;
+    color: #374151;
+    padding: 12px 14px;
+    vertical-align: middle;
+  }
+
+  .entity-name { font-weight: 700; color: #0f172a; }
+  .entity-role { font-size: 11px; color: #6b7280; margin-top: 2px; }
+
+  .tag {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  .tag-shield  { background: #dcfce7; color: #15803d; }
+  .tag-danger  { background: #fee2e2; color: #b91c1c; }
+  .tag-watch   { background: #fef3c7; color: #92400e; }
+  .tag-neutral { background: #f1f5f9; color: #475569; }
+
+  .grade-cell { font-weight: 800; font-size: 14px; }
+  .grade-aa   { color: #15803d; }
+  .grade-bad  { color: #dc2626; }
+  .grade-warn { color: #d97706; }
+
+  .profit-pos { color: #16a34a; font-weight: 700; }
+  .profit-neg { color: #dc2626; font-weight: 700; }
+
+  .debt-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .debt-bar {
+    flex: 1;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 60px;
+  }
+
+  .debt-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+
+  .fill-green  { background: linear-gradient(90deg, #22c55e, #16a34a); }
+  .fill-yellow { background: linear-gradient(90deg, #f59e0b, #d97706); }
+  .fill-red    { background: linear-gradient(90deg, #f87171, #dc2626); }
+
+  .debt-text { font-size: 12px; font-weight: 700; min-width: 40px; text-align: right; }
+
+  /* 시사점 박스 */
+  .insight-box {
+    margin: 0 24px 24px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    animation: fadeUp 0.5s 0.5s ease both;
+  }
+
+  .insight-icon { font-size: 24px; flex-shrink: 0; }
+  .insight-title { font-size: 14px; font-weight: 800; color: #1e3a6e; margin-bottom: 5px; }
+  .insight-body  { font-size: 12.5px; color: #374151; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="w-header">
+    <div class="w-label">📈 그룹 재무 지도</div>
+    <div class="w-title">SK그룹 주요 계열사 — 버팀목과 블랙홀</div>
+    <div class="w-sub">SK하이닉스가 그룹을 떠받치는 구조 속 SK온의 적자가 얼마나 위협적인지 확인하세요</div>
+  </div>
+
+  <!-- 핵심 지표 스코어카드 -->
+  <div class="scorecard-grid">
+    <div class="sc-item">
+      <div class="sc-label">SK이노베이션 순차입금 (연결)</div>
+      <div class="sc-value blue">22.5조<span class="sc-unit">원</span></div>
+      <div class="sc-note">2025년 말 (전년 대비 6조 감소)</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-label">SK온 연간 영업손실 (2025)</div>
+      <div class="sc-value red">–9,319억<span class="sc-unit">원</span></div>
+      <div class="sc-note">분사 이후 연속 적자 지속</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-label">SK 지주사 순차입금</div>
+      <div class="sc-value">8.6조<span class="sc-unit">원</span></div>
+      <div class="sc-note">2025년 말 기준, 전년비 1.9조↓</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-label">SK이노베이션 당기순손실</div>
+      <div class="sc-value red">–5.4조<span class="sc-unit">원</span></div>
+      <div class="sc-note">2025년 (4조2천억 손상 포함)</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-label">SK이노베이션 지주사 부채비율</div>
+      <div class="sc-value">69.5%<span class="sc-unit"></span></div>
+      <div class="sc-note">전년 86.3% → 개선세</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-label">종속회사 슬림화</div>
+      <div class="sc-value green">–27개<span class="sc-unit">사</span></div>
+      <div class="sc-note">200개(24년) → 173개(25년)</div>
+    </div>
+  </div>
+
+  <!-- 계열사 비교 테이블 -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:130px">계열사</th>
+          <th>역할</th>
+          <th>신용등급<br><span style="font-weight:400;font-size:10px">(국내 기준)</span></th>
+          <th>수익 현황</th>
+          <th style="min-width:140px">부채 수준</th>
+          <th>리스크</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="entity-name">SK하이닉스</div>
+            <div class="entity-role">반도체 / 그룹 캐시카우</div>
+          </td>
+          <td><span class="tag tag-shield">🛡 버팀목</span></td>
+          <td class="grade-cell grade-aa">AA+</td>
+          <td class="profit-pos">흑자 (대규모)</td>
+          <td>
+            <div class="debt-bar-wrap">
+              <div class="debt-bar"><div class="debt-fill fill-green" style="width:30%"></div></div>
+              <div class="debt-text" style="color:#16a34a">낮음</div>
+            </div>
+          </td>
+          <td><span class="tag tag-shield">안정</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="entity-name">SK텔레콤</div>
+            <div class="entity-role">통신 / 안정적 현금흐름</div>
+          </td>
+          <td><span class="tag tag-neutral">안정</span></td>
+          <td class="grade-cell grade-aa">AA</td>
+          <td class="profit-pos">흑자 지속</td>
+          <td>
+            <div class="debt-bar-wrap">
+              <div class="debt-bar"><div class="debt-fill fill-green" style="width:40%"></div></div>
+              <div class="debt-text" style="color:#16a34a">보통</div>
+            </div>
+          </td>
+          <td><span class="tag tag-neutral">낮음</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="entity-name">SK이노베이션</div>
+            <div class="entity-role">에너지·배터리 지주</div>
+          </td>
+          <td><span class="tag tag-watch">⚡ 관찰</span></td>
+          <td class="grade-cell grade-warn">AA<br><span style="font-size:10px">(해외: Ba1)</span></td>
+          <td class="profit-neg">순손실 –5.4조</td>
+          <td>
+            <div class="debt-bar-wrap">
+              <div class="debt-bar"><div class="debt-fill fill-red" style="width:80%"></div></div>
+              <div class="debt-text" style="color:#dc2626">높음</div>
+            </div>
+          </td>
+          <td><span class="tag tag-watch">⚠️ 주목</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="entity-name">SK온</div>
+            <div class="entity-role">배터리 / 적자 누적</div>
+          </td>
+          <td><span class="tag tag-danger">🔴 블랙홀</span></td>
+          <td class="grade-cell grade-bad">비상장<br><span style="font-size:10px">(자체등급 없음)</span></td>
+          <td class="profit-neg">–9,319억 (2025)</td>
+          <td>
+            <div class="debt-bar-wrap">
+              <div class="debt-bar"><div class="debt-fill fill-red" style="width:95%"></div></div>
+              <div class="debt-text" style="color:#dc2626">매우높음</div>
+            </div>
+          </td>
+          <td><span class="tag tag-danger">🔴 최대위험</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="entity-name">SK E&S (합병)</div>
+            <div class="entity-role">에너지 / SK이노 합병</div>
+          </td>
+          <td><span class="tag tag-neutral">완충재</span></td>
+          <td class="grade-cell grade-aa">AA-</td>
+          <td class="profit-pos">흑자 (에너지)</td>
+          <td>
+            <div class="debt-bar-wrap">
+              <div class="debt-bar"><div class="debt-fill fill-yellow" style="width:55%"></div></div>
+              <div class="debt-text" style="color:#d97706">중간</div>
+            </div>
+          </td>
+          <td><span class="tag tag-neutral">보통</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="entity-name">SKC</div>
+            <div class="entity-role">소재 / 동박 사업 부진</div>
+          </td>
+          <td><span class="tag tag-watch">⚡ 관찰</span></td>
+          <td class="grade-cell grade-warn">A</td>
+          <td class="profit-neg">부진 (전기차 둔화)</td>
+          <td>
+            <div class="debt-bar-wrap">
+              <div class="debt-bar"><div class="debt-fill fill-yellow" style="width:65%"></div></div>
+              <div class="debt-text" style="color:#d97706">중상</div>
+            </div>
+          </td>
+          <td><span class="tag tag-watch">⚠️ 주목</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-icon">💡</div>
+    <div>
+      <div class="insight-title">크레딧 전문가의 핵심 판단</div>
+      <div class="insight-body">
+        SK그룹의 재무 구조는 <strong>SK하이닉스라는 단일 엔진에 과도하게 의존</strong>하고 있습니다. 반도체 사이클이 꺾이거나 SK온의 적자가 예상보다 길어지면 그룹 전체 신용 지형이 흔들릴 수 있습니다.
+        지주사가 알짜 자산을 매각해 SK온을 지원하는 '방어적 리밸런싱' 전략은 단기 위기는 막지만, <strong>장기 투자 역량을 갉아먹는 구조</strong>입니다.
+        2026년 SK온 IPO가 성공해야 이 악순환의 고리가 끊깁니다.
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
