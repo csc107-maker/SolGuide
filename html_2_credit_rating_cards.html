@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK그룹 신용등급 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f1f5f9;
+    padding: 28px 16px;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 6px;
+  }
+
+  .section-subtitle {
+    font-size: 13px;
+    color: #475569;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  /* 주요 대비 박스 */
+  .contrast-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media(max-width:600px){ .contrast-box { grid-template-columns: 1fr; } }
+
+  .c-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    animation: fadeIn 0.5s ease both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform: translateY(10px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  .c-card:nth-child(1){ animation-delay:0.05s }
+  .c-card:nth-child(2){ animation-delay:0.15s }
+
+  .c-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .label-domestic { background: #dbeafe; color: #1d4ed8; }
+  .label-global   { background: #fce7f3; color: #9d174d; }
+
+  .c-agency-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .c-agency-row:last-child { border-bottom: none; }
+
+  .agency-name {
+    font-size: 13px;
+    color: #475569;
+    font-weight: 600;
+  }
+
+  .grade-pill {
+    font-size: 15px;
+    font-weight: 900;
+    padding: 4px 16px;
+    border-radius: 24px;
+    letter-spacing: 0.5px;
+  }
+
+  .grade-aa    { background: #dcfce7; color: #15803d; }
+  .grade-baa   { background: #fef9c3; color: #854d0e; }
+  .grade-ba    { background: #fee2e2; color: #b91c1c; }
+  .grade-bbb   { background: #fff7ed; color: #c2410c; }
+  .grade-a     { background: #e0f2fe; color: #0369a1; }
+
+  .grade-outlook {
+    font-size: 10px;
+    margin-top: 2px;
+    text-align: right;
+  }
+
+  .outlook-neg  { color: #ef4444; font-weight: 700; }
+  .outlook-stab { color: #16a34a; font-weight: 700; }
+
+  /* 경고 배너 */
+  .alert-banner {
+    background: linear-gradient(135deg, #fff1f2, #ffe4e6);
+    border: 1.5px solid #fecdd3;
+    border-left: 5px solid #ef4444;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    animation: fadeIn 0.5s 0.3s ease both;
+  }
+
+  .alert-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+
+  .alert-title { font-size: 14px; font-weight: 700; color: #b91c1c; margin-bottom: 5px; }
+  .alert-desc  { font-size: 12.5px; color: #4b5563; line-height: 1.7; }
+
+  /* 부채성 자본 테이블 */
+  .table-section {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    overflow: hidden;
+    margin-bottom: 20px;
+    animation: fadeIn 0.5s 0.4s ease both;
+  }
+
+  .table-header {
+    background: linear-gradient(135deg, #1e3a6e, #2563eb);
+    padding: 16px 20px;
+    color: #fff;
+  }
+
+  .table-header h3 { font-size: 14px; font-weight: 800; }
+  .table-header p  { font-size: 12px; color: #bfdbfe; margin-top: 3px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    background: #f8faff;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e3a6e;
+    text-align: left;
+    padding: 10px 16px;
+    border-bottom: 2px solid #e0eaff;
+  }
+
+  td {
+    font-size: 13px;
+    color: #374151;
+    padding: 11px 16px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .amount-col { font-weight: 700; color: #1d4ed8; text-align: right; }
+  .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .risk-high   { background: #fee2e2; color: #b91c1c; }
+  .risk-medium { background: #fef3c7; color: #92400e; }
+
+  .total-row td { background: #eff6ff; font-weight: 700; }
+  .total-row .amount-col { color: #b91c1c; font-size: 15px; }
+
+  .footnote {
+    font-size: 11px;
+    color: #9ca3af;
+    padding: 10px 16px;
+    background: #f8faff;
+    border-top: 1px solid #e0eaff;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="section-label">⚖️ 신용등급 비교 분석</div>
+  <div class="section-title">국내 vs 해외 신용평가 — 극명한 괴리</div>
+  <div class="section-subtitle">
+    같은 SK이노베이션을 보는 국내·해외 시각이 이렇게 다릅니다. 어느 쪽이 진실에 가까울까요?
+  </div>
+
+  <div class="contrast-box">
+    <div class="c-card">
+      <span class="c-card-label label-domestic">🇰🇷 국내 신용평가사 (2025.8 기준)</span>
+      <div class="c-agency-row">
+        <div class="agency-name">나이스신용평가</div>
+        <div>
+          <div class="grade-pill grade-aa">AA (안정적)</div>
+          <div class="grade-outlook outlook-stab">회사채 기준</div>
+        </div>
+      </div>
+      <div class="c-agency-row">
+        <div class="agency-name">한국기업평가</div>
+        <div>
+          <div class="grade-pill grade-aa">AA (안정적)</div>
+          <div class="grade-outlook outlook-stab">회사채 기준</div>
+        </div>
+      </div>
+      <div class="c-agency-row">
+        <div class="agency-name">한국신용평가</div>
+        <div>
+          <div class="grade-pill grade-aa">AA (안정적)</div>
+          <div class="grade-outlook outlook-stab">회사채 기준</div>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:#6b7280; line-height:1.6; padding:10px; background:#f0fdf4; border-radius:8px;">
+        ✅ 근거: 정유·화학 현금창출력 + SK그룹 지원 가능성 (SK하이닉스 버팀목)
+      </div>
+    </div>
+
+    <div class="c-card">
+      <span class="c-card-label label-global">🌍 해외 신용평가사 (2025~2026 기준)</span>
+      <div class="c-agency-row">
+        <div class="agency-name">무디스 (Moody's)</div>
+        <div>
+          <div class="grade-pill grade-ba">Ba1 ⬇</div>
+          <div class="grade-outlook outlook-neg">투기등급 · 부정적</div>
+        </div>
+      </div>
+      <div class="c-agency-row">
+        <div class="agency-name">S&P</div>
+        <div>
+          <div class="grade-pill grade-bbb">BBB-</div>
+          <div class="grade-outlook outlook-neg">투자적격 최하단 · 부정적</div>
+        </div>
+      </div>
+      <div class="c-agency-row">
+        <div class="agency-name">SKC (한신평 기준)</div>
+        <div>
+          <div class="grade-pill grade-a">A (안정적)</div>
+          <div class="grade-outlook outlook-stab">2026.01.20 평가</div>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:#6b7280; line-height:1.6; padding:10px; background:#fff8f8; border-radius:8px;">
+        🔴 근거: 배터리 사업 지속 적자 + 부채 부담 + 1~2년 개선 불확실
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-banner">
+    <div class="alert-icon">⚠️</div>
+    <div>
+      <div class="alert-title">국내외 등급 괴리가 의미하는 것</div>
+      <div class="alert-desc">
+        무디스의 Ba1 투기등급 부여로 글로벌 기관투자자들(연기금·보험사)의 보유 의무 위반이 발생, 채권 강제 매도 압력이 생겼습니다.
+        이것이 신한은행 신용보강 없이는 5억 달러 글로벌 본드를 발행하기 어렵게 된 근본 이유입니다.
+        S&P마저 한 단계 내리면 'BB+' 투기등급으로 격하되어 <strong>달러채 조달 창구가 사실상 닫힙니다.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <div class="table-header">
+      <h3>📋 SK이노베이션 부채성 자본 조달 현황</h3>
+      <p>회계상 자본이지만 실질적으로 부채에 가까운 조달 구조 (한국신용평가 추산)</p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>금액</th>
+          <th>성격</th>
+          <th>위험도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>주가수익스왑 (PRS)</td>
+          <td class="amount-col">3조 8,000억원</td>
+          <td>주가 연동, 실질 채무</td>
+          <td><span class="risk-tag risk-high">⬆ 높음</span></td>
+        </tr>
+        <tr>
+          <td>상환전환우선주 (RCPS)</td>
+          <td class="amount-col">3조 1,000억원</td>
+          <td>상환 의무, 투자자 권리 강함</td>
+          <td><span class="risk-tag risk-high">⬆ 높음</span></td>
+        </tr>
+        <tr>
+          <td>전환우선주 (CPS)</td>
+          <td class="amount-col">3조원</td>
+          <td>전환권, 지분 희석 우려</td>
+          <td><span class="risk-tag risk-medium">중간</span></td>
+        </tr>
+        <tr>
+          <td>신종자본증권 (영구채)</td>
+          <td class="amount-col">1조 9,000억원</td>
+          <td>이자 지급, 회계상 자본 계상</td>
+          <td><span class="risk-tag risk-medium">중간</span></td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>SK이노베이션 소계</strong></td>
+          <td class="amount-col">12조원</td>
+          <td colspan="2">SK그룹 전체 18조원 중 67%</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">※ 한국신용평가 추산치 기준. SK그룹 전체 부채성 자본 약 18조원 중 SK이노베이션 단독 비중 약 12조원. 이 구조가 신용평가사들의 '하방 압력 경고' 근거.</div>
+  </div>
+
+</div>
+</body>
+</html>
