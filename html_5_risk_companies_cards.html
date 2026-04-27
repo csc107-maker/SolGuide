@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회사채 주의 기업 리스트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f1f5f9;
+    padding: 28px 16px;
+  }
+
+  .wrap {
+    max-width: 840px;
+    margin: 0 auto;
+  }
+
+  .top-bar {
+    background: linear-gradient(135deg, #450a0a, #991b1b, #ef4444);
+    border-radius: 16px 16px 0 0;
+    padding: 22px 26px;
+    color: #fff;
+  }
+
+  .top-bar-label { font-size: 11px; letter-spacing: 2px; color: #fca5a5; margin-bottom: 5px; }
+  .top-bar-title { font-size: 20px; font-weight: 900; }
+  .top-bar-sub   { font-size: 12.5px; color: #fca5a5; margin-top: 6px; line-height: 1.5; }
+
+  .cards-bg {
+    background: #fff;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+    padding: 24px;
+  }
+
+  /* 레벨 범례 */
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #374151; }
+  .leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .leg-red    { background: #ef4444; }
+  .leg-orange { background: #f59e0b; }
+  .leg-yellow { background: #eab308; }
+
+  /* 카드 */
+  .card {
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 16px;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(12px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .card:nth-child(1){ animation-delay:.05s }
+  .card:nth-child(2){ animation-delay:.15s }
+  .card:nth-child(3){ animation-delay:.25s }
+  .card:nth-child(4){ animation-delay:.35s }
+  .card:nth-child(5){ animation-delay:.45s }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+
+  .card-top:hover { background: #fafafa; }
+
+  .risk-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .rb-red    { background: #fee2e2; }
+  .rb-orange { background: #fff7ed; }
+  .rb-yellow { background: #fefce8; }
+
+  .card-main { flex: 1; }
+
+  .card-company { font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+  .card-subtitle { font-size: 12px; color: #6b7280; }
+
+  .card-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .risk-level {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .level-critical { background: #fee2e2; color: #b91c1c; }
+  .level-high     { background: #fff7ed; color: #c2410c; }
+  .level-medium   { background: #fefce8; color: #854d0e; }
+
+  .grade-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+  }
+
+  /* 상세 내용 */
+  .card-body {
+    border-top: 1px solid #f1f5f9;
+    padding: 14px 18px;
+    background: #fafbff;
+  }
+
+  .issue-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  @media(max-width:500px){ .issue-grid { grid-template-columns: 1fr; } }
+
+  .issue-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .ii-label { font-size: 10.5px; color: #9ca3af; margin-bottom: 3px; font-weight: 600; }
+  .ii-value { font-size: 13px; font-weight: 700; color: #1e293b; line-height: 1.3; }
+  .ii-value.neg { color: #dc2626; }
+  .ii-value.warn { color: #d97706; }
+  .ii-value.pos { color: #16a34a; }
+
+  .risk-desc {
+    font-size: 12.5px;
+    color: #4b5563;
+    line-height: 1.75;
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px 14px;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #ef4444;
+  }
+
+  .risk-desc.orange { border-left-color: #f59e0b; }
+  .risk-desc.yellow { border-left-color: #eab308; }
+
+  .watch-point {
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: #374151;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.6;
+  }
+
+  .watch-icon { color: #2563eb; font-weight: 700; flex-shrink: 0; }
+
+  /* 하단 요약 */
+  .summary-alert {
+    background: linear-gradient(135deg, #fff7ed, #fff1f2);
+    border: 1.5px solid #fed7aa;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    animation: fadeUp 0.5s 0.6s ease both;
+  }
+
+  .sa-icon { font-size: 22px; flex-shrink: 0; }
+  .sa-title { font-size: 14px; font-weight: 800; color: #9a3412; margin-bottom: 6px; }
+  .sa-body  { font-size: 12.5px; color: #4b5563; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <div class="top-bar-label">⚠️ 크레딧 리스크 모니터링</div>
+    <div class="top-bar-title">지금 주목해야 할 회사채 주의 기업들</div>
+    <div class="top-bar-sub">증권업계 20년 시각으로 선별한 2026년 회사채 리스크 레이더</div>
+  </div>
+
+  <div class="cards-bg">
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot leg-red"></div> 최고위험 — 즉각 모니터링</div>
+      <div class="leg-item"><div class="leg-dot leg-orange"></div> 고위험 — 지속 관찰</div>
+      <div class="leg-item"><div class="leg-dot leg-yellow"></div> 중위험 — 선제 점검</div>
+    </div>
+
+    <!-- SK이노베이션/SK온 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="risk-badge rb-red">🔴</div>
+        <div class="card-main">
+          <div class="card-company">SK이노베이션 / SK온</div>
+          <div class="card-subtitle">배터리·에너지 계열 / 무디스 투기등급(Ba1)</div>
+        </div>
+        <div class="card-meta">
+          <span class="risk-level level-critical">최고위험</span>
+          <span class="grade-tag">국내 AA ↔ 해외 Ba1</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="issue-grid">
+          <div class="issue-item">
+            <div class="ii-label">순차입금 (연결)</div>
+            <div class="ii-value neg">22.5조원</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">2025~26년 만기 회사채</div>
+            <div class="ii-value neg">8조원+ 집중</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">SK온 2025 영업손실</div>
+            <div class="ii-value neg">–9,319억원</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">IPO 데드라인</div>
+            <div class="ii-value warn">2026년 말</div>
+          </div>
+        </div>
+        <div class="risk-desc">
+          무디스 투기등급으로 글로벌 기관투자자 의무 매도 압력 발생. S&P 'BBB-' 부정적 전망으로 한 단계만 더 하향하면 달러채 시장 접근이 사실상 봉쇄됩니다. 신한은행 신용보강 없이는 이번 5억 달러 글로벌 본드 발행 자체가 어려운 상황.
+        </div>
+        <div class="watch-point">
+          <span class="watch-icon">👁</span>
+          <span><strong>핵심 관찰 포인트:</strong> S&P 신용등급 정기 평가 결과, SK온 2026년 분기 실적, IPO 추진 일정 발표 여부</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 한화솔루션 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="risk-badge rb-orange">🟠</div>
+        <div class="card-main">
+          <div class="card-company">한화솔루션</div>
+          <div class="card-subtitle">태양광·화학 / 미국 솔라허브 과잉투자 후유증</div>
+        </div>
+        <div class="card-meta">
+          <span class="risk-level level-high">고위험</span>
+          <span class="grade-tag">국내 A+ 수준</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="issue-grid">
+          <div class="issue-item">
+            <div class="ii-label">유상증자 규모</div>
+            <div class="ii-value warn">1.8조원 (최종)</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">목표 부채비율</div>
+            <div class="ii-value warn">150% 이내</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">중국 태양광 공세</div>
+            <div class="ii-value neg">수천억원 영업손실</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">이자비용 추이</div>
+            <div class="ii-value neg">급증세</div>
+          </div>
+        </div>
+        <div class="risk-desc orange">
+          김동관 부회장 주도 솔라허브(미국 태양광 기지) 프로젝트에 수조원 투입 후 중국 경쟁사 공세로 대규모 손실 발생. 신용등급 하락 시 조달금리 급등으로 연간 이자비용이 수천억원 추가 증가 우려. 주주들은 2021년에 이어 또 다시 증자 요청을 받았습니다.
+        </div>
+        <div class="watch-point">
+          <span class="watch-icon">👁</span>
+          <span><strong>핵심 관찰 포인트:</strong> 부채비율 150% 달성 여부, 신용등급사 정기 평가, 미국 태양광 보조금 정책 변화</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 롯데케미칼 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="risk-badge rb-orange">🟠</div>
+        <div class="card-main">
+          <div class="card-company">롯데케미칼</div>
+          <div class="card-subtitle">석유화학 / 업황 부진 장기화</div>
+        </div>
+        <div class="card-meta">
+          <span class="risk-level level-high">고위험</span>
+          <span class="grade-tag">A+ (하향 이력)</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="issue-grid">
+          <div class="issue-item">
+            <div class="ii-label">업황 현황</div>
+            <div class="ii-value neg">글로벌 공급과잉</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">중국 수요</div>
+            <div class="ii-value neg">부진 지속</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">등급 변동 이력</div>
+            <div class="ii-value warn">2023~24년 하향</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">회복 시점</div>
+            <div class="ii-value warn">2026년 이후 불확실</div>
+          </div>
+        </div>
+        <div class="risk-desc orange">
+          석유화학 글로벌 공급과잉과 중국발 수요 부진이 겹치며 이미 신용등급 하향 이력이 있습니다. 업황 회복이 예상보다 지연될 경우 추가 하방 가능성이 있으며, 롯데그룹 전체 재무 부담과도 연결됩니다.
+        </div>
+        <div class="watch-point">
+          <span class="watch-icon">👁</span>
+          <span><strong>핵심 관찰 포인트:</strong> 에틸렌·폴리에틸렌 스프레드 회복 여부, 중국 수요 회복 시점, 롯데그룹 계열 지원 능력</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PF 건설 섹터 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="risk-badge rb-yellow">🟡</div>
+        <div class="card-main">
+          <div class="card-company">PF 연계 건설사 · 부동산신탁사</div>
+          <div class="card-subtitle">부동산 경기 연동 / 태영건설 워크아웃 이후 잔영</div>
+        </div>
+        <div class="card-meta">
+          <span class="risk-level level-medium">중위험</span>
+          <span class="grade-tag">BBB ~ BB 구간</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="issue-grid">
+          <div class="issue-item">
+            <div class="ii-label">태영건설</div>
+            <div class="ii-value warn">워크아웃 진행 중</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">PF 부실 잔존</div>
+            <div class="ii-value neg">미해소 물량 다수</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">부동산 경기</div>
+            <div class="ii-value warn">회복 지연</div>
+          </div>
+          <div class="issue-item">
+            <div class="ii-label">BBB- 금리</div>
+            <div class="ii-value neg">9.30% 연중 최고</div>
+          </div>
+        </div>
+        <div class="risk-desc yellow">
+          태영건설 워크아웃 이후에도 PF 연계 부실 문제는 완전히 해소되지 않았습니다. BBB- 급 금리가 9%를 넘는 상황에서 중소 건설사와 부동산신탁사의 신규 조달은 사실상 봉쇄 상태에 가깝습니다.
+        </div>
+        <div class="watch-point">
+          <span class="watch-icon">👁</span>
+          <span><strong>핵심 관찰 포인트:</strong> 부동산 거래량 및 PF 사업장 정상화 비율, 금융당국 PF 연착륙 지원책 실효성</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-alert">
+      <div class="sa-icon">📌</div>
+      <div>
+        <div class="sa-title">채권 투자자를 위한 핵심 체크리스트</div>
+        <div class="sa-body">
+          ① <strong>국내 신평사 등급보다 해외 신평사(무디스·S&P) 등급에 더 가중치</strong>를 두세요 — 국내 신평사는 구조적으로 관계 리스크가 있습니다.<br>
+          ② 단기차입금이 전체 차입금의 <strong>20% 이상이면 유동성 경보</strong>.<br>
+          ③ RCPS·PRS 등 <strong>부채성 자본 규모</strong>가 클수록 실질 레버리지가 높습니다.<br>
+          ④ 회사채 만기가 2026년에 집중된 기업 — <strong>차환 리스크</strong>를 반드시 확인하세요.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
