@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMP 가격 트렌드 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #fff; }
+  .wrap { background: #FFFDF5; border: 1.5px solid #FFE082; border-radius: 16px; padding: 28px 28px 20px; max-width: 680px; margin: 0 auto; }
+  .top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+  .title-area h2 { font-size: 17px; font-weight: 700; color: #333; margin-bottom: 4px; }
+  .title-area p { font-size: 13px; color: #888; }
+  .badge { background: #FF6F00; color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 20px; white-space: nowrap; align-self: flex-start; }
+  .stat-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 120px; background: #fff; border: 1px solid #FFE082; border-radius: 12px; padding: 14px 16px; }
+  .stat .lbl { font-size: 11px; color: #999; margin-bottom: 4px; }
+  .stat .val { font-size: 22px; font-weight: 700; color: #E65100; }
+  .stat .sub { font-size: 11px; color: #4CAF50; margin-top: 2px; }
+  .chart-wrap { position: relative; width: 100%; height: 220px; }
+  .note { font-size: 11px; color: #aaa; margin-top: 12px; text-align: right; }
+  .legend { display: flex; gap: 18px; margin-bottom: 12px; font-size: 12px; color: #666; }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="title-area">
+      <h2>📈 2026년 SMP 가격 월별 추이 (육지 기준)</h2>
+      <p>계통한계가격(SMP) · 출처: 해줌, 전력거래소</p>
+    </div>
+    <div class="badge">4월 급등 +15.6%</div>
+  </div>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="lbl">2026년 1월</div>
+      <div class="val">102.9<span style="font-size:14px;font-weight:400;">원</span></div>
+      <div class="sub" style="color:#aaa;">기준점</div>
+    </div>
+    <div class="stat">
+      <div class="lbl">2026년 3월</div>
+      <div class="val">109.8<span style="font-size:14px;font-weight:400;">원</span></div>
+      <div class="sub">▲ +6.9원</div>
+    </div>
+    <div class="stat">
+      <div class="lbl">2026년 4월 (2주)</div>
+      <div class="val">119.5<span style="font-size:14px;font-weight:400;">원</span></div>
+      <div class="sub">▲ +9.7원</div>
+    </div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:#FF8F00;"></span>육지 SMP</span>
+    <span><span class="dot" style="background:#29B6F6;"></span>제주 SMP</span>
+  </div>
+  <div class="chart-wrap">
+    <canvas id="smpChart" role="img" aria-label="2026년 1월부터 4월까지 SMP 가격 상승 추이. 102.9원에서 119.47원으로 급등.">SMP 가격: 1월 102.9원 → 3월 109.79원 → 4월 119.47원</canvas>
+  </div>
+  <div class="note">* 4월은 2주차 기준 데이터 / 제주 4월: 117.94원</div>
+</div>
+<script>
+const ctx = document.getElementById('smpChart').getContext('2d');
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['1월', '2월(추정)', '3월', '4월(2주)'],
+    datasets: [
+      {
+        label: '육지 SMP',
+        data: [102.9, 106.3, 109.79, 119.47],
+        borderColor: '#FF8F00',
+        backgroundColor: 'rgba(255,143,0,0.08)',
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: '#FF6F00',
+        pointRadius: [4,4,4,7],
+        pointHoverRadius: 8,
+        borderWidth: 2.5,
+        borderDash: [0,0],
+      },
+      {
+        label: '제주 SMP',
+        data: [null, null, null, 117.94],
+        borderColor: '#29B6F6',
+        backgroundColor: 'rgba(41,182,246,0.08)',
+        tension: 0.4,
+        fill: false,
+        pointBackgroundColor: '#0288D1',
+        pointRadius: [0,0,0,7],
+        pointHoverRadius: 8,
+        borderWidth: 2,
+        borderDash: [5,4],
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(2) + '원'
+        }
+      }
+    },
+    scales: {
+      y: {
+        min: 95,
+        max: 125,
+        ticks: {
+          callback: v => v + '원',
+          font: { size: 12 },
+          color: '#999'
+        },
+        grid: { color: 'rgba(0,0,0,0.06)' }
+      },
+      x: {
+        ticks: { font: { size: 12 }, color: '#666' },
+        grid: { display: false }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
