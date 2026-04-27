@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쿠쿠홀딩스 핵심 투자지표</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F7F9FF;
+    padding: 28px 20px;
+  }
+
+  .widget-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .widget-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .badge {
+    background: #1A3FAB;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .widget-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1A1A2E;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 12px rgba(26,63,171,0.08);
+    border-top: 3px solid transparent;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(26,63,171,0.13);
+  }
+
+  .card.blue  { border-top-color: #1A3FAB; }
+  .card.teal  { border-top-color: #0ABFA3; }
+  .card.amber { border-top-color: #F59E0B; }
+  .card.green { border-top-color: #22C55E; }
+  .card.red   { border-top-color: #EF4444; }
+  .card.purple{ border-top-color: #8B5CF6; }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B7280;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-value {
+    font-size: 26px;
+    font-weight: 900;
+    color: #1A1A2E;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .card-value.up   { color: #EF4444; }
+  .card-value.blue { color: #1A3FAB; }
+  .card-value.teal { color: #0ABFA3; }
+
+  .card-sub {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin-top: 2px;
+  }
+
+  .card-arrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    background: #FEF3C7;
+    color: #D97706;
+    padding: 2px 7px;
+    border-radius: 6px;
+    margin-top: 4px;
+  }
+
+  .note {
+    background: #EFF6FF;
+    border-left: 4px solid #1A3FAB;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 12px;
+    color: #374151;
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+
+  .note b { color: #1A3FAB; }
+
+  .date-tag {
+    font-size: 11px;
+    color: #9CA3AF;
+    text-align: right;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="widget-header">
+    <span class="badge">📊 투자지표</span>
+    <span class="widget-title">쿠쿠홀딩스(192400) 핵심 밸류에이션 요약</span>
+  </div>
+
+  <div class="grid">
+    <div class="card blue">
+      <div class="card-label">현재주가</div>
+      <div class="card-value blue">28,000<span style="font-size:14px">원</span></div>
+      <div class="card-sub">52주 범위 21,000~35,900원</div>
+    </div>
+    <div class="card teal">
+      <div class="card-label">PER (주가수익비율)</div>
+      <div class="card-value teal">7.0<span style="font-size:14px">배</span></div>
+      <div class="card-sub">코스피 평균 12~15배 대비 저평가</div>
+    </div>
+    <div class="card amber">
+      <div class="card-label">PBR (주가순자산비율)</div>
+      <div class="card-value" style="color:#F59E0B">0.77<span style="font-size:14px">배</span></div>
+      <div class="card-sub">순자산 대비 23% 할인 매매 중</div>
+    </div>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card green">
+      <div class="card-label">배당수익률</div>
+      <div class="card-value" style="color:#22C55E">4.6~5.5<span style="font-size:14px">%</span></div>
+      <div class="card-sub">DPS 1,400원 (2025년 예상) · 비과세 배당 기대</div>
+    </div>
+    <div class="card purple">
+      <div class="card-label">애널리스트 목표주가</div>
+      <div class="card-value" style="color:#8B5CF6">40,000<span style="font-size:14px">원</span></div>
+      <div class="card-arrow">▲ 상승여력 약 35~43%</div>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:0">
+    <div class="card" style="border-top-color:#64748B">
+      <div class="card-label">EPS</div>
+      <div class="card-value" style="color:#334155;font-size:20px">4,209<span style="font-size:13px">원</span></div>
+      <div class="card-sub">TTM 기준</div>
+    </div>
+    <div class="card" style="border-top-color:#EC4899">
+      <div class="card-label">자사주 비율</div>
+      <div class="card-value" style="color:#EC4899;font-size:20px">12.61<span style="font-size:13px">%</span></div>
+      <div class="card-sub">소각 시 주당가치 상승 기대</div>
+    </div>
+    <div class="card" style="border-top-color:#0EA5E9">
+      <div class="card-label">투자의견</div>
+      <div class="card-value" style="color:#0EA5E9;font-size:16px;margin-top:4px">BUY 🟢</div>
+      <div class="card-sub">NH투자증권 (2025.12.18)</div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>💡 분석 코멘트:</b> PBR 0.77배는 자산 가치 대비 현저한 저평가를 의미합니다. 실적 성장과 배당 확대가 동시에 진행되고 있어 <b>밸류에이션 리레이팅</b> 가능성이 높은 구간입니다.
+  </div>
+
+  <div class="date-tag">기준일: 2026.04 | 출처: NH투자증권, FnGuide, Investing.com</div>
+</div>
+</body>
+</html>
