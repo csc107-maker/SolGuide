@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>글로벌 선행지표 대시보드 — 2026.04.27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #F6F5F0;
+  --surface:   #FFFFFF;
+  --border:    #E3E0D8;
+  --text:      #1C1B18;
+  --sub:       #6B6860;
+  --muted:     #A8A59E;
+  --danger:    #C0392B;
+  --danger-bg: #FDF0EE;
+  --danger-lt: #F5C6C1;
+  --warn:      #D68A00;
+  --warn-bg:   #FFF8E6;
+  --warn-lt:   #FFDFA0;
+  --safe:      #1A7A4A;
+  --safe-bg:   #E8F6EF;
+  --safe-lt:   #A3DDB9;
+  --vix-accent:  #C0392B;
+  --wti-accent:  #D68A00;
+  --krw-accent:  #B56000;
+  --dxy-accent:  #2563EB;
+  --tnx-accent:  #6D28D9;
+  --ewy-accent:  #1A7A4A;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  padding: 0; margin: 0;
+}
+
+.widget-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 20px 32px;
+}
+
+/* HEADER */
+.widget-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  gap: 12px;
+}
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #1C1B18;
+  color: #F6F5F0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+.dot-live {
+  width: 7px; height: 7px;
+  background: #4ADE80;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.header-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.header-sub {
+  font-size: 12px;
+  color: var(--sub);
+  margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+}
+.header-right { text-align: right; flex-shrink: 0; }
+.risk-pill {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--warn-bg);
+  border: 1.5px solid var(--warn-lt);
+  border-radius: 10px;
+  padding: 8px 16px;
+  min-width: 90px;
+}
+.risk-score {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--warn);
+  line-height: 1;
+}
+.risk-label { font-size:10px; color:var(--warn); font-weight:700; letter-spacing:.5px; margin-top:2px; }
+.risk-sub   { font-size:9px;  color:var(--muted); font-family:'DM Mono',monospace; margin-top:3px; }
+
+.divider { height:1px; background:var(--border); margin:0 0 20px; }
+
+/* GRID */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media(max-width:560px){ .cards-grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:360px){ .cards-grid{ grid-template-columns:1fr; } }
+
+/* CARD */
+.ind-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .18s, box-shadow .18s;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp .4s ease forwards;
+}
+.ind-card:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.07); }
+.ind-card:nth-child(1){animation-delay:.05s}
+.ind-card:nth-child(2){animation-delay:.12s}
+.ind-card:nth-child(3){animation-delay:.19s}
+.ind-card:nth-child(4){animation-delay:.26s}
+.ind-card:nth-child(5){animation-delay:.33s}
+.ind-card:nth-child(6){animation-delay:.40s}
+@keyframes fadeUp{ to{opacity:1;transform:translateY(0)} }
+
+.ind-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  border-radius:12px 12px 0 0;
+}
+.card-vix::before{ background:var(--vix-accent) }
+.card-wti::before{ background:var(--wti-accent) }
+.card-krw::before{ background:var(--krw-accent) }
+.card-dxy::before{ background:var(--dxy-accent) }
+.card-tnx::before{ background:var(--tnx-accent) }
+.card-ewy::before{ background:var(--ewy-accent) }
+
+.card-danger{ border-color:var(--danger-lt); background:var(--danger-bg) }
+.card-warn  { border-color:var(--warn-lt);   background:var(--warn-bg)   }
+.card-safe  { border-color:var(--safe-lt);   background:var(--safe-bg)   }
+
+.card-icon  { font-size:18px; margin-bottom:6px; display:block }
+.card-name  { font-size:11px; font-weight:600; color:var(--sub); letter-spacing:.3px; margin-bottom:6px; text-transform:uppercase }
+.card-value { font-family:'DM Mono',monospace; font-size:24px; font-weight:500; color:var(--text); line-height:1; margin-bottom:4px }
+.card-change{ font-family:'DM Mono',monospace; font-size:12px; display:flex; align-items:center; gap:3px; margin-bottom:10px }
+
+/*
+  색상 규칙 (수정 적용):
+  · chg-pos  = 일반 상승 호재 (녹색) — WTI 상승은 유가니까 neg
+  · chg-neg  = 일반 하락 또는 악재 상승 (빨간색)
+  · chg-bad  = 역방향 지표 상승 (빨간색) — VIX↑·KRW↑ 둘 다 악재
+  · chg-good = 역방향 지표 하락 (녹색)  — VIX↓·KRW↓ 둘 다 호재
+  · chg-flat = 보합 (회색)
+*/
+.chg-pos  { color:var(--safe)   }
+.chg-neg  { color:var(--danger) }
+.chg-bad  { color:var(--danger) }
+.chg-good { color:var(--safe)   }
+.chg-flat { color:var(--muted)  }
+
+.status-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:10px; font-weight:700; letter-spacing:.5px;
+  padding:3px 8px; border-radius:20px;
+}
+.badge-danger{ background:var(--danger); color:#fff }
+.badge-warn  { background:var(--warn);   color:#fff }
+.badge-safe  { background:var(--safe);   color:#fff }
+
+.bar-wrap {
+  margin-top:8px; height:4px;
+  background:rgba(0,0,0,.08); border-radius:4px; overflow:hidden;
+}
+.bar-fill { height:100%; border-radius:4px; transition:width .6s ease }
+.bar-danger{ background:var(--danger) }
+.bar-warn  { background:var(--warn)   }
+.bar-safe  { background:var(--safe)   }
+
+.card-threshold { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); margin-top:6px }
+
+/* SUMMARY */
+.summary-row {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:8px; margin-bottom:16px;
+}
+.sum-chip {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:8px 10px; text-align:center;
+}
+.sum-chip-label { font-size:9px; color:var(--muted); font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.5px }
+.sum-chip-val   { font-size:12px; font-weight:700; margin-top:2px }
+.chip-danger{ color:var(--danger) }
+.chip-warn  { color:var(--warn)   }
+.chip-safe  { color:var(--safe)   }
+
+/* FOOTER */
+.widget-footer {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px; padding-top:14px; border-top:1px solid var(--border);
+}
+.footer-note   { font-size:10px; color:var(--muted); font-family:'DM Mono',monospace; line-height:1.5 }
+.footer-source { font-size:10px; color:var(--muted); font-family:'DM Mono',monospace; text-align:right; flex-shrink:0 }
+</style>
+</head>
+<body>
+
+<div class="widget-wrap">
+
+  <!-- HEADER -->
+  <div class="widget-header">
+    <div class="header-left">
+      <div class="header-badge">
+        <span class="dot-live"></span>
+        GLOBAL MARKET WATCH · 2026.04.27
+      </div>
+      <div class="header-title">6대 글로벌 선행지표 대시보드</div>
+      <div class="header-sub">4월 27일(월) 마감 기준 | 미-이란 협상 교착 · 호르무즈 봉쇄 지속</div>
+    </div>
+    <div class="header-right">
+      <!-- 위험도 점수: 경보 1(WTI·30pt) + 주의 1(KRW·10pt) = 40점 -->
+      <div class="risk-pill">
+        <div class="risk-score">40</div>
+        <div class="risk-label">⚠ 주의</div>
+        <div class="risk-sub">/ 100점</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="cards-grid">
+
+    <!-- ① VIX 공포지수 ─────────────────────────────────────────
+         종가: 18.76 (전일 18.71 → +0.05, +0.27%)
+         VIX 상승 = 공포 증가 = 악재 → chg-bad (빨간색)  ✅
+         진행 바: 18.76 / 25 = 75%  ✅ (이전 57% → 수정)
+         상태: 안전 (< 25 경보 임계)
+    ──────────────────────────────────────────────────────────── -->
+    <div class="ind-card card-vix card-safe">
+      <span class="card-icon">📊</span>
+      <div class="card-name">VIX 공포지수</div>
+      <div class="card-value">18.76</div>
+      <div class="card-change chg-bad">▲ +0.05 (+0.27%)</div>
+      <span class="status-badge badge-safe">✓ 안정</span>
+      <div class="bar-wrap">
+        <div class="bar-fill bar-safe" style="width:75%;"></div>
+      </div>
+      <div class="card-threshold">경보 임계: ≥ 25 | 현재 75% 근접 (안전 구간)</div>
+    </div>
+
+    <!-- ② WTI 유가 ──────────────────────────────────────────────
+         4/24(금) 종가: $94.40  →  4/27(월) 종가: $95.27
+         변화: +0.87 (+0.92%)
+         WTI 상승 = 에너지 비용·인플레 압력 상승 → chg-neg (빨간색)
+         진행 바: 95.27 ≥ 95(경보 임계) → 97%  ✅ (이전 88% → 수정)
+         상태: 경보 (95.27 ≥ $95)
+    ──────────────────────────────────────────────────────────── -->
+    <div class="ind-card card-wti card-danger">
+      <span class="card-icon">🛢️</span>
+      <div class="card-name">WTI 유가 ($/배럴)</div>
+      <div class="card-value">95.27</div>
+      <div class="card-change chg-neg">▲ +0.87 (+0.92%)</div>
+      <span class="status-badge badge-danger">⚠ 경보</span>
+      <div class="bar-wrap">
+        <div class="bar-fill bar-danger" style="width:97%;"></div>
+      </div>
+      <div class="card-threshold">경보 임계: ≥ $95 | 임계선 돌파 · 호르무즈 봉쇄</div>
+    </div>
+
+    <!-- ③ USD/KRW 환율 ──────────────────────────────────────────
+         4/24(금) 종가: 1,473.82  →  4/27(월) 종가: 1,475.69
+         변화: +1.87 (+0.13%)
+         ✅ 수정: KRW 상승 = 원화 약세 = 악재 → chg-bad (빨간색)
+         ✅ 수정: 경보 임계 ≥ 1,500 (이전 1,450 = 오표기)
+         진행 바: (1,475.69-1,300)/(1,500-1,300) = 87.8% → 88%  ✅
+         상태: 주의 (1,450 ≤ 1,475.69 < 1,500)
+    ──────────────────────────────────────────────────────────── -->
+    <div class="ind-card card-krw card-warn">
+      <span class="card-icon">💱</span>
+      <div class="card-name">USD / KRW 환율</div>
+      <div class="card-value">1,475</div>
+      <div class="card-change chg-bad">▲ +1.87 (+0.13%)</div>
+      <span class="status-badge badge-warn">⚠ 주의</span>
+      <div class="bar-wrap">
+        <div class="bar-fill bar-warn" style="width:88%;"></div>
+      </div>
+      <div class="card-threshold">경보 임계: ≥ 1,500 | 주의 구간 상단 (원화 약세)</div>
+    </div>
+
+    <!-- ④ DXY 달러인덱스 ────────────────────────────────────────
+         4/27(월) 종가: 98.47 (출처: TradingEconomics 확인값)
+         변화: −0.06 (−0.06%)
+         DXY 하락 = 달러 약세 → 신흥국 통화 압박 경감 = 한국 증시 중립~긍정
+         → chg-good (녹색)
+         진행 바: 안전 구간이므로 낮은 값 유지 (48%)
+         상태: 안전 (< 105 주의 임계)
+    ──────────────────────────────────────────────────────────── -->
+    <div class="ind-card card-dxy card-safe">
+      <span class="card-icon">💵</span>
+      <div class="card-name">DXY 달러인덱스</div>
+      <div class="card-value">98.47</div>
+      <div class="card-change chg-good">▼ −0.06 (−0.06%)</div>
+      <span class="status-badge badge-safe">✓ 안정</span>
+      <div class="bar-wrap">
+        <div class="bar-fill bar-safe" style="width:48%;"></div>
+      </div>
+      <div class="card-threshold">경보 임계: ≥ 108 | 달러 약세 기조</div>
+    </div>
+
+    <!-- ⑤ US 10년 금리 ──────────────────────────────────────────
+         ✅ 수정: 4/24(금) 종가 4.32% (출처: TradingEconomics 확인)
+         4/27(월) 추정치: 4.34% (유가 상승→인플레 우려→금리 소폭 상승)
+         변화: +0.02bp (+0.46%)
+         ✅ 이전 수치(4.35% / +0.07 / +1.63%)는 기준값 오류로 수정
+         진행 바: 4.34 / 5.0 = 86.8% → 87%  ✅ (이전 42% → 수정)
+         상태: 안전 (< 4.5 주의 임계)
+    ──────────────────────────────────────────────────────────── -->
+    <div class="ind-card card-tnx card-safe">
+      <span class="card-icon">📈</span>
+      <div class="card-name">US 10년 금리 (%)</div>
+      <div class="card-value">4.34</div>
+      <div class="card-change chg-neg">▲ +0.02bp (+0.46%)</div>
+      <span class="status-badge badge-safe">✓ 안정</span>
+      <div class="bar-wrap">
+        <div class="bar-fill bar-safe" style="width:87%;"></div>
+      </div>
+      <div class="card-threshold">경보 임계: ≥ 5.0% | 연준 동결 기조 유지 (추정치)</div>
+    </div>
+
+    <!-- ⑥ EWY (한국 ETF) ─────────────────────────────────────────
+         4/27(월) 종가 변화: −0.42% (코스피 숨고르기)
+         EWY 하락 = 외국인 자금 이탈 우려 → chg-neg (빨간색)
+         진행 바: 0.42 / 2.5 = 16.8% → 17%  ✅ (이전 55% → 수정)
+         상태: 안전 (−0.42% > −2.5% 경보 임계)
+    ──────────────────────────────────────────────────────────── -->
+    <div class="ind-card card-ewy card-safe">
+      <span class="card-icon">🇰🇷</span>
+      <div class="card-name">EWY (한국 ETF)</div>
+      <div class="card-value">−0.42%</div>
+      <div class="card-change chg-neg">▼ 코스피 숨고르기 국면</div>
+      <span class="status-badge badge-safe">✓ 안정</span>
+      <div class="bar-wrap">
+        <div class="bar-fill bar-safe" style="width:17%;"></div>
+      </div>
+      <div class="card-threshold">경보 임계: ≤ −2.5% | 낙폭 제한적 (안전 여유 충분)</div>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY ROW ✅ 수정: 1경보·1주의·4안전 (이전 1경보·2주의·3안전은 오류) -->
+  <div class="summary-row">
+    <div class="sum-chip">
+      <div class="sum-chip-label">🔴 경보 지표</div>
+      <div class="sum-chip-val chip-danger">1 / 6</div>
+    </div>
+    <div class="sum-chip">
+      <div class="sum-chip-label">🟠 주의 지표</div>
+      <div class="sum-chip-val chip-warn">1 / 6</div>
+    </div>
+    <div class="sum-chip">
+      <div class="sum-chip-label">🟢 안전 지표</div>
+      <div class="sum-chip-val chip-safe">4 / 6</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="widget-footer">
+    <div class="footer-note">
+      ⚠ 2026년 4월 27일(월) 마감 기준. US 10Y는 추정치 포함.<br>
+      투자 결정의 최종 책임은 투자자 본인에게 있습니다.
+    </div>
+    <div class="footer-source">
+      출처: CBOE · TradingEconomics<br>
+      Investing.com · Barchart
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
