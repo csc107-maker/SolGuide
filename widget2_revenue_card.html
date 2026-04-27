@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 발전 수익 비교</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #fff; }
+  .wrap { background: #F3F8FF; border: 1.5px solid #90CAF9; border-radius: 16px; padding: 28px; max-width: 680px; margin: 0 auto; }
+  h2 { font-size: 17px; font-weight: 700; color: #1A237E; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #5C6BC0; margin-bottom: 22px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .card { background: #fff; border-radius: 14px; padding: 20px; border: 1px solid #BBDEFB; }
+  .card.highlight { border: 2px solid #1565C0; }
+  .period { font-size: 11px; font-weight: 700; color: #1565C0; background: #E3F2FD; display: inline-block; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+  .period.old { color: #78909C; background: #ECEFF1; }
+  .amount-label { font-size: 12px; color: #90A4AE; margin-bottom: 2px; }
+  .amount { font-size: 26px; font-weight: 700; color: #1A237E; margin-bottom: 2px; }
+  .amount.big { color: #0D47A1; }
+  .amount span { font-size: 14px; font-weight: 400; }
+  .sub-item { display: flex; justify-content: space-between; font-size: 12px; color: #78909C; padding: 4px 0; border-top: 1px solid #EEF2FF; margin-top: 8px; }
+  .sub-item b { color: #455A64; }
+  .arrow-area { display: flex; align-items: center; justify-content: center; font-size: 28px; color: #42A5F5; }
+  .diff-box { background: #E8F5E9; border: 1.5px solid #81C784; border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .diff-label { font-size: 13px; color: #2E7D32; font-weight: 600; }
+  .diff-nums { display: flex; gap: 20px; flex-wrap: wrap; }
+  .diff-item { text-align: center; }
+  .diff-item .d-val { font-size: 20px; font-weight: 700; color: #1B5E20; }
+  .diff-item .d-desc { font-size: 11px; color: #4CAF50; }
+  .note { font-size: 11px; color: #aaa; margin-top: 14px; text-align: right; }
+  @media(max-width: 480px) { .cards { grid-template-columns: 1fr; } .arrow-area { transform: rotate(90deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2>💡 SMP 상승 → 실제 수익 얼마나 달라졌나?</h2>
+  <p class="subtitle">3kW 주택용 태양광 기준 · 월 발전량 300kWh 가정</p>
+  <div class="cards">
+    <div class="card">
+      <div class="period old">2026년 1월 기준</div>
+      <div class="amount-label">SMP 수익 (월)</div>
+      <div class="amount">30,870<span>원</span></div>
+      <div class="sub-item"><span>SMP 단가</span><b>102.9원/kWh</b></div>
+      <div class="sub-item"><span>발전량</span><b>300kWh</b></div>
+    </div>
+    <div class="card highlight">
+      <div class="period">2026년 4월 기준 ★</div>
+      <div class="amount-label">SMP 수익 (월)</div>
+      <div class="amount big">35,841<span>원</span></div>
+      <div class="sub-item"><span>SMP 단가</span><b>119.47원/kWh</b></div>
+      <div class="sub-item"><span>발전량</span><b>300kWh</b></div>
+    </div>
+  </div>
+  <div class="diff-box">
+    <div class="diff-label">📈 상승 효과 요약</div>
+    <div class="diff-nums">
+      <div class="diff-item">
+        <div class="d-val">+4,971원</div>
+        <div class="d-desc">월 수익 증가</div>
+      </div>
+      <div class="diff-item">
+        <div class="d-val">+15.6%</div>
+        <div class="d-desc">수익률 상승</div>
+      </div>
+      <div class="diff-item">
+        <div class="d-val">+약 6만원</div>
+        <div class="d-desc">연간 추가 수익</div>
+      </div>
+    </div>
+  </div>
+  <p class="note">* REC 수익 미포함 / 봄철 일사량 기준 / 실제 수익은 지역·설치각도에 따라 다름</p>
+</div>
+</body>
+</html>
