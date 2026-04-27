@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국내 회사채 시장 현황</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f1f5f9;
+    padding: 28px 16px;
+  }
+
+  .dash {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .dash-header {
+    background: linear-gradient(135deg, #1e293b, #0f2c5e);
+    border-radius: 18px 18px 0 0;
+    padding: 22px 26px;
+    color: #fff;
+  }
+
+  .dash-label { font-size: 11px; letter-spacing: 2px; color: #94a3b8; margin-bottom: 5px; }
+  .dash-title { font-size: 20px; font-weight: 900; }
+  .dash-sub   { font-size: 12.5px; color: #94a3b8; margin-top: 5px; }
+
+  .dash-body {
+    background: #fff;
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 24px;
+  }
+
+  /* 금리 카드 그리드 */
+  .rate-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  @media(max-width:580px){ .rate-grid { grid-template-columns: 1fr 1fr; } }
+
+  .rate-card {
+    background: #f8faff;
+    border: 1px solid #e0eaff;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    animation: popIn 0.4s ease both;
+  }
+
+  @keyframes popIn {
+    from { opacity:0; transform: scale(0.95); }
+    to   { opacity:1; transform: scale(1); }
+  }
+
+  .rate-card:nth-child(1){ animation-delay:.05s }
+  .rate-card:nth-child(2){ animation-delay:.1s }
+  .rate-card:nth-child(3){ animation-delay:.15s }
+  .rate-card:nth-child(4){ animation-delay:.2s }
+  .rate-card:nth-child(5){ animation-delay:.25s }
+  .rate-card:nth-child(6){ animation-delay:.3s }
+
+  .rate-card.alert { background: #fff8f8; border-color: #fecdd3; }
+  .rate-card.warn  { background: #fffbf0; border-color: #fde68a; }
+
+  .rc-grade { font-size: 11px; font-weight: 700; color: #6b7280; margin-bottom: 6px; letter-spacing: .5px; }
+  .rc-rate  { font-size: 26px; font-weight: 900; color: #0f172a; line-height: 1; }
+  .rc-rate.high { color: #dc2626; }
+  .rc-rate.mid  { color: #d97706; }
+  .rc-rate.low  { color: #16a34a; }
+  .rc-label { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+  .rc-change {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    margin-top: 6px;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .change-up   { background: #fee2e2; color: #b91c1c; }
+  .change-down { background: #dcfce7; color: #15803d; }
+
+  /* BMSI 게이지 */
+  .bmsi-section {
+    background: #f8faff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    animation: popIn 0.5s 0.35s ease both;
+  }
+
+  .bmsi-gauge { flex: 0 0 140px; text-align: center; }
+  .bmsi-ring {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .bmsi-ring svg { transform: rotate(-90deg); }
+
+  .bmsi-ring .ring-bg { fill: none; stroke: #e5e7eb; stroke-width: 12; }
+  .bmsi-ring .ring-fill {
+    fill: none;
+    stroke: #f59e0b;
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 298.45;
+    stroke-dashoffset: 14.92; /* 99.9 / 200 * 298.45 ≈ 148.9, 298.45 - (99.9/200)*298.45 */
+    transition: stroke-dashoffset 1s ease;
+  }
+
+  .bmsi-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .bmsi-num { font-size: 22px; font-weight: 900; color: #d97706; line-height: 1; }
+  .bmsi-sub { font-size: 10px; color: #6b7280; }
+
+  .bmsi-info { flex: 1; min-width: 200px; }
+  .bmsi-title { font-size: 14px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+  .bmsi-desc  { font-size: 12.5px; color: #475569; line-height: 1.7; }
+
+  .bmsi-divider {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .bmsi-d-item {
+    flex: 1;
+    background: #fff;
+    border-radius: 8px;
+    padding: 9px 12px;
+    border: 1px solid #e0eaff;
+  }
+
+  .bd-label { font-size: 10px; color: #9ca3af; margin-bottom: 3px; }
+  .bd-value { font-size: 16px; font-weight: 800; }
+  .bd-value.up   { color: #dc2626; }
+  .bd-value.down { color: #16a34a; }
+
+  /* 기업별 발행 전략 */
+  .strat-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 14px;
+    padding-left: 12px;
+    border-left: 4px solid #2563eb;
+  }
+
+  .strat-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .strat-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f8faff;
+    border-radius: 10px;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    animation: popIn 0.4s ease both;
+  }
+
+  .strat-item:nth-child(1){ animation-delay:.4s }
+  .strat-item:nth-child(2){ animation-delay:.45s }
+  .strat-item:nth-child(3){ animation-delay:.5s }
+  .strat-item:nth-child(4){ animation-delay:.55s }
+
+  .s-company { font-size: 13px; font-weight: 700; color: #0f172a; min-width: 120px; }
+
+  .s-status {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 14px;
+    white-space: nowrap;
+  }
+  .s-delay { background: #fef3c7; color: #92400e; }
+  .s-proceed { background: #dcfce7; color: #15803d; }
+  .s-switch { background: #e0f2fe; color: #0369a1; }
+
+  .s-desc { font-size: 12px; color: #6b7280; line-height: 1.5; flex: 1; }
+
+  .footer-note {
+    margin-top: 20px;
+    font-size: 11px;
+    color: #9ca3af;
+    line-height: 1.7;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="dash">
+  <div class="dash-header">
+    <div class="dash-label">🏦 채권시장 모니터</div>
+    <div class="dash-title">2026년 국내 회사채 시장 현황 대시보드</div>
+    <div class="dash-sub">고금리·수급 부담·투자심리 위축이 겹친 채권시장의 지금 상황</div>
+  </div>
+
+  <div class="dash-body">
+
+    <!-- 금리 현황 -->
+    <div style="font-size:13px; font-weight:700; color:#1e293b; margin-bottom:14px; padding-left:10px; border-left:4px solid #2563eb;">
+      회사채 등급별 3년물 금리 현황
+    </div>
+
+    <div class="rate-grid">
+      <div class="rate-card">
+        <div class="rc-grade">국고채 3년</div>
+        <div class="rc-rate low">2.92<span style="font-size:16px">%</span></div>
+        <div class="rc-label">기준 금리</div>
+        <span class="rc-change change-up">▲ 연초比 +0.5%p</span>
+      </div>
+      <div class="rate-card">
+        <div class="rc-grade">회사채 AA- 3년</div>
+        <div class="rc-rate mid">3.47<span style="font-size:16px">%</span></div>
+        <div class="rc-label">스프레드 ~55bp</div>
+        <span class="rc-change change-up">▲ 연중 최고치 근접</span>
+      </div>
+      <div class="rate-card alert">
+        <div class="rc-grade">회사채 BBB- 3년</div>
+        <div class="rc-rate high">9.30<span style="font-size:16px">%</span></div>
+        <div class="rc-label">투기 근접 등급</div>
+        <span class="rc-change change-up">▲ 연중 최고치 근접</span>
+      </div>
+      <div class="rate-card">
+        <div class="rc-grade">CD금리 91일</div>
+        <div class="rc-rate low">3.10<span style="font-size:16px">%</span></div>
+        <div class="rc-label">단기 기준</div>
+        <span class="rc-change change-down">▼ 안정세</span>
+      </div>
+      <div class="rate-card warn">
+        <div class="rc-grade">AA- vs BBB- 스프레드</div>
+        <div class="rc-rate mid">583<span style="font-size:16px">bp</span></div>
+        <div class="rc-label">등급 간 차이</div>
+        <span class="rc-change change-up">▲ 신용 차별화 심화</span>
+      </div>
+      <div class="rate-card">
+        <div class="rc-grade">3년물 최고치 (기중)</div>
+        <div class="rc-rate">3.10<span style="font-size:16px">%</span></div>
+        <div class="rc-label">국고채 연중 피크</div>
+        <span class="rc-change change-up">▲ 현재 95% 수준</span>
+      </div>
+    </div>
+
+    <!-- BMSI 섹션 -->
+    <div class="bmsi-section">
+      <div class="bmsi-gauge">
+        <div class="bmsi-ring">
+          <svg viewBox="0 0 110 110" width="110" height="110">
+            <circle class="ring-bg" cx="55" cy="55" r="47.5"/>
+            <!-- 99.9/200 ≈ 49.95% of full circle, so dashoffset ≈ 298.45*0.5005 ≈ 149.4 -->
+            <circle class="ring-fill" cx="55" cy="55" r="47.5"
+              stroke-dashoffset="149.4"/>
+          </svg>
+          <div class="bmsi-center">
+            <div class="bmsi-num">99.9</div>
+            <div class="bmsi-sub">BMSI</div>
+          </div>
+        </div>
+        <div style="font-size:11px; color:#9ca3af; margin-top:4px;">100 미만 = 위축</div>
+      </div>
+
+      <div class="bmsi-info">
+        <div class="bmsi-title">📉 2026년 1월 채권시장지표(BMSI) 100 하회</div>
+        <div class="bmsi-desc">
+          금융투자협회 채권업계 리더 설문 기반 BMSI가 전월(103.2) 대비 3.3p 하락한 <strong>99.9</strong>로 100을 밑돌았습니다. 연초 회사채 발행 확대에 따른 수급 부담과 미국 기준금리 인하 기대 약화가 주요 원인.
+        </div>
+        <div class="bmsi-divider">
+          <div class="bmsi-d-item">
+            <div class="bd-label">종합 BMSI</div>
+            <div class="bd-value up">99.9 ▼</div>
+          </div>
+          <div class="bmsi-d-item">
+            <div class="bd-label">금리전망 BMSI</div>
+            <div class="bd-value down">144.0 ▲</div>
+          </div>
+          <div class="bmsi-d-item">
+            <div class="bd-label">전월 대비</div>
+            <div class="bd-value up">–3.3p</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 기업별 전략 -->
+    <div class="strat-title">주요 기업 회사채 발행 전략 변화 (2026년 연초)</div>
+
+    <div class="strat-list">
+      <div class="strat-item">
+        <div class="s-company">SK텔레콤</div>
+        <span class="s-status s-switch">🔄 전략 전환</span>
+        <div class="s-desc">회사채 발행 → 시중은행 차입으로 선회 검토. 채권 발행금리 > 은행 대출금리 역전 현상 때문.</div>
+      </div>
+      <div class="strat-item">
+        <div class="s-company">한화에어로스페이스</div>
+        <span class="s-status s-proceed">✅ 발행 진행</span>
+        <div class="s-desc">방산 호황 등 실적 뒷받침으로 1월 발행 계획 유지. 수요예측 결과 주목.</div>
+      </div>
+      <div class="strat-item">
+        <div class="s-company">주택도시보증공사(HUG)</div>
+        <span class="s-status s-delay">⏸ 이연</span>
+        <div class="s-desc">연말 발행 계획 → 2026년 1분기로 연기. 허브리츠 950억원 회사채 포함.</div>
+      </div>
+      <div class="strat-item">
+        <div class="s-company">포스코퓨처엠</div>
+        <span class="s-status s-proceed">✅ 발행 진행</span>
+        <div class="s-desc">배터리 소재 중장기 성장 스토리로 1월 발행 계획 유지. 수요 확보 주목.</div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      ※ 금리 데이터는 채권정보센터·금융투자협회 기준 2026년 1월 수준. 실시간 변동 있음.<br>
+      ※ BMSI(Bond Market Sentiment Index)는 금융투자협회 채권업계 리더 그룹 대상 설문 기반 지표.<br>
+      ※ 본 자료는 정보 제공 목적이며 투자 권유가 아닙니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
