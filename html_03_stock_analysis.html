@@ -1,299 +1,401 @@
-<!-- [삽입 위치] 추천 종목 기업 분석 섹션 직후 (밸류에이션 표 아래) -->
+<!-- [삽입 위치: 오늘의 추천 종목 기업 분석 섹션 직후] -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>삼성전자 종목 분석 카드 - 2026.04.27</title>
+<title>LS Electric 종목 분석 카드 - 2026.04.28</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    background: #faf5ff;
-    padding: 24px 16px;
+    background: transparent;
   }
-  .card-wrap {
-    max-width: 820px;
+  .widget-wrap {
+    background: #f0f9ff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 18px rgba(0,100,200,0.09);
+    max-width: 720px;
     margin: 0 auto;
   }
-  .main-card {
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 4px 24px rgba(109,40,217,0.08);
-    overflow: hidden;
-    margin-bottom: 16px;
-  }
-  .card-hero {
-    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 60%, #2563eb 100%);
-    color: white;
-    padding: 24px 28px;
-  }
-  .hero-top {
+
+  /* ── 헤더 ── */
+  .header-row {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 10px;
   }
-  .stock-name {
-    font-size: 1.5rem;
-    font-weight: 900;
-    line-height: 1.2;
-  }
-  .stock-ticker {
-    font-size: 0.85rem;
-    opacity: 0.85;
-    margin-top: 4px;
-  }
-  .price-badge {
-    background: rgba(255,255,255,0.2);
-    border-radius: 12px;
-    padding: 8px 14px;
-    text-align: right;
-  }
-  .price-label { font-size: 0.73rem; opacity: 0.8; }
-  .price-val { font-size: 1.2rem; font-weight: 800; }
-  .price-chg { font-size: 0.8rem; color: #86efac; font-weight: 700; }
-
-  .hero-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 8px;
-  }
-  .htag {
-    background: rgba(255,255,255,0.18);
-    border-radius: 999px;
-    padding: 3px 10px;
-    font-size: 0.72rem;
-    font-weight: 700;
-  }
-
-  .card-body {
-    padding: 24px 28px;
-  }
-
-  .section-label {
-    font-size: 0.75rem;
+  .ticker-badge {
+    background: linear-gradient(135deg, #0369a1, #0284c7);
+    color: #fff;
+    font-size: 13px;
     font-weight: 800;
-    color: #7c3aed;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 12px;
-    margin-top: 20px;
+    border-radius: 8px;
+    padding: 6px 14px;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
   }
-  .section-label:first-child { margin-top: 0; }
+  .stock-name-wrap { flex: 1; min-width: 160px; }
+  .stock-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0c2340;
+    letter-spacing: -0.5px;
+  }
+  .stock-sub {
+    font-size: 11px;
+    color: #0369a1;
+    margin-top: 3px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .price-col { text-align: right; flex-shrink: 0; }
+  .current-price {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0369a1;
+    letter-spacing: -0.5px;
+  }
+  .price-change {
+    font-size: 12px;
+    color: #dc2626;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .price-note {
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
 
-  /* Valuation Table */
-  table {
+  /* ── 섹션 공통 ── */
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0369a1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 16px 0 10px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid #bae6fd;
+    margin: 14px 0;
+  }
+
+  /* ── 수주 하이라이트 배너 ── */
+  .contract-banner {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: #fff;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .contract-icon { font-size: 24px; flex-shrink: 0; }
+  .contract-text { flex: 1; }
+  .contract-text strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+  .contract-text span { font-size: 11px; opacity: 0.9; line-height: 1.6; }
+
+  /* ── 밸류에이션 테이블 ── */
+  .val-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.84rem;
+    font-size: 13px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
-  th {
-    background: #f5f3ff;
-    color: #5b21b6;
-    font-weight: 700;
+  .val-table thead tr { background: #e0f2fe; }
+  .val-table th {
     padding: 9px 12px;
     text-align: left;
-    border-bottom: 2px solid #e9d5ff;
-    font-size: 0.78rem;
-  }
-  td {
-    padding: 9px 12px;
-    border-bottom: 1px solid #f3f0ff;
-    color: #374151;
-    vertical-align: middle;
-  }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #faf5ff; }
-  .val-highlight {
-    font-weight: 800;
-    color: #4f46e5;
-  }
-  .val-good { color: #059669; font-weight: 700; }
-  .val-up   { color: #dc2626; font-weight: 700; }
-
-  /* Tags Grid */
-  .tags-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-  }
-  .tag-box {
-    border-radius: 12px;
-    padding: 12px 14px;
-  }
-  .tag-box.buy { background: #dcfce7; }
-  .tag-box.risk { background: #fee2e2; }
-  .tag-box-label {
-    font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
+    color: #0369a1;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 6px;
+    letter-spacing: 0.3px;
   }
-  .tag-box.buy .tag-box-label  { color: #166534; }
-  .tag-box.risk .tag-box-label { color: #991b1b; }
-  .tag-list { list-style: none; padding: 0; }
-  .tag-list li {
-    font-size: 0.8rem;
-    color: #374151;
-    padding: 3px 0;
-    line-height: 1.4;
+  .val-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #f0f9ff;
+    color: #1e293b;
+    font-weight: 500;
   }
-  .tag-list li::before { content: '• '; }
+  .val-table tr:last-child td { border-bottom: none; }
+  .val-table tr:hover td { background: #f0f9ff; }
+  .val-highlight { font-weight: 800; color: #0369a1; }
 
-  .footer-note {
+  /* ── 목표주가 그리드 ── */
+  .tp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+  .tp-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     text-align: center;
-    font-size: 0.72rem;
-    color: #94a3b8;
-    margin-top: 8px;
+    border-top: 3px solid #0ea5e9;
+  }
+  .tp-card.gold { border-top-color: #f59e0b; }
+  .tp-house { font-size: 11px; color: #64748b; margin-bottom: 4px; font-weight: 600; }
+  .tp-price { font-size: 15px; font-weight: 800; color: #0c2340; }
+  .tp-upside { font-size: 10px; font-weight: 700; margin-top: 3px; }
+  .up-green { color: #16a34a; }
+  .up-red   { color: #dc2626; }
+
+  /* ── 전략 포인트 ── */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .strategy-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 13px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    border-left: 3px solid #0ea5e9;
+    font-size: 12px;
+    color: #334155;
+    line-height: 1.6;
+  }
+  .strategy-card .s-title {
+    font-weight: 700;
+    color: #0369a1;
+    font-size: 11px;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  /* ── 52주 바 ── */
+  .range-bg {
+    background: #e0f2fe;
+    border-radius: 6px;
+    height: 10px;
+    position: relative;
+    margin-top: 4px;
+  }
+  .range-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #38bdf8, #0369a1);
+    border-radius: 6px;
+  }
+  .range-dot {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px; height: 14px;
+    background: #0369a1;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 4px;
+  }
+
+  /* ── 태그 ── */
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .buy-tag  { font-size: 11px; font-weight: 700; background: #dcfce7; color: #15803d; border-radius: 6px; padding: 4px 10px; }
+  .risk-tag { font-size: 11px; font-weight: 700; background: #fee2e2; color: #dc2626; border-radius: 6px; padding: 4px 10px; }
+
+  .disclaimer {
+    font-size: 10px; color: #94a3b8;
+    margin-top: 14px; text-align: center; line-height: 1.5;
+  }
+
+  @media (max-width: 480px) {
+    .strategy-grid { grid-template-columns: 1fr; }
+    .current-price { font-size: 18px; }
+    .stock-name { font-size: 15px; }
+    .val-table th, .val-table td { padding: 7px 8px; font-size: 11px; }
+    .tp-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
+<div class="widget-wrap">
 
-<div class="card-wrap">
-
-  <div class="main-card">
-
-    <!-- Hero Header -->
-    <div class="card-hero">
-      <div class="hero-top">
-        <div>
-          <div class="stock-name">삼성전자</div>
-          <div class="stock-ticker">Samsung Electronics | KRX: 005930</div>
-        </div>
-        <div class="price-badge">
-          <div class="price-label">최근 주가 (52주 고가)</div>
-          <div class="price-val">₩223,000</div>
-          <div class="price-chg">▲ 52주 수익률 +215.96%</div>
-        </div>
-      </div>
-      <div class="hero-tags">
-        <span class="htag">AI 메모리</span>
-        <span class="htag">HBM4</span>
-        <span class="htag">반도체 대장주</span>
-        <span class="htag">코스피 시총 1위</span>
-        <span class="htag">글로벌 외국인 수급</span>
-      </div>
+  <!-- 헤더 -->
+  <div class="header-row">
+    <div class="ticker-badge">010120.KS</div>
+    <div class="stock-name-wrap">
+      <div class="stock-name">LS Electric</div>
+      <div class="stock-sub">📌 2026.04.28 오늘의 추천 종목<br>AI 데이터센터 전력 인프라 — 세계 최초 초전도 전력망 보유</div>
     </div>
-
-    <!-- Body -->
-    <div class="card-body">
-
-      <!-- Valuation Table -->
-      <div class="section-label">📊 핵심 밸류에이션 지표</div>
-      <table>
-        <thead>
-          <tr>
-            <th>지표</th>
-            <th>수치</th>
-            <th>평가</th>
-            <th>비고</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12개월 선행 PER</td>
-            <td class="val-highlight">약 8~10x</td>
-            <td class="val-good">저평가</td>
-            <td>글로벌 피어 대비 할인</td>
-          </tr>
-          <tr>
-            <td>12개월 선행 PBR</td>
-            <td class="val-highlight">약 1.2~1.4x</td>
-            <td class="val-good">적정 수준</td>
-            <td>코리아디스카운트 해소 중</td>
-          </tr>
-          <tr>
-            <td>ROE (자기자본이익률)</td>
-            <td class="val-highlight">10.78%</td>
-            <td class="val-good">개선 중</td>
-            <td>2024년 대비 크게 상승</td>
-          </tr>
-          <tr>
-            <td>ROIC</td>
-            <td class="val-highlight">12.12%</td>
-            <td class="val-good">양호</td>
-            <td>투하자본 효율 회복</td>
-          </tr>
-          <tr>
-            <td>Altman Z-Score</td>
-            <td class="val-highlight">4.27</td>
-            <td class="val-good">재무 건전</td>
-            <td>파산 위험 거의 없음 (2.99 이상)</td>
-          </tr>
-          <tr>
-            <td>Piotroski F-Score</td>
-            <td class="val-highlight">5 / 9</td>
-            <td>보통 이상</td>
-            <td>재무 건전성 종합 점수</td>
-          </tr>
-          <tr>
-            <td>52주 고가</td>
-            <td class="val-highlight">₩223,000</td>
-            <td class="val-up">신고가 경신</td>
-            <td>연초 대비 약 4배 상승</td>
-          </tr>
-          <tr>
-            <td>52주 저가</td>
-            <td>₩52,900</td>
-            <td>저점 탈출</td>
-            <td>2025년 실적 저점 구간</td>
-          </tr>
-          <tr>
-            <td>52주 수익률</td>
-            <td class="val-highlight">+215.96%</td>
-            <td class="val-good">압도적 성과</td>
-            <td>코스피 YTD +47~51% 대비 아웃퍼폼</td>
-          </tr>
-          <tr>
-            <td>코스피 선행 PER</td>
-            <td class="val-highlight">약 7.5x</td>
-            <td class="val-good">아시아 최저 수준</td>
-            <td>MSCI 아태 15.4x 대비 절반</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Buy/Risk Tags -->
-      <div class="section-label">🎯 매수 근거 & 리스크 요인</div>
-      <div class="tags-grid">
-        <div class="tag-box buy">
-          <div class="tag-box-label">✅ 매수 근거</div>
-          <ul class="tag-list">
-            <li>AI HBM4 고객사 납품 확대 기대</li>
-            <li>DXY 약세 → 외국인 순매수 지속</li>
-            <li>VIX 하락 → 대형주 리스크온 수혜</li>
-            <li>글로벌 IB 코스피 목표 8,000 상향</li>
-            <li>MSCI 피어 대비 여전히 할인 거래</li>
-            <li>1분기 GDP 서프라이즈 펀더멘털 지지</li>
-          </ul>
-        </div>
-        <div class="tag-box risk">
-          <div class="tag-box-label">⚠️ 리스크 요인</div>
-          <ul class="tag-list">
-            <li>중동 지정학 → VIX 재반등 가능성</li>
-            <li>미 10년물 4.5% 돌파 시 부담</li>
-            <li>HBM 경쟁 심화 (SK하이닉스, 마이크론)</li>
-            <li>원화 강세 가속 시 수출 실적 압박</li>
-            <li>단기 과열 후 차익 실현 매물 출현</li>
-          </ul>
-        </div>
-      </div>
-
+    <div class="price-col">
+      <div class="current-price">255,500원</div>
+      <div class="price-change">▲ 전일 +12.36%</div>
+      <div class="price-note">4/27 종가 | 3일 연속 신고가</div>
     </div>
   </div>
 
-  <div class="footer-note">
-    ※ 본 내용은 투자 정보 제공 목적이며 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.<br>
-    밸류에이션 수치는 시장 컨센서스 기반 추정치로 실제와 다를 수 있습니다.
+  <!-- 수주 배너 -->
+  <div class="contract-banner">
+    <div class="contract-icon">🏆</div>
+    <div class="contract-text">
+      <strong>2026년 4월 신규 수주: 미국 AI 데이터센터 $115M + $46M 계약</strong>
+      <span>전력분배 스위치기어·변압기 공급 / DC 그리드 솔루션 / 세계 최초 초전도 전력망 데이터센터 적용 프로젝트 진행 중 (with KEPCO)</span>
+    </div>
   </div>
 
+  <!-- 밸류에이션 테이블 -->
+  <div class="section-title">📊 핵심 투자 지표</div>
+  <table class="val-table">
+    <thead>
+      <tr><th>지표</th><th>수치</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>현재 주가 (4/27 종가)</td>
+        <td class="val-highlight">255,500원</td>
+        <td>주식분할 후 기준</td>
+      </tr>
+      <tr>
+        <td>전일 등락률</td>
+        <td class="val-highlight">+12.36%</td>
+        <td>코스피 당일 최고 상승 섹터</td>
+      </tr>
+      <tr>
+        <td>모닝스타 공정가치 (분할 조정)</td>
+        <td class="val-highlight">약 309,000원</td>
+        <td>현재 대비 +20.9% 여력</td>
+      </tr>
+      <tr>
+        <td>Forward PER</td>
+        <td class="val-highlight">약 20~25배</td>
+        <td>글로벌 경쟁사 지멘스(15~18배) 대비 성장 프리미엄</td>
+      </tr>
+      <tr>
+        <td>애널리스트 투자의견</td>
+        <td class="val-highlight">매수 19명 / 매도 0명</td>
+        <td>만장일치 매수 — 비중확대</td>
+      </tr>
+      <tr>
+        <td>2026년 미국 수주 잔고</td>
+        <td class="val-highlight">$161M (약 2,380억원)</td>
+        <td>$115M + $46M 신규 계약 합산</td>
+      </tr>
+      <tr>
+        <td>AI HVAC 전력절감 효과</td>
+        <td class="val-highlight">-24.6% 전력소비</td>
+        <td>AI 기반 냉각 제어 — 상용화 완료</td>
+      </tr>
+      <tr>
+        <td>초전도 전력망</td>
+        <td class="val-highlight">세계 최초 개발</td>
+        <td>KEPCO + LS Electric 공동 — 데이터센터 적용 예정</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <!-- 목표주가 -->
+  <div class="section-title">🏦 목표주가 분석 (분할 조정 추정)</div>
+  <div class="tp-grid">
+    <div class="tp-card gold">
+      <div class="tp-house">모닝스타 FV</div>
+      <div class="tp-price">~309,000원</div>
+      <div class="tp-upside up-green">▲ +20.9% 여력</div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-house">최고 목표가</div>
+      <div class="tp-price">~293,000원</div>
+      <div class="tp-upside up-green">▲ +14.7% 여력</div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-house">컨센서스 평균</div>
+      <div class="tp-price">~219,000원</div>
+      <div class="tp-upside up-red">▼ 이미 상회 중</div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-house">분석가 만장일치</div>
+      <div class="tp-price">19 / 0</div>
+      <div class="tp-upside up-green">Buy / Sell</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 52주 바 -->
+  <div class="section-title">📈 52주 주가 위치</div>
+  <div class="range-labels">
+    <span>52주 저점 <strong>~90,000원</strong></span>
+    <span style="color:#0369a1; font-weight:700;">현재 255,500원 ← 52주 신고가</span>
+    <span>목표 <strong>~309,000원</strong></span>
+  </div>
+  <div class="range-bg">
+    <div class="range-fill" style="width:73%"></div>
+    <div class="range-dot" style="left:73%"></div>
+  </div>
+  <div style="font-size:11px; color:#64748b; margin-top:5px;">
+    ※ 52주 저점→목표가 구간 중 현재 73% 위치 | 목표가까지 약 27% 여력
+  </div>
+
+  <hr class="divider">
+
+  <!-- 전략 포인트 -->
+  <div class="section-title">🎯 오늘 주목 이유 — 4가지 핵심 포인트</div>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <span class="s-title">⚡ 미국 AI 데이터센터 독점 납품</span>
+      하이퍼스케일 AI 데이터센터에 전력분배·DC 그리드 솔루션 독점 공급. 4월 한 달에만 $161M(약 2,380억원) 신규 수주 — 연간 매출의 약 30% 규모.
+    </div>
+    <div class="strategy-card">
+      <span class="s-title">🌐 세계 최초 초전도 전력망</span>
+      KEPCO와 세계 최초로 데이터센터 초전도 전력망 개발 중. 기술 독점 → 글로벌 라이선스 수익 + 추가 수주 가능성. 경쟁사 진입장벽 매우 높음.
+    </div>
+    <div class="strategy-card">
+      <span class="s-title">📊 FOMC 동결 → 설비투자 가속</span>
+      미국 금리 동결 지속 시 빅테크 AI 인프라 capex 가속. LS Electric 미국 수주 파이프라인 확대 → 2026년 하반기 실적 추가 서프라이즈 가능.
+    </div>
+    <div class="strategy-card">
+      <span class="s-title">🔋 AI HVAC 냉각 상용화 완료</span>
+      데이터센터 전력 소비 24.6% 절감 AI 냉각 시스템 실증 완료. 에너지 비용 절감에 민감한 빅테크 클라이언트 추가 계약 가능성 高.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 매수/리스크 태그 -->
+  <div class="section-title">✅ 매수 근거</div>
+  <div class="tag-row">
+    <span class="buy-tag">미국 $161M 신규 수주</span>
+    <span class="buy-tag">세계 최초 초전도 전력망</span>
+    <span class="buy-tag">만장일치 매수 (19/0)</span>
+    <span class="buy-tag">3거래일 연속 신고가</span>
+    <span class="buy-tag">FOMC 동결 인프라 수혜</span>
+    <span class="buy-tag">AI 냉각 솔루션 상용화</span>
+  </div>
+
+  <div class="section-title" style="margin-top:14px;">⚠️ 주요 리스크</div>
+  <div class="tag-row">
+    <span class="risk-tag">단기 +12% 급등 피로감</span>
+    <span class="risk-tag">철강·구리 원자재 비용 상승</span>
+    <span class="risk-tag">WTI 고유가 → 물류비 부담</span>
+    <span class="risk-tag">컨센서스 평균 목표가 이미 상회</span>
+  </div>
+
+  <div class="disclaimer">
+    ⚠ 본 내용은 투자 정보 제공 목적으로 작성되었으며, 투자 권유가 아닙니다.<br>
+    투자 판단의 최종 책임은 투자자 본인에게 있습니다.
+  </div>
 </div>
-
 </body>
 </html>
