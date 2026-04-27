@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쿠쿠홀딩스 분기 실적</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { margin:0;padding:0;box-sizing:border-box; }
+
+  body {
+    font-family:'Noto Sans KR',sans-serif;
+    background:#F0FDF4;
+    padding:28px 20px;
+  }
+
+  .wrap { max-width:720px;margin:0 auto; }
+
+  .header {
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:20px;
+  }
+
+  .icon-box {
+    width:40px;height:40px;
+    background:linear-gradient(135deg,#10B981,#059669);
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;
+  }
+
+  .title-group h2 { font-size:17px;font-weight:800;color:#064E3B; }
+  .title-group p  { font-size:12px;color:#6B7280;margin-top:2px; }
+
+  .table-wrap {
+    background:#ffffff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 3px 16px rgba(16,185,129,0.12);
+  }
+
+  table {
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+  }
+
+  thead tr {
+    background:linear-gradient(135deg,#065F46,#047857);
+    color:#ffffff;
+  }
+
+  thead th {
+    padding:12px 14px;
+    text-align:center;
+    font-weight:700;
+    letter-spacing:0.3px;
+    font-size:12px;
+  }
+
+  thead th:first-child { text-align:left;padding-left:18px; }
+
+  tbody tr {
+    border-bottom:1px solid #F0FDF4;
+    transition:background 0.15s;
+  }
+
+  tbody tr:hover { background:#F0FDF4; }
+
+  tbody tr.highlight {
+    background:#ECFDF5;
+  }
+
+  tbody tr.estimate {
+    background:#FFFBEB;
+  }
+
+  td {
+    padding:11px 14px;
+    text-align:center;
+    color:#374151;
+  }
+
+  td:first-child {
+    text-align:left;
+    padding-left:18px;
+    font-weight:600;
+    color:#1A1A1A;
+  }
+
+  .up   { color:#EF4444;font-weight:700; }
+  .down { color:#3B82F6;font-weight:700; }
+  .neu  { color:#6B7280; }
+
+  .tag {
+    display:inline-block;
+    font-size:10px;
+    font-weight:700;
+    padding:2px 7px;
+    border-radius:4px;
+    margin-left:5px;
+  }
+
+  .tag-best { background:#FEF3C7;color:#B45309; }
+  .tag-est  { background:#EFF6FF;color:#1D4ED8; }
+
+  .summary {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:14px;
+  }
+
+  .sum-card {
+    background:#fff;
+    border-radius:12px;
+    padding:14px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .sum-label { font-size:11px;color:#6B7280;margin-bottom:4px; }
+  .sum-value { font-size:20px;font-weight:900;color:#065F46; }
+  .sum-sub   { font-size:11px;color:#9CA3AF;margin-top:3px; }
+
+  .note {
+    background:#ECFDF5;
+    border-left:4px solid #10B981;
+    padding:10px 14px;
+    border-radius:0 8px 8px 0;
+    font-size:12px;color:#065F46;
+    margin-top:14px;line-height:1.6;
+  }
+
+  .note b { color:#047857; }
+
+  .date-tag { font-size:11px;color:#9CA3AF;text-align:right;margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="icon-box">📋</div>
+    <div class="title-group">
+      <h2>쿠쿠홀딩스 분기별 실적 추이 (연결기준)</h2>
+      <p>매출액 · 영업이익 · 순이익 | 단위: 억원</p>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>분기</th>
+          <th>매출액</th>
+          <th>YoY</th>
+          <th>영업이익</th>
+          <th>YoY</th>
+          <th>순이익</th>
+          <th>YoY</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2024 2Q</td>
+          <td>1,842</td>
+          <td class="neu">—</td>
+          <td>181</td>
+          <td class="neu">—</td>
+          <td>152</td>
+          <td class="neu">—</td>
+        </tr>
+        <tr>
+          <td>2024 3Q</td>
+          <td>2,027</td>
+          <td class="neu">—</td>
+          <td>226</td>
+          <td class="neu">—</td>
+          <td>232</td>
+          <td class="neu">—</td>
+        </tr>
+        <tr>
+          <td>2025 2Q</td>
+          <td>2,063</td>
+          <td class="up">+12%</td>
+          <td>204</td>
+          <td class="up">+13%</td>
+          <td>—</td>
+          <td class="neu">—</td>
+        </tr>
+        <tr class="highlight">
+          <td>2025 3Q <span class="tag tag-best">역대급</span></td>
+          <td><b>2,433</b></td>
+          <td class="up">+20%</td>
+          <td><b>303</b></td>
+          <td class="up">+34%</td>
+          <td><b>380</b></td>
+          <td class="up">+64%</td>
+        </tr>
+        <tr class="estimate">
+          <td>2025 4Q <span class="tag tag-est">추정치</span></td>
+          <td>2,682</td>
+          <td class="up">+12.1%</td>
+          <td>382</td>
+          <td class="up">+3.3%</td>
+          <td>—</td>
+          <td class="neu">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="summary">
+    <div class="sum-card">
+      <div class="sum-label">3Q25 매출 예상 초과</div>
+      <div class="sum-value" style="color:#10B981">+9%</div>
+      <div class="sum-sub">컨센서스 대비</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">3Q25 영업이익 초과</div>
+      <div class="sum-value" style="color:#F59E0B">+12%</div>
+      <div class="sum-sub">컨센서스 대비</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">3Q25 순이익 급증</div>
+      <div class="sum-value" style="color:#EF4444">+64%</div>
+      <div class="sum-sub">YoY 기준</div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>💡 주목 포인트:</b> 2025년 3분기 순이익이 전년 대비 +64% 폭증한 것은 <b>레버리지 효과 극대화</b>의 신호입니다.
+    매출 증가 이상으로 이익이 늘어나는 구간은 투자 관점에서 가장 매력적인 구간입니다.
+  </div>
+
+  <div class="date-tag">출처: 버틀러, NH투자증권 추정, 씽크풀 | 2025 4Q는 NH투자증권 추정치</div>
+</div>
+</body>
+</html>
