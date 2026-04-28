@@ -1,543 +1,273 @@
+<!-- [삽입 위치] 핵심 뉴스 TOP 5 섹션 바로 아래 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오늘의 시장 뉴스 TOP 5 — 2026.04.27</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<title>뉴스 타임라인 | 2026.04.29</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: #f0fdf4;
+    padding: 24px 16px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .header h2 {
+    font-size: 1.25rem;
+    color: #14532d;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .header p { font-size: 0.8rem; color: #6b7280; }
 
-:root {
-  --bg:         #F4F2EC;
-  --surface:    #FFFFFF;
-  --surface2:   #FAFAF7;
-  --border:     #E4E0D5;
-  --text:       #18170F;
-  --sub:        #605E55;
-  --muted:      #A09D95;
+  .timeline {
+    max-width: 780px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #22c55e, #3b82f6, #f59e0b, #8b5cf6, #10b981);
+    border-radius: 2px;
+  }
 
-  /* 뉴스 카테고리 색상 */
-  --bull:       #14703F;   /* 상승·호재 */
-  --bull-bg:    #E5F5EE;
-  --bull-lt:    #A8DFC0;
-  --bear:       #B03020;   /* 하락·악재 */
-  --bear-bg:    #FCEAE7;
-  --bear-lt:    #F0B5AC;
-  --warn:       #C07800;   /* 경고·중립 */
-  --warn-bg:    #FFF5DC;
-  --warn-lt:    #F5D98A;
-  --geo:        #1A5FA0;   /* 지정학 */
-  --geo-bg:     #E2EEF9;
-  --geo-lt:     #9ABFE6;
+  .news-item {
+    position: relative;
+    margin-left: 32px;
+    margin-bottom: 18px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  }
+  .news-item::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 18px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px;
+  }
+  .news-item.n1::before { background: #22c55e; box-shadow: 0 0 0 2px #22c55e; }
+  .news-item.n2::before { background: #3b82f6; box-shadow: 0 0 0 2px #3b82f6; }
+  .news-item.n3::before { background: #f59e0b; box-shadow: 0 0 0 2px #f59e0b; }
+  .news-item.n4::before { background: #8b5cf6; box-shadow: 0 0 0 2px #8b5cf6; }
+  .news-item.n5::before { background: #10b981; box-shadow: 0 0 0 2px #10b981; }
 
-  /* 타임라인 세로선 */
-  --line:       #D8D4C8;
-  --dot-size:   14px;
-}
+  .news-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .news-rank {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .r1 { background: #22c55e; }
+  .r2 { background: #3b82f6; }
+  .r3 { background: #f59e0b; }
+  .r4 { background: #8b5cf6; }
+  .r5 { background: #10b981; }
 
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  padding: 0; margin: 0;
-}
+  .source-badge {
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #555;
+    font-weight: 600;
+  }
+  .tag {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+  .tag-good    { background: #dcfce7; color: #166534; }
+  .tag-bad     { background: #fee2e2; color: #991b1b; }
+  .tag-neutral { background: #fef9c3; color: #854d0e; }
 
-.wrap {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 32px 20px 40px;
-}
+  .news-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .news-body {
+    font-size: 0.82rem;
+    color: #4b5563;
+    line-height: 1.65;
+  }
+  .stars {
+    font-size: 0.78rem;
+    color: #f59e0b;
+    margin-top: 6px;
+  }
+  .impact-meter {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .impact-label { font-size: 0.68rem; color: #9ca3af; }
+  .impact-bar {
+    height: 5px;
+    border-radius: 3px;
+    flex: 1;
+    background: #e5e7eb;
+    overflow: hidden;
+  }
+  .impact-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+  .fill-green  { background: #22c55e; }
+  .fill-blue   { background: #3b82f6; }
+  .fill-yellow { background: #f59e0b; }
+  .fill-purple { background: #8b5cf6; }
+  .fill-teal   { background: #10b981; }
 
-/* ── HEADER ── */
-.page-header {
-  margin-bottom: 28px;
-}
-.date-strip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.date-sep { width: 24px; height: 1px; background: var(--border); }
-.page-title {
-  font-family: 'Noto Serif KR', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.35;
-  margin-bottom: 6px;
-}
-.page-sub {
-  font-size: 13px;
-  color: var(--sub);
-  line-height: 1.6;
-}
-.header-rule {
-  margin-top: 16px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--text) 0%, transparent 80%);
-  border: none;
-  border-radius: 2px;
-}
-
-/* ── LEGEND ── */
-.legend-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 26px;
-}
-.leg-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-family: 'DM Mono', monospace;
-}
-.leg-bull { background: var(--bull-bg); color: var(--bull); border: 1px solid var(--bull-lt); }
-.leg-bear { background: var(--bear-bg); color: var(--bear); border: 1px solid var(--bear-lt); }
-.leg-warn { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn-lt); }
-.leg-geo  { background: var(--geo-bg);  color: var(--geo);  border: 1px solid var(--geo-lt);  }
-.leg-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-/* ── TIMELINE ── */
-.timeline {
-  position: relative;
-  padding-left: 36px;
-}
-/* 세로선 */
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 8px;
-  bottom: 8px;
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    var(--bull) 0%,
-    var(--bull-lt) 25%,
-    var(--geo-lt) 50%,
-    var(--warn-lt) 75%,
-    var(--bear-lt) 100%
-  );
-  border-radius: 2px;
-}
-
-/* ── ITEM ── */
-.tl-item {
-  position: relative;
-  margin-bottom: 20px;
-  opacity: 0;
-  transform: translateX(-10px);
-  animation: slideIn .45s ease forwards;
-}
-.tl-item:nth-child(1) { animation-delay: .05s; }
-.tl-item:nth-child(2) { animation-delay: .18s; }
-.tl-item:nth-child(3) { animation-delay: .31s; }
-.tl-item:nth-child(4) { animation-delay: .44s; }
-.tl-item:nth-child(5) { animation-delay: .57s; }
-@keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
-
-/* 타임라인 점 */
-.tl-dot {
-  position: absolute;
-  left: -32px;
-  top: 14px;
-  width: var(--dot-size);
-  height: var(--dot-size);
-  border-radius: 50%;
-  border: 2.5px solid var(--bg);
-  box-shadow: 0 0 0 1.5px currentColor;
-  z-index: 1;
-}
-.dot-bull { background: var(--bull); color: var(--bull); }
-.dot-bear { background: var(--bear); color: var(--bear); }
-.dot-warn { background: var(--warn); color: var(--warn); }
-.dot-geo  { background: var(--geo);  color: var(--geo);  }
-
-/* 카드 */
-.tl-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 18px 15px;
-  transition: box-shadow .18s, transform .18s;
-  position: relative;
-  overflow: hidden;
-}
-.tl-card:hover {
-  transform: translateX(3px);
-  box-shadow: 0 4px 20px rgba(0,0,0,.07);
-}
-/* 좌측 accent bar */
-.tl-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 4px;
-  border-radius: 0 0 0 10px;
-}
-.card-bull::before { background: var(--bull); }
-.card-bear::before { background: var(--bear); }
-.card-warn::before { background: var(--warn); }
-.card-geo::before  { background: var(--geo);  }
-
-/* 카드 내용 */
-.card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-.card-meta {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  flex-shrink: 0;
-}
-.rank-badge {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-}
-.cat-tag {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 2px 7px;
-  border-radius: 10px;
-  font-family: 'DM Mono', monospace;
-}
-.tag-bull { background: var(--bull-bg); color: var(--bull); }
-.tag-bear { background: var(--bear-bg); color: var(--bear); }
-.tag-warn { background: var(--warn-bg); color: var(--warn); }
-.tag-geo  { background: var(--geo-bg);  color: var(--geo);  }
-
-.time-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.card-headline {
-  font-family: 'Noto Serif KR', serif;
-  font-size: 14.5px;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.45;
-  margin-bottom: 8px;
-}
-
-.card-body {
-  font-size: 12.5px;
-  color: var(--sub);
-  line-height: 1.65;
-  margin-bottom: 10px;
-}
-
-/* 수치 뱃지 행 */
-.stat-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-.stat-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10.5px;
-  padding: 3px 9px;
-  border-radius: 6px;
-  font-weight: 500;
-}
-.sc-bull { background: var(--bull-bg); color: var(--bull); }
-.sc-bear { background: var(--bear-bg); color: var(--bear); }
-.sc-warn { background: var(--warn-bg); color: var(--warn); }
-.sc-geo  { background: var(--geo-bg);  color: var(--geo);  }
-.sc-neu  { background: #F0EEE8;        color: var(--sub);  }
-
-/* 임팩트 라벨 */
-.impact-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-top: 8px;
-  border-top: 1px dashed var(--border);
-}
-.impact-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-.impact-text {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--sub);
-}
-
-/* ── FOOTER ── */
-.page-footer {
-  margin-top: 8px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 12px;
-}
-.footer-note {
-  font-size: 10px;
-  color: var(--muted);
-  font-family: 'DM Mono', monospace;
-  line-height: 1.55;
-}
-.footer-src {
-  font-size: 10px;
-  color: var(--muted);
-  font-family: 'DM Mono', monospace;
-  text-align: right;
-  flex-shrink: 0;
-}
+  .disclaimer {
+    text-align: center;
+    font-size: 0.68rem;
+    color: #9ca3af;
+    margin-top: 16px;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 480px) {
+    .news-title { font-size: 0.88rem; }
+    .timeline { padding-left: 14px; }
+    .news-item { margin-left: 24px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<div class="header">
+  <h2>📰 2026.04.29 한국 증시 핵심 뉴스 타임라인</h2>
+  <p>오늘 장에 직접 영향을 줄 5대 이벤트 분석</p>
+</div>
 
-  <!-- HEADER -->
-  <div class="page-header">
-    <div class="date-strip">
-      <span>2026.04.27</span>
-      <span class="date-sep"></span>
-      <span>마감 시황</span>
-      <span class="date-sep"></span>
-      <span>Market Recap</span>
+<div class="timeline">
+
+  <!-- 뉴스 1 -->
+  <div class="news-item n1">
+    <div class="news-top">
+      <span class="news-rank r1">TOP 1</span>
+      <span class="source-badge">Bloomberg · Korea Herald</span>
+      <span class="tag tag-good">📈 호재</span>
     </div>
-    <div class="page-title">오늘의 시장 뉴스 TOP 5</div>
-    <div class="page-sub">
-      코스피 6,615 사상 최고 · SK하이닉스 130만원 돌파 · 미-이란 2차 협상 결렬<br>
-      국내외 핵심 5대 뉴스를 시간 순으로 정리한 투자자 브리핑입니다.
+    <div class="news-title">한국 증시, 영국 추월 — 세계 8위 주식시장 등극</div>
+    <div class="news-body">
+      한국 상장사 시가총액이 $4.04조를 기록하며 영국($3.99조)을 처음으로 추월했습니다. 코스피는 올해에만 약 60% 상승하며 주요국 증시 중 압도적 1위 수익률을 달성. 이 뉴스는 글로벌 패시브 펀드와 기관의 한국 비중 확대를 촉진할 수 있습니다.
     </div>
-    <hr class="header-rule">
+    <div class="stars">⭐⭐⭐ 중장기 외국인 자금 유입 트리거</div>
+    <div class="impact-meter">
+      <span class="impact-label">시장 영향도</span>
+      <div class="impact-bar"><div class="impact-fill fill-green" style="width:70%"></div></div>
+      <span class="impact-label">70%</span>
+    </div>
   </div>
 
-  <!-- LEGEND -->
-  <div class="legend-row">
-    <span class="leg-chip leg-bull"><span class="leg-dot" style="background:var(--bull)"></span>호재·상승</span>
-    <span class="leg-chip leg-geo"><span class="leg-dot" style="background:var(--geo)"></span>지정학</span>
-    <span class="leg-chip leg-warn"><span class="leg-dot" style="background:var(--warn)"></span>경계·혼조</span>
-    <span class="leg-chip leg-bear"><span class="leg-dot" style="background:var(--bear)"></span>리스크·주의</span>
+  <!-- 뉴스 2 -->
+  <div class="news-item n2">
+    <div class="news-top">
+      <span class="news-rank r2">TOP 2</span>
+      <span class="source-badge">CNBC · MarketScreener</span>
+      <span class="tag tag-good">📈 초대형 호재</span>
+    </div>
+    <div class="news-title">SK하이닉스 Q1 2026 — 순이익 40.35조원, 영업이익률 72% 달성</div>
+    <div class="news-body">
+      SK하이닉스가 Q1 2026 순이익 40.35조원(+398% YoY)을 기록했습니다. HBM3E AI 메모리 수요가 전혀 꺾이지 않고 있으며, 영업이익 37.61조원은 분기 사상 최대. 골드만삭스 목표주가를 135만원으로 상향. 반도체 업종 전반 동반 상승 기대.
+    </div>
+    <div class="stars">⭐⭐⭐⭐⭐ 오늘 반도체 섹터 상승의 핵심 동력</div>
+    <div class="impact-meter">
+      <span class="impact-label">시장 영향도</span>
+      <div class="impact-bar"><div class="impact-fill fill-blue" style="width:95%"></div></div>
+      <span class="impact-label">95%</span>
+    </div>
   </div>
 
-  <!-- TIMELINE -->
-  <div class="timeline">
-
-    <!-- ① 코스피 6,600 돌파 -->
-    <div class="tl-item">
-      <div class="tl-dot dot-bull"></div>
-      <div class="tl-card card-bull">
-        <div class="card-top">
-          <div class="card-meta">
-            <span class="rank-badge">TOP 1</span>
-            <span class="cat-tag tag-bull">📈 국내증시</span>
-          </div>
-          <span class="time-tag">15:30 마감</span>
-        </div>
-        <div class="card-headline">
-          코스피 6,615.03 마감 — 사상 첫 6,600선 돌파<br>
-          국내 증시 시가총액 6,047조원 · 역대 첫 6,000조 시대
-        </div>
-        <div class="card-body">
-          코스피가 전일 대비 139.40pt(+2.15%) 오른 6,615.03에 마감하며 사상 최고가를 갈아치웠다.
-          장중에는 6,657.22까지 치솟기도 했다. SK하이닉스의 1분기 역대급 실적과
-          반도체 업종 전반의 랠리가 지수를 견인했다. 코스닥도 1.72% 오른 1,224.52로
-          25년 만에 1,200선을 회복하며 동반 강세를 보였다.
-        </div>
-        <div class="stat-row">
-          <span class="stat-chip sc-bull">KOSPI 6,615.03 ▲+2.15%</span>
-          <span class="stat-chip sc-bull">KOSDAQ 1,224.52 ▲+1.72%</span>
-          <span class="stat-chip sc-neu">시총 6,047조원 (사상 첫 6,000조 돌파)</span>
-        </div>
-        <div class="impact-row">
-          <span class="impact-label">투자 임팩트</span>
-          <span class="impact-text">반도체·방산 중심 추세 상승 지속 확인 — 중기 강세 시그널</span>
-        </div>
-      </div>
+  <!-- 뉴스 3 -->
+  <div class="news-item n3">
+    <div class="news-top">
+      <span class="news-rank r3">TOP 3</span>
+      <span class="source-badge">Korea Herald · THE INVESTOR</span>
+      <span class="tag tag-good">📈 호재</span>
     </div>
-
-    <!-- ② SK하이닉스 130만원 터치 -->
-    <div class="tl-item">
-      <div class="tl-dot dot-bull"></div>
-      <div class="tl-card card-bull">
-        <div class="card-top">
-          <div class="card-meta">
-            <span class="rank-badge">TOP 2</span>
-            <span class="cat-tag tag-bull">💾 반도체</span>
-          </div>
-          <span class="time-tag">11:19 장중</span>
-        </div>
-        <div class="card-headline">
-          SK하이닉스 장중 130만원 터치 · 역대 최고가 경신<br>
-          외국인 56만주 순매수 · 시장 전체 외국인 1.4조 유입
-        </div>
-        <div class="card-body">
-          SK하이닉스가 장중 130만원을 돌파하며 역대 최고가를 새로 썼다.
-          4월 23일 발표한 1분기 영업이익 37조6,103억원(분기 사상 최대) 여파가
-          계속 반영된 결과다. 마감은 129만5,000원(+5.97%)이었다. 삼성증권은
-          2026년 연간 영업이익 전망치를 205조원에서 228조원으로, 한국투자증권은
-          251조원으로 각각 상향 조정했다. 외국인과 기관이 유가증권시장에서 각각
-          1조3,909억원, 1조1,997억원을 순매수하며 지수를 이끌었다.
-        </div>
-        <div class="stat-row">
-          <span class="stat-chip sc-bull">000660 마감 1,295,000원 ▲+5.97%</span>
-          <span class="stat-chip sc-bull">외국인 순매수 561,712주</span>
-          <span class="stat-chip sc-neu">삼성증권 TP → 228조 상향</span>
-        </div>
-        <div class="impact-row">
-          <span class="impact-label">투자 임팩트</span>
-          <span class="impact-text">HBM 공급 부족 구조 지속 — SK하이닉스 중기 추세 매수 유효</span>
-        </div>
-      </div>
+    <div class="news-title">삼성SDI, ESS 배터리 급성장으로 Q1 흑자 전환</div>
+    <div class="news-body">
+      삼성SDI가 Q1 2026 순이익 561억원을 달성하며 1년 만에 흑자로 돌아섰습니다. AI 데이터센터향 ESS 배터리 수요 폭증과 미국 현지 생산(AMPC) 세액공제 수혜가 실적을 견인. 2026년 ESS 출하량은 전년 대비 +67% 성장 전망.
     </div>
-
-    <!-- ③ 미-이란 2차 협상 결렬 -->
-    <div class="tl-item">
-      <div class="tl-dot dot-geo"></div>
-      <div class="tl-card card-geo">
-        <div class="card-top">
-          <div class="card-meta">
-            <span class="rank-badge">TOP 3</span>
-            <span class="cat-tag tag-geo">🌏 지정학</span>
-          </div>
-          <span class="time-tag">오전 (현지시간)</span>
-        </div>
-        <div class="card-headline">
-          미-이란 파키스탄 2차 평화협상 또 결렬<br>
-          핵 농축·제재 해제 이견 — 트럼프 "군사 압박 강화" 예고
-        </div>
-        <div class="card-body">
-          파키스탄 이슬라마바드에서 열린 미국-이란 2차 종전 협상이 핵 농축 중단
-          기간 및 미국의 제재 해제 시점을 둘러싼 이견을 좁히지 못하고 무산됐다.
-          이란 외무장관은 오만을 거쳐 협상 조건을 재전달하고 있지만, 트럼프
-          대통령은 "대화의 문은 열어두겠다"면서도 해상 봉쇄·군사 압박을 더욱 강화할
-          것이라고 밝혔다. 브렌트유는 107달러대까지 재상승했다.
-        </div>
-        <div class="stat-row">
-          <span class="stat-chip sc-geo">브렌트유 $107/배럴 재상승</span>
-          <span class="stat-chip sc-geo">WTI $95.27/배럴</span>
-          <span class="stat-chip sc-warn">호르무즈 해협 사실상 봉쇄 9주 지속</span>
-        </div>
-        <div class="impact-row">
-          <span class="impact-label">투자 임팩트</span>
-          <span class="impact-text">고유가 장기화 → 정유·에너지 주 단기 수혜 / 소비재·항공 비용 압박</span>
-        </div>
-      </div>
+    <div class="stars">⭐⭐⭐ 저평가 해소 계기, 반등 기대</div>
+    <div class="impact-meter">
+      <span class="impact-label">시장 영향도</span>
+      <div class="impact-bar"><div class="impact-fill fill-yellow" style="width:65%"></div></div>
+      <span class="impact-label">65%</span>
     </div>
+  </div>
 
-    <!-- ④ 코스닥 1,200선 회복 -->
-    <div class="tl-item">
-      <div class="tl-dot dot-bull"></div>
-      <div class="tl-card card-bull">
-        <div class="card-top">
-          <div class="card-meta">
-            <span class="rank-badge">TOP 4</span>
-            <span class="cat-tag tag-bull">🧬 코스닥</span>
-          </div>
-          <span class="time-tag">15:30 마감</span>
-        </div>
-        <div class="card-headline">
-          코스닥 1,224.52 마감 — 25년여 만에 1,200선 회복<br>
-          바이오·소부장·우주 섹터 주도 · 코스피 자금 분산 유입
-        </div>
-        <div class="card-body">
-          코스닥이 1,224.52로 마감하며 약 25년 만에 1,200선을 회복했다.
-          코스피 대형 반도체 종목에서 일부 자금이 코스닥 바이오·소재·부품·장비
-          (소부장), 재생에너지, 우주 섹터로 이동하는 양상이 포착됐다.
-          정부의 코스닥 활성화 정책에 맞춰 대형 연기금도 코스닥 비중을
-          확대하고 있다는 점이 긍정적인 수급 배경으로 작용했다.
-        </div>
-        <div class="stat-row">
-          <span class="stat-chip sc-bull">KOSDAQ 1,224.52 ▲+1.72%</span>
-          <span class="stat-chip sc-bull">1,200선 25년 만에 회복</span>
-          <span class="stat-chip sc-neu">바이오·소부장 주도</span>
-        </div>
-        <div class="impact-row">
-          <span class="impact-label">투자 임팩트</span>
-          <span class="impact-text">코스닥 중소형 바이오·소부장 비중 확대 고려 시점 — 분산 수혜 기대</span>
-        </div>
-      </div>
+  <!-- 뉴스 4 -->
+  <div class="news-item n4">
+    <div class="news-top">
+      <span class="news-rank r4">TOP 4</span>
+      <span class="source-badge">Hyundai Newsroom · Seoul Economic Daily</span>
+      <span class="tag tag-good">📈 호재</span>
     </div>
-
-    <!-- ⑤ 개인 14조 순매도 · 고점 경계 -->
-    <div class="tl-item">
-      <div class="tl-dot dot-warn"></div>
-      <div class="tl-card card-warn">
-        <div class="card-top">
-          <div class="card-meta">
-            <span class="rank-badge">TOP 5</span>
-            <span class="cat-tag tag-warn">⚠ 수급경계</span>
-          </div>
-          <span class="time-tag">마감 후 집계</span>
-        </div>
-        <div class="card-headline">
-          개인 4월 들어 14조원 순매도 · "고점 인식" 확산<br>
-          이날만 2조5,243억 팔아 — 외국인·기관 매수 vs 개인 매도 극대화
-        </div>
-        <div class="card-body">
-          개인 투자자는 4월 한 달간 14조원 이상을 순매도하며 '고점 인식'을
-          강하게 드러냈다. 이날만 2조5,243억원을 팔아치웠다. 반면 외국인은
-          현물 1조3,909억원·선물 5,982억원을 샀고, 기관도 1조1,997억원을
-          매수했다. 중동 불안·글로벌 금리 변수 속 개인의 차익실현이 이어지는
-          반면, 외국인·기관의 대규모 매수로 지수는 상승세를 유지하는 구조다.
-        </div>
-        <div class="stat-row">
-          <span class="stat-chip sc-bull">외국인 순매수 +1조3,909억</span>
-          <span class="stat-chip sc-bull">기관 순매수 +1조1,997억</span>
-          <span class="stat-chip sc-bear">개인 순매도 −2조5,243억</span>
-        </div>
-        <div class="impact-row">
-          <span class="impact-label">투자 임팩트</span>
-          <span class="impact-text">외국인·기관 주도 시장 — 개인 과매도 구간은 역사적으로 저점 매수 기회</span>
-        </div>
-      </div>
+    <div class="news-title">현대차, 아틀라스 로봇 + Q1 역대 최고 매출 45.94조원</div>
+    <div class="news-body">
+      현대차 Q1 2026 매출이 45.94조원(+3.4% YoY)으로 사상 최고를 기록했습니다. 전동화 차량 비중 24.9%로 분기 최고치. 아틀라스 휴머노이드 로봇 공개로 주가가 60만원을 돌파. EV 배터리 구독 서비스 파일럿도 시작해 비즈니스 모델 다각화 진행 중.
     </div>
-
-  </div><!-- /timeline -->
-
-  <!-- FOOTER -->
-  <div class="page-footer">
-    <div class="footer-note">
-      ⚠ 본 자료는 2026년 4월 27일(월) 마감 기준 보도자료 요약입니다.<br>
-      투자 결정의 최종 책임은 투자자 본인에게 있습니다.
+    <div class="stars">⭐⭐⭐⭐ EV·로봇 이중 모멘텀</div>
+    <div class="impact-meter">
+      <span class="impact-label">시장 영향도</span>
+      <div class="impact-bar"><div class="impact-fill fill-purple" style="width:78%"></div></div>
+      <span class="impact-label">78%</span>
     </div>
-    <div class="footer-src">
-      출처: 머니투데이 · 한국경제 · 민심뉴스<br>
-      오늘의클릭 · Barchart · TradingEconomics
+  </div>
+
+  <!-- 뉴스 5 -->
+  <div class="news-item n5">
+    <div class="news-top">
+      <span class="news-rank r5">TOP 5</span>
+      <span class="source-badge">Bloomberg · KED Global</span>
+      <span class="tag tag-neutral">🔔 중장기 호재</span>
+    </div>
+    <div class="news-title">구글 딥마인드, 삼성·SK하이닉스·현대차·LG와 AI 파트너십 강화</div>
+    <div class="news-body">
+      구글 딥마인드가 한국 4대 대기업과 AI 파트너십을 심화한다고 발표했습니다. 이는 한국 기업들이 글로벌 AI 공급망의 핵심 허브로 자리매김하고 있음을 확인해주는 신호. 단기 주가 영향보다는 중장기 협력 수주·R&D 기대감을 높입니다.
+    </div>
+    <div class="stars">⭐⭐⭐ 한국 AI 생태계 위상 강화</div>
+    <div class="impact-meter">
+      <span class="impact-label">시장 영향도</span>
+      <div class="impact-bar"><div class="impact-fill fill-teal" style="width:55%"></div></div>
+      <span class="impact-label">55%</span>
     </div>
   </div>
 
 </div>
+
+<p class="disclaimer">※ 본 자료는 투자 정보 제공 목적이며 투자 권유가 아닙니다. 최종 투자 판단은 투자자 본인 책임입니다.</p>
+
 </body>
 </html>
