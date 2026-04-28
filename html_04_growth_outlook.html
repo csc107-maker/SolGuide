@@ -1,360 +1,360 @@
-<!-- [삽입 위치: LS Electric 지속성장 근거 4가지 섹션 직후] -->
+<!-- [삽입 위치] 지속성장 근거 4가지 섹션 바로 아래 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LS Electric 성장 전망 카드 - 2026.04.28</title>
+<title>성장 전망 카드 | 2026.04.29</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    background: transparent;
+    background: #fffbf0;
+    padding: 24px 16px;
   }
-  .widget-wrap {
-    background: #f0fdf4;
-    border-radius: 16px;
-    padding: 24px 20px;
-    box-shadow: 0 4px 16px rgba(0,140,80,0.08);
-    max-width: 720px;
-    margin: 0 auto;
+  .header {
+    text-align: center;
+    margin-bottom: 22px;
   }
-  .widget-title {
-    font-size: 15px;
+  .header h2 {
+    font-size: 1.25rem;
+    color: #78350f;
     font-weight: 700;
-    color: #14532d;
     margin-bottom: 4px;
   }
-  .widget-date {
-    font-size: 12px;
-    color: #166534;
-    margin-bottom: 20px;
-  }
-  .section-title {
-    font-size: 12px;
-    font-weight: 700;
-    color: #15803d;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin: 0 0 12px;
-  }
-  .divider {
-    border: none;
-    border-top: 1px solid #bbf7d0;
-    margin: 16px 0;
-  }
+  .header p { font-size: 0.8rem; color: #92400e; }
 
-  /* ── 4대 성장 근거 카드 ── */
-  .growth-grid {
+  /* 4대 성장 근거 카드 */
+  .reasons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px;
-    margin-bottom: 4px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    max-width: 900px;
+    margin: 0 auto 24px;
   }
-  .growth-card {
+  .reason-card {
     background: #fff;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border-top: 4px solid #4ade80;
+    border-radius: 14px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-bottom: 4px solid;
+    position: relative;
   }
-  .growth-card:nth-child(2) { border-top-color: #22d3ee; }
-  .growth-card:nth-child(3) { border-top-color: #a78bfa; }
-  .growth-card:nth-child(4) { border-top-color: #fb923c; }
+  .reason-card.r1 { border-color: #3b82f6; }
+  .reason-card.r2 { border-color: #22c55e; }
+  .reason-card.r3 { border-color: #f59e0b; }
+  .reason-card.r4 { border-color: #8b5cf6; }
 
-  .growth-num {
-    font-size: 30px;
-    font-weight: 900;
-    color: #4ade80;
-    line-height: 1;
-    margin-bottom: 6px;
-    letter-spacing: -1px;
-  }
-  .growth-card:nth-child(2) .growth-num { color: #22d3ee; }
-  .growth-card:nth-child(3) .growth-num { color: #a78bfa; }
-  .growth-card:nth-child(4) .growth-num { color: #fb923c; }
-
-  .growth-title {
-    font-size: 13px;
+  .reason-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-size: 0.9rem;
     font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 7px;
-    line-height: 1.4;
+    color: #fff;
+    margin-bottom: 10px;
   }
-  .growth-body {
-    font-size: 12px;
-    color: #475569;
+  .bg-blue   { background: #3b82f6; }
+  .bg-green  { background: #22c55e; }
+  .bg-orange { background: #f59e0b; }
+  .bg-violet { background: #8b5cf6; }
+
+  .reason-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .reason-body {
+    font-size: 0.79rem;
+    color: #4b5563;
     line-height: 1.65;
   }
-  .growth-kpi {
+  .reason-kpi {
     margin-top: 10px;
-    background: #f0fdf4;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 12px;
+    display: inline-block;
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.76rem;
     font-weight: 700;
-    color: #15803d;
+    color: #374151;
   }
 
-  /* ── 수주 파이프라인 테이블 ── */
-  .order-table {
+  /* 이익 전망 테이블 */
+  .forecast-section {
+    max-width: 900px;
+    margin: 0 auto 22px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .forecast-section h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .forecast-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    margin-bottom: 4px;
+    font-size: 0.83rem;
   }
-  .order-table thead tr {
-    background: linear-gradient(90deg, #16a34a, #15803d);
-  }
-  .order-table th {
-    padding: 10px 14px;
+  .forecast-table thead th {
+    background: #f3f4f6;
+    padding: 9px 12px;
     text-align: center;
-    font-weight: 800;
-    color: #fff;
-    font-size: 12px;
-    letter-spacing: 0.3px;
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 0.76rem;
   }
-  .order-table td {
-    padding: 10px 14px;
-    border-bottom: 1px solid #f0fdf4;
+  .forecast-table thead th:first-child { text-align: left; }
+  .forecast-table tbody tr:nth-child(even) { background: #f9fafb; }
+  .forecast-table tbody td {
+    padding: 9px 12px;
+    color: #1f2937;
+    font-weight: 600;
     text-align: center;
-    color: #1e293b;
-    font-weight: 500;
-    font-size: 13px;
+    border-bottom: 1px solid #f3f4f6;
   }
-  .order-table tr:last-child td { border-bottom: none; }
-  .order-table tr:hover td { background: #f0fdf4; }
-  .order-table .left { text-align: left; font-weight: 600; }
-  .hl-green { font-weight: 800; color: #15803d; }
-  .hl-blue  { font-weight: 800; color: #0369a1; }
-  .badge-new {
-    background: #dcfce7; color: #15803d;
-    font-size: 10px; font-weight: 800;
-    border-radius: 4px; padding: 1px 6px;
-    margin-left: 4px;
-  }
+  .forecast-table tbody td:first-child { text-align: left; font-weight: 700; }
+  .forecast-table td.good  { color: #dc2626; font-weight: 800; }
+  .forecast-table td.great { color: #7c3aed; font-weight: 800; }
+  .forecast-table td.gray  { color: #9ca3af; }
 
-  /* ── KPI 달성 바 ── */
-  .bar-section { margin-bottom: 4px; }
-  .bar-item { margin-bottom: 12px; }
-  .bar-label {
+  /* 차트 바 */
+  .chart-section {
+    max-width: 900px;
+    margin: 0 auto 22px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .chart-section h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 16px;
+  }
+  .bar-chart-row {
     display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: #374151;
-    margin-bottom: 5px;
-    font-weight: 500;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
   }
-  .bar-label span:last-child { font-weight: 800; color: #15803d; }
-  .bar-bg {
-    background: #dcfce7;
-    border-radius: 6px;
-    height: 10px;
-    overflow: hidden;
-  }
+  .bar-label { font-size: 0.76rem; color: #6b7280; min-width: 65px; font-weight: 600; }
+  .bar-track { flex: 1; height: 20px; background: #f3f4f6; border-radius: 10px; overflow: hidden; }
   .bar-fill {
     height: 100%;
-    border-radius: 6px;
-    background: linear-gradient(90deg, #4ade80, #16a34a);
-  }
-
-  /* ── 투자 결론 박스 ── */
-  .conclusion-box {
-    background: linear-gradient(135deg, #052e16, #14532d);
-    border-radius: 14px;
-    padding: 20px;
-    color: #fff;
-  }
-  .conclusion-title {
-    font-size: 14px;
-    font-weight: 800;
-    color: #4ade80;
-    margin-bottom: 12px;
-    letter-spacing: -0.3px;
-  }
-  .conclusion-body {
-    font-size: 13px;
-    line-height: 1.8;
-    color: #bbf7d0;
-  }
-  .conclusion-chips {
+    border-radius: 10px;
     display: flex;
-    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #fff;
+    transition: width 0.4s ease;
+  }
+  .bar-2024 { background: #93c5fd; }
+  .bar-2025 { background: #3b82f6; }
+  .bar-2026e { background: #1d4ed8; }
+  .bar-2027f { background: #7c3aed; }
+
+  /* 투자 결론 박스 */
+  .conclusion-box {
+    max-width: 900px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #1e40af, #4f46e5);
+    border-radius: 16px;
+    padding: 22px 24px;
+    color: #fff;
+    box-shadow: 0 4px 18px rgba(30,64,175,0.3);
+  }
+  .conclusion-box h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .conclusion-box p {
+    font-size: 0.85rem;
+    line-height: 1.75;
+    opacity: 0.92;
+    margin-bottom: 14px;
+  }
+  .verdict-chips {
+    display: flex;
     flex-wrap: wrap;
-    margin-top: 14px;
+    gap: 8px;
   }
   .chip {
-    background: rgba(74,222,128,0.15);
-    border: 1px solid rgba(74,222,128,0.35);
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
     border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 11px;
+    padding: 4px 14px;
+    font-size: 0.78rem;
     font-weight: 700;
-    color: #86efac;
-  }
-  .disclaimer {
-    font-size: 10px;
-    color: #4ade80;
-    margin-top: 12px;
-    opacity: 0.65;
   }
 
+  .disclaimer {
+    text-align: center;
+    font-size: 0.68rem;
+    color: #9ca3af;
+    margin-top: 18px;
+  }
   @media (max-width: 480px) {
-    .growth-grid { grid-template-columns: 1fr; }
-    .growth-num { font-size: 24px; }
-    .order-table th, .order-table td { padding: 8px 8px; font-size: 11px; }
+    .forecast-table { font-size: 0.74rem; }
+    .reason-title { font-size: 0.85rem; }
   }
 </style>
 </head>
 <body>
-<div class="widget-wrap">
-  <div class="widget-title">⚡ LS Electric 지속성장 근거 & 수주 파이프라인</div>
-  <div class="widget-date">2026년 4월 28일 | 컨센서스 + 공시 기반 분석</div>
 
-  <!-- 4대 성장 근거 -->
-  <div class="section-title">📌 성장을 확신하는 4가지 근거</div>
-  <div class="growth-grid">
+<div class="header">
+  <h2>🚀 코스피 지속 상승의 4대 구조적 근거</h2>
+  <p>2026년 4월 29일 기준 | 실적·기술·정책·자금 흐름 종합 분석</p>
+</div>
 
-    <div class="growth-card">
-      <div class="growth-num">01</div>
-      <div class="growth-title">미국 AI 데이터센터 독점 수주 — 4월에만 $161M</div>
-      <div class="growth-body">하이퍼스케일 AI 데이터센터 전력분배·스위치기어·변압기 독점 공급. $46M + $115M 연속 수주로 연간 매출 약 30% 규모 신규 파이프라인 확보.</div>
-      <div class="growth-kpi">📊 2026년 4월 신규 수주: $161M (약 2,380억원)</div>
-    </div>
+<!-- 4대 성장 근거 -->
+<div class="reasons-grid">
 
-    <div class="growth-card">
-      <div class="growth-num">02</div>
-      <div class="growth-title">세계 최초 초전도 전력망 — 기술 독점으로 글로벌 확산</div>
-      <div class="growth-body">KEPCO와 공동 개발 중인 데이터센터 초전도 전력망은 전력 손실을 거의 제로에 가깝게 줄이는 기술. 세계 최초 → 기술 특허 → 글로벌 라이선스 수익 가능성.</div>
-      <div class="growth-kpi">📊 기술 독점 기간: 최소 3~5년 추정</div>
-    </div>
-
-    <div class="growth-card">
-      <div class="growth-num">03</div>
-      <div class="growth-title">FOMC 동결 → 빅테크 capex 가속 → 수주 더 늘어난다</div>
-      <div class="growth-body">금리 동결 94% 확률. 동결 확인 시 MS·구글·메타·아마존 AI 인프라 투자 속도가 더 빨라짐. LS Electric 하반기 추가 수주 가시성 높음.</div>
-      <div class="growth-kpi">📊 FOMC 동결 확률: 94% (4/28~29 결정)</div>
-    </div>
-
-    <div class="growth-card">
-      <div class="growth-num">04</div>
-      <div class="growth-title">AI HVAC 냉각 솔루션 — 전력공급+냉각 원스톱 패키지</div>
-      <div class="growth-body">전력소비 24.6% 절감 AI 냉각 시스템 실증 완료. 기존 전력분배 납품처에 냉각 솔루션 추가 공급 → 단가 및 마진율 동반 상승 구조.</div>
-      <div class="growth-kpi">📊 전력소비 절감: -24.6% (실증 완료)</div>
-    </div>
-
+  <div class="reason-card r1">
+    <div class="reason-num bg-blue">1</div>
+    <div class="reason-title">실적이 뒷받침하는 랠리</div>
+    <div class="reason-body">코스피 2026 추정 EPS 연초 대비 +90.4% 상승. SK하이닉스 영업이익률 72%, 삼성SDI 흑자 전환, 현대차 역대 최고 매출. 기대감이 아닌 실적이 주가를 끌어올리는 구조.</div>
+    <span class="reason-kpi">📊 EPS 성장 +90.4% (연초比)</span>
   </div>
 
-  <hr class="divider">
+  <div class="reason-card r2">
+    <div class="reason-num bg-green">2</div>
+    <div class="reason-title">글로벌 AI 인프라 핵심 공급국</div>
+    <div class="reason-body">HBM 메모리 없이는 AI 서버를 구성할 수 없습니다. 엔비디아·구글·MS의 AI 인프라 투자가 SK하이닉스·삼성전자를 통해 한국으로 흘러들어옵니다. 구글 딥마인드 파트너십이 이를 강화.</div>
+    <span class="reason-kpi">🧠 HBM 글로벌 점유율 62%+</span>
+  </div>
 
-  <!-- 수주 파이프라인 테이블 -->
-  <div class="section-title">📋 주요 수주·계약 현황 (2026년)</div>
-  <table class="order-table">
+  <div class="reason-card r3">
+    <div class="reason-num bg-orange">3</div>
+    <div class="reason-title">코리아 디스카운트 해소</div>
+    <div class="reason-body">자사주 매입·배당 확대·주주환원 강화 정책으로 수십 년간 이어진 저평가가 해소되고 있습니다. 한국 시총이 영국을 추월한 것은 구조적 변화의 신호. 밸류업 프로그램 지속 효과.</div>
+    <span class="reason-kpi">🏛 한국 시총 세계 8위 ($4.04조)</span>
+  </div>
+
+  <div class="reason-card r4">
+    <div class="reason-num bg-violet">4</div>
+    <div class="reason-title">외국인 자금의 구조적 유입</div>
+    <div class="reason-body">DXY 달러 약세 + EWY ETF 강세 + MSCI 지수 내 한국 비중 확대 가능성이 맞물립니다. 패시브 펀드의 자동 매수와 환차익 기대가 중첩되어 외국인 순매수 기조가 유지됩니다.</div>
+    <span class="reason-kpi">💹 EWY YTD +60% · DXY -1.84%(월간)</span>
+  </div>
+
+</div>
+
+<!-- 이익 전망 테이블 -->
+<div class="forecast-section">
+  <h3>📈 주요 기업 연도별 이익 전망 (단위: 조원)</h3>
+  <table class="forecast-table">
     <thead>
       <tr>
-        <th>계약 내용</th>
-        <th>규모</th>
-        <th>지역</th>
-        <th>시기</th>
-        <th>상태</th>
+        <th>종목</th>
+        <th>2024 실적</th>
+        <th>2025 실적</th>
+        <th>2026E 전망</th>
+        <th>2027F 전망</th>
+        <th>성장 동력</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="left">하이퍼스케일 AI 데이터센터 전력분배 공급<span class="badge-new">NEW</span></td>
-        <td class="hl-green">$115M</td>
-        <td>미국</td>
-        <td>2026년 4월</td>
-        <td>계약 체결</td>
+        <td>SK하이닉스</td>
+        <td class="gray">13.0조</td>
+        <td class="good">29.0조</td>
+        <td class="great">40.3조↑</td>
+        <td class="great">48.0조↑</td>
+        <td>HBM4, AI 슈퍼사이클</td>
       </tr>
       <tr>
-        <td class="left">AI 데이터센터 전력분배 장비 공급<span class="badge-new">NEW</span></td>
-        <td class="hl-green">$46M</td>
-        <td>미국</td>
-        <td>2026년 초</td>
-        <td>납품 진행중</td>
+        <td>삼성전자</td>
+        <td class="gray">32.0조</td>
+        <td class="good">38.0조</td>
+        <td class="great">52.0조↑</td>
+        <td class="great">63.0조↑</td>
+        <td>파운드리 + HBM3E</td>
       </tr>
       <tr>
-        <td class="left">초전도 전력망 데이터센터 적용 프로젝트</td>
-        <td class="hl-blue">세계 최초</td>
-        <td>한국</td>
-        <td>2026년</td>
-        <td>개발 진행중</td>
+        <td>삼성SDI</td>
+        <td class="gray">-0.3조</td>
+        <td class="gray">-0.2조</td>
+        <td class="good">+0.6조↑</td>
+        <td class="great">+2.5조↑</td>
+        <td>ESS 20GWh 확대</td>
       </tr>
       <tr>
-        <td class="left">AI HVAC 냉각 솔루션 상용화</td>
-        <td class="hl-blue">전력 -24.6%</td>
-        <td>한국</td>
-        <td>2026년 4월</td>
-        <td>상용화 완료</td>
+        <td>현대자동차</td>
+        <td class="gray">14.2조</td>
+        <td class="good">15.8조</td>
+        <td class="great">17.5조↑</td>
+        <td class="great">20.0조↑</td>
+        <td>EV+HEV+로봇 밸류</td>
       </tr>
       <tr>
-        <td class="left">Data Center World 2026 DC 그리드 솔루션 전시</td>
-        <td class="hl-blue">글로벌 마케팅</td>
-        <td>글로벌</td>
-        <td>2026년</td>
-        <td>진행중</td>
+        <td>KOSPI 전체 EPS</td>
+        <td class="gray">기준</td>
+        <td class="good">+42%</td>
+        <td class="great">+90%↑</td>
+        <td class="great">+35%↑</td>
+        <td>AI 수혜 + 기업가치 제고</td>
       </tr>
     </tbody>
   </table>
-
-  <hr class="divider">
-
-  <!-- KPI 달성 바 -->
-  <div class="section-title">📊 핵심 성장 지표 달성 현황</div>
-  <div class="bar-section">
-    <div class="bar-item">
-      <div class="bar-label">
-        <span>애널리스트 매수 의견 (19명 / 전체 19명)</span>
-        <span>100%</span>
-      </div>
-      <div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
-    </div>
-    <div class="bar-item">
-      <div class="bar-label">
-        <span>모닝스타 FV 대비 현재 주가 (255,500원 / 309,000원)</span>
-        <span>83%</span>
-      </div>
-      <div class="bar-bg"><div class="bar-fill" style="width:83%"></div></div>
-    </div>
-    <div class="bar-item">
-      <div class="bar-label">
-        <span>52주 저점→목표가 진행률 (~90,000원 → ~309,000원)</span>
-        <span>75%</span>
-      </div>
-      <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div>
-    </div>
-    <div class="bar-item">
-      <div class="bar-label">
-        <span>기술 상용화 완료 지표 (AI HVAC: ✔ / 초전도망: 개발중)</span>
-        <span>50%</span>
-      </div>
-      <div class="bar-bg"><div class="bar-fill" style="width:50%; background: linear-gradient(90deg, #4ade80, #22d3ee)"></div></div>
-    </div>
-  </div>
-
-  <!-- 투자 결론 -->
-  <div class="conclusion-box">
-    <div class="conclusion-title">💡 투자 결론 — LS Electric이 오늘 주목받아야 하는 이유</div>
-    <div class="conclusion-body">
-      반도체만 보던 시장의 시야가 이제 전력인프라로 넓어지고 있습니다. AI 데이터센터 한 동을 짓는 데 필요한 전력 설비 규모는 일반 공장의 수십 배입니다. MS·구글·아마존이 매년 수백억 달러씩 AI 인프라에 투자하는 한, LS Electric의 수주는 계속 늘어날 수밖에 없어요.<br><br>
-      세계 최초 초전도 전력망이라는 기술 독점, 만장일치 매수 의견, FOMC 동결 수혜까지 삼박자가 맞아떨어진 지금, 모닝스타 공정가치(~309,000원)까지 아직 20.9%의 여력이 남아 있습니다.
-    </div>
-    <div class="conclusion-chips">
-      <span class="chip">세계 최초 초전도망</span>
-      <span class="chip">미국 $161M 수주</span>
-      <span class="chip">만장일치 Buy</span>
-      <span class="chip">FOMC 동결 수혜</span>
-      <span class="chip">모닝스타 FV +20.9%</span>
-      <span class="chip">AI 냉각 상용화</span>
-    </div>
-    <div class="disclaimer">⚠ 본 내용은 투자 정보 제공 목적이며, 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.</div>
-  </div>
-
 </div>
+
+<!-- 간이 바 차트 -->
+<div class="chart-section">
+  <h3>📊 코스피 지수 경로 (전망)</h3>
+  <div class="bar-chart-row">
+    <span class="bar-label">2024 말</span>
+    <div class="bar-track"><div class="bar-fill bar-2024" style="width:48%">4,000p</div></div>
+  </div>
+  <div class="bar-chart-row">
+    <span class="bar-label">2025 말</span>
+    <div class="bar-track"><div class="bar-fill bar-2025" style="width:60%">5,000p</div></div>
+  </div>
+  <div class="bar-chart-row">
+    <span class="bar-label">2026.04 현재</span>
+    <div class="bar-track"><div class="bar-fill bar-2026e" style="width:80%">6,641p ▲</div></div>
+  </div>
+  <div class="bar-chart-row">
+    <span class="bar-label">GS 목표치</span>
+    <div class="bar-track"><div class="bar-fill bar-2027f" style="width:96%">8,000p 🎯</div></div>
+  </div>
+</div>
+
+<!-- 투자 결론 박스 -->
+<div class="conclusion-box">
+  <h3>🏁 오늘의 투자 결론</h3>
+  <p>
+    VIX 18.60(안정권) + DXY 약세 + FOMC 동결 기대(94%) + SK하이닉스 역대급 실적이 맞물려 <strong>오늘 코스피는 상승 우위</strong>를 점하고 있습니다. 골드만삭스 목표치 8,000p 기준 약 <strong>20% 추가 상승 여력</strong>이 남아있습니다. WTI $100 돌파와 FOMC 파월 발언이 변수이나, 반도체·AI 메모리·ESS·전동화 차량 섹터의 실적 모멘텀은 견고합니다.
+  </p>
+  <div class="verdict-chips">
+    <span class="chip">🟢 반도체·HBM 비중 유지</span>
+    <span class="chip">🟢 ESS 배터리 저점 매수</span>
+    <span class="chip">🟢 현대차 분할 매수</span>
+    <span class="chip">🔴 항공·해운 비중 축소</span>
+    <span class="chip">⚡ FOMC 발언 모니터링</span>
+  </div>
+</div>
+
+<p class="disclaimer" style="margin-top:16px;">※ 본 자료는 투자 정보 제공 목적이며 투자 권유가 아닙니다. 최종 투자 판단은 투자자 본인 책임입니다. 과거 수익률은 미래를 보장하지 않습니다.</p>
+
 </body>
 </html>
