@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유가 시나리오 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f5f5f0;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 28px 16px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: #1a1a2e;
+    color: #f39c12;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+  .header h1 { font-size: 22px; font-weight: 900; color: #1a1a2e; }
+  .header p { color: #777; font-size: 12px; margin-top: 6px; }
+
+  /* Current price bar */
+  .current-price {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  }
+  .price-item { text-align: center; flex: 1; min-width: 100px; }
+  .price-item .label { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .price-item .value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+  .price-item .unit { font-size: 11px; color: #999; }
+  .price-divider { width: 1px; background: #eee; height: 50px; }
+
+  /* Scenario cards */
+  .scenarios { display: flex; flex-direction: column; gap: 16px; }
+  .scenario {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    animation: slideIn 0.4s ease both;
+  }
+  .scenario:nth-child(1) { animation-delay: 0.05s; }
+  .scenario:nth-child(2) { animation-delay: 0.10s; }
+  .scenario:nth-child(3) { animation-delay: 0.15s; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scenario-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .scenario-icon { font-size: 24px; }
+  .scenario-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .scenario-subtitle {
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 2px;
+  }
+  .scenario-prob {
+    margin-left: auto;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 10px;
+  }
+
+  .s-bull .scenario-header { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+  .s-base .scenario-header { background: linear-gradient(135deg, #2980b9, #3498db); }
+  .s-bear .scenario-header { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+
+  .scenario-body { padding: 16px 20px; }
+
+  .price-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #f8f8f8;
+  }
+  .price-range .pr-label { font-size: 11px; color: #888; width: 60px; }
+  .price-range .pr-val {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .s-bull .price-range .pr-val { color: #27ae60; }
+  .s-base .price-range .pr-val { color: #2980b9; }
+  .s-bear .price-range .pr-val { color: #c0392b; }
+
+  .conditions {
+    margin-bottom: 12px;
+  }
+  .conditions .cond-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .cond-list { list-style: none; }
+  .cond-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 12px;
+    color: #444;
+    padding: 3px 0;
+    line-height: 1.5;
+  }
+  .cond-list li::before { content: '•'; color: #ccc; flex-shrink: 0; }
+
+  .impact {
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .s-bull .impact { background: #eafaf1; color: #1e8449; }
+  .s-base .impact { background: #eaf4fc; color: #1a5276; }
+  .s-bear .impact { background: #fdedec; color: #922b21; }
+
+  .impact .impact-label {
+    font-weight: 700;
+    font-size: 11px;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  /* Timeline */
+  .time-section {
+    margin-top: 24px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  }
+  .time-section h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .time-card {
+    text-align: center;
+    padding: 12px;
+    border-radius: 10px;
+    background: #f8f8f8;
+  }
+  .time-card .period {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 4px;
+  }
+  .time-card .direction {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .time-card .desc {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.4;
+  }
+
+  .disclaimer {
+    font-size: 10px;
+    color: #bbb;
+    text-align: center;
+    margin-top: 16px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="badge">OIL PRICE OUTLOOK</div>
+    <h1>UAE 탈퇴 이후 — 유가 3대 시나리오</h1>
+    <p>에너지 전문가들이 보는 국제유가 방향성 분석</p>
+  </div>
+
+  <div class="current-price">
+    <div class="price-item">
+      <div class="label">현재 브렌트유</div>
+      <div class="value">$106</div>
+      <div class="unit">/ 배럴 (2026.04.28)</div>
+    </div>
+    <div class="price-divider"></div>
+    <div class="price-item">
+      <div class="label">현재 WTI</div>
+      <div class="value">$95.87</div>
+      <div class="unit">/ 배럴</div>
+    </div>
+    <div class="price-divider"></div>
+    <div class="price-item">
+      <div class="label">UAE 생산 목표</div>
+      <div class="value">+160만</div>
+      <div class="unit">배럴/일 증산 (→2027년)</div>
+    </div>
+  </div>
+
+  <div class="scenarios">
+
+    <!-- Bull -->
+    <div class="scenario s-bull">
+      <div class="scenario-header">
+        <span class="scenario-icon">📉</span>
+        <div>
+          <div class="scenario-title">시나리오 A — 완만한 유가 하락</div>
+          <div class="scenario-subtitle">UAE 증산 + OPEC 약화 + 시장 안정</div>
+        </div>
+        <span class="scenario-prob">가능성 35%</span>
+      </div>
+      <div class="scenario-body">
+        <div class="price-range">
+          <span class="pr-label">브렌트유</span>
+          <span class="pr-val">$80~$90</span>
+          <span style="font-size:11px;color:#888;margin-left:4px;">/ 배럴 (6~12개월 내)</span>
+        </div>
+        <div class="conditions">
+          <div class="cond-title">발생 조건</div>
+          <ul class="cond-list">
+            <li>UAE가 점진적 증산 약속을 실행</li>
+            <li>호르무즈 해협 위기가 완화 또는 봉합</li>
+            <li>다른 OPEC 회원국들의 규율 붕괴 없음</li>
+            <li>글로벌 경기 침체로 수요 감소</li>
+          </ul>
+        </div>
+        <div class="impact">
+          <span class="impact-label">🇰🇷 한국 영향</span>
+          수입 원가 절감 → 물가 안정, 정유·화학·항공 수익성 개선. 무역수지 개선 기대. 소비자 체감 유가 하락.
+        </div>
+      </div>
+    </div>
+
+    <!-- Base -->
+    <div class="scenario s-base">
+      <div class="scenario-header">
+        <span class="scenario-icon">⚖️</span>
+        <div>
+          <div class="scenario-title">시나리오 B — 높은 변동성 속 횡보</div>
+          <div class="scenario-subtitle">지정학 리스크 vs 증산 압력 충돌</div>
+        </div>
+        <span class="scenario-prob">가능성 45%</span>
+      </div>
+      <div class="scenario-body">
+        <div class="price-range">
+          <span class="pr-label">브렌트유</span>
+          <span class="pr-val">$90~$110</span>
+          <span style="font-size:11px;color:#888;margin-left:4px;">/ 배럴 (변동 지속)</span>
+        </div>
+        <div class="conditions">
+          <div class="cond-title">발생 조건</div>
+          <ul class="cond-list">
+            <li>UAE 증산 지연 (인프라·허가 문제)</li>
+            <li>이란 전쟁 및 호르무즈 긴장 지속</li>
+            <li>사우디가 감산으로 대응 → 효과 상쇄</li>
+            <li>OPEC 와해 우려 속 불확실성 지속</li>
+          </ul>
+        </div>
+        <div class="impact">
+          <span class="impact-label">🇰🇷 한국 영향</span>
+          현재 수준 유지 또는 소폭 등락. 기업 계획 수립 어려움. 에너지 비용 불확실성으로 투자 심리 위축 가능.
+        </div>
+      </div>
+    </div>
+
+    <!-- Bear -->
+    <div class="scenario s-bear">
+      <div class="scenario-header">
+        <span class="scenario-icon">📈</span>
+        <div>
+          <div class="scenario-title">시나리오 C — 공급 충격으로 유가 급등</div>
+          <div class="scenario-subtitle">호르무즈 봉쇄 or OPEC 붕괴형 혼란</div>
+        </div>
+        <span class="scenario-prob">가능성 20%</span>
+      </div>
+      <div class="scenario-body">
+        <div class="price-range">
+          <span class="pr-label">브렌트유</span>
+          <span class="pr-val">$120~$150+</span>
+          <span style="font-size:11px;color:#888;margin-left:4px;">/ 배럴 (위기 시)</span>
+        </div>
+        <div class="conditions">
+          <div class="cond-title">발생 조건</div>
+          <ul class="cond-list">
+            <li>이란의 호르무즈 해협 봉쇄 실행</li>
+            <li>UAE 원유 수출 인프라 공격·피해</li>
+            <li>다수 OPEC 회원국의 연쇄 탈퇴 → 감산 협력 붕괴</li>
+            <li>사우디의 보복성 감산 단행</li>
+          </ul>
+        </div>
+        <div class="impact">
+          <span class="impact-label">🇰🇷 한국 영향</span>
+          수입 원가 급등 → 인플레이션 재점화. 경상수지 악화. 항공·운송 타격 심각. 긴급 비축유 방출 필요성.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="time-section">
+    <h3>⏱️ 시간별 유가 방향성 전망</h3>
+    <div class="time-grid">
+      <div class="time-card">
+        <div class="period">단기 (1~3개월)</div>
+        <div class="direction">↔️</div>
+        <div class="desc">선반영 완료. 호르무즈 리스크가 하단 지지. 변동성 확대</div>
+      </div>
+      <div class="time-card">
+        <div class="period">중기 (6~12개월)</div>
+        <div class="direction">↘️</div>
+        <div class="desc">UAE 실제 증산 시작 시 공급 증가 → 하락 압력 가중</div>
+      </div>
+      <div class="time-card">
+        <div class="period">장기 (1~3년)</div>
+        <div class="direction">❓</div>
+        <div class="desc">에너지 전환 속도, AI 전력 수요, 글로벌 경기에 좌우</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    ⚠️ 이 분석은 참고용입니다. 유가 예측은 전문가도 자주 틀립니다. 투자 결정에 활용 시 전문가 상담 필수.
+  </div>
+
+</div>
+</body>
+</html>
