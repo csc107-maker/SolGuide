@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성 EHS 구매 및 설치 안내</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8fafc;
+    padding: 24px 16px;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    border: 1.5px solid #e2e8f0;
+    overflow: hidden;
+  }
+  .header {
+    background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+    padding: 26px 30px 20px;
+    color: #fff;
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #bfdbfe;
+  }
+  .header h2 { font-size: 21px; font-weight: 900; line-height: 1.35; }
+  .header p { font-size: 13px; margin-top: 5px; color: #93c5fd; }
+
+  /* 채널 카드 */
+  .channels { padding: 24px 30px; }
+  .section-label {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 14px;
+  }
+  .channel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .ch-card {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px 16px;
+    transition: box-shadow 0.2s;
+    background: #fafbff;
+  }
+  .ch-card:hover {
+    box-shadow: 0 4px 16px rgba(59,130,246,0.12);
+    border-color: #93c5fd;
+  }
+  .ch-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .ch-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 4px;
+  }
+  .ch-desc {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.6;
+  }
+  .ch-tag {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+
+  /* 스마트싱스 연동 배너 */
+  .smart-banner {
+    margin: 0 30px 26px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1.5px solid #bfdbfe;
+  }
+  .smart-icon { font-size: 36px; }
+  .smart-text h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1e40af;
+    margin-bottom: 4px;
+  }
+  .smart-text p {
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  /* 서비스 장점 */
+  .merits { padding: 0 30px 26px; }
+  .merit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+  .merit-item:last-child { border-bottom: none; }
+  .merit-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #1e40af;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .merit-content strong {
+    font-size: 13px;
+    color: #1e293b;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .merit-content span {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  .tip-box {
+    margin: 0 30px 24px;
+    background: #fef9c3;
+    border-left: 4px solid #eab308;
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #713f12;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="badge">🛒 구매 & 설치 안내</div>
+    <h2>삼성 EHS 히트펌프 보일러<br>어디서 구매하고 설치하나요?</h2>
+    <p>공식 채널 · 전국 서비스 · 전문 엔지니어 지원</p>
+  </div>
+
+  <div class="channels">
+    <div class="section-label">📍 구매 채널 (4가지)</div>
+    <div class="channel-grid">
+      <div class="ch-card">
+        <span class="ch-icon">🌐</span>
+        <div class="ch-name">삼성 B2B 웹사이트</div>
+        <div class="ch-desc">samsung.com/sec/business에서 히트펌프 전용 제품 페이지 → '견적 문의' or '매장 상담 예약'</div>
+        <span class="ch-tag">온라인 견적 가능</span>
+      </div>
+      <div class="ch-card">
+        <span class="ch-icon">🏪</span>
+        <div class="ch-name">삼성 디지털프라자</div>
+        <div class="ch-desc">전국 공식 매장 방문 상담 및 구매 가능. samsung.com → 매장 찾기에서 인근 매장 검색</div>
+        <span class="ch-tag">대면 상담 가능</span>
+      </div>
+      <div class="ch-card">
+        <span class="ch-icon">🔧</span>
+        <div class="ch-name">삼성전자서비스</div>
+        <div class="ch-desc">전국 전문 엔지니어가 설치부터 유지보수까지 일괄 처리. 설치 후 SmartThings 연동 지원</div>
+        <span class="ch-tag">전국 서비스망</span>
+      </div>
+      <div class="ch-card">
+        <span class="ch-icon">🏗️</span>
+        <div class="ch-name">삼성 공인 설치 파트너</div>
+        <div class="ch-desc">지역 공인 설치업체를 통하면 보조금 신청 서류 대행까지! 번거로운 행정 처리를 맡길 수 있습니다</div>
+        <span class="ch-tag">보조금 대행 가능 ⭐</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="smart-banner">
+    <div class="smart-icon">📱</div>
+    <div class="smart-text">
+      <h3>SmartThings 앱으로 스마트하게 관리</h3>
+      <p>설치 후 삼성 SmartThings 앱과 연동하면 언제 어디서나 실내 온도·출수 온도 확인 및 원격 제어가 가능합니다. 7인치 터치 디스플레이로도 손쉽게 제어!</p>
+    </div>
+  </div>
+
+  <div class="merits">
+    <div class="section-label">⭐ 삼성 EHS만의 차별화 서비스</div>
+    <div class="merit-item">
+      <div class="merit-num">1</div>
+      <div class="merit-content">
+        <strong>전국 AS 인프라 보장</strong>
+        <span>삼성전자 전국 서비스 센터 및 전문 엔지니어 네트워크로 신속한 유지보수 제공</span>
+      </div>
+    </div>
+    <div class="merit-item">
+      <div class="merit-num">2</div>
+      <div class="merit-content">
+        <strong>영하 25도 혹한 보장 운전</strong>
+        <span>동파 방지 밸브 + 전기 히터로 극한 환경에서도 안정적 작동 보장</span>
+      </div>
+    </div>
+    <div class="merit-item">
+      <div class="merit-num">3</div>
+      <div class="merit-content">
+        <strong>최소 35dB 저소음 설계</strong>
+        <span>톱날형 팬 구조로 도서관 수준의 정숙함 실현. 이웃 소음 걱정 없음</span>
+      </div>
+    </div>
+    <div class="merit-item">
+      <div class="merit-num">4</div>
+      <div class="merit-content">
+        <strong>친환경 냉매 R32 사용</strong>
+        <span>기존 R410A 대비 지구온난화지수(GWP) 68% 낮은 친환경 냉매 적용</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    💡 <strong>전문가 TIP</strong>: 보조금 신청까지 한번에 처리하려면 삼성 공인 설치 파트너사 이용을 강력 추천! 서류 준비·제출·보조금 수령 과정을 업체가 대행해주기 때문에 훨씬 편리합니다.
+  </div>
+</div>
+</body>
+</html>
