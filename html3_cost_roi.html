@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비용 및 원금 회수 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fff7ed;
+    padding: 24px 16px;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(180,80,0,0.09);
+    border: 1.5px solid #fed7aa;
+    overflow: hidden;
+  }
+  .header {
+    background: linear-gradient(135deg, #c2410c 0%, #f97316 100%);
+    padding: 26px 30px 20px;
+    color: #fff;
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.22);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fed7aa;
+  }
+  .header h2 { font-size: 21px; font-weight: 900; line-height: 1.35; }
+  .header p { font-size: 13px; margin-top: 5px; color: #fed7aa; }
+
+  /* 비용 비교 섹션 */
+  .cost-section { padding: 26px 30px 10px; }
+  .section-title {
+    font-size: 14px; font-weight: 800; color: #9a3412;
+    margin-bottom: 16px;
+  }
+  .cost-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .cost-box {
+    border-radius: 14px;
+    padding: 18px 16px;
+    border: 1.5px solid #fed7aa;
+    background: #fff7ed;
+  }
+  .cost-box.highlighted {
+    background: #fff0e0;
+    border-color: #f97316;
+  }
+  .cost-box-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 6px;
+  }
+  .cost-box-amount {
+    font-size: 22px;
+    font-weight: 900;
+    color: #c2410c;
+    line-height: 1.1;
+  }
+  .cost-box-amount span { font-size: 14px; font-weight: 600; color: #9a3412; }
+  .cost-box-sub {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* 테이블 */
+  .table-wrap { padding: 0 30px 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: #fff7ed;
+    color: #9a3412;
+    font-weight: 700;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid #fed7aa;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #fde8d4;
+    color: #334155;
+    line-height: 1.5;
+  }
+  td strong { color: #c2410c; }
+  tr:last-child td { border-bottom: none; }
+
+  /* ROI 타임라인 */
+  .roi-section { padding: 0 30px 26px; }
+  .roi-title { font-size: 14px; font-weight: 800; color: #9a3412; margin-bottom: 16px; }
+  .roi-bar-wrap {
+    background: #f1f5f9;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    padding: 18px 20px;
+  }
+  .roi-years {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+  }
+  .roi-track {
+    height: 24px;
+    background: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+  }
+  .roi-fill-cost {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 20%;
+    background: linear-gradient(90deg, #f97316, #ef4444);
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+  }
+  .roi-fill-cost span {
+    font-size: 10px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .roi-marker {
+    position: absolute;
+    top: -22px;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 800;
+    color: #c2410c;
+    white-space: nowrap;
+  }
+  .roi-label-row {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: #64748b;
+  }
+  .roi-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .scenario-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .scenario-box {
+    background: #fff7ed;
+    border: 1.5px solid #fed7aa;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+  .scenario-icon { font-size: 22px; margin-bottom: 6px; }
+  .scenario-label { font-size: 11px; color: #64748b; font-weight: 600; margin-bottom: 4px; line-height: 1.4; }
+  .scenario-value { font-size: 20px; font-weight: 900; color: #c2410c; }
+  .scenario-unit { font-size: 12px; color: #f97316; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="badge">💰 비용 & ROI 분석</div>
+    <h2>구매·설치 비용부터<br>원금 회수 기간까지 한눈에</h2>
+    <p>30평형 기준 · 정부 보조금 적용 시나리오</p>
+  </div>
+
+  <div class="cost-section">
+    <div class="section-title">📦 예상 비용 구조 (보조금 적용 전/후)</div>
+    <div class="cost-grid">
+      <div class="cost-box">
+        <div class="cost-box-title">총 설치 비용 (보조금 전)</div>
+        <div class="cost-box-amount">500~800<span>만원</span></div>
+        <div class="cost-box-sub">본체 400~600만 원<br>+ 공사비 100~200만 원</div>
+      </div>
+      <div class="cost-box highlighted">
+        <div class="cost-box-title">실제 부담금 (보조금 70% 후)</div>
+        <div class="cost-box-amount">150~250<span>만원</span></div>
+        <div class="cost-box-sub">설치비 최대 70% 차감<br>→ 실질 부담 대폭 감소</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>금액 (추정)</th>
+          <th>비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>삼성 EHS 본체</td>
+          <td><strong>400~600만 원</strong></td>
+          <td>용량·사양에 따라 변동</td>
+        </tr>
+        <tr>
+          <td>설치 공사비</td>
+          <td><strong>100~200만 원</strong></td>
+          <td>배관·전기 공사 포함</td>
+        </tr>
+        <tr>
+          <td>정부 보조금</td>
+          <td><strong>최대 ~560만 원 차감</strong></td>
+          <td>설치비의 최대 70%</td>
+        </tr>
+        <tr>
+          <td>태양광 6kW (선택)</td>
+          <td><strong>600~900만 원</strong></td>
+          <td>별도 태양광 보조금 적용 가능</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700; color:#c2410c;">최종 실부담금 (히트펌프만)</td>
+          <td><strong>~200만 원</strong></td>
+          <td>보조금 최대 적용 기준</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="roi-section">
+    <div class="roi-title">⏱️ 원금 회수 시나리오</div>
+    <div class="scenario-row">
+      <div class="scenario-box">
+        <div class="scenario-icon">⚡</div>
+        <div class="scenario-label">히트펌프만 교체<br>(보조금 적용 후 ~200만원)</div>
+        <div class="scenario-value">2~3<span class="scenario-unit">년</span></div>
+      </div>
+      <div class="scenario-box">
+        <div class="scenario-icon">☀️⚡</div>
+        <div class="scenario-label">히트펌프 + 태양광 6kW<br>(각종 보조금 적용 후)</div>
+        <div class="scenario-value">3~4<span class="scenario-unit">년</span></div>
+      </div>
+    </div>
+    <div style="margin-top:14px; background:#f0fdf4; border-radius:12px; padding:14px 16px; font-size:13px; color:#166534; font-weight:600; line-height:1.7;">
+      ✅ 히트펌프 보일러 제품 수명: <strong>15~20년</strong><br>
+      → 회수 이후 <strong>12~17년간 순수 절감 혜택</strong> 지속<br>
+      → 10년 누적 절감 예상액: <strong>약 850만~1,250만 원</strong>
+    </div>
+  </div>
+</div>
+</body>
+</html>
