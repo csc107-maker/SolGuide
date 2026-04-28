@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 수혜 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f0fff4;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 32px 16px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: #27ae60;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+  .header h1 { font-size: 22px; font-weight: 900; color: #1a1a2e; }
+  .header h1 em { color: #27ae60; font-style: normal; }
+  .header p { color: #666; font-size: 12px; margin-top: 6px; }
+
+  /* Summary stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    border-bottom: 3px solid #27ae60;
+  }
+  .stat-card .num {
+    font-size: 24px;
+    font-weight: 900;
+    color: #27ae60;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-card .lbl {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  /* Main table */
+  .table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr {
+    background: #1a1a2e;
+    color: #fff;
+  }
+  thead th {
+    padding: 12px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    letter-spacing: 0.5px;
+  }
+  thead th:first-child { width: 130px; }
+  tbody tr {
+    border-bottom: 1px solid #f0f4f0;
+    transition: background 0.15s;
+    animation: fadeRow 0.4s ease both;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f8fff9; }
+  tbody tr:nth-child(1) { animation-delay: 0.05s; }
+  tbody tr:nth-child(2) { animation-delay: 0.10s; }
+  tbody tr:nth-child(3) { animation-delay: 0.15s; }
+  tbody tr:nth-child(4) { animation-delay: 0.20s; }
+  tbody tr:nth-child(5) { animation-delay: 0.25s; }
+  tbody tr:nth-child(6) { animation-delay: 0.30s; }
+
+  @keyframes fadeRow {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  tbody td {
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #333;
+    vertical-align: top;
+  }
+  .industry {
+    font-weight: 700;
+    color: #1a1a2e;
+    font-size: 13px;
+  }
+  .industry .icon { margin-right: 4px; }
+
+  .badge-level {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .high { background: #d4edda; color: #155724; }
+  .mid  { background: #fff3cd; color: #856404; }
+  .low  { background: #f8d7da; color: #721c24; }
+  .neu  { background: #e2e3e5; color: #383d41; }
+
+  .companies {
+    color: #2980b9;
+    font-size: 11px;
+  }
+
+  .risk-section {
+    background: #fff8f0;
+    border: 2px solid #e67e22;
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  .risk-section h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #d35400;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .risk-list { list-style: none; }
+  .risk-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 0;
+    border-bottom: 1px dashed #ffe0c0;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.5;
+  }
+  .risk-list li:last-child { border-bottom: none; }
+  .risk-list li .ri { color: #e67e22; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  .korea-stat {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    border-left: 4px solid #27ae60;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .korea-stat p {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.8;
+  }
+  .korea-stat strong { color: #27ae60; }
+
+  .source { font-size: 10px; color: #bbb; text-align: right; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="badge">KOREA IMPACT ANALYSIS</div>
+    <h1>UAE OPEC 탈퇴 — <em>한국 산업별 영향 분석</em></h1>
+    <p>세계 5위 원유 수입국 대한민국이 맞이할 기회와 리스크</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num">5위</div>
+      <div class="lbl">한국<br>세계 원유 수입 순위</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">75%</div>
+      <div class="lbl">중동 의존도<br>(사우디·UAE·쿠웨이트)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">340→500</div>
+      <div class="lbl">UAE 증산 목표<br>(만 배럴/일, 2027년)</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>산업</th>
+          <th>수혜 수준</th>
+          <th>영향 내용</th>
+          <th>주요 기업</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="industry"><span class="icon">🏭</span>정유</div></td>
+          <td><span class="badge-level high">수혜 ↑↑</span></td>
+          <td>원유 가격 하락 시 정제마진 개선. UAE산 직수입 비율 높은 기업은 안정적 공급선 확보 효과</td>
+          <td class="companies">SK이노베이션<br>S-OIL<br>GS칼텍스</td>
+        </tr>
+        <tr>
+          <td><div class="industry"><span class="icon">🧪</span>석유화학</div></td>
+          <td><span class="badge-level high">수혜 ↑↑</span></td>
+          <td>납사 원료 가격 안정화. 에틸렌·프로필렌 등 기초 화학원료 원가 하락 → 수익성 개선</td>
+          <td class="companies">LG화학<br>롯데케미칼<br>금호석유</td>
+        </tr>
+        <tr>
+          <td><div class="industry"><span class="icon">✈️</span>항공</div></td>
+          <td><span class="badge-level high">수혜 ↑</span></td>
+          <td>항공유 가격 하락 → 연료비(전체 비용의 25~30%) 절감. 영업이익 개선 직결</td>
+          <td class="companies">대한항공<br>아시아나항공<br>제주항공</td>
+        </tr>
+        <tr>
+          <td><div class="industry"><span class="icon">⚡</span>원전·에너지</div></td>
+          <td><span class="badge-level mid">기회 ↑</span></td>
+          <td>UAE 바라카 원전 파트너십 기반 에너지 협력 심화 가능성. 추가 원전·가스 인프라 수주 기회</td>
+          <td class="companies">한국수력원자력<br>두산에너빌리티<br>한전KPS</td>
+        </tr>
+        <tr>
+          <td><div class="industry"><span class="icon">🚗</span>자동차·타이어</div></td>
+          <td><span class="badge-level mid">혼재</span></td>
+          <td>합성고무·플라스틱 원료 비용 하락은 긍정적. 그러나 전기차 전환 가속 여부에 따라 중장기 수요 변수</td>
+          <td class="companies">현대차<br>기아<br>한국타이어</td>
+        </tr>
+        <tr>
+          <td><div class="industry"><span class="icon">☀️</span>태양광</div></td>
+          <td><span class="badge-level low">단기 주의</span></td>
+          <td>유가 하락 시 화석연료 경쟁력 상대적 강화 → 단기 태양광 주가 압박. 중장기 에너지 전환 수요는 지속</td>
+          <td class="companies">한화솔루션<br>OCI<br>신성이엔지</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="korea-stat">
+    <p>
+      🇰🇷 한국은 원유를 <strong>100% 수입</strong>에 의존합니다. 유가가 배럴당 <strong>10달러 하락</strong>하면,
+      연간 수입 비용이 약 <strong>70~80억 달러(약 10조 원)</strong> 절감된다는 분석이 있습니다.
+      이는 무역수지 개선과 물가 안정으로 이어질 수 있는 중요한 변수입니다.
+    </p>
+  </div>
+
+  <div class="risk-section">
+    <h3>⚠️ 동시에 주의해야 할 리스크</h3>
+    <ul class="risk-list">
+      <li><span class="ri">①</span><div>호르무즈 해협 봉쇄 리스크 — 이란-미국 전쟁 지속 중. 해협 통과 원유 물동량의 20% 차질 시 오히려 유가 폭등 가능</div></li>
+      <li><span class="ri">②</span><div>사우디 보복 증산 또는 감산 — 사우디의 대응에 따라 유가가 급등하거나 급락할 수 있어 정유·화학 업계 변동성 확대</div></li>
+      <li><span class="ri">③</span><div>달러 강세 지속 — 원유가 달러로 거래되므로, 원·달러 환율 상승 시 원화 기준 수입 원가 부담 가중</div></li>
+      <li><span class="ri">④</span><div>단기 공급 불확실성 — UAE의 실제 증산 시점까지 수개월~1년 이상 소요. 그 사이의 시장 변동성에 주의</div></li>
+    </ul>
+  </div>
+
+  <div class="source">※ 투자 권유 아님. 참고용 분석 자료 | 출처: 한국에너지경제연구원, 한국경제, 헤럴드경제 (2026.04.28)</div>
+</div>
+</body>
+</html>
