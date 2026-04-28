@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에코솔루션 광고 배너</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Montserrat:wght@700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: transparent;
+    padding: 16px;
+  }
+
+  .ad-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c2340 100%);
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 12px 40px rgba(0,60,150,0.25);
+  }
+
+  /* 배경 장식 원 */
+  .deco-circle-1 {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%);
+    top: -80px;
+    right: -60px;
+    pointer-events: none;
+  }
+  .deco-circle-2 {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%);
+    bottom: -60px;
+    left: 20px;
+    pointer-events: none;
+  }
+  .deco-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #22d3ee, #3b82f6, #22c55e);
+  }
+
+  .ad-inner {
+    position: relative;
+    z-index: 2;
+    padding: 36px 36px 32px;
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .brand-badge {
+    background: linear-gradient(135deg, #22d3ee, #3b82f6);
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 0.05em;
+  }
+
+  .brand-sub {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+
+  .ad-headline {
+    font-size: 28px;
+    font-weight: 900;
+    color: #f8fafc;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .ad-headline .accent {
+    background: linear-gradient(90deg, #22d3ee, #22c55e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .ad-sub {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 480px;
+  }
+
+  /* 핵심 숫자 */
+  .stats-row {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stat-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .stat-num .unit {
+    font-size: 16px;
+    font-weight: 700;
+    color: #38bdf8;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.1);
+    align-self: stretch;
+  }
+
+  /* 혜택 칩들 */
+  .chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 99px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: #cbd5e1;
+    font-weight: 600;
+  }
+
+  .chip .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+  }
+
+  /* CTA 버튼 영역 */
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .cta-main {
+    display: inline-block;
+    background: linear-gradient(135deg, #22d3ee, #3b82f6);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 13px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    box-shadow: 0 4px 16px rgba(34,211,238,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .cta-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(34,211,238,0.4);
+  }
+
+  .cta-secondary {
+    font-size: 13px;
+    color: #94a3b8;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    border: none;
+    background: none;
+  }
+
+  .cta-secondary:hover { color: #cbd5e1; }
+
+  /* 하단 보증 배지 */
+  .guarantee-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+  }
+
+  .guarantee-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  .guarantee-item .icon { font-size: 14px; }
+
+  @media (max-width: 480px) {
+    .ad-inner { padding: 24px 22px 22px; }
+    .ad-headline { font-size: 22px; }
+    .stats-row { gap: 18px; }
+    .stat-num { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="ad-wrap">
+  <div class="deco-circle-1"></div>
+  <div class="deco-circle-2"></div>
+  <div class="deco-line"></div>
+
+  <div class="ad-inner">
+    <div class="brand-row">
+      <div class="brand-badge">🌱 EcoSolution</div>
+      <div class="brand-sub">Samsung × 에너지 독립 솔루션</div>
+    </div>
+
+    <div class="ad-headline">
+      난방비 걱정,<br>
+      이제 <span class="accent">에코솔루션</span>에 맡기세요
+    </div>
+
+    <div class="ad-sub">
+      삼성 EHS 히트펌프 + 태양광 6kW의 완벽한 조합.<br>
+      전기 1로 열 5를 만들고, 태양광으로 그 전기마저 무료로 만드세요.<br>
+      정부 보조금 최대 70% 지원으로 지금이 바로 최적의 타이밍입니다.
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">4.9<span class="unit">x</span></div>
+        <div class="stat-label">SCOP 에너지 효율</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">70<span class="unit">%</span></div>
+        <div class="stat-label">정부 보조금 지원율</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">2~3<span class="unit">년</span></div>
+        <div class="stat-label">원금 회수 기간</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">-25<span class="unit">℃</span></div>
+        <div class="stat-label">혹한 환경 작동 보장</div>
+      </div>
+    </div>
+
+    <div class="chips-row">
+      <div class="chip"><span class="dot"></span>연간 난방비 최대 95% 절감</div>
+      <div class="chip"><span class="dot"></span>SmartThings 앱 연동</div>
+      <div class="chip"><span class="dot"></span>전국 전문 엔지니어 AS</div>
+      <div class="chip"><span class="dot"></span>35dB 초저소음</div>
+      <div class="chip"><span class="dot"></span>친환경 R32 냉매</div>
+    </div>
+
+    <div class="cta-row">
+      <button class="cta-main" onclick="alert('삼성전자 공식 히트펌프 페이지로 이동합니다!\n👉 samsung.com/sec/business')">
+        🔥 무료 에너지 절감 진단 받기
+      </button>
+      <button class="cta-secondary" onclick="alert('정부24(gov.kr)에서 보조금 신청 가능합니다!')">보조금 신청하러 가기 →</button>
+    </div>
+
+    <div class="guarantee-row">
+      <div class="guarantee-item"><span class="icon">🏆</span>삼성전자 공식 인증 제품</div>
+      <div class="guarantee-item"><span class="icon">🛡️</span>정부 보조금 대상 확인</div>
+      <div class="guarantee-item"><span class="icon">🔧</span>전국 설치·AS 보장</div>
+      <div class="guarantee-item"><span class="icon">💚</span>탄소 저감 인증</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
