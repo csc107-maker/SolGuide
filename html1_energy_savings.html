@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에너지 절감 분석 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f7ff;
+    padding: 24px 16px;
+  }
+
+  .card-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,90,200,0.10);
+    overflow: hidden;
+    border: 1.5px solid #dbeafe;
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+    padding: 28px 32px 20px;
+    color: #fff;
+  }
+
+  .card-header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+    color: #e0f2fe;
+  }
+
+  .card-header h2 {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.35;
+  }
+
+  .card-header p {
+    font-size: 13px;
+    margin-top: 6px;
+    color: #bae6fd;
+  }
+
+  /* Bar Chart Section */
+  .chart-section {
+    padding: 28px 32px 10px;
+  }
+
+  .chart-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .bar-row {
+    margin-bottom: 16px;
+  }
+
+  .bar-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+
+  .bar-label .name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .bar-label .amount {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1e40af;
+  }
+
+  .bar-bg {
+    height: 18px;
+    background: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 1.2s ease;
+  }
+
+  .fill-red    { background: linear-gradient(90deg, #ef4444, #f97316); }
+  .fill-blue   { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+  .fill-green  { background: linear-gradient(90deg, #10b981, #22c55e); }
+
+  /* Savings Cards */
+  .savings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 20px 32px 28px;
+  }
+
+  .saving-box {
+    background: #f0f9ff;
+    border: 1.5px solid #bae6fd;
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+
+  .saving-icon {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .saving-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .saving-value {
+    font-size: 19px;
+    font-weight: 900;
+    color: #1e40af;
+    line-height: 1.1;
+  }
+
+  .saving-unit {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0ea5e9;
+  }
+
+  .note {
+    font-size: 11px;
+    color: #94a3b8;
+    padding: 0 32px 20px;
+    line-height: 1.6;
+  }
+
+  /* SCOP badge */
+  .scop-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #eff6ff;
+    margin: 0 32px 24px;
+    border-radius: 12px;
+    padding: 14px 18px;
+    border-left: 4px solid #3b82f6;
+  }
+
+  .scop-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: #1d4ed8;
+    line-height: 1;
+  }
+
+  .scop-desc {
+    font-size: 12px;
+    color: #334155;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+<div class="card-wrap">
+  <div class="card-header">
+    <div class="badge">☀️ 에너지 절감 분석</div>
+    <h2>태양광 6kW + EHS 히트펌프<br>연간 난방비 비교</h2>
+    <p>30평형 기준 · 연간 절감 시뮬레이션</p>
+  </div>
+
+  <div class="chart-section">
+    <div class="chart-title">📊 난방 방식별 연간 비용 비교 (30평형 기준)</div>
+
+    <div class="bar-row">
+      <div class="bar-label">
+        <span class="name">🔥 기존 도시가스 보일러</span>
+        <span class="amount">130만 원</span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill fill-red" style="width:100%"></div></div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">
+        <span class="name">⚡ EHS 히트펌프 (전기 구입)</span>
+        <span class="amount">45만 원</span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill fill-blue" style="width:35%"></div></div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">
+        <span class="name">✅ EHS 히트펌프 + 태양광 6kW</span>
+        <span class="amount">7만 원</span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill fill-green" style="width:5%"></div></div>
+    </div>
+  </div>
+
+  <div class="scop-row">
+    <div class="scop-num">4.9</div>
+    <div class="scop-desc">
+      <strong>계절성능계수(SCOP) 4.9</strong><br>
+      전기 1을 쓰면 열 약 5배를 생산합니다.<br>
+      바닥 난방(35℃ 출수 조건) 기준 공식 측정값
+    </div>
+  </div>
+
+  <div class="savings-grid">
+    <div class="saving-box">
+      <div class="saving-icon">💰</div>
+      <div class="saving-label">히트펌프만 교체 시<br>연간 절감액</div>
+      <div class="saving-value">~85<span class="saving-unit">만원</span></div>
+    </div>
+    <div class="saving-box">
+      <div class="saving-icon">☀️</div>
+      <div class="saving-label">태양광 병행 시<br>연간 절감액</div>
+      <div class="saving-value">~123<span class="saving-unit">만원</span></div>
+    </div>
+    <div class="saving-box">
+      <div class="saving-icon">📅</div>
+      <div class="saving-label">태양광 포함<br>10년 누적 절감</div>
+      <div class="saving-value">~1,230<span class="saving-unit">만원</span></div>
+    </div>
+  </div>
+
+  <div class="note">
+    ※ 본 수치는 30평형 · 연평균 일조량 기준 추정값으로, 지역·주택 단열·사용 패턴에 따라 실제 절감액은 달라질 수 있습니다.<br>
+    ※ 태양광 6kW 연간 발전량 약 7,800kWh, 히트펌프 연간 소비 전력 약 2,000~2,500kWh 기준.
+  </div>
+</div>
+</body>
+</html>
