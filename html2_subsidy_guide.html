@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정부 보조금 신청 가이드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0fdf4;
+    padding: 24px 16px;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,120,60,0.10);
+    overflow: hidden;
+    border: 1.5px solid #bbf7d0;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #166534 0%, #22c55e 100%);
+    padding: 26px 30px 20px;
+    color: #fff;
+  }
+
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.22);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #dcfce7;
+  }
+
+  .header h2 {
+    font-size: 21px;
+    font-weight: 900;
+    line-height: 1.35;
+  }
+
+  .header p {
+    font-size: 13px;
+    margin-top: 5px;
+    color: #bbf7d0;
+  }
+
+  /* 핵심 지원 요약 */
+  .highlight-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 1.5px solid #dcfce7;
+  }
+
+  .hl-box {
+    padding: 18px 16px;
+    text-align: center;
+    border-right: 1.5px solid #dcfce7;
+  }
+
+  .hl-box:last-child { border-right: none; }
+
+  .hl-num {
+    font-size: 24px;
+    font-weight: 900;
+    color: #166534;
+    line-height: 1.1;
+  }
+
+  .hl-label {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  /* 신청 프로세스 타임라인 */
+  .timeline-section {
+    padding: 26px 30px;
+  }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #166534;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-list { position: relative; }
+
+  .step-list::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 28px;
+    bottom: 0;
+    width: 2px;
+    background: #dcfce7;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    font-weight: 900;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 8px rgba(34,197,94,0.3);
+  }
+
+  .step-content {
+    flex: 1;
+    padding-top: 6px;
+  }
+
+  .step-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2e1a;
+    margin-bottom: 4px;
+  }
+
+  .step-desc {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  .step-tag {
+    display: inline-block;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: #166534;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  /* 신청처 표 */
+  .table-section {
+    padding: 0 30px 26px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    background: #f0fdf4;
+    color: #166534;
+    font-weight: 700;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid #bbf7d0;
+  }
+
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  td a {
+    color: #16a34a;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .warn-box {
+    margin: 0 30px 24px;
+    background: #fefce8;
+    border-left: 4px solid #eab308;
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #713f12;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="badge">🏛️ 2026 정부 보조금 가이드</div>
+    <h2>히트펌프 보일러 교체<br>설치비 최대 70% 국가 지원!</h2>
+    <p>한국에너지공단 · 정부24 · 환경부 통합 안내</p>
+  </div>
+
+  <div class="highlight-row">
+    <div class="hl-box">
+      <div class="hl-num">70%</div>
+      <div class="hl-label">가구당 설치비<br>최대 지원율</div>
+    </div>
+    <div class="hl-box">
+      <div class="hl-num">144억</div>
+      <div class="hl-label">2026년 정부<br>투입 예산</div>
+    </div>
+    <div class="hl-box">
+      <div class="hl-num">350만</div>
+      <div class="hl-label">2035년까지<br>보급 목표 대수</div>
+    </div>
+  </div>
+
+  <div class="timeline-section">
+    <div class="section-title">📋 보조금 신청 STEP by STEP</div>
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">지원 대상 확인</div>
+          <div class="step-desc">화석연료(가스·등유·연탄) 보일러를 히트펌프 보일러로 교체하는 가구. 삼성 EHS는 정부 보조금 지원 대상 제품입니다.</div>
+          <span class="step-tag">일반 가구 / 저소득층 우대</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">신청처 접속 및 사전 신청</div>
+          <div class="step-desc">한국에너지공단(kemco.or.kr) 또는 정부24(gov.kr)에 접속하여 온라인 신청. 관할 구청 환경과 방문 신청도 가능합니다.</div>
+          <span class="step-tag">온라인 or 방문 선택 가능</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">제품 선택 및 설치 계약</div>
+          <div class="step-desc">삼성전자 공인 설치업체 또는 삼성 디지털프라자와 계약. 보조금 대행 처리 업체 선택 시 서류 부담 감소.</div>
+          <span class="step-tag">삼성 공인 파트너사 권장</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">기존 보일러 철거 + 신규 설치</div>
+          <div class="step-desc">설치 완료 후 설치 확인서·제조번호·전후 사진 촬영. 이 단계에서 서류를 꼼꼼히 챙기는 것이 핵심입니다.</div>
+          <span class="step-tag">사진 촬영 필수!</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">서류 제출 및 보조금 수령</div>
+          <div class="step-desc">온라인 시스템 또는 구청 환경과에 서류 접수. 심사 후 보조금은 설치업체 또는 신청인에게 직접 지급됩니다.</div>
+          <span class="step-tag">보통 2~4주 소요</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <table>
+      <thead>
+        <tr>
+          <th>지원 기관</th>
+          <th>신청 방법</th>
+          <th>특이 사항</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>한국에너지공단</strong></td>
+          <td>kemco.or.kr 온라인</td>
+          <td>주요 히트펌프 보급 창구</td>
+        </tr>
+        <tr>
+          <td><strong>정부24</strong></td>
+          <td>gov.kr 온라인</td>
+          <td>통합 민원 포털</td>
+        </tr>
+        <tr>
+          <td><strong>관할 구청 환경과</strong></td>
+          <td>방문 / 우편</td>
+          <td>친환경 보일러 지원 병행 가능</td>
+        </tr>
+        <tr>
+          <td><strong>한국전력(한전)</strong></td>
+          <td>사이버지점 / 지역 지사</td>
+          <td>복지시설 최대 30%(200만 원)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warn-box">
+    ⚠️ <strong>중요 안내</strong>: 정부 예산은 선착순 소진 방식입니다. 특히 1~3월에 신청이 집중되어 상반기 중 조기 마감되는 지자체가 많습니다. 지금 바로 신청 가능 여부를 확인하세요!
+  </div>
+</div>
+</body>
+</html>
