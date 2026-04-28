@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>석유 파생 제품군 인포그래픽</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f0f4ff;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 32px 16px;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: #1a1a2e;
+    color: #f39c12;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #1a1a2e;
+    line-height: 1.4;
+  }
+  .header h1 em { color: #e74c3c; font-style: normal; }
+  .header p { color: #666; font-size: 13px; margin-top: 6px; }
+
+  /* Barrel visual */
+  .barrel-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .barrel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .barrel-icon {
+    width: 80px;
+    height: 96px;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border-radius: 8px 8px 12px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(44,62,80,0.3);
+  }
+  .barrel-icon::before, .barrel-icon::after {
+    content: '';
+    position: absolute;
+    left: 8px; right: 8px;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+  }
+  .barrel-icon::before { top: 16px; }
+  .barrel-icon::after { bottom: 16px; }
+  .barrel-label { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+  .barrel-sub { font-size: 10px; color: #888; }
+
+  .arrow-big {
+    font-size: 28px;
+    color: #e74c3c;
+    font-weight: 900;
+  }
+
+  .refinery {
+    text-align: center;
+  }
+  .refinery-icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .refinery-label { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+
+  /* Category grid */
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .cat-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 4px solid;
+    animation: popIn 0.4s ease both;
+  }
+  .cat-card:nth-child(1) { animation-delay: 0.05s; border-color: #e74c3c; }
+  .cat-card:nth-child(2) { animation-delay: 0.10s; border-color: #e67e22; }
+  .cat-card:nth-child(3) { animation-delay: 0.15s; border-color: #27ae60; }
+  .cat-card:nth-child(4) { animation-delay: 0.20s; border-color: #2980b9; }
+  .cat-card:nth-child(5) { animation-delay: 0.25s; border-color: #8e44ad; }
+  .cat-card:nth-child(6) { animation-delay: 0.30s; border-color: #16a085; }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.93); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .cat-icon { font-size: 22px; }
+  .cat-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+  .cat-pct {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #f5f5f5;
+    color: #555;
+  }
+
+  .product-list {
+    list-style: none;
+  }
+  .product-list li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 12px;
+    color: #444;
+  }
+  .product-list li:last-child { border-bottom: none; }
+  .product-list li .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .product-list li .ex {
+    margin-left: auto;
+    font-size: 10px;
+    color: #aaa;
+    font-style: italic;
+  }
+
+  .c1 .dot { background: #e74c3c; }
+  .c2 .dot { background: #e67e22; }
+  .c3 .dot { background: #27ae60; }
+  .c4 .dot { background: #2980b9; }
+  .c5 .dot { background: #8e44ad; }
+  .c6 .dot { background: #16a085; }
+
+  .stat-bar {
+    margin-top: 28px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .stat-bar h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .bar-items { display: flex; flex-direction: column; gap: 10px; }
+  .bar-item { display: flex; align-items: center; gap: 10px; }
+  .bar-label { font-size: 11px; color: #555; width: 120px; flex-shrink: 0; }
+  .bar-track {
+    flex: 1;
+    height: 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    animation: growBar 1s ease both;
+    animation-delay: 0.3s;
+  }
+  @keyframes growBar {
+    from { width: 0 !important; }
+  }
+  .bar-val { font-size: 11px; font-weight: 700; width: 36px; text-align: right; }
+
+  .source { font-size: 10px; color: #bbb; text-align: right; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="badge">OIL PRODUCTS MAP</div>
+    <h1>원유 한 배럴(159L)에서<br>무엇이 나오는가?</h1>
+    <p>석유는 연료만이 아닙니다 — 우리 일상의 70%는 석유로 만들어집니다</p>
+  </div>
+
+  <div class="barrel-section">
+    <div class="barrel">
+      <div class="barrel-icon">🛢️</div>
+      <div class="barrel-label">원유 1배럴</div>
+      <div class="barrel-sub">약 159리터</div>
+    </div>
+    <div class="arrow-big">→</div>
+    <div class="refinery">
+      <span class="refinery-icon">🏭</span>
+      <div class="refinery-label">정제·분리 공정</div>
+    </div>
+    <div class="arrow-big">→</div>
+    <div style="text-align:center;">
+      <div style="font-size:28px; font-weight:900; color:#e74c3c;">6가지</div>
+      <div style="font-size:12px; color:#555;">핵심 제품군</div>
+      <div style="font-size:10px; color:#aaa;">수천 가지 최종 제품</div>
+    </div>
+  </div>
+
+  <div class="categories">
+
+    <div class="cat-card c1">
+      <div class="cat-header">
+        <span class="cat-icon">⛽</span>
+        <span class="cat-name">에너지·연료</span>
+        <span class="cat-pct">~44%</span>
+      </div>
+      <ul class="product-list">
+        <li><span class="dot"></span>휘발유(가솔린) <span class="ex">자동차 연료</span></li>
+        <li><span class="dot"></span>경유(디젤) <span class="ex">트럭·버스·선박</span></li>
+        <li><span class="dot"></span>항공유(제트연료) <span class="ex">비행기</span></li>
+        <li><span class="dot"></span>중유 <span class="ex">발전소·대형선박</span></li>
+        <li><span class="dot"></span>LPG <span class="ex">가정용 취사·난방</span></li>
+        <li><span class="dot"></span>등유 <span class="ex">보일러·난방</span></li>
+      </ul>
+    </div>
+
+    <div class="cat-card c2">
+      <div class="cat-header">
+        <span class="cat-icon">🧴</span>
+        <span class="cat-name">플라스틱·포장재</span>
+        <span class="cat-pct">~16%</span>
+      </div>
+      <ul class="product-list">
+        <li><span class="dot"></span>폴리에틸렌(PE) <span class="ex">비닐봉투·페트병</span></li>
+        <li><span class="dot"></span>폴리프로필렌(PP) <span class="ex">식품용기·포장재</span></li>
+        <li><span class="dot"></span>PVC <span class="ex">파이프·창틀·바닥재</span></li>
+        <li><span class="dot"></span>폴리스티렌(PS) <span class="ex">발포스티렌·전자부품</span></li>
+        <li><span class="dot"></span>ABS수지 <span class="ex">전자제품·자동차 내장재</span></li>
+      </ul>
+    </div>
+
+    <div class="cat-card c3">
+      <div class="cat-header">
+        <span class="cat-icon">👕</span>
+        <span class="cat-name">섬유·의류</span>
+        <span class="cat-pct">~8%</span>
+      </div>
+      <ul class="product-list">
+        <li><span class="dot"></span>폴리에스터 <span class="ex">티셔츠·운동복</span></li>
+        <li><span class="dot"></span>나일론 <span class="ex">스타킹·등산복</span></li>
+        <li><span class="dot"></span>아크릴 <span class="ex">니트·스웨터</span></li>
+        <li><span class="dot"></span>스판덱스 <span class="ex">요가복·속옷</span></li>
+        <li><span class="dot"></span>합성가죽 <span class="ex">가방·신발</span></li>
+      </ul>
+    </div>
+
+    <div class="cat-card c4">
+      <div class="cat-header">
+        <span class="cat-icon">💊</span>
+        <span class="cat-name">의약품·화장품</span>
+        <span class="cat-pct">~6%</span>
+      </div>
+      <ul class="product-list">
+        <li><span class="dot"></span>아스피린 원료 <span class="ex">해열·진통제</span></li>
+        <li><span class="dot"></span>항생제 캡슐 <span class="ex">젤라틴(석유 유래)</span></li>
+        <li><span class="dot"></span>바세린 <span class="ex">피부보호제</span></li>
+        <li><span class="dot"></span>립스틱·크림 <span class="ex">파라핀·실리콘 오일</span></li>
+        <li><span class="dot"></span>향수 용매 <span class="ex">알코올·방향족</span></li>
+      </ul>
+    </div>
+
+    <div class="cat-card c5">
+      <div class="cat-header">
+        <span class="cat-icon">🌾</span>
+        <span class="cat-name">농업·식량</span>
+        <span class="cat-pct">~5%</span>
+      </div>
+      <ul class="product-list">
+        <li><span class="dot"></span>요소(질소)비료 <span class="ex">작물 성장 필수</span></li>
+        <li><span class="dot"></span>농약·제초제 <span class="ex">병충해 방제</span></li>
+        <li><span class="dot"></span>농업용 필름 <span class="ex">하우스·멀칭재</span></li>
+        <li><span class="dot"></span>식품 포장재 <span class="ex">신선도 유지</span></li>
+      </ul>
+    </div>
+
+    <div class="cat-card c6">
+      <div class="cat-header">
+        <span class="cat-icon">🏗️</span>
+        <span class="cat-name">건설·산업소재</span>
+        <span class="cat-pct">~12%</span>
+      </div>
+      <ul class="product-list">
+        <li><span class="dot"></span>아스팔트 <span class="ex">도로 포장</span></li>
+        <li><span class="dot"></span>합성고무 <span class="ex">타이어·씰링재</span></li>
+        <li><span class="dot"></span>윤활유·엔진오일 <span class="ex">기계·자동차</span></li>
+        <li><span class="dot"></span>접착제·실란트 <span class="ex">건축·제조업</span></li>
+        <li><span class="dot"></span>페인트·코팅제 <span class="ex">방청·도장</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="stat-bar">
+    <h3>🛢️ 원유 한 배럴에서 나오는 주요 제품 비율 (개략)</h3>
+    <div class="bar-items">
+      <div class="bar-item">
+        <span class="bar-label">에너지·연료</span>
+        <div class="bar-track"><div class="bar-fill" style="width:44%; background:#e74c3c;"></div></div>
+        <span class="bar-val" style="color:#e74c3c">44%</span>
+      </div>
+      <div class="bar-item">
+        <span class="bar-label">플라스틱·포장</span>
+        <div class="bar-track"><div class="bar-fill" style="width:16%; background:#e67e22;"></div></div>
+        <span class="bar-val" style="color:#e67e22">16%</span>
+      </div>
+      <div class="bar-item">
+        <span class="bar-label">건설·산업소재</span>
+        <div class="bar-track"><div class="bar-fill" style="width:12%; background:#2980b9;"></div></div>
+        <span class="bar-val" style="color:#2980b9">12%</span>
+      </div>
+      <div class="bar-item">
+        <span class="bar-label">섬유·의류</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%; background:#27ae60;"></div></div>
+        <span class="bar-val" style="color:#27ae60">8%</span>
+      </div>
+      <div class="bar-item">
+        <span class="bar-label">기타(농업·의약 등)</span>
+        <div class="bar-track"><div class="bar-fill" style="width:11%; background:#8e44ad;"></div></div>
+        <span class="bar-val" style="color:#8e44ad">11%</span>
+      </div>
+      <div class="bar-item">
+        <span class="bar-label">손실·기타</span>
+        <div class="bar-track"><div class="bar-fill" style="width:9%; background:#bdc3c7;"></div></div>
+        <span class="bar-val" style="color:#999">9%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="source">참고: 미국 에너지정보청(EIA), 석유화학산업협회 | 비율은 원유 종류에 따라 편차 있음</div>
+</div>
+</body>
+</html>
