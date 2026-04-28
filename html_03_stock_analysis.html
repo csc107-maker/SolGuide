@@ -1,401 +1,282 @@
-<!-- [삽입 위치: 오늘의 추천 종목 기업 분석 섹션 직후] -->
+<!-- [삽입 위치] 추천 종목 분석 섹션 바로 아래 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LS Electric 종목 분석 카드 - 2026.04.28</title>
+<title>종목 분석 카드 | 2026.04.29</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    background: transparent;
+    background: #faf5ff;
+    padding: 24px 16px;
   }
-  .widget-wrap {
-    background: #f0f9ff;
-    border-radius: 16px;
-    padding: 24px 20px;
-    box-shadow: 0 4px 18px rgba(0,100,200,0.09);
-    max-width: 720px;
+  .header {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .header h2 {
+    font-size: 1.25rem;
+    color: #4c1d95;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .header p { font-size: 0.8rem; color: #6b7280; }
+
+  .cards-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    max-width: 960px;
     margin: 0 auto;
   }
 
-  /* ── 헤더 ── */
-  .header-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-  }
-  .ticker-badge {
-    background: linear-gradient(135deg, #0369a1, #0284c7);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 800;
-    border-radius: 8px;
-    padding: 6px 14px;
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-  }
-  .stock-name-wrap { flex: 1; min-width: 160px; }
-  .stock-name {
-    font-size: 18px;
-    font-weight: 800;
-    color: #0c2340;
-    letter-spacing: -0.5px;
-  }
-  .stock-sub {
-    font-size: 11px;
-    color: #0369a1;
-    margin-top: 3px;
-    font-weight: 600;
-    line-height: 1.5;
-  }
-  .price-col { text-align: right; flex-shrink: 0; }
-  .current-price {
-    font-size: 22px;
-    font-weight: 800;
-    color: #0369a1;
-    letter-spacing: -0.5px;
-  }
-  .price-change {
-    font-size: 12px;
-    color: #dc2626;
-    font-weight: 700;
-    margin-top: 2px;
-  }
-  .price-note {
-    font-size: 10px;
-    color: #94a3b8;
-    margin-top: 2px;
-  }
-
-  /* ── 섹션 공통 ── */
-  .section-title {
-    font-size: 12px;
-    font-weight: 700;
-    color: #0369a1;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin: 16px 0 10px;
-  }
-  .divider {
-    border: none;
-    border-top: 1px solid #bae6fd;
-    margin: 14px 0;
-  }
-
-  /* ── 수주 하이라이트 배너 ── */
-  .contract-banner {
-    background: linear-gradient(135deg, #0ea5e9, #0369a1);
-    border-radius: 10px;
-    padding: 14px 16px;
-    color: #fff;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .contract-icon { font-size: 24px; flex-shrink: 0; }
-  .contract-text { flex: 1; }
-  .contract-text strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 3px; }
-  .contract-text span { font-size: 11px; opacity: 0.9; line-height: 1.6; }
-
-  /* ── 밸류에이션 테이블 ── */
-  .val-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
+  .stock-card {
     background: #fff;
-    border-radius: 10px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 3px 14px rgba(0,0,0,0.08);
   }
-  .val-table thead tr { background: #e0f2fe; }
-  .val-table th {
-    padding: 9px 12px;
-    text-align: left;
-    font-weight: 700;
-    color: #0369a1;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-  .val-table td {
-    padding: 9px 12px;
-    border-bottom: 1px solid #f0f9ff;
-    color: #1e293b;
-    font-weight: 500;
-  }
-  .val-table tr:last-child td { border-bottom: none; }
-  .val-table tr:hover td { background: #f0f9ff; }
-  .val-highlight { font-weight: 800; color: #0369a1; }
-
-  /* ── 목표주가 그리드 ── */
-  .tp-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 10px;
-  }
-  .tp-card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    text-align: center;
-    border-top: 3px solid #0ea5e9;
-  }
-  .tp-card.gold { border-top-color: #f59e0b; }
-  .tp-house { font-size: 11px; color: #64748b; margin-bottom: 4px; font-weight: 600; }
-  .tp-price { font-size: 15px; font-weight: 800; color: #0c2340; }
-  .tp-upside { font-size: 10px; font-weight: 700; margin-top: 3px; }
-  .up-green { color: #16a34a; }
-  .up-red   { color: #dc2626; }
-
-  /* ── 전략 포인트 ── */
-  .strategy-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .strategy-card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 12px 13px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    border-left: 3px solid #0ea5e9;
-    font-size: 12px;
-    color: #334155;
-    line-height: 1.6;
-  }
-  .strategy-card .s-title {
-    font-weight: 700;
-    color: #0369a1;
-    font-size: 11px;
-    margin-bottom: 5px;
-    display: block;
-  }
-
-  /* ── 52주 바 ── */
-  .range-bg {
-    background: #e0f2fe;
-    border-radius: 6px;
-    height: 10px;
-    position: relative;
-    margin-top: 4px;
-  }
-  .range-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #38bdf8, #0369a1);
-    border-radius: 6px;
-  }
-  .range-dot {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 14px; height: 14px;
-    background: #0369a1;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-  .range-labels {
+  .card-header {
+    padding: 14px 18px;
+    color: #fff;
     display: flex;
     justify-content: space-between;
-    font-size: 11px;
-    color: #64748b;
-    margin-bottom: 4px;
+    align-items: center;
+  }
+  .card-header.blue   { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+  .card-header.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  .card-header.violet { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+
+  .stock-name {
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+  .stock-ticker {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .stock-sector {
+    font-size: 0.68rem;
+    background: rgba(255,255,255,0.2);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
   }
 
-  /* ── 태그 ── */
-  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-  .buy-tag  { font-size: 11px; font-weight: 700; background: #dcfce7; color: #15803d; border-radius: 6px; padding: 4px 10px; }
-  .risk-tag { font-size: 11px; font-weight: 700; background: #fee2e2; color: #dc2626; border-radius: 6px; padding: 4px 10px; }
+  .card-body { padding: 16px 18px; }
+
+  /* 지표 테이블 */
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin-bottom: 14px;
+  }
+  .metrics-table th {
+    text-align: left;
+    color: #9ca3af;
+    font-weight: 600;
+    padding: 4px 0;
+    font-size: 0.72rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .metrics-table td {
+    padding: 5px 0;
+    color: #1f2937;
+    font-weight: 700;
+    border-bottom: 1px solid #f9fafb;
+  }
+  .metrics-table td.positive { color: #dc2626; }
+  .metrics-table td.highlight { color: #7c3aed; }
+
+  /* 52주 수익률 바 */
+  .perf-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .perf-label { font-size: 0.72rem; color: #9ca3af; min-width: 60px; }
+  .perf-bar {
+    flex: 1;
+    height: 8px;
+    background: #f3f4f6;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .perf-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+  .bar-blue   { background: linear-gradient(to right, #93c5fd, #2563eb); }
+  .bar-orange { background: linear-gradient(to right, #fde68a, #d97706); }
+  .bar-violet { background: linear-gradient(to right, #ddd6fe, #7c3aed); }
+  .perf-val { font-size: 0.8rem; font-weight: 800; color: #dc2626; min-width: 45px; text-align: right; }
+
+  /* 태그 */
+  .tags-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+  .tag {
+    font-size: 0.65rem;
+    padding: 3px 9px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+  .tag-buy  { background: #dcfce7; color: #15803d; }
+  .tag-risk { background: #fee2e2; color: #b91c1c; }
+
+  .opinion-box {
+    background: #f9fafb;
+    border-left: 3px solid;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    color: #374151;
+    line-height: 1.6;
+  }
+  .opinion-box.blue-border   { border-color: #3b82f6; }
+  .opinion-box.orange-border { border-color: #f59e0b; }
+  .opinion-box.violet-border { border-color: #8b5cf6; }
 
   .disclaimer {
-    font-size: 10px; color: #94a3b8;
-    margin-top: 14px; text-align: center; line-height: 1.5;
+    text-align: center;
+    font-size: 0.68rem;
+    color: #9ca3af;
+    margin-top: 18px;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
   }
-
   @media (max-width: 480px) {
-    .strategy-grid { grid-template-columns: 1fr; }
-    .current-price { font-size: 18px; }
-    .stock-name { font-size: 15px; }
-    .val-table th, .val-table td { padding: 7px 8px; font-size: 11px; }
-    .tp-grid { grid-template-columns: 1fr 1fr; }
+    .stock-name { font-size: 0.95rem; }
   }
 </style>
 </head>
 <body>
-<div class="widget-wrap">
 
-  <!-- 헤더 -->
-  <div class="header-row">
-    <div class="ticker-badge">010120.KS</div>
-    <div class="stock-name-wrap">
-      <div class="stock-name">LS Electric</div>
-      <div class="stock-sub">📌 2026.04.28 오늘의 추천 종목<br>AI 데이터센터 전력 인프라 — 세계 최초 초전도 전력망 보유</div>
-    </div>
-    <div class="price-col">
-      <div class="current-price">255,500원</div>
-      <div class="price-change">▲ 전일 +12.36%</div>
-      <div class="price-note">4/27 종가 | 3일 연속 신고가</div>
-    </div>
-  </div>
-
-  <!-- 수주 배너 -->
-  <div class="contract-banner">
-    <div class="contract-icon">🏆</div>
-    <div class="contract-text">
-      <strong>2026년 4월 신규 수주: 미국 AI 데이터센터 $115M + $46M 계약</strong>
-      <span>전력분배 스위치기어·변압기 공급 / DC 그리드 솔루션 / 세계 최초 초전도 전력망 데이터센터 적용 프로젝트 진행 중 (with KEPCO)</span>
-    </div>
-  </div>
-
-  <!-- 밸류에이션 테이블 -->
-  <div class="section-title">📊 핵심 투자 지표</div>
-  <table class="val-table">
-    <thead>
-      <tr><th>지표</th><th>수치</th><th>비고</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>현재 주가 (4/27 종가)</td>
-        <td class="val-highlight">255,500원</td>
-        <td>주식분할 후 기준</td>
-      </tr>
-      <tr>
-        <td>전일 등락률</td>
-        <td class="val-highlight">+12.36%</td>
-        <td>코스피 당일 최고 상승 섹터</td>
-      </tr>
-      <tr>
-        <td>모닝스타 공정가치 (분할 조정)</td>
-        <td class="val-highlight">약 309,000원</td>
-        <td>현재 대비 +20.9% 여력</td>
-      </tr>
-      <tr>
-        <td>Forward PER</td>
-        <td class="val-highlight">약 20~25배</td>
-        <td>글로벌 경쟁사 지멘스(15~18배) 대비 성장 프리미엄</td>
-      </tr>
-      <tr>
-        <td>애널리스트 투자의견</td>
-        <td class="val-highlight">매수 19명 / 매도 0명</td>
-        <td>만장일치 매수 — 비중확대</td>
-      </tr>
-      <tr>
-        <td>2026년 미국 수주 잔고</td>
-        <td class="val-highlight">$161M (약 2,380억원)</td>
-        <td>$115M + $46M 신규 계약 합산</td>
-      </tr>
-      <tr>
-        <td>AI HVAC 전력절감 효과</td>
-        <td class="val-highlight">-24.6% 전력소비</td>
-        <td>AI 기반 냉각 제어 — 상용화 완료</td>
-      </tr>
-      <tr>
-        <td>초전도 전력망</td>
-        <td class="val-highlight">세계 최초 개발</td>
-        <td>KEPCO + LS Electric 공동 — 데이터센터 적용 예정</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <hr class="divider">
-
-  <!-- 목표주가 -->
-  <div class="section-title">🏦 목표주가 분석 (분할 조정 추정)</div>
-  <div class="tp-grid">
-    <div class="tp-card gold">
-      <div class="tp-house">모닝스타 FV</div>
-      <div class="tp-price">~309,000원</div>
-      <div class="tp-upside up-green">▲ +20.9% 여력</div>
-    </div>
-    <div class="tp-card">
-      <div class="tp-house">최고 목표가</div>
-      <div class="tp-price">~293,000원</div>
-      <div class="tp-upside up-green">▲ +14.7% 여력</div>
-    </div>
-    <div class="tp-card">
-      <div class="tp-house">컨센서스 평균</div>
-      <div class="tp-price">~219,000원</div>
-      <div class="tp-upside up-red">▼ 이미 상회 중</div>
-    </div>
-    <div class="tp-card">
-      <div class="tp-house">분석가 만장일치</div>
-      <div class="tp-price">19 / 0</div>
-      <div class="tp-upside up-green">Buy / Sell</div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- 52주 바 -->
-  <div class="section-title">📈 52주 주가 위치</div>
-  <div class="range-labels">
-    <span>52주 저점 <strong>~90,000원</strong></span>
-    <span style="color:#0369a1; font-weight:700;">현재 255,500원 ← 52주 신고가</span>
-    <span>목표 <strong>~309,000원</strong></span>
-  </div>
-  <div class="range-bg">
-    <div class="range-fill" style="width:73%"></div>
-    <div class="range-dot" style="left:73%"></div>
-  </div>
-  <div style="font-size:11px; color:#64748b; margin-top:5px;">
-    ※ 52주 저점→목표가 구간 중 현재 73% 위치 | 목표가까지 약 27% 여력
-  </div>
-
-  <hr class="divider">
-
-  <!-- 전략 포인트 -->
-  <div class="section-title">🎯 오늘 주목 이유 — 4가지 핵심 포인트</div>
-  <div class="strategy-grid">
-    <div class="strategy-card">
-      <span class="s-title">⚡ 미국 AI 데이터센터 독점 납품</span>
-      하이퍼스케일 AI 데이터센터에 전력분배·DC 그리드 솔루션 독점 공급. 4월 한 달에만 $161M(약 2,380억원) 신규 수주 — 연간 매출의 약 30% 규모.
-    </div>
-    <div class="strategy-card">
-      <span class="s-title">🌐 세계 최초 초전도 전력망</span>
-      KEPCO와 세계 최초로 데이터센터 초전도 전력망 개발 중. 기술 독점 → 글로벌 라이선스 수익 + 추가 수주 가능성. 경쟁사 진입장벽 매우 높음.
-    </div>
-    <div class="strategy-card">
-      <span class="s-title">📊 FOMC 동결 → 설비투자 가속</span>
-      미국 금리 동결 지속 시 빅테크 AI 인프라 capex 가속. LS Electric 미국 수주 파이프라인 확대 → 2026년 하반기 실적 추가 서프라이즈 가능.
-    </div>
-    <div class="strategy-card">
-      <span class="s-title">🔋 AI HVAC 냉각 상용화 완료</span>
-      데이터센터 전력 소비 24.6% 절감 AI 냉각 시스템 실증 완료. 에너지 비용 절감에 민감한 빅테크 클라이언트 추가 계약 가능성 高.
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- 매수/리스크 태그 -->
-  <div class="section-title">✅ 매수 근거</div>
-  <div class="tag-row">
-    <span class="buy-tag">미국 $161M 신규 수주</span>
-    <span class="buy-tag">세계 최초 초전도 전력망</span>
-    <span class="buy-tag">만장일치 매수 (19/0)</span>
-    <span class="buy-tag">3거래일 연속 신고가</span>
-    <span class="buy-tag">FOMC 동결 인프라 수혜</span>
-    <span class="buy-tag">AI 냉각 솔루션 상용화</span>
-  </div>
-
-  <div class="section-title" style="margin-top:14px;">⚠️ 주요 리스크</div>
-  <div class="tag-row">
-    <span class="risk-tag">단기 +12% 급등 피로감</span>
-    <span class="risk-tag">철강·구리 원자재 비용 상승</span>
-    <span class="risk-tag">WTI 고유가 → 물류비 부담</span>
-    <span class="risk-tag">컨센서스 평균 목표가 이미 상회</span>
-  </div>
-
-  <div class="disclaimer">
-    ⚠ 본 내용은 투자 정보 제공 목적으로 작성되었으며, 투자 권유가 아닙니다.<br>
-    투자 판단의 최종 책임은 투자자 본인에게 있습니다.
-  </div>
+<div class="header">
+  <h2>📋 2026.04.29 추천 종목 심층 분석</h2>
+  <p>글로벌 지표 + 실적 + 외국인 동향 기반 | 투자 참고 자료</p>
 </div>
+
+<div class="cards-wrap">
+
+  <!-- SK하이닉스 -->
+  <div class="stock-card">
+    <div class="card-header blue">
+      <div>
+        <div class="stock-name">SK하이닉스</div>
+        <div class="stock-ticker">KRX: 000660 · 반도체</div>
+      </div>
+      <span class="stock-sector">🏆 HBM 1위</span>
+    </div>
+    <div class="card-body">
+      <table class="metrics-table">
+        <tr><th>지표</th><th>수치</th></tr>
+        <tr><td>현재 주가</td><td class="positive">약 1,100,000원</td></tr>
+        <tr><td>GS 목표주가</td><td class="highlight">1,350,000원</td></tr>
+        <tr><td>Q1 영업이익</td><td class="positive">37.61조원</td></tr>
+        <tr><td>영업이익률</td><td class="positive">72%</td></tr>
+        <tr><td>순이익 YoY</td><td class="positive">+398%</td></tr>
+        <tr><td>HBM 점유율</td><td class="highlight">62%</td></tr>
+      </table>
+      <div class="perf-row">
+        <span class="perf-label">YTD 수익률</span>
+        <div class="perf-bar"><div class="perf-fill bar-blue" style="width:70%"></div></div>
+        <span class="perf-val">+35%↑</span>
+      </div>
+      <div class="tags-row">
+        <span class="tag tag-buy">✅ AI 수요 지속</span>
+        <span class="tag tag-buy">✅ HBM4 개발 중</span>
+        <span class="tag tag-buy">✅ 외국인 순매수</span>
+        <span class="tag tag-risk">⚠ 환율 하락 리스크</span>
+        <span class="tag tag-risk">⚠ 중국 경쟁 심화</span>
+      </div>
+      <div class="opinion-box blue-border">
+        💡 AI 메모리 슈퍼사이클 수혜 최전선. 영업이익률 72%는 반도체 역사상 최고 수준 중 하나. 오늘 추가 외국인 매수 유입 가능성 높음.
+      </div>
+    </div>
+  </div>
+
+  <!-- 삼성SDI -->
+  <div class="stock-card">
+    <div class="card-header orange">
+      <div>
+        <div class="stock-name">삼성SDI</div>
+        <div class="stock-ticker">KRX: 006400 · 배터리</div>
+      </div>
+      <span class="stock-sector">🔋 ESS 반등</span>
+    </div>
+    <div class="card-body">
+      <table class="metrics-table">
+        <tr><th>지표</th><th>수치</th></tr>
+        <tr><td>현재 주가</td><td class="positive">약 630,000원</td></tr>
+        <tr><td>Q1 순이익</td><td class="positive">561억원 (흑자전환)</td></tr>
+        <tr><td>ESS 출하 전망</td><td class="highlight">12→20GWh (+67%)</td></tr>
+        <tr><td>AMPC 수혜</td><td class="positive">72억→439억원</td></tr>
+        <tr><td>저평가 여지</td><td class="highlight">애널 대비 -77%</td></tr>
+        <tr><td>AI DC향 ESS</td><td class="positive">급성장 중</td></tr>
+      </table>
+      <div class="perf-row">
+        <span class="perf-label">회복 여력</span>
+        <div class="perf-bar"><div class="perf-fill bar-orange" style="width:77%"></div></div>
+        <span class="perf-val">77%↑</span>
+      </div>
+      <div class="tags-row">
+        <span class="tag tag-buy">✅ 흑자 전환 확인</span>
+        <span class="tag tag-buy">✅ AI DC ESS 수요</span>
+        <span class="tag tag-buy">✅ 미국 현지생산</span>
+        <span class="tag tag-risk">⚠ EV 수요 불확실</span>
+        <span class="tag tag-risk">⚠ CATL 경쟁</span>
+      </div>
+      <div class="opinion-box orange-border">
+        💡 공정가치 대비 77% 저평가 구간. ESS 배터리가 AI 인프라 필수 부품으로 재평가받는 중. 분할 매수 전략 유효.
+      </div>
+    </div>
+  </div>
+
+  <!-- 현대자동차 -->
+  <div class="stock-card">
+    <div class="card-header violet">
+      <div>
+        <div class="stock-name">현대자동차</div>
+        <div class="stock-ticker">KRX: 005380 · 자동차·로봇</div>
+      </div>
+      <span class="stock-sector">🤖 EV+Robot</span>
+    </div>
+    <div class="card-body">
+      <table class="metrics-table">
+        <tr><th>지표</th><th>수치</th></tr>
+        <tr><td>현재 주가</td><td class="positive">600,000원 이상</td></tr>
+        <tr><td>Q1 매출</td><td class="positive">45.94조원 (역대 최고)</td></tr>
+        <tr><td>전동화 비중</td><td class="highlight">24.9% (분기 최고)</td></tr>
+        <tr><td>EV 판매</td><td class="positive">58,788대 (+14.2%)</td></tr>
+        <tr><td>HEV 판매</td><td class="positive">173,977대 (최고)</td></tr>
+        <tr><td>아틀라스 로봇</td><td class="highlight">상용화 진행 중</td></tr>
+      </table>
+      <div class="perf-row">
+        <span class="perf-label">주가 상승</span>
+        <div class="perf-bar"><div class="perf-fill bar-violet" style="width:82%"></div></div>
+        <span class="perf-val">+82%↑</span>
+      </div>
+      <div class="tags-row">
+        <span class="tag tag-buy">✅ 역대 최고 매출</span>
+        <span class="tag tag-buy">✅ 로봇 모멘텀</span>
+        <span class="tag tag-buy">✅ EV·HEV 동반 강세</span>
+        <span class="tag tag-risk">⚠ 원화강세 수익 희석</span>
+        <span class="tag tag-risk">⚠ 로봇 불확실성</span>
+      </div>
+      <div class="opinion-box violet-border">
+        💡 완성차+로봇+배터리 구독의 삼중 모멘텀. 도요타 시총 추월 가능성도 거론되는 상황. 단기 조정 시 매수 기회.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="disclaimer">※ 본 자료는 투자 정보 제공 목적이며 투자 권유가 아닙니다. 최종 투자 판단은 투자자 본인 책임입니다. 과거 수익률은 미래를 보장하지 않습니다.</p>
+
 </body>
 </html>
