@@ -1,273 +1,210 @@
-<!-- [삽입 위치] 핵심 뉴스 TOP 5 섹션 바로 아래 -->
+<!-- [삽입 위치] 핵심 뉴스 TOP 5 섹션 직후에 삽입하세요 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>뉴스 타임라인 | 2026.04.29</title>
+<title>오늘의 핵심 뉴스 타임라인 — 2026.04.30</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    background: #f0fdf4;
-    padding: 24px 16px;
+    background: transparent;
   }
-  .header {
-    text-align: center;
-    margin-bottom: 22px;
-  }
-  .header h2 {
-    font-size: 1.25rem;
-    color: #14532d;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .header p { font-size: 0.8rem; color: #6b7280; }
-
-  .timeline {
-    max-width: 780px;
+  .widget-wrap {
+    background: #fffbf0;
+    border-radius: 16px;
+    padding: 24px 20px 20px;
+    max-width: 720px;
     margin: 0 auto;
+    box-shadow: 0 2px 12px rgba(200,150,30,0.08);
+  }
+  .widget-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #78350f;
+    margin-bottom: 6px;
+  }
+  .widget-date {
+    font-size: 12px;
+    color: #92400e;
+    margin-bottom: 20px;
+  }
+  .timeline {
     position: relative;
-    padding-left: 20px;
+    padding-left: 28px;
   }
   .timeline::before {
     content: '';
     position: absolute;
-    left: 20px;
-    top: 0; bottom: 0;
-    width: 3px;
-    background: linear-gradient(to bottom, #22c55e, #3b82f6, #f59e0b, #8b5cf6, #10b981);
+    left: 9px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, #fbbf24, #f59e0b, #d97706);
     border-radius: 2px;
   }
-
   .news-item {
     position: relative;
-    margin-left: 32px;
     margin-bottom: 18px;
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 16px 18px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
   }
   .news-item::before {
     content: '';
     position: absolute;
-    left: -22px;
+    left: -24px;
     top: 18px;
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    border: 3px solid #fff;
-    box-shadow: 0 0 0 2px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #f59e0b;
   }
-  .news-item.n1::before { background: #22c55e; box-shadow: 0 0 0 2px #22c55e; }
-  .news-item.n2::before { background: #3b82f6; box-shadow: 0 0 0 2px #3b82f6; }
-  .news-item.n3::before { background: #f59e0b; box-shadow: 0 0 0 2px #f59e0b; }
-  .news-item.n4::before { background: #8b5cf6; box-shadow: 0 0 0 2px #8b5cf6; }
-  .news-item.n5::before { background: #10b981; box-shadow: 0 0 0 2px #10b981; }
+  .news-item.good::before { background: #10b981; box-shadow: 0 0 0 2px #10b981; }
+  .news-item.bad::before  { background: #ef4444; box-shadow: 0 0 0 2px #ef4444; }
+  .news-item.mixed::before { background: #8b5cf6; box-shadow: 0 0 0 2px #8b5cf6; }
 
-  .news-top {
+  .news-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 8px;
   }
-  .news-rank {
-    font-size: 0.7rem;
-    font-weight: 800;
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 10px;
-  }
-  .r1 { background: #22c55e; }
-  .r2 { background: #3b82f6; }
-  .r3 { background: #f59e0b; }
-  .r4 { background: #8b5cf6; }
-  .r5 { background: #10b981; }
-
-  .source-badge {
-    font-size: 0.65rem;
+  .badge-source {
+    font-size: 10px;
+    font-weight: 700;
     padding: 2px 7px;
     border-radius: 8px;
-    background: #f3f4f6;
-    color: #555;
-    font-weight: 600;
+    background: #e0e7ff;
+    color: #3730a3;
+    white-space: nowrap;
   }
-  .tag {
-    font-size: 0.65rem;
-    padding: 2px 8px;
-    border-radius: 10px;
+  .badge-good {
+    font-size: 10px;
     font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: #d1fae5;
+    color: #065f46;
+    white-space: nowrap;
   }
-  .tag-good    { background: #dcfce7; color: #166534; }
-  .tag-bad     { background: #fee2e2; color: #991b1b; }
-  .tag-neutral { background: #fef9c3; color: #854d0e; }
-
+  .badge-bad {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: #fee2e2;
+    color: #991b1b;
+    white-space: nowrap;
+  }
+  .badge-mixed {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: #ede9fe;
+    color: #6d28d9;
+    white-space: nowrap;
+  }
   .news-title {
-    font-size: 0.95rem;
+    font-size: 13px;
     font-weight: 700;
-    color: #1f2937;
-    margin-bottom: 6px;
-    line-height: 1.4;
+    color: #1e293b;
+    line-height: 1.5;
+    margin-bottom: 4px;
   }
   .news-body {
-    font-size: 0.82rem;
-    color: #4b5563;
-    line-height: 1.65;
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.6;
   }
-  .stars {
-    font-size: 0.78rem;
-    color: #f59e0b;
-    margin-top: 6px;
-  }
-  .impact-meter {
+  .news-impact {
     margin-top: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #7c3aed;
+    background: #f5f3ff;
+    border-radius: 6px;
+    padding: 4px 8px;
+    display: inline-block;
   }
-  .impact-label { font-size: 0.68rem; color: #9ca3af; }
-  .impact-bar {
-    height: 5px;
-    border-radius: 3px;
-    flex: 1;
-    background: #e5e7eb;
-    overflow: hidden;
-  }
-  .impact-fill {
-    height: 100%;
-    border-radius: 3px;
-  }
-  .fill-green  { background: #22c55e; }
-  .fill-blue   { background: #3b82f6; }
-  .fill-yellow { background: #f59e0b; }
-  .fill-purple { background: #8b5cf6; }
-  .fill-teal   { background: #10b981; }
-
   .disclaimer {
-    text-align: center;
-    font-size: 0.68rem;
-    color: #9ca3af;
     margin-top: 16px;
-    max-width: 780px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  @media (max-width: 480px) {
-    .news-title { font-size: 0.88rem; }
-    .timeline { padding-left: 14px; }
-    .news-item { margin-left: 24px; }
+    font-size: 10px;
+    color: #a8a29e;
+    text-align: center;
+    line-height: 1.5;
   }
 </style>
 </head>
 <body>
+<div class="widget-wrap">
+  <div class="widget-title">📰 오늘의 핵심 뉴스 타임라인 — 2026.04.30</div>
+  <div class="widget-date">코스피 개장 전 주요 이슈 요약 | 호재·악재 분류</div>
 
-<div class="header">
-  <h2>📰 2026.04.29 한국 증시 핵심 뉴스 타임라인</h2>
-  <p>오늘 장에 직접 영향을 줄 5대 이벤트 분석</p>
+  <div class="timeline">
+
+    <!-- 뉴스 1 -->
+    <div class="news-item bad">
+      <div class="news-header">
+        <span class="badge-source">🏛 FOMC / 연준</span>
+        <span class="badge-bad">⬇ 악재</span>
+      </div>
+      <div class="news-title">연준, 금리 동결 — 그러나 3명 반대표 "매파적 결정"</div>
+      <div class="news-body">4월 29~30일 FOMC 회의에서 연준은 기준금리를 동결했으나, 3명의 이사가 '향후 금리 인하 가능성 언급 삭제'에 반대했다. 시장은 이를 매파 신호로 해석, 미국 10년물 금리가 4.42%로 급등했다.</div>
+      <div class="news-impact">📌 영향: 성장주·기술주 밸류에이션 압박 / 달러 소폭 강세 가능성</div>
+    </div>
+
+    <!-- 뉴스 2 -->
+    <div class="news-item bad">
+      <div class="news-header">
+        <span class="badge-source">🤖 OpenAI / AI</span>
+        <span class="badge-bad">⬇ 악재</span>
+      </div>
+      <div class="news-title">오픈AI, 내부 성장 목표 미달 — AI 수요 우려 재점화</div>
+      <div class="news-body">오픈AI가 내부적으로 설정한 성장 목표를 달성하지 못했다는 보도가 나왔다. AI 소프트웨어 수요에 대한 회의론이 일부 투자자 사이에서 다시 고개를 들며, 반도체 관련주에 단기 하방 압력이 생길 수 있다.</div>
+      <div class="news-impact">📌 영향: SK하이닉스·삼성전자 HBM 수요 점검 / 단기 조정 가능성</div>
+    </div>
+
+    <!-- 뉴스 3 -->
+    <div class="news-item good">
+      <div class="news-header">
+        <span class="badge-source">🛡 방산 / 지정학</span>
+        <span class="badge-good">⬆ 호재</span>
+      </div>
+      <div class="news-title">미-이란 평화 협상 결렬 — 유가·K방산 수혜</div>
+      <div class="news-body">미국과 이란의 평화 협상이 사실상 결렬됐다는 소식이 전해졌다. WTI 유가는 103달러를 돌파하며 3거래일 연속 상승했다. 호르무즈 해협 봉쇄 장기화 우려 속에 한화에어로스페이스, KAI, LIG넥스원 등 K-방산주 재조명이 예상된다.</div>
+      <div class="news-impact">📌 영향: 한화에어로스페이스, KAI, HD현대중공업 강세 기대</div>
+    </div>
+
+    <!-- 뉴스 4 -->
+    <div class="news-item good">
+      <div class="news-header">
+        <span class="badge-source">💾 SK하이닉스</span>
+        <span class="badge-good">⬆ 호재</span>
+      </div>
+      <div class="news-title">SK하이닉스 1분기 역대 최고 영업이익 달성</div>
+      <div class="news-body">SK하이닉스가 2026년 1분기에 역대 최고 영업이익을 기록했다. HBM 글로벌 점유율 57%, HBM3E 가격 20% 인상 효과가 복합 작용했다. 연간 영업이익은 47.2조원으로 삼성전자(43.6조원)를 첫 추월했다.</div>
+      <div class="news-impact">📌 영향: SK하이닉스·삼성전자 AI 메모리 슈퍼사이클 모멘텀 유지</div>
+    </div>
+
+    <!-- 뉴스 5 -->
+    <div class="news-item mixed">
+      <div class="news-header">
+        <span class="badge-source">📊 블룸버그 / KOSPI</span>
+        <span class="badge-mixed">⚠ 혼조</span>
+      </div>
+      <div class="news-title">코스피 세계 최고 상승 — "버블 리스크" 경고도</div>
+      <div class="news-body">블룸버그는 코스피가 연초 이후 약 60% 상승, 세계 주요 지수 중 최고 수익률을 기록했다고 보도했다. 동시에 "세계 최고 상승이 버블 리스크를 만들 수 있다"는 경고도 함께 내놨다. 고객 예탁금은 현재 123조원으로 회복 중.</div>
+      <div class="news-impact">📌 영향: 단기 차익실현 압력 상존 / 중장기 구조적 상승 훼손 아님</div>
+    </div>
+
+  </div>
+  <div class="disclaimer">본 내용은 투자 정보 제공 목적이며 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.</div>
 </div>
-
-<div class="timeline">
-
-  <!-- 뉴스 1 -->
-  <div class="news-item n1">
-    <div class="news-top">
-      <span class="news-rank r1">TOP 1</span>
-      <span class="source-badge">Bloomberg · Korea Herald</span>
-      <span class="tag tag-good">📈 호재</span>
-    </div>
-    <div class="news-title">한국 증시, 영국 추월 — 세계 8위 주식시장 등극</div>
-    <div class="news-body">
-      한국 상장사 시가총액이 $4.04조를 기록하며 영국($3.99조)을 처음으로 추월했습니다. 코스피는 올해에만 약 60% 상승하며 주요국 증시 중 압도적 1위 수익률을 달성. 이 뉴스는 글로벌 패시브 펀드와 기관의 한국 비중 확대를 촉진할 수 있습니다.
-    </div>
-    <div class="stars">⭐⭐⭐ 중장기 외국인 자금 유입 트리거</div>
-    <div class="impact-meter">
-      <span class="impact-label">시장 영향도</span>
-      <div class="impact-bar"><div class="impact-fill fill-green" style="width:70%"></div></div>
-      <span class="impact-label">70%</span>
-    </div>
-  </div>
-
-  <!-- 뉴스 2 -->
-  <div class="news-item n2">
-    <div class="news-top">
-      <span class="news-rank r2">TOP 2</span>
-      <span class="source-badge">CNBC · MarketScreener</span>
-      <span class="tag tag-good">📈 초대형 호재</span>
-    </div>
-    <div class="news-title">SK하이닉스 Q1 2026 — 순이익 40.35조원, 영업이익률 72% 달성</div>
-    <div class="news-body">
-      SK하이닉스가 Q1 2026 순이익 40.35조원(+398% YoY)을 기록했습니다. HBM3E AI 메모리 수요가 전혀 꺾이지 않고 있으며, 영업이익 37.61조원은 분기 사상 최대. 골드만삭스 목표주가를 135만원으로 상향. 반도체 업종 전반 동반 상승 기대.
-    </div>
-    <div class="stars">⭐⭐⭐⭐⭐ 오늘 반도체 섹터 상승의 핵심 동력</div>
-    <div class="impact-meter">
-      <span class="impact-label">시장 영향도</span>
-      <div class="impact-bar"><div class="impact-fill fill-blue" style="width:95%"></div></div>
-      <span class="impact-label">95%</span>
-    </div>
-  </div>
-
-  <!-- 뉴스 3 -->
-  <div class="news-item n3">
-    <div class="news-top">
-      <span class="news-rank r3">TOP 3</span>
-      <span class="source-badge">Korea Herald · THE INVESTOR</span>
-      <span class="tag tag-good">📈 호재</span>
-    </div>
-    <div class="news-title">삼성SDI, ESS 배터리 급성장으로 Q1 흑자 전환</div>
-    <div class="news-body">
-      삼성SDI가 Q1 2026 순이익 561억원을 달성하며 1년 만에 흑자로 돌아섰습니다. AI 데이터센터향 ESS 배터리 수요 폭증과 미국 현지 생산(AMPC) 세액공제 수혜가 실적을 견인. 2026년 ESS 출하량은 전년 대비 +67% 성장 전망.
-    </div>
-    <div class="stars">⭐⭐⭐ 저평가 해소 계기, 반등 기대</div>
-    <div class="impact-meter">
-      <span class="impact-label">시장 영향도</span>
-      <div class="impact-bar"><div class="impact-fill fill-yellow" style="width:65%"></div></div>
-      <span class="impact-label">65%</span>
-    </div>
-  </div>
-
-  <!-- 뉴스 4 -->
-  <div class="news-item n4">
-    <div class="news-top">
-      <span class="news-rank r4">TOP 4</span>
-      <span class="source-badge">Hyundai Newsroom · Seoul Economic Daily</span>
-      <span class="tag tag-good">📈 호재</span>
-    </div>
-    <div class="news-title">현대차, 아틀라스 로봇 + Q1 역대 최고 매출 45.94조원</div>
-    <div class="news-body">
-      현대차 Q1 2026 매출이 45.94조원(+3.4% YoY)으로 사상 최고를 기록했습니다. 전동화 차량 비중 24.9%로 분기 최고치. 아틀라스 휴머노이드 로봇 공개로 주가가 60만원을 돌파. EV 배터리 구독 서비스 파일럿도 시작해 비즈니스 모델 다각화 진행 중.
-    </div>
-    <div class="stars">⭐⭐⭐⭐ EV·로봇 이중 모멘텀</div>
-    <div class="impact-meter">
-      <span class="impact-label">시장 영향도</span>
-      <div class="impact-bar"><div class="impact-fill fill-purple" style="width:78%"></div></div>
-      <span class="impact-label">78%</span>
-    </div>
-  </div>
-
-  <!-- 뉴스 5 -->
-  <div class="news-item n5">
-    <div class="news-top">
-      <span class="news-rank r5">TOP 5</span>
-      <span class="source-badge">Bloomberg · KED Global</span>
-      <span class="tag tag-neutral">🔔 중장기 호재</span>
-    </div>
-    <div class="news-title">구글 딥마인드, 삼성·SK하이닉스·현대차·LG와 AI 파트너십 강화</div>
-    <div class="news-body">
-      구글 딥마인드가 한국 4대 대기업과 AI 파트너십을 심화한다고 발표했습니다. 이는 한국 기업들이 글로벌 AI 공급망의 핵심 허브로 자리매김하고 있음을 확인해주는 신호. 단기 주가 영향보다는 중장기 협력 수주·R&D 기대감을 높입니다.
-    </div>
-    <div class="stars">⭐⭐⭐ 한국 AI 생태계 위상 강화</div>
-    <div class="impact-meter">
-      <span class="impact-label">시장 영향도</span>
-      <div class="impact-bar"><div class="impact-fill fill-teal" style="width:55%"></div></div>
-      <span class="impact-label">55%</span>
-    </div>
-  </div>
-
-</div>
-
-<p class="disclaimer">※ 본 자료는 투자 정보 제공 목적이며 투자 권유가 아닙니다. 최종 투자 판단은 투자자 본인 책임입니다.</p>
-
 </body>
 </html>
