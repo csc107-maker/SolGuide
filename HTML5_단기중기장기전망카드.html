@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LS일렉트릭 단기·중기·장기 전망 카드</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; }
+  body { background: #f8fafc; padding: 20px; }
+  .wrapper { max-width: 780px; margin: 0 auto; }
+
+  .header-band { background: #0f172a; border-radius: 14px; padding: 20px 26px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .header-band h2 { color: white; font-size: 18px; font-weight: 800; }
+  .header-band p { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 3px; }
+  .header-badge { background: rgba(255,255,255,0.12); color: white; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+
+  .forecast-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 14px; }
+
+  .f-card { border-radius: 16px; padding: 22px 18px 18px; position: relative; overflow: hidden; }
+  .f-card.short { background: #eff6ff; border: 1.5px solid #bfdbfe; }
+  .f-card.mid   { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+  .f-card.long  { background: #faf5ff; border: 1.5px solid #ddd6fe; }
+
+  .f-icon-bg { position: absolute; top: 12px; right: 14px; font-size: 36px; opacity: 0.12; line-height: 1; }
+
+  .f-period { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 11px; border-radius: 20px; margin-bottom: 12px; }
+  .f-card.short .f-period { background: #dbeafe; color: #1d4ed8; }
+  .f-card.mid   .f-period { background: #dcfce7; color: #15803d; }
+  .f-card.long  .f-period { background: #ede9fe; color: #5b21b6; }
+
+  .f-verdict { font-size: 15px; font-weight: 800; line-height: 1.35; margin-bottom: 10px; }
+  .f-card.short .f-verdict { color: #1e3a8a; }
+  .f-card.mid   .f-verdict { color: #14532d; }
+  .f-card.long  .f-verdict { color: #3b0764; }
+
+  .f-divider { height: 1px; margin: 10px 0; }
+  .f-card.short .f-divider { background: #bfdbfe; }
+  .f-card.mid   .f-divider { background: #bbf7d0; }
+  .f-card.long  .f-divider { background: #ddd6fe; }
+
+  .f-row { display: flex; align-items: flex-start; gap: 7px; font-size: 12px; line-height: 1.6; margin-bottom: 5px; }
+  .f-row:last-of-type { margin-bottom: 0; }
+  .f-bullet { flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; }
+  .f-card.short .f-bullet { background: #3b82f6; }
+  .f-card.mid   .f-bullet { background: #10b981; }
+  .f-card.long  .f-bullet { background: #8b5cf6; }
+  .f-card.short .f-row { color: #1e3a8a; }
+  .f-card.mid   .f-row { color: #14532d; }
+  .f-card.long  .f-row { color: #3b0764; }
+
+  .f-action { margin-top: 14px; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 9px; text-align: center; }
+  .f-card.short .f-action { background: rgba(59,130,246,0.13); color: #1d4ed8; }
+  .f-card.mid   .f-action { background: rgba(16,185,129,0.13); color: #065f46; }
+  .f-card.long  .f-action { background: rgba(139,92,246,0.13); color: #5b21b6; }
+
+  .consensus-row { background: white; border-radius: 12px; padding: 16px 20px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 14px; }
+  .cr-item { text-align: center; padding: 0 12px; }
+  .cr-item + .cr-item { border-left: 1px solid #f1f5f9; }
+  .cr-label { font-size: 11px; color: #94a3b8; font-weight: 600; margin-bottom: 5px; }
+  .cr-value { font-size: 18px; font-weight: 800; color: #1e293b; }
+  .cr-sub { font-size: 11px; color: #64748b; margin-top: 3px; }
+  .cr-up { color: #10b981; font-weight: 700; }
+
+  .note { font-size: 11px; color: #94a3b8; text-align: center; }
+
+  @media (max-width: 580px) {
+    .forecast-grid { grid-template-columns: 1fr; }
+    .consensus-row { grid-template-columns: 1fr; }
+    .cr-item + .cr-item { border-left: none; border-top: 1px solid #f1f5f9; padding-top: 10px; margin-top: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header-band">
+    <div>
+      <h2>🔭 LS일렉트릭 투자 전망 요약</h2>
+      <p>단기 · 중기 · 장기 시나리오 | 증권가 컨센서스 기반</p>
+    </div>
+    <span class="header-badge">기준일 2026.04.29</span>
+  </div>
+
+  <div class="consensus-row">
+    <div class="cr-item">
+      <div class="cr-label">2026F 매출액</div>
+      <div class="cr-value">6조 412억</div>
+      <div class="cr-sub"><span class="cr-up">+21.7% YoY</span></div>
+    </div>
+    <div class="cr-item">
+      <div class="cr-label">2026F 영업이익</div>
+      <div class="cr-value">6,376억</div>
+      <div class="cr-sub"><span class="cr-up">+49.4% YoY</span></div>
+    </div>
+    <div class="cr-item">
+      <div class="cr-label">컨센서스 목표주가</div>
+      <div class="cr-value">210K~350K</div>
+      <div class="cr-sub">18개 증권사 전원 매수</div>
+    </div>
+  </div>
+
+  <div class="forecast-grid">
+
+    <div class="f-card short">
+      <div class="f-icon-bg">⚡</div>
+      <span class="f-period">단기 · 3~6개월</span>
+      <div class="f-verdict">U자형 반등 초입<br>모멘텀 강화 국면</div>
+      <div class="f-divider"></div>
+      <div class="f-row"><span class="f-bullet"></span><span>수주잔고 5.6조원 → 매출 전환 본격화</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>추가 빅테크 수주 공시 기대</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>3Q 미국 관세 환급 영업익 증가 가능성</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>일부 목표가 초과로 단기 변동성 주의</span></div>
+      <div class="f-action">분할 매수 · 수주 공시 주목</div>
+    </div>
+
+    <div class="f-card mid">
+      <div class="f-icon-bg">📈</div>
+      <span class="f-period">중기 · 6개월~2년</span>
+      <div class="f-verdict">증설 효과 본격화<br>이익 극대화 구간</div>
+      <div class="f-divider"></div>
+      <div class="f-row"><span class="f-bullet"></span><span>변압기 CAPA 6,000억→추가 확대</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>미국 MCM 공장 2028년 3,500억 증설</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>HVDC · ESS 신사업 매출 가시화</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>2027F 영업이익 9,000억원대 전망</span></div>
+      <div class="f-action">핵심 보유 · 목표가 35만원</div>
+    </div>
+
+    <div class="f-card long">
+      <div class="f-icon-bg">🌐</div>
+      <span class="f-period">장기 · 2년 이상</span>
+      <div class="f-verdict">글로벌 전력 솔루션<br>기업으로의 진화</div>
+      <div class="f-divider"></div>
+      <div class="f-row"><span class="f-bullet"></span><span>미국 변압기 자급률 20% — 구조적 공급 부족</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>DC 솔루션 (HVDC·LVDC) 리더십 구축</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>유럽 · 중동 신시장 진출 가속</span></div>
+      <div class="f-row"><span class="f-bullet"></span><span>AI · 신재생에너지 수요 2030년까지 지속</span></div>
+      <div class="f-action">장기 보유 · 핵심 성장주</div>
+    </div>
+
+  </div>
+
+  <p class="note">※ 본 자료는 공개 정보를 기반으로 한 정보 제공 목적이며, 특정 종목의 매수·매도 권유가 아닙니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
+</div>
+</body>
+</html>
