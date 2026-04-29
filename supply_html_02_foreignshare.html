@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>외국인 보유 비중 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Mono:wght@700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f5f7ff; padding: 20px; }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .header {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+    padding: 22px 28px;
+    color: white;
+  }
+  .header h2 { font-size: 17px; font-weight: 900; }
+  .header p { font-size: 12px; opacity: 0.7; margin-top: 4px; }
+
+  .donut-section {
+    padding: 28px 28px 20px;
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .donut-wrap {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+  }
+
+  .donut-wrap svg {
+    transform: rotate(-90deg);
+  }
+
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .donut-pct {
+    font-family: 'Space Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+
+  .donut-label {
+    font-size: 10px;
+    color: #6b7280;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .legend-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .legend-text { flex: 1; }
+  .legend-name { font-size: 13px; font-weight: 700; color: #1e3a5f; }
+  .legend-pct { font-family: 'Space Mono', monospace; font-size: 12px; color: #6b7280; margin-top: 1px; }
+
+  .comparison-section {
+    padding: 0 28px 20px;
+  }
+
+  .comp-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 14px;
+  }
+
+  .comp-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .comp-name {
+    width: 130px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    flex-shrink: 0;
+  }
+
+  .comp-bar-track {
+    flex: 1;
+    background: #f1f5f9;
+    border-radius: 5px;
+    height: 26px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .comp-fill {
+    height: 100%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    animation: barIn 1.2s ease-out both;
+  }
+
+  @keyframes barIn { from { width: 0 !important; } }
+
+  .insight-box {
+    margin: 0 28px 20px;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    border-radius: 12px;
+    padding: 14px 18px;
+  }
+
+  .insight-title { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 6px; }
+
+  .insight-item {
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+    color: #78350f;
+    line-height: 1.5;
+    margin-bottom: 5px;
+  }
+
+  .insight-item:last-child { margin-bottom: 0; }
+
+  .footnote {
+    padding: 12px 20px;
+    font-size: 10px;
+    color: #9ca3af;
+    border-top: 1px solid #f3f4f6;
+    background: #f9fafb;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h2>🌍 LS일렉트릭 외국인 보유 비중 분석 (4월 28일 기준)</h2>
+    <p>21.35%의 의미 — 기회인가, 리스크인가</p>
+  </div>
+
+  <div class="donut-section">
+    <div class="donut-wrap">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <circle cx="80" cy="80" r="60" fill="none" stroke="#e5e7eb" stroke-width="22"/>
+        <!-- 외국인 21.35% -->
+        <circle cx="80" cy="80" r="60" fill="none" stroke="#3b82f6" stroke-width="22"
+          stroke-dasharray="80.5 296.9" stroke-dashoffset="0" style="animation: dash 1.5s ease-out both;">
+        </circle>
+        <!-- 기관 약 18% -->
+        <circle cx="80" cy="80" r="60" fill="none" stroke="#10b981" stroke-width="22"
+          stroke-dasharray="67.8 309.6" stroke-dashoffset="-80.5" style="animation: dash 1.5s ease-out 0.2s both;">
+        </circle>
+        <!-- 개인 약 60.65% -->
+      </svg>
+      <div class="donut-center">
+        <div class="donut-pct">21.35%</div>
+        <div class="donut-label">외국인 비중</div>
+      </div>
+    </div>
+
+    <div class="legend-list">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#3b82f6;"></div>
+        <div class="legend-text">
+          <div class="legend-name">외국인</div>
+          <div class="legend-pct">21.35% · 32,024,088주</div>
+        </div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#10b981;"></div>
+        <div class="legend-text">
+          <div class="legend-name">기관</div>
+          <div class="legend-pct">약 18~20% (추정)</div>
+        </div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#f59e0b;"></div>
+        <div class="legend-text">
+          <div class="legend-name">대주주 + 기타</div>
+          <div class="legend-pct">LS그룹 등 특수관계인</div>
+        </div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#e5e7eb;"></div>
+        <div class="legend-text">
+          <div class="legend-name">개인 + 기타</div>
+          <div class="legend-pct">나머지 유동 물량</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comparison-section">
+    <div class="comp-title">📊 코스피 전력기기 동종목 외국인 비중 비교</div>
+
+    <div class="comp-item">
+      <div class="comp-name">LS일렉트릭 (현재)</div>
+      <div class="comp-bar-track">
+        <div class="comp-fill" style="width:42.7%; background: linear-gradient(90deg, #3b82f6, #93c5fd);">21.35%</div>
+      </div>
+    </div>
+
+    <div class="comp-item">
+      <div class="comp-name">코스피 대형주 평균</div>
+      <div class="comp-bar-track">
+        <div class="comp-fill" style="width:62%; background: linear-gradient(90deg, #6b7280, #9ca3af);">약 30%</div>
+      </div>
+    </div>
+
+    <div class="comp-item">
+      <div class="comp-name">HD현대일렉트릭</div>
+      <div class="comp-bar-track">
+        <div class="comp-fill" style="width:76%; background: linear-gradient(90deg, #10b981, #6ee7b7);">약 38%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-title">🔍 21.35% 외국인 비중, 이렇게 해석하세요</div>
+    <div class="insight-item">
+      <span>✅</span>
+      <span><strong>상승 잠재력</strong>: 코스피 대형주 평균(30%) 대비 낮아, 외국인 추가 유입 시 상승 폭 클 수 있습니다.</span>
+    </div>
+    <div class="insight-item">
+      <span>⚠️</span>
+      <span><strong>매도 리스크</strong>: 현재 21.35% 중 차익실현 또는 헤지 목적 매도가 단기 출회될 경우, 수급 압력이 커질 수 있습니다.</span>
+    </div>
+    <div class="insight-item">
+      <span>📌</span>
+      <span><strong>비중 변화 모니터링</strong>: 외국인 비중이 지속 감소(20% 하회)하면 이탈 신호로 해석, 안정적으로 유지되면 차익실현 마무리 신호.</span>
+    </div>
+  </div>
+
+  <div class="footnote">※ 외국인 보유 수치: 4월 28일 KRX 데이터 기준. 기관·개인 비중은 추정치입니다.</div>
+</div>
+</body>
+</html>
