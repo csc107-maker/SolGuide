@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LS일렉트릭 수급 종합 신호 대시보드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Mono:wght@700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0f4ff; padding: 20px; }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 32px rgba(30,60,180,0.13);
+  }
+
+  /* 헤더 */
+  .header {
+    background: linear-gradient(135deg, #0a0f2c 0%, #1a2560 60%, #1e40af 100%);
+    padding: 24px 28px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .header h2 { font-size: 17px; font-weight: 900; margin-bottom: 4px; }
+  .header p { font-size: 12px; opacity: 0.7; }
+
+  .date-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* 주가 요약 바 */
+  .price-bar {
+    background: #eff6ff;
+    padding: 12px 28px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    border-bottom: 1px solid #dbeafe;
+    flex-wrap: wrap;
+  }
+
+  .pb-item { text-align: center; }
+  .pb-label { font-size: 10px; color: #6b7280; font-weight: 600; }
+  .pb-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-top: 2px;
+  }
+
+  .pb-up { color: #dc2626; }
+  .pb-divider { width: 1px; background: #bfdbfe; height: 36px; }
+
+  /* 신호 카드 그리드 */
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .sig-card {
+    background: white;
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .sig-card:hover { background: #f8faff; }
+
+  .sig-icon { font-size: 24px; line-height: 1; }
+
+  .sig-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+
+  .sig-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .sig-direction {
+    font-size: 10px;
+    color: #6b7280;
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  /* 신호등 */
+  .sig-light {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px; right: 12px;
+  }
+
+  .light-red    { background: #ef4444; box-shadow: 0 0 6px #ef4444aa; }
+  .light-yellow { background: #f59e0b; box-shadow: 0 0 6px #f59e0baa; }
+  .light-green  { background: #10b981; box-shadow: 0 0 6px #10b981aa; }
+
+  /* 신호 배지 */
+  .sig-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  .badge-sell   { background: #fee2e2; color: #dc2626; }
+  .badge-buy    { background: #d1fae5; color: #065f46; }
+  .badge-watch  { background: #fef3c7; color: #92400e; }
+  .badge-neut   { background: #f3f4f6; color: #374151; }
+
+  /* 종합 미터 */
+  .meter-section {
+    padding: 20px 28px;
+    border-top: 2px solid #e5e7eb;
+    background: #f9fafb;
+  }
+
+  .meter-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 16px;
+  }
+
+  .meter-track {
+    background: #e5e7eb;
+    border-radius: 99px;
+    height: 14px;
+    position: relative;
+    overflow: visible;
+    margin-bottom: 8px;
+  }
+
+  .meter-fill-bull {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    border-radius: 0 99px 99px 0;
+    animation: mfill 1.4s ease-out both;
+  }
+
+  .meter-fill-bear {
+    position: absolute;
+    right: 50%;
+    top: 0;
+    height: 100%;
+    border-radius: 99px 0 0 99px;
+    animation: mfillL 1.4s ease-out both;
+  }
+
+  @keyframes mfill  { from { width: 0; } }
+  @keyframes mfillL { from { width: 0; } }
+
+  .meter-center {
+    position: absolute;
+    left: 50%;
+    top: -3px;
+    transform: translateX(-50%);
+    width: 20px; height: 20px;
+    background: white;
+    border: 3px solid #374151;
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  .meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  .meter-labels span:first-child { color: #dc2626; }
+  .meter-labels span:last-child  { color: #10b981; }
+  .meter-labels span:nth-child(2){ color: #6b7280; }
+
+  /* 핵심 포인트 리스트 */
+  .key-points {
+    padding: 16px 28px 20px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .kp-title { font-size: 13px; font-weight: 700; color: #1e3a5f; margin-bottom: 12px; }
+
+  .kp-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 9px;
+    align-items: flex-start;
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.55;
+  }
+
+  .kp-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  /* 최종 판정 배너 */
+  .verdict-banner {
+    margin: 0 20px 20px;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: linear-gradient(135deg, #1e3a5f, #1e40af);
+    color: white;
+  }
+
+  .verdict-icon { font-size: 28px; flex-shrink: 0; }
+  .verdict-text { font-size: 12px; line-height: 1.65; }
+  .verdict-text strong { font-size: 13px; display: block; margin-bottom: 4px; }
+
+  .footnote {
+    padding: 12px 20px;
+    font-size: 10px;
+    color: #9ca3af;
+    border-top: 1px solid #f3f4f6;
+    background: #f9fafb;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h2>⚡ LS일렉트릭 수급 종합 신호 대시보드</h2>
+        <p>외국인 · 기관 · 공매도 · 대차 · 프로그램 — 5각 수급 전체 보기</p>
+      </div>
+      <span class="date-chip">2026. 04. 29</span>
+    </div>
+  </div>
+
+  <!-- 주가 요약 바 -->
+  <div class="price-bar">
+    <div class="pb-item">
+      <div class="pb-label">4/28 종가</div>
+      <div class="pb-val">262,500원</div>
+    </div>
+    <div class="pb-divider"></div>
+    <div class="pb-item">
+      <div class="pb-label">전일 대비</div>
+      <div class="pb-val pb-up">▲ +2.74%</div>
+    </div>
+    <div class="pb-divider"></div>
+    <div class="pb-item">
+      <div class="pb-label">거래량</div>
+      <div class="pb-val">3,626,868주</div>
+    </div>
+    <div class="pb-divider"></div>
+    <div class="pb-item">
+      <div class="pb-label">거래대금</div>
+      <div class="pb-val">9,935억원</div>
+    </div>
+    <div class="pb-divider"></div>
+    <div class="pb-item">
+      <div class="pb-label">시가총액</div>
+      <div class="pb-val">39조 2,250억</div>
+    </div>
+  </div>
+
+  <!-- 5각 신호 카드 -->
+  <div class="signal-grid">
+
+    <!-- 외국인 -->
+    <div class="sig-card">
+      <div class="sig-light light-red"></div>
+      <div class="sig-icon">🌍</div>
+      <div class="sig-name">외국인</div>
+      <div class="sig-value" style="color:#dc2626;">−292,576주</div>
+      <div class="sig-direction">4/28 순매도<br>보유 비중 21.35%</div>
+      <span class="sig-badge badge-sell">순매도 우세</span>
+    </div>
+
+    <!-- 기관 -->
+    <div class="sig-card">
+      <div class="sig-light light-green"></div>
+      <div class="sig-icon">🏢</div>
+      <div class="sig-name">기관</div>
+      <div class="sig-value" style="color:#10b981;">+225,188주</div>
+      <div class="sig-direction">4/24 대규모 순매수<br>지지 매수 유지</div>
+      <span class="sig-badge badge-buy">순매수 우세</span>
+    </div>
+
+    <!-- 공매도 -->
+    <div class="sig-card">
+      <div class="sig-light light-yellow"></div>
+      <div class="sig-icon">📉</div>
+      <div class="sig-name">공매도</div>
+      <div class="sig-value" style="color:#f59e0b;">증가 추정</div>
+      <div class="sig-direction">단기 급등 후<br>숏 세력 진입 구간</div>
+      <span class="sig-badge badge-watch">모니터링 필요</span>
+    </div>
+
+    <!-- 대차잔고 -->
+    <div class="sig-card">
+      <div class="sig-light light-yellow"></div>
+      <div class="sig-icon">🏦</div>
+      <div class="sig-name">대차잔고</div>
+      <div class="sig-value" style="color:#f59e0b;">재진입 가능</div>
+      <div class="sig-direction">4/27~28 급등 후<br>공매도 탄약 축적 중</div>
+      <span class="sig-badge badge-watch">단기 하방 주의</span>
+    </div>
+
+    <!-- 프로그램 -->
+    <div class="sig-card">
+      <div class="sig-light light-green"></div>
+      <div class="sig-icon">🖥️</div>
+      <div class="sig-name">프로그램</div>
+      <div class="sig-value" style="color:#10b981;">비차익 유입</div>
+      <div class="sig-direction">K200 편입 효과<br>ETF 리밸런싱 수혜</div>
+      <span class="sig-badge badge-neut">중립 ~ 긍정</span>
+    </div>
+
+    <!-- 개인투자자 -->
+    <div class="sig-card">
+      <div class="sig-light light-yellow"></div>
+      <div class="sig-icon">👤</div>
+      <div class="sig-name">개인</div>
+      <div class="sig-value" style="color:#7c3aed;">모멘텀 매수</div>
+      <div class="sig-direction">키움·한투 창구 주도<br>단기 상승 이끌어</div>
+      <span class="sig-badge badge-watch">변동성 수반</span>
+    </div>
+
+  </div>
+
+  <!-- 강세·약세 미터 -->
+  <div class="meter-section">
+    <div class="meter-title">🌡️ 수급 강도 미터 — 현재 위치</div>
+
+    <div class="meter-track">
+      <!-- 약세(Bear) 방향 — 왼쪽 -->
+      <div class="meter-fill-bear" style="width:28%; background: linear-gradient(90deg, #dc2626, #fca5a5);"></div>
+      <!-- 강세(Bull) 방향 — 오른쪽 -->
+      <div class="meter-fill-bull" style="width:22%; background: linear-gradient(90deg, #86efac, #10b981);"></div>
+      <div class="meter-center"></div>
+    </div>
+
+    <div class="meter-labels">
+      <span>◀ 약세 (Bear)</span>
+      <span>중립</span>
+      <span>(Bull) 강세 ▶</span>
+    </div>
+
+    <div style="margin-top:12px; text-align:center; font-size:12px; color:#6b7280; font-weight:600;">
+      📍 현재: <strong style="color:#f59e0b;">중립에서 약세 방향으로 소폭 기울어진 구간</strong>
+      — 기관 지지 vs 외국인·공매도 압력이 팽팽히 맞서는 수급 충돌 구간
+    </div>
+  </div>
+
+  <!-- 핵심 포인트 -->
+  <div class="key-points">
+    <div class="kp-title">📌 오늘 장 수급에서 꼭 체크할 3가지</div>
+
+    <div class="kp-item">
+      <div class="kp-dot" style="background:#dc2626;"></div>
+      <div><strong style="color:#dc2626;">[외국인 동향]</strong> 오후 장에서도 순매도가 지속되는지, 아니면 순매수로 전환하는지 확인. 순매수 전환 시 강한 반등 신호.</div>
+    </div>
+    <div class="kp-item">
+      <div class="kp-dot" style="background:#f59e0b;"></div>
+      <div><strong style="color:#f59e0b;">[공매도 비율]</strong> 전체 거래량 대비 공매도 비율이 10% 초과 시 단기 하방 압력 강화 신호. KRX 공매도 포털 실시간 확인 권장.</div>
+    </div>
+    <div class="kp-item">
+      <div class="kp-dot" style="background:#10b981;"></div>
+      <div><strong style="color:#10b981;">[기관 지지선]</strong> 기관의 순매수 창구(주로 국내 증권사 자기매매·연기금 라인) 유지 여부. 255,000원~260,000원 지지 확인이 핵심.</div>
+    </div>
+  </div>
+
+  <!-- 최종 판정 배너 -->
+  <div class="verdict-banner">
+    <div class="verdict-icon">⚖️</div>
+    <div class="verdict-text">
+      <strong>수급 종합 판정 — "충돌 구간, 기관 지지 여부가 핵심"</strong>
+      외국인 순매도 + 공매도 압력은 단기 변동성을 확대시키지만, 기관의 꾸준한 순매수와 5.6조원 수주잔고라는 펀더멘털이 하방을 지지하고 있습니다. 270,000~280,000원 구간을 돌파하면 추가 랠리, 250,000원 이하 이탈 시 단기 추세 재점검이 필요합니다.
+    </div>
+  </div>
+
+  <div class="footnote">※ 수급 신호는 공개 KRX 데이터 기반이며 실시간 공매도·대차 수치는 KRX 공매도 포털(shortsell.krx.co.kr)에서 직접 확인하세요. 본 자료는 투자 권유가 아닙니다.</div>
+</div>
+</body>
+</html>
