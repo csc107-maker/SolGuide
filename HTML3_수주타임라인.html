@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LS일렉트릭 수주 타임라인</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; }
+  body { background: #f8fafc; padding: 20px; }
+  .wrapper { max-width: 780px; margin: 0 auto; }
+  .header { background: #0f172a; border-radius: 14px; padding: 22px 28px; margin-bottom: 20px; color: white; }
+  .header h2 { font-size: 19px; font-weight: 800; }
+  .header p { font-size: 13px; opacity: 0.7; margin-top: 4px; }
+  .timeline { position: relative; padding-left: 0; }
+  .tl-item { display: grid; grid-template-columns: 100px 20px 1fr; gap: 0 16px; margin-bottom: 0; align-items: stretch; }
+  .tl-date { font-size: 12px; font-weight: 700; color: #64748b; text-align: right; padding-top: 16px; padding-bottom: 8px; }
+  .tl-spine { display: flex; flex-direction: column; align-items: center; }
+  .tl-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; margin-top: 18px; z-index: 1; position: relative; }
+  .tl-line { width: 2px; flex: 1; background: #e2e8f0; }
+  .tl-item:last-child .tl-line { display: none; }
+  .tl-content { background: white; border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; border: 1px solid #e2e8f0; }
+  .tl-content .tc-title { font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+  .tl-content .tc-desc { font-size: 13px; color: #475569; line-height: 1.6; }
+  .tl-content .tc-amount { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 6px; margin-top: 8px; }
+  .blue-dot { background: #3b82f6; }
+  .green-dot { background: #10b981; }
+  .purple-dot { background: #8b5cf6; }
+  .orange-dot { background: #f59e0b; }
+  .red-dot { background: #ef4444; }
+  .tag-blue { background: #eff6ff; color: #1d4ed8; }
+  .tag-green { background: #ecfdf5; color: #065f46; }
+  .tag-purple { background: #faf5ff; color: #5b21b6; }
+  .tag-orange { background: #fff7ed; color: #c2410c; }
+
+  .capacity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+  .c-card { background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; text-align: center; }
+  .c-label { font-size: 11px; color: #94a3b8; font-weight: 600; margin-bottom: 6px; }
+  .c-from { font-size: 14px; color: #ef4444; font-weight: 700; }
+  .c-arrow { font-size: 18px; color: #94a3b8; margin: 4px 0; }
+  .c-to { font-size: 18px; color: #10b981; font-weight: 800; }
+  .c-growth { font-size: 12px; font-weight: 700; background: #ecfdf5; color: #065f46; padding: 2px 8px; border-radius: 6px; margin-top: 4px; display: inline-block; }
+  .section-divider { font-size: 13px; font-weight: 700; color: #1e40af; text-transform: uppercase; letter-spacing: 0.05em; margin: 20px 0 12px; display: flex; align-items: center; gap: 8px; }
+  .section-divider::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+  .note { font-size: 11px; color: #94a3b8; margin-top: 16px; text-align: center; }
+  @media (max-width: 560px) { 
+    .tl-item { grid-template-columns: 72px 16px 1fr; }
+    .capacity-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="header">
+    <h2>🏭 수주 & 생산능력 확대 타임라인</h2>
+    <p>LS일렉트릭 핵심 수주 이벤트 및 증설 현황 | 2025~2026</p>
+  </div>
+
+  <div class="section-divider">주요 수주 이벤트</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">2025년<br>3분기</div>
+      <div class="tl-spine"><div class="tl-dot orange-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tc-title">북미 신재생에너지 초고압 변압기 수주</div>
+        <div class="tc-desc">북미 유틸리티 및 신재생에너지 프로젝트향 대규모 초고압 변압기 수주 확보. 고단가 제품 비중 확대로 수익성 구조 개선 본격화.</div>
+        <span class="tc-amount tag-orange">1,382억원</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025년<br>4분기</div>
+      <div class="tl-spine"><div class="tl-dot orange-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tc-title">북미 신재생에너지 추가 대형 수주</div>
+        <div class="tc-desc">3분기에 이어 4분기에도 북미 전력 인프라 수주가 대규모로 확보되며 수주잔고 급증. 연간 수주 3조 7,000억원 돌파(창사 최대).</div>
+        <span class="tc-amount tag-orange">4,598억원</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025년<br>하반기</div>
+      <div class="tl-spine"><div class="tl-dot blue-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tc-title">빅테크 X사향 배전반 연간 대규모 수주</div>
+        <div class="tc-desc">상반기 1,625억원, 하반기 1,905억원으로 특정 빅테크 기업향 배전 솔루션 수주 잇따라 확보. 빅테크 고객 레퍼런스 본격 구축.</div>
+        <span class="tc-amount tag-blue">상·하반기 합계 3,530억원</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026년<br>4월 13일</div>
+      <div class="tl-spine"><div class="tl-dot green-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tc-title">북미 빅테크 A사 하이퍼스케일 데이터센터 계약</div>
+        <div class="tc-desc">북미 메이저 빅테크 기업으로부터 하이퍼스케일 데이터센터 전력 인프라 계약 체결. 신규 고객 레퍼런스 확보 의미. 연내 매출 반영 예정.</div>
+        <span class="tc-amount tag-green">1억 1,497만달러 (약 1,703억원)</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026년<br>1분기</div>
+      <div class="tl-spine"><div class="tl-dot purple-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tc-title">1분기 신규 수주 사상 최대</div>
+        <div class="tc-desc">1분기 누적 신규 수주 1조 863억원(+27% YoY). 국내는 데이터센터·반도체 투자, 해외는 2025년 계약 1조원 규모 물량 반영 중. 연간 4조원 이상 수주 전망.</div>
+        <span class="tc-amount tag-purple">1조 863억원 (1Q)</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026년<br>4월 28일</div>
+      <div class="tl-spine"><div class="tl-dot blue-dot"></div></div>
+      <div class="tl-content">
+        <div class="tc-title">LS증권 목표주가 35만원으로 상향</div>
+        <div class="tc-desc">초고압변압기·배전 대형 수주 지속을 근거로 LS증권이 목표주가를 26만원→35만원(+34.6%)으로 대폭 상향. "스토리와 실질 모두 최강" 평가. 투자의견 매수 유지.</div>
+        <span class="tc-amount tag-blue">목표주가 350,000원</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider">생산능력(CAPA) 확대 현황</div>
+  <div class="capacity-grid">
+    <div class="c-card">
+      <div class="c-label">초고압 변압기 (부산)</div>
+      <div class="c-from">2,000억</div>
+      <div class="c-arrow">↓</div>
+      <div class="c-to">6,000억+</div>
+      <span class="c-growth">+200%+</span>
+      <div style="font-size:11px;color:#94a3b8;margin-top:6px;">2025년 2생산동 가동</div>
+    </div>
+    <div class="c-card">
+      <div class="c-label">미국 MCM 배전반</div>
+      <div class="c-from">500억</div>
+      <div class="c-arrow">↓</div>
+      <div class="c-to">3,500억</div>
+      <span class="c-growth">+600%</span>
+      <div style="font-size:11px;color:#94a3b8;margin-top:6px;">2028년까지 1차 증설</div>
+    </div>
+    <div class="c-card">
+      <div class="c-label">미국 MCM 2차 증설</div>
+      <div class="c-from">3,500억</div>
+      <div class="c-arrow">↓</div>
+      <div class="c-to">7,000억+</div>
+      <span class="c-growth">+100%</span>
+      <div style="font-size:11px;color:#94a3b8;margin-top:6px;">2030년까지 추가 증설</div>
+    </div>
+  </div>
+  <p class="note">※ 생산능력은 연간 매출 기준 추정치 | 출처: LS일렉트릭 IR자료, 증권사 리포트</p>
+</div>
+</body>
+</html>
