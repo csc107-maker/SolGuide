@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공매도 & 대차잔고 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Mono:wght@700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f5f7ff; padding: 20px; }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .header {
+    background: linear-gradient(135deg, #450a0a 0%, #b91c1c 100%);
+    padding: 22px 28px;
+    color: white;
+  }
+  .header h2 { font-size: 17px; font-weight: 900; }
+  .header p { font-size: 12px; opacity: 0.7; margin-top: 4px; }
+
+  /* 공매도 흐름 다이어그램 */
+  .flow-section {
+    padding: 24px 28px 16px;
+    background: #fff5f5;
+    border-bottom: 1px solid #fee2e2;
+  }
+
+  .flow-title { font-size: 14px; font-weight: 700; color: #991b1b; margin-bottom: 16px; }
+
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .flow-step {
+    flex-shrink: 0;
+    background: white;
+    border: 2px solid #fca5a5;
+    border-radius: 10px;
+    padding: 10px 14px;
+    text-align: center;
+    min-width: 90px;
+  }
+
+  .step-icon { font-size: 18px; margin-bottom: 4px; }
+  .step-text { font-size: 11px; font-weight: 700; color: #7f1d1d; line-height: 1.3; }
+
+  .flow-arrow {
+    font-size: 18px;
+    color: #ef4444;
+    flex-shrink: 0;
+    padding: 0 6px;
+    font-weight: 900;
+  }
+
+  /* 대차 메커니즘 */
+  .mech-section {
+    padding: 20px 28px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .mech-title { font-size: 14px; font-weight: 700; color: #1e3a5f; margin-bottom: 14px; }
+
+  .mech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .mech-card {
+    background: #f8faff;
+    border: 1px solid #e0e7ff;
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .mech-icon { font-size: 22px; margin-bottom: 6px; }
+  .mech-name { font-size: 11px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
+  .mech-desc { font-size: 10px; color: #6b7280; line-height: 1.4; }
+
+  /* 시나리오 표 */
+  .scenario-section {
+    padding: 20px 28px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .scenario-title { font-size: 14px; font-weight: 700; color: #1e3a5f; margin-bottom: 14px; }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  thead th {
+    background: #1e3a5f;
+    color: white;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  thead th:first-child { text-align: left; border-radius: 0; }
+
+  tbody td {
+    padding: 11px 14px;
+    font-size: 12px;
+    color: #374151;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  tbody td:first-child { text-align: left; font-weight: 600; }
+
+  .tag-up { background: #fee2e2; color: #dc2626; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .tag-down { background: #dbeafe; color: #1d4ed8; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .tag-vol { background: #f3e8ff; color: #7c3aed; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+
+  /* LS일렉트릭 현재 위치 */
+  .current-section {
+    margin: 0 28px 20px;
+    background: #fef9c3;
+    border: 1px solid #fde047;
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+
+  .cur-title { font-size: 13px; font-weight: 700; color: #713f12; margin-bottom: 10px; }
+  .cur-item { font-size: 12px; color: #78350f; line-height: 1.6; margin-bottom: 5px; display: flex; gap: 8px; }
+
+  .krx-link {
+    display: block;
+    background: #1e3a5f;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 0 28px 20px;
+  }
+
+  .footnote {
+    padding: 12px 20px;
+    font-size: 10px;
+    color: #9ca3af;
+    border-top: 1px solid #f3f4f6;
+    background: #f9fafb;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h2>📉 공매도 & 대차잔고 분석 — LS일렉트릭 (010120)</h2>
+    <p>단기 급등 종목에 작동하는 하방 압력 메커니즘</p>
+  </div>
+
+  <div class="flow-section">
+    <div class="flow-title">🔴 공매도 작동 메커니즘 (5단계)</div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-icon">🏦</div>
+        <div class="step-text">대차<br>계약</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon">📤</div>
+        <div class="step-text">주식<br>차입</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon">💸</div>
+        <div class="step-text">시장에<br>매도</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon">📉</div>
+        <div class="step-text">주가<br>하락 기대</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon">🔄</div>
+        <div class="step-text">싸게 매수<br>→ 상환</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; font-size:11px; color:#991b1b;">
+      💡 주가가 오를수록 공매도 세력은 손실. 이때 강제 환매수(숏커버링)가 발생 → 주가 추가 급등 가능.
+    </div>
+  </div>
+
+  <div class="mech-section">
+    <div class="mech-title">📋 대차잔고 3가지 핵심 신호</div>
+    <div class="mech-grid">
+      <div class="mech-card">
+        <div class="mech-icon">📈</div>
+        <div class="mech-name">대차 증가 + 주가 상승</div>
+        <div class="mech-desc">숏 세력이 물리는 구간. 상방 압력 우위. 숏커버링 가능.</div>
+      </div>
+      <div class="mech-card">
+        <div class="mech-icon">📉</div>
+        <div class="mech-name">대차 증가 + 주가 하락</div>
+        <div class="mech-desc">숏 세력 수익 구간. 하방 압력 강화. 이탈 신호 주의.</div>
+      </div>
+      <div class="mech-card">
+        <div class="mech-icon">⚡</div>
+        <div class="mech-name">대차 급감 + 주가 급등</div>
+        <div class="mech-desc">숏커버링 랠리. 단기 급등 후 조정 국면 진입 주의.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-title">🎯 대차잔고 변동 시나리오별 주가 영향</div>
+    <table>
+      <thead>
+        <tr>
+          <th>시나리오</th>
+          <th>대차잔고</th>
+          <th>주가 방향</th>
+          <th>투자 시사점</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A. 숏커버링 완료</td>
+          <td>급감 ↓↓</td>
+          <td><span class="tag-up">급등 ↑↑</span></td>
+          <td>단기 모멘텀 이후 조정 주의</td>
+        </tr>
+        <tr>
+          <td>B. 추가 대차 유입</td>
+          <td>증가 ↑</td>
+          <td><span class="tag-down">하방 압력 ↓</span></td>
+          <td>270,000~280,000원 저항 강화</td>
+        </tr>
+        <tr>
+          <td>C. 현상 유지</td>
+          <td>보합 →</td>
+          <td><span class="tag-vol">횡보 변동</span></td>
+          <td>수급 균형 구간, 거래량 확인 필요</td>
+        </tr>
+        <tr style="background:#fffbeb;">
+          <td>D. 현재 추정 국면</td>
+          <td>4/27~28 급등 후<br>재진입 가능성</td>
+          <td><span class="tag-vol">변동성 확대</span></td>
+          <td>단기 조정 후 재상승 패턴 주의</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="current-section">
+    <div class="cur-title">📍 LS일렉트릭 현재 공매도·대차 포인트 (4월 29일 기준 분석)</div>
+    <div class="cur-item">
+      <span>📊</span>
+      <span><strong>4월 한 달간 +65% 급등</strong> → 단기 과열 구간으로 공매도 세력의 진입 가능 레벨 진입.</span>
+    </div>
+    <div class="cur-item">
+      <span>⚠️</span>
+      <span><strong>PER 80~137배</strong> → 밸류에이션 부담이 숏 세력 논리 강화. "펀더멘털 대비 주가 과도 상승" 주장 유효.</span>
+    </div>
+    <div class="cur-item">
+      <span>🔄</span>
+      <span><strong>4/27 급등 구간</strong>에서 일부 숏커버링(강제 환매수)이 발생했을 가능성. 이후 대차 재진입 시 단기 조정 신호.</span>
+    </div>
+    <div class="cur-item">
+      <span>📌</span>
+      <span><strong>실시간 공매도 비율·대차잔고</strong>는 KRX 공매도 포털에서 직접 확인 권장 (shortsell.krx.co.kr).</span>
+    </div>
+  </div>
+
+  <div class="footnote">※ 본 분석은 공개 정보와 구조적 특성 기반 추론입니다. 실시간 공매도·대차 수치는 KRX 데이터를 직접 확인하시기 바랍니다.</div>
+</div>
+</body>
+</html>
