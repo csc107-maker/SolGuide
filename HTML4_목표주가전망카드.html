@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LS일렉트릭 증권사 목표주가 & 전망</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; }
+  body { background: #f8fafc; padding: 20px; }
+  .wrapper { max-width: 780px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 700; color: #1e40af; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .current-box { background: #1e293b; border-radius: 14px; padding: 20px 24px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .current-box .cb-label { color: rgba(255,255,255,0.6); font-size: 13px; margin-bottom: 4px; }
+  .current-box .cb-price { color: white; font-size: 28px; font-weight: 800; }
+  .current-box .cb-change { background: rgba(16,185,129,0.2); color: #34d399; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 8px; display: inline-block; }
+  .current-box .cb-right { text-align: right; }
+  .current-box .cb-date { color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 4px; }
+
+  .target-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .t-card { background: white; border-radius: 12px; padding: 16px 14px; border: 1px solid #e2e8f0; text-align: center; position: relative; overflow: hidden; }
+  .t-card.top-pick { border: 2px solid #10b981; }
+  .t-card.top-pick::before { content: '최고 목표가'; position: absolute; top: 0; left: 0; right: 0; background: #10b981; color: white; font-size: 10px; font-weight: 700; padding: 3px; text-align: center; }
+  .t-card.top-pick .t-bank { margin-top: 14px; }
+  .t-bank { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px; }
+  .t-price { font-size: 22px; font-weight: 800; color: #1e293b; }
+  .t-upside { font-size: 12px; font-weight: 700; margin-top: 4px; }
+  .upside-pos { color: #10b981; }
+  .upside-neg { color: #ef4444; }
+  .t-date { font-size: 10px; color: #94a3b8; margin-top: 4px; }
+  .consensus-bar { background: white; border-radius: 12px; padding: 18px 20px; border: 1px solid #e2e8f0; margin-bottom: 24px; }
+  .cb2-label { font-size: 13px; color: #64748b; margin-bottom: 10px; }
+  .bar-track { height: 10px; background: #f1f5f9; border-radius: 10px; position: relative; margin: 8px 0 4px; }
+  .bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981); }
+  .bar-marker { position: absolute; top: -3px; height: 16px; width: 3px; background: #1e293b; border-radius: 2px; }
+  .bar-labels { display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; }
+
+  .forecast-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+  .f-card { border-radius: 14px; padding: 20px 16px; position: relative; overflow: hidden; }
+  .f-card.short { background: #eff6ff; border: 1px solid #bfdbfe; }
+  .f-card.mid { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .f-card.long { background: #faf5ff; border: 1px solid #ddd6fe; }
+  .f-period { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+  .f-card.short .f-period { background: #dbeafe; color: #1d4ed8; }
+  .f-card.mid .f-period { background: #dcfce7; color: #15803d; }
+  .f-card.long .f-period { background: #ede9fe; color: #5b21b6; }
+  .f-verdict { font-size: 15px; font-weight: 800; color: #1e293b; margin-bottom: 8px; line-height: 1.3; }
+  .f-body { font-size: 12px; line-height: 1.7; color: #475569; }
+  .f-icon { font-size: 28px; position: absolute; top: 14px; right: 14px; opacity: 0.2; }
+  .f-point { font-size: 11px; font-weight: 700; margin-top: 10px; padding: 6px 10px; border-radius: 8px; }
+  .f-card.short .f-point { background: rgba(59,130,246,0.1); color: #1d4ed8; }
+  .f-card.mid .f-point { background: rgba(16,185,129,0.1); color: #065f46; }
+  .f-card.long .f-point { background: rgba(139,92,246,0.1); color: #5b21b6; }
+
+  .risk-box { background: #fff7ed; border-radius: 12px; padding: 16px 20px; border: 1px solid #fed7aa; margin-top: 6px; }
+  .risk-box h4 { font-size: 14px; font-weight: 700; color: #c2410c; margin-bottom: 10px; }
+  .risk-item { display: flex; gap: 8px; font-size: 12px; color: #7c2d12; margin-bottom: 6px; align-items: flex-start; }
+  .risk-item::before { content: '▲'; color: #f59e0b; flex-shrink: 0; font-size: 10px; margin-top: 2px; }
+
+  .note { font-size: 11px; color: #94a3b8; margin-top: 16px; text-align: center; }
+  @media (max-width: 560px) { 
+    .forecast-grid { grid-template-columns: 1fr; }
+    .target-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- 현재 주가 & 목표주가 섹션 -->
+  <div class="section-label">증권가 목표주가 분석</div>
+  <div class="current-box">
+    <div>
+      <div class="cb-label">현재 주가 (2026.04.28 종가)</div>
+      <div class="cb-price">262,500원</div>
+      <span class="cb-change">+7,000원 (+2.74%)</span>
+    </div>
+    <div class="cb-right">
+      <div style="color:rgba(255,255,255,0.6);font-size:12px;">52주 최저 / 최고</div>
+      <div style="color:white;font-size:14px;font-weight:700;">38,180원 / 281,500원</div>
+      <div class="cb-date">전 거래일 기준</div>
+    </div>
+  </div>
+
+  <div class="target-grid">
+    <div class="t-card top-pick">
+      <div class="t-bank">LS증권</div>
+      <div class="t-price">350,000</div>
+      <div class="t-upside upside-pos">+33.3%</div>
+      <div class="t-date">2026.04.28 ↑</div>
+    </div>
+    <div class="t-card">
+      <div class="t-bank">유안타증권</div>
+      <div class="t-price">260,000</div>
+      <div class="t-upside upside-neg">-0.9%</div>
+      <div class="t-date">2026.04.14</div>
+    </div>
+    <div class="t-card">
+      <div class="t-bank">교보증권</div>
+      <div class="t-price">240,000</div>
+      <div class="t-upside upside-neg">-8.6%</div>
+      <div class="t-date">2026.04.22 ↑</div>
+    </div>
+    <div class="t-card">
+      <div class="t-bank">KB증권</div>
+      <div class="t-price">240,000</div>
+      <div class="t-upside upside-neg">-8.6%</div>
+      <div class="t-date">2026.04.15 ↑</div>
+    </div>
+    <div class="t-card">
+      <div class="t-bank">신한투자증권</div>
+      <div class="t-price">210,000</div>
+      <div class="t-upside upside-neg">-20.0%</div>
+      <div class="t-date">2026.04.22 ↑</div>
+    </div>
+  </div>
+
+  <div class="consensus-bar">
+    <div class="cb2-label">컨센서스 목표주가 범위 (전체 18개 증권사 — 전원 매수 의견)</div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#1e293b;margin-bottom:6px;">
+      <span>최저 210,000원</span>
+      <span style="color:#10b981;">최고 350,000원</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width: 100%;"></div>
+      <div class="bar-marker" style="left: calc(52500/140000*100% - 1.5px);" title="현재가 262,500"></div>
+    </div>
+    <div class="bar-labels">
+      <span>210,000</span>
+      <span style="color:#1e293b;font-weight:700;">현재가 262,500▲</span>
+      <span>350,000</span>
+    </div>
+  </div>
+
+  <!-- 단기/중기/장기 전망 -->
+  <div class="section-label" style="margin-top:8px;">투자 전망 요약</div>
+  <div class="forecast-grid">
+    <div class="f-card short">
+      <span class="f-icon">⚡</span>
+      <span class="f-period">단기 (3~6개월)</span>
+      <div class="f-verdict">U자형 반등 초입<br>모멘텀 강화 국면</div>
+      <div class="f-body">2026년 상반기 수주 잔고가 매출로 전환되는 구간 진입. 추가 빅테크 수주 공시 기대. 3Q 관세 환급 가능성.</div>
+      <div class="f-point">분할 매수 / 수주 공시 주목</div>
+    </div>
+    <div class="f-card mid">
+      <span class="f-icon">📈</span>
+      <span class="f-period">중기 (6개월~2년)</span>
+      <div class="f-verdict">증설 효과 본격화<br>이익 극대화 구간</div>
+      <div class="f-body">초고압 변압기 6,000억→추가 증설. HVDC·ESS 신사업 가시화. 2026F 영업이익 6,376억, 2027F 9,000억+ 전망.</div>
+      <div class="f-point">핵심 보유 / 목표 35만원</div>
+    </div>
+    <div class="f-card long">
+      <span class="f-icon">🌐</span>
+      <span class="f-period">장기 (2년 이상)</span>
+      <div class="f-verdict">글로벌 전력 솔루션<br>기업으로 진화</div>
+      <div class="f-body">DC 솔루션 리더십, 유럽·중동 신시장, HVDC 국산화. 미국 자급률 20% 구조적 공급 부족 지속. 2030년까지 슈퍼사이클.</div>
+      <div class="f-point">장기 보유 / 핵심 종목</div>
+    </div>
+  </div>
+
+  <div class="risk-box">
+    <h4>주요 리스크 요인 (모니터링 필수)</h4>
+    <div class="risk-item">미·중 관세 확대 및 원자재(구리·철강) 가격 상승 가능성</div>
+    <div class="risk-item">현재 주가가 일부 증권사 목표주가 이미 상회 — 단기 차익 실현 압력 존재</div>
+    <div class="risk-item">빅테크 AI 데이터센터 투자 사이클 둔화 가능성 (현재 가능성 낮음)</div>
+    <div class="risk-item">베트남 법인(LS메탈비나) 현지 세무당국 조사 진행 중 — 결과 주시 필요</div>
+    <div class="risk-item">PBR 18배 이상 높은 밸류에이션은 성장 기대 훼손 시 조정 폭 커질 수 있음</div>
+  </div>
+
+  <p class="note">※ 본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 투자 판단 및 책임은 투자자 본인에게 있습니다.</p>
+</div>
+</body>
+</html>
