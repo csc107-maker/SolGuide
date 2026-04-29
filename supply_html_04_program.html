@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프로그램 매매 + 수급 종합 대시보드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Mono:wght@700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f5f7ff; padding: 20px; }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    padding: 22px 28px;
+    color: white;
+  }
+  .header h2 { font-size: 17px; font-weight: 900; }
+  .header p { font-size: 12px; opacity: 0.7; margin-top: 4px; }
+
+  /* 프로그램 매매 설명 */
+  .prog-section {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .prog-title { font-size: 14px; font-weight: 700; color: #1e3a5f; margin-bottom: 14px; }
+
+  .prog-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .prog-card {
+    border-radius: 10px;
+    padding: 14px;
+  }
+
+  .prog-card-blue { background: #eff6ff; border: 1px solid #bfdbfe; }
+  .prog-card-green { background: #f0fdf4; border: 1px solid #bbf7d0; }
+
+  .prog-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .prog-card-blue .prog-card-title { color: #1d4ed8; }
+  .prog-card-green .prog-card-title { color: #15803d; }
+
+  .prog-card-desc {
+    font-size: 11px;
+    color: #6b7280;
+    line-height: 1.5;
+  }
+
+  .prog-note {
+    background: #f0f4ff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #3730a3;
+    font-weight: 600;
+  }
+
+  /* 수급 종합 레이더 */
+  .radar-section {
+    padding: 22px 28px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .radar-title { font-size: 14px; font-weight: 700; color: #1e3a5f; margin-bottom: 16px; }
+
+  .supply-table { width: 100%; border-collapse: collapse; }
+
+  .supply-table thead th {
+    background: #1e3a5f;
+    color: white;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .supply-table thead th:first-child { text-align: left; }
+
+  .supply-table tbody td {
+    padding: 12px 14px;
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    color: #374151;
+  }
+
+  .supply-table tbody td:first-child {
+    text-align: left;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+
+  .arrow-up { color: #dc2626; font-weight: 900; font-size: 14px; }
+  .arrow-down { color: #2563eb; font-weight: 900; font-size: 14px; }
+  .arrow-neut { color: #6b7280; font-weight: 900; font-size: 14px; }
+
+  .risk-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+
+  .risk-red { background: #ef4444; }
+  .risk-yellow { background: #f59e0b; }
+  .risk-green { background: #10b981; }
+
+  /* 종합 판단 */
+  .verdict-section {
+    padding: 20px 28px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+  }
+
+  .verdict-title { font-size: 15px; font-weight: 900; margin-bottom: 14px; letter-spacing: -0.3px; }
+
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .verdict-item {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+
+  .verdict-label { font-size: 10px; opacity: 0.65; font-weight: 600; margin-bottom: 5px; }
+  .verdict-value { font-size: 13px; font-weight: 700; line-height: 1.4; }
+
+  .val-warn { color: #fca5a5; }
+  .val-good { color: #6ee7b7; }
+  .val-mid { color: #fde68a; }
+
+  .final-box {
+    margin-top: 14px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .footnote {
+    padding: 12px 20px;
+    font-size: 10px;
+    color: #9ca3af;
+    border-top: 1px solid #f3f4f6;
+    background: #f9fafb;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h2>🖥️ 프로그램 매매 분석 + 수급 종합 대시보드</h2>
+    <p>기계의 손 vs 사람의 손 — LS일렉트릭 수급 완전 해부</p>
+  </div>
+
+  <div class="prog-section">
+    <div class="prog-title">⚙️ LS일렉트릭에 작동하는 프로그램 매매 구조</div>
+    <div class="prog-grid">
+      <div class="prog-card prog-card-blue">
+        <div class="prog-card-title">차익 프로그램</div>
+        <div class="prog-card-desc">
+          KOSPI200 선물·현물 가격 괴리 이용. 선물 저평가 시 현물 매도 + 선물 매수 → 주가 하방 압력.<br>
+          선물 고평가 시 반대. LS일렉트릭은 K200 편입 종목이므로 직접 영향권.
+        </div>
+      </div>
+      <div class="prog-card prog-card-green">
+        <div class="prog-card-title">비차익 프로그램</div>
+        <div class="prog-card-desc">
+          ETF 리밸런싱, 인덱스 펀드 조정, 알고리즘 모멘텀 매매. 거래량 급증 구간(4/27: +12.36%)에서 비차익 매수 유입이 상승을 가속시켰을 가능성.
+        </div>
+      </div>
+    </div>
+    <div class="prog-note">
+      📌 4월 28일 주요 거래원: <strong>한국투자증권, 키움증권</strong> — 리테일 모멘텀 매매 주도. 기관 프로그램보다 개인 매매 비중이 높았음을 시사.
+    </div>
+  </div>
+
+  <div class="radar-section">
+    <div class="radar-title">📊 수급 4각 종합 평가표 (4월 29일 기준)</div>
+    <table class="supply-table">
+      <thead>
+        <tr>
+          <th>수급 항목</th>
+          <th>최근 방향</th>
+          <th>주가 영향</th>
+          <th>리스크</th>
+          <th>종합</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🌍 외국인</td>
+          <td><span class="arrow-up">▼ 순매도</span><br><span style="font-size:10px;color:#6b7280;">292,576주 (4/28)</span></td>
+          <td>하방 압력</td>
+          <td><span class="risk-dot risk-red"></span>높음</td>
+          <td>⚠️ 주의</td>
+        </tr>
+        <tr>
+          <td>🏢 기관</td>
+          <td><span class="arrow-down">▲ 순매수</span><br><span style="font-size:10px;color:#6b7280;">225K (4/24) 지지</span></td>
+          <td>하방 지지</td>
+          <td><span class="risk-dot risk-green"></span>낮음</td>
+          <td>✅ 우호적</td>
+        </tr>
+        <tr>
+          <td>📉 공매도</td>
+          <td><span class="arrow-neut">→ 증가 추정</span><br><span style="font-size:10px;color:#6b7280;">단기 급등 후 진입</span></td>
+          <td>변동성 확대</td>
+          <td><span class="risk-dot risk-yellow"></span>중간</td>
+          <td>⚠️ 모니터링</td>
+        </tr>
+        <tr>
+          <td>🏦 대차잔고</td>
+          <td><span class="arrow-neut">→ 재진입 가능</span><br><span style="font-size:10px;color:#6b7280;">구조적 위험</span></td>
+          <td>단기 하방</td>
+          <td><span class="risk-dot risk-yellow"></span>중간</td>
+          <td>⚠️ 모니터링</td>
+        </tr>
+        <tr>
+          <td>🖥️ 프로그램</td>
+          <td><span class="arrow-down">→ 비차익 유입</span><br><span style="font-size:10px;color:#6b7280;">K200 편입 효과</span></td>
+          <td>중립~긍정</td>
+          <td><span class="risk-dot risk-green"></span>낮음</td>
+          <td>✅ 중립</td>
+        </tr>
+        <tr style="background:#f0fdf4;">
+          <td>👤 개인투자자</td>
+          <td><span class="arrow-down">▲ 모멘텀 매수</span><br><span style="font-size:10px;color:#6b7280;">키움·한투 창구</span></td>
+          <td>단기 상승 주도</td>
+          <td><span class="risk-dot risk-yellow"></span>중간</td>
+          <td>⚡ 변동성 주의</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="verdict-section">
+    <div class="verdict-title">🔮 수급 종합 판단 — 4각 구조의 결론</div>
+    <div class="verdict-grid">
+      <div class="verdict-item">
+        <div class="verdict-label">단기 (1~2주)</div>
+        <div class="verdict-value val-warn">외국인 매도 + 공매도 압력 → 270,000원 저항 구간에서 변동성 확대</div>
+      </div>
+      <div class="verdict-item">
+        <div class="verdict-label">중기 (1~3개월)</div>
+        <div class="verdict-value val-good">기관 지지 + 실적 성장 스토리 → 단기 조정 후 재상승 기대</div>
+      </div>
+      <div class="verdict-item">
+        <div class="verdict-label">핵심 모니터링 포인트</div>
+        <div class="verdict-value val-mid">외국인 보유 비중 20% 유지 여부 + 대차잔고 추세 방향</div>
+      </div>
+      <div class="verdict-item">
+        <div class="verdict-label">실시간 확인 채널</div>
+        <div class="verdict-value" style="color: #93c5fd;">KRX 공매도 포털 · 코스콤 대차 현황 · HTS 기관/외인 창구 분석</div>
+      </div>
+    </div>
+    <div class="final-box">
+      💡 <strong>핵심 결론</strong>: 지금은 "펀더멘털 황소(기관·개인)와 밸류에이션 곰(외국인 일부·공매도 세력)의 충돌 구간"입니다. 기관이 지지 매수를 유지하는 한 추세는 살아있지만, 외국인 매도가 21% 이하로 비중을 낮추거나 대차잔고가 급증하면 단기 조정 깊이가 커질 수 있습니다.
+    </div>
+  </div>
+
+  <div class="footnote">※ 본 분석은 공개 데이터와 구조적 특성 기반입니다. 실시간 수치는 KRX·코스콤에서 확인하세요. 투자 권유가 아닙니다.</div>
+</div>
+</body>
+</html>
