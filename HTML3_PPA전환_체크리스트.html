@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>발전 사업자 PPA 전환 체크리스트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F0FFF4;
+    padding: 32px 16px;
+  }
+
+  .container { max-width: 720px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #DCFCE7;
+    border: 1.5px solid #22C55E;
+    color: #15803D;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .main-title {
+    font-size: 21px;
+    font-weight: 900;
+    color: #0F2027;
+    margin-bottom: 6px;
+  }
+
+  .sub-desc {
+    font-size: 13px;
+    color: #6B7280;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* Step cards */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .step-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    position: relative;
+    border-top: 4px solid;
+    transition: transform 0.2s;
+  }
+
+  .step-card:hover { transform: translateY(-3px); }
+
+  .step-card:nth-child(1) { border-color: #3B82F6; }
+  .step-card:nth-child(2) { border-color: #8B5CF6; }
+  .step-card:nth-child(3) { border-color: #F59E0B; }
+  .step-card:nth-child(4) { border-color: #10B981; }
+
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .step-card:nth-child(1) .step-num { background: #3B82F6; }
+  .step-card:nth-child(2) .step-num { background: #8B5CF6; }
+  .step-card:nth-child(3) .step-num { background: #F59E0B; }
+  .step-card:nth-child(4) .step-num { background: #10B981; }
+
+  .step-title {
+    font-size: 14.5px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .check-list { list-style: none; }
+
+  .check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12.5px;
+    color: #4B5563;
+    padding: 5px 0;
+    border-bottom: 1px dashed #F3F4F6;
+    line-height: 1.5;
+  }
+
+  .check-list li:last-child { border-bottom: none; }
+
+  .check-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background: #F3F4F6;
+    border: 1.5px solid #D1D5DB;
+    margin-top: 2px;
+  }
+
+  /* Priority tags inside steps */
+  .priority-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    margin-top: 10px;
+  }
+
+  .step-card:nth-child(1) .priority-tag { background: #EFF6FF; color: #2563EB; }
+  .step-card:nth-child(2) .priority-tag { background: #F5F3FF; color: #7C3AED; }
+  .step-card:nth-child(3) .priority-tag { background: #FFFBEB; color: #D97706; }
+  .step-card:nth-child(4) .priority-tag { background: #ECFDF5; color: #059669; }
+
+  /* Summary table */
+  .summary-box {
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    margin-bottom: 16px;
+  }
+
+  .summary-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    background: #F9FAFB;
+    color: #374151;
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid #E5E7EB;
+  }
+
+  td {
+    padding: 10px 14px;
+    color: #4B5563;
+    border-bottom: 1px solid #F3F4F6;
+    line-height: 1.5;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+
+  .badge-red { background: #FEE2E2; color: #DC2626; }
+  .badge-yellow { background: #FEF3C7; color: #D97706; }
+  .badge-green { background: #D1FAE5; color: #059669; }
+
+  .alert-box {
+    background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+    border: 1.5px solid #34D399;
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #065F46;
+    line-height: 1.7;
+  }
+
+  .source-note {
+    text-align: right;
+    font-size: 11px;
+    color: #A0AEBA;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 520px) {
+    .steps-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="section-label">✅ 실전 대응 가이드</div>
+  <div class="main-title">소규모 태양광 발전소, PPA 전환 4단계 체크리스트</div>
+  <div class="sub-desc">지금 당장 시작할 수 있는 현실적 준비 로드맵입니다.</div>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-title">현재 계약 구조<br>정확히 파악하기</div>
+      <ul class="check-list">
+        <li><span class="check-icon"></span>계약 유형 확인 (SMP+REC / FIT / 기타)</li>
+        <li><span class="check-icon"></span>계약 만료일 및 갱신 조건 확인</li>
+        <li><span class="check-icon"></span>현재 월평균 REC 수익 산정</li>
+      </ul>
+      <span class="priority-tag">🔵 즉시 실행</span>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-title">PPA 계약 가능 여부<br>타진하기</div>
+      <ul class="check-list">
+        <li><span class="check-icon"></span>한전 중개형 PPA 신청 자격 확인</li>
+        <li><span class="check-icon"></span>제3자 직접 PPA 가능 용량인지 검토</li>
+        <li><span class="check-icon"></span>RE100 기업 수요 매칭 가능성 조사</li>
+      </ul>
+      <span class="priority-tag">🟣 1개월 이내</span>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-title">발전량 데이터<br>3년치 정비하기</div>
+      <ul class="check-list">
+        <li><span class="check-icon"></span>월별 발전량 데이터 엑셀 정리</li>
+        <li><span class="check-icon"></span>계절별 편차 패턴 분석</li>
+        <li><span class="check-icon"></span>설비 이용률 및 가동률 산정</li>
+      </ul>
+      <span class="priority-tag">🟡 2개월 이내</span>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-title">전문가·플랫폼<br>통해 계약 진행</div>
+      <ul class="check-list">
+        <li><span class="check-icon"></span>RE100 전문 컨설팅 기관 문의</li>
+        <li><span class="check-icon"></span>PPA 중개 플랫폼 3곳 이상 비교</li>
+        <li><span class="check-icon"></span>계약 단가 협상 및 기간 조건 검토</li>
+      </ul>
+      <span class="priority-tag">🟢 3개월 이내 완료 목표</span>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-title">📋 발전소 규모별 추천 전환 전략</div>
+    <table>
+      <thead>
+        <tr>
+          <th>발전소 규모</th>
+          <th>추천 전환 방식</th>
+          <th>긴급도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>100kW 미만 소규모</td>
+          <td>한전 중개형 PPA (가장 현실적)</td>
+          <td><span class="badge badge-red">즉시 대응</span></td>
+        </tr>
+        <tr>
+          <td>100kW ~ 1MW 중규모</td>
+          <td>한전 중개형 + 제3자 PPA 병행 검토</td>
+          <td><span class="badge badge-yellow">3개월 내</span></td>
+        </tr>
+        <tr>
+          <td>1MW 이상 대규모</td>
+          <td>제3자 직접 PPA 또는 RE100 직거래</td>
+          <td><span class="badge badge-green">전략적 접근</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert-box">
+    💚 <strong>지금이 골든타임입니다.</strong> 2028년 PPA 시장 안정화 전에 먼저 좋은 조건으로 계약하는 것이 핵심입니다. 입찰 경쟁이 치열해질수록 소규모 발전소에 불리한 조건이 될 수 있습니다.
+  </div>
+  <div class="source-note">※ 본 가이드는 2026 RE100 컨퍼런스 및 업계 정보 기반 / 개별 상황에 따라 전문가 상담 권장</div>
+</div>
+</body>
+</html>
