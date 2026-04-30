@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 조달 단가 전망 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #FFFBF0;
+    padding: 32px 16px;
+  }
+
+  .container { max-width: 720px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FFF3CD;
+    border: 1.5px solid #FFC107;
+    color: #8B6914;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .main-title {
+    font-size: 21px;
+    font-weight: 900;
+    color: #1A1A2E;
+    margin-bottom: 6px;
+  }
+
+  .sub-desc {
+    font-size: 13px;
+    color: #6B7280;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  /* Bar chart */
+  .chart-area {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+
+  .chart-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 24px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .bar-label {
+    width: 68px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 38px;
+    background: #F3F4F6;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    transition: width 1s ease;
+    position: relative;
+  }
+
+  .bar-fill.y2026 { background: linear-gradient(90deg, #FF8F00, #FFC107); width: 90%; }
+  .bar-fill.y2027 { background: linear-gradient(90deg, #F57C00, #FFA726); width: 85%; }
+  .bar-fill.y2028 { background: linear-gradient(90deg, #388E3C, #66BB6A); width: 80%; }
+
+  .bar-val {
+    margin-left: auto;
+    margin-right: 12px;
+    font-size: 13.5px;
+    font-weight: 900;
+  }
+
+  .bar-tag {
+    width: 60px;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: #6B7280;
+    text-align: left;
+  }
+
+  .bar-tag.now { color: #E65100; }
+  .bar-tag.stable { color: #2E7D32; }
+
+  .divider { border: none; border-top: 1px dashed #E5E7EB; margin: 22px 0; }
+
+  /* Timeline */
+  .timeline-wrap {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+
+  .tl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 24px;
+  }
+
+  .tl-track {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .tl-track::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(180deg, #FFC107, #66BB6A);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .tl-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: absolute;
+    left: -22px;
+    top: 3px;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #E5E7EB;
+  }
+
+  .tl-item:nth-child(1) .tl-dot { background: #FF8F00; box-shadow: 0 0 0 2px #FF8F00; }
+  .tl-item:nth-child(2) .tl-dot { background: #F57C00; box-shadow: 0 0 0 2px #F57C00; }
+  .tl-item:nth-child(3) .tl-dot { background: #388E3C; box-shadow: 0 0 0 2px #388E3C; }
+
+  .tl-content {
+    background: #FAFAFA;
+    border: 1px solid #F0F0F0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    width: 100%;
+  }
+
+  .tl-year {
+    font-size: 13px;
+    font-weight: 900;
+    color: #374151;
+    margin-bottom: 5px;
+  }
+
+  .tl-price {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+
+  .tl-item:nth-child(1) .tl-price { color: #E65100; }
+  .tl-item:nth-child(2) .tl-price { color: #F57C00; }
+  .tl-item:nth-child(3) .tl-price { color: #2E7D32; }
+
+  .tl-desc {
+    font-size: 12.5px;
+    color: #6B7280;
+    line-height: 1.6;
+  }
+
+  .tl-tag {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-top: 6px;
+  }
+
+  .tag-danger { background: #FEE2E2; color: #DC2626; }
+  .tag-caution { background: #FEF3C7; color: #D97706; }
+  .tag-safe { background: #D1FAE5; color: #059669; }
+
+  .note-box {
+    background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+    border: 1.5px solid #FFC107;
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #7B5800;
+    line-height: 1.7;
+  }
+
+  .source-note {
+    text-align: right;
+    font-size: 11px;
+    color: #A0AEBA;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="section-label">📊 가격 전망</div>
+  <div class="main-title">태양광 조달 단가, 2026~2028 전망</div>
+  <div class="sub-desc">RE100 컨퍼런스 발표 기반 | 단위: 원/kWh</div>
+
+  <div class="chart-area">
+    <div class="chart-title">📈 연도별 태양광 조달 단가 비교</div>
+    <div class="bar-row">
+      <div class="bar-label">2026년</div>
+      <div class="bar-track">
+        <div class="bar-fill y2026">
+          <span class="bar-val">약 180원대</span>
+        </div>
+      </div>
+      <div class="bar-tag now">현재</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2027년</div>
+      <div class="bar-track">
+        <div class="bar-fill y2027">
+          <span class="bar-val">170~175원</span>
+        </div>
+      </div>
+      <div class="bar-tag">전환기</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2028년</div>
+      <div class="bar-track">
+        <div class="bar-fill y2028">
+          <span class="bar-val">160~170원</span>
+        </div>
+      </div>
+      <div class="bar-tag stable">안정화</div>
+    </div>
+  </div>
+
+  <div class="timeline-wrap">
+    <div class="tl-title">🗓 단계별 시장 변화 흐름</div>
+    <div class="tl-track">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">2026년 현재</div>
+          <div class="tl-price">약 180원대 / kWh</div>
+          <div class="tl-desc">REC 현물 거래 아직 가능하나 입찰 미달 반복. PPA 시장 빠르게 확대 중.</div>
+          <span class="tl-tag tag-danger">지금 대응이 필요한 시점</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">2027년 예상</div>
+          <div class="tl-price">170~175원 / kWh</div>
+          <div class="tl-desc">PPA 전환 가속화. REC 현물 수요 급감 구간. 미전환 사업자 수익 불안정 위험.</div>
+          <span class="tl-tag tag-caution">PPA 계약 완료 권장 시점</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">2028년 전망</div>
+          <div class="tl-price">160~170원 / kWh</div>
+          <div class="tl-desc">PPA 중심 시장 안정화. 조달 단가 하락하지만 수익 예측 가능성 높아짐.</div>
+          <span class="tl-tag tag-safe">PPA 고정 수익 안정화</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    ⚠️ <strong>단가 하락 = 수익 감소 아닙니다.</strong> 조달 단가는 낮아지지만, PPA 계약을 통해 <strong>안정적·예측 가능한 수익 구조</strong>로 전환하는 것이 핵심입니다. 지금 준비하지 않으면 불안정한 변동 수익에 노출될 수 있습니다.
+  </div>
+  <div class="source-note">※ 2026 RE100 컨퍼런스 발표 기반 추정치 / 실제 수치는 시장 상황에 따라 변동될 수 있음</div>
+</div>
+</body>
+</html>
