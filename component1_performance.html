@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성 EHS 히트펌프 성능 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Oswald:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f7ff;
+    padding: 32px 16px;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #0077cc;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #0d1b2a;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+
+  .section-sub {
+    text-align: center;
+    font-size: 13px;
+    color: #5a7a9a;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    max-width: 860px;
+    margin: 0 auto 28px;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 26px 22px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,60,130,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,60,130,0.13);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .card.gas::before   { background: linear-gradient(90deg, #f97316, #fb923c); }
+  .card.heat::before  { background: linear-gradient(90deg, #0ea5e9, #06b6d4); }
+  .card.combo::before { background: linear-gradient(90deg, #22c55e, #10b981); }
+
+  .card.highlight {
+    background: linear-gradient(145deg, #e0f2fe, #f0fdf4);
+    border: 2px solid #22c55e;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .gas  .badge { background: #fff7ed; color: #ea580c; }
+  .heat .badge { background: #e0f2fe; color: #0284c7; }
+  .combo .badge { background: #f0fdf4; color: #16a34a; }
+
+  .card-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .metric-row:last-child { border-bottom: none; }
+
+  .metric-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .metric-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e3a5f;
+  }
+
+  .metric-value.good  { color: #16a34a; }
+  .metric-value.mid   { color: #0284c7; }
+  .metric-value.bad   { color: #dc2626; }
+
+  .winner-ribbon {
+    position: absolute;
+    top: 16px; right: -22px;
+    background: #16a34a;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 28px;
+    transform: rotate(35deg);
+  }
+
+  .bar-section {
+    max-width: 860px;
+    margin: 0 auto 20px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 26px;
+    box-shadow: 0 4px 16px rgba(0,60,130,0.07);
+  }
+
+  .bar-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 16px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .bar-label {
+    font-size: 11px;
+    color: #475569;
+    width: 130px;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 14px;
+    background: #f1f5f9;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 20px;
+    animation: barGrow 1.2s ease forwards;
+    transform-origin: left;
+  }
+
+  @keyframes barGrow {
+    from { width: 0; }
+    to   { width: var(--w); }
+  }
+
+  .bar-fill.gas   { background: linear-gradient(90deg, #f97316, #fb923c); --w: 18%; width: 18%; }
+  .bar-fill.heat  { background: linear-gradient(90deg, #0ea5e9, #06b6d4); --w: 62%; width: 62%; }
+  .bar-fill.combo { background: linear-gradient(90deg, #22c55e, #10b981); --w: 100%; width: 100%; }
+
+  .bar-num {
+    font-size: 12px;
+    font-weight: 700;
+    width: 70px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .bar-num.gas   { color: #ea580c; }
+  .bar-num.heat  { color: #0284c7; }
+  .bar-num.combo { color: #16a34a; }
+
+  .note {
+    max-width: 860px;
+    margin: 0 auto;
+    font-size: 10px;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<p class="section-label">성능 비교 분석</p>
+<h2 class="section-title">가스보일러 vs 히트펌프 vs 태양광 조합</h2>
+<p class="section-sub">동일 주택(3인 가구, 84㎡) 기준 겨울철 월간 난방비 시뮬레이션<br>양평 실증 데이터 및 SCOP 4.9 기준 산출</p>
+
+<div class="cards-grid">
+
+  <!-- 가스보일러 -->
+  <div class="card gas">
+    <span class="badge">기존 방식</span>
+    <span class="card-icon">🔥</span>
+    <div class="card-name">도시가스 보일러<br>(콘덴싱 기준)</div>
+    <div class="metric-row">
+      <span class="metric-label">에너지 효율</span>
+      <span class="metric-value bad">~90%</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">SCOP 등가 효율</span>
+      <span class="metric-value bad">0.9</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">월 난방비 (겨울)</span>
+      <span class="metric-value bad">18~25만원</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">CO₂ 배출</span>
+      <span class="metric-value bad">기준 100%</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">탄소 감축</span>
+      <span class="metric-value bad">없음</span>
+    </div>
+  </div>
+
+  <!-- 히트펌프 단독 -->
+  <div class="card heat">
+    <span class="badge">삼성 EHS</span>
+    <span class="card-icon">💨</span>
+    <div class="card-name">EHS 히트펌프 보일러<br>(단독 운용)</div>
+    <div class="metric-row">
+      <span class="metric-label">SCOP (35℃ 출수)</span>
+      <span class="metric-value mid">4.9</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">에너지 효율 배율</span>
+      <span class="metric-value mid">가스 대비 5배</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">월 난방비 (겨울)</span>
+      <span class="metric-value mid">8~12만원</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">CO₂ 배출</span>
+      <span class="metric-value mid">기준 대비 40%</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">난방비 절감률</span>
+      <span class="metric-value mid">약 53%↓</span>
+    </div>
+  </div>
+
+  <!-- 히트펌프 + 태양광 -->
+  <div class="card combo highlight">
+    <div class="winner-ribbon">추천</div>
+    <span class="badge">최적 조합</span>
+    <span class="card-icon">☀️</span>
+    <div class="card-name">EHS 히트펌프<br>+ 태양광 6kW</div>
+    <div class="metric-row">
+      <span class="metric-label">SCOP (유효)</span>
+      <span class="metric-value good">4.9 + 자가발전</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">태양광 자가 소비</span>
+      <span class="metric-value good">낮 시간 최대화</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">월 난방비 (겨울)</span>
+      <span class="metric-value good">3~6만원</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">CO₂ 배출</span>
+      <span class="metric-value good">기준 대비 ~20%</span>
+    </div>
+    <div class="metric-row">
+      <span class="metric-label">난방비 절감률</span>
+      <span class="metric-value good">60~80%↓</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- 절감 효과 바 차트 -->
+<div class="bar-section">
+  <div class="bar-title">📊 월 난방비 상대 비교 (높을수록 비용 많이 지출)</div>
+  <div class="bar-row">
+    <span class="bar-label">도시가스 보일러</span>
+    <div class="bar-track"><div class="bar-fill gas"></div></div>
+    <span class="bar-num gas">18~25만원</span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">EHS 히트펌프</span>
+    <div class="bar-track"><div class="bar-fill heat"></div></div>
+    <span class="bar-num heat">8~12만원</span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">히트펌프+태양광</span>
+    <div class="bar-track"><div class="bar-fill combo"></div></div>
+    <span class="bar-num combo">3~6만원</span>
+  </div>
+</div>
+
+<p class="note">
+  ※ 3인 가구 84㎡ 기준 추정치 / 실제 사용 환경(단열 등급·지역·생활 패턴)에 따라 차이 있음<br>
+  ※ 양평 실증 데이터(영하 15℃ 이하 20일 지속 환경, 난방비 53% 절감) 기반 산출<br>
+  ※ 태양광 조합은 스마트싱스 앱 재생에너지 우선 활용 설정 기준
+</p>
+
+</body>
+</html>
