@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화오션 2026 1Q 실적</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:#f0fdf4;padding:28px 16px;}
+  .wrap{max-width:800px;margin:0 auto;}
+
+  /* 헤더 */
+  .hdr{
+    background:linear-gradient(135deg,#064e3b,#065f46,#047857);
+    border-radius:20px;padding:28px 26px 22px;
+    color:#fff;margin-bottom:18px;
+    position:relative;overflow:hidden;
+  }
+  .hdr::before{
+    content:'🎯';
+    position:absolute;right:26px;top:20px;
+    font-size:60px;opacity:.15;
+  }
+  .hdr::after{
+    content:'';position:absolute;
+    bottom:-50px;right:-50px;
+    width:200px;height:200px;border-radius:50%;
+    background:rgba(255,255,255,.05);
+  }
+  .tag{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.3);
+    color:#d1fae5;
+    font-size:11px;font-weight:700;
+    letter-spacing:1.2px;text-transform:uppercase;
+    padding:4px 12px;border-radius:20px;margin-bottom:12px;
+  }
+  .hdr h1{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:1px;margin-bottom:6px;}
+  .hdr p{font-size:13px;color:rgba(255,255,255,.75);line-height:1.55;}
+
+  .surprise-badge{
+    position:absolute;right:26px;bottom:22px;
+    background:#fbbf24;color:#1c1917;
+    font-size:12px;font-weight:900;
+    padding:6px 16px;border-radius:30px;
+    letter-spacing:.3px;
+  }
+
+  /* 어닝 서프라이즈 대형 배너 */
+  .surprise-banner{
+    background:linear-gradient(135deg,#fef3c7,#fde68a);
+    border:2px solid #fbbf24;
+    border-radius:18px;
+    padding:20px 22px;
+    margin-bottom:16px;
+    display:flex;align-items:center;gap:16px;
+  }
+  .sb-left{text-align:center;flex-shrink:0;}
+  .sb-icon{font-size:40px;margin-bottom:4px;}
+  .sb-label{font-size:11px;font-weight:700;color:#92400e;letter-spacing:.5px;}
+  .sb-right h2{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#78350f;letter-spacing:.5px;margin-bottom:4px;}
+  .sb-right p{font-size:13px;color:#92400e;line-height:1.55;}
+
+  /* 실적 4종 카드 */
+  .result-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:12px;margin-bottom:16px;
+  }
+  @media(max-width:480px){.result-grid{grid-template-columns:1fr;}}
+
+  .res-card{
+    background:#fff;border-radius:16px;
+    padding:18px 16px;
+    box-shadow:0 2px 12px rgba(0,0,0,.07);
+  }
+  .res-card.highlight{
+    background:linear-gradient(135deg,#ecfdf5,#d1fae5);
+    border:2px solid #6ee7b7;
+  }
+  .res-label{font-size:11.5px;font-weight:700;color:#64748b;margin-bottom:6px;letter-spacing:.4px;}
+  .res-val{
+    font-family:'DM Mono',monospace;
+    font-size:22px;font-weight:500;
+    color:#0b2d55;line-height:1.1;margin-bottom:4px;
+  }
+  .res-card.highlight .res-val{color:#065f46;}
+  .res-badge{
+    display:inline-block;font-size:11px;font-weight:700;
+    padding:3px 10px;border-radius:20px;
+    margin-top:2px;
+  }
+  .badge-up{background:#dcfce7;color:#166534;}
+  .badge-beat{background:#fef3c7;color:#92400e;}
+  .badge-down{background:#fee2e2;color:#991b1b;}
+  .res-note{font-size:11.5px;color:#64748b;margin-top:6px;line-height:1.4;}
+
+  /* 컨센서스 비교 바 */
+  .card{
+    background:#fff;border-radius:16px;
+    padding:22px 22px;box-shadow:0 2px 12px rgba(0,0,0,.07);
+    margin-bottom:14px;
+  }
+  .card-title{
+    font-size:13px;font-weight:700;color:#065f46;
+    letter-spacing:.8px;text-transform:uppercase;
+    margin-bottom:16px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .card-title::after{content:'';flex:1;height:1px;background:#d1fae5;}
+
+  .comp-row{margin-bottom:14px;}
+  .comp-label{
+    display:flex;justify-content:space-between;
+    font-size:12px;font-weight:600;color:#374151;
+    margin-bottom:6px;
+  }
+  .comp-bar-bg{
+    height:12px;border-radius:8px;
+    background:#f1f5f9;position:relative;overflow:visible;
+  }
+  .comp-bar-con{
+    height:100%;border-radius:8px;
+    background:#94a3b8;
+    position:absolute;top:0;left:0;
+  }
+  .comp-bar-act{
+    height:100%;border-radius:8px;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    position:absolute;top:0;left:0;
+  }
+  .comp-note{font-size:11.5px;color:#64748b;margin-top:5px;}
+
+  /* 사업부 실적 테이블 */
+  .biz-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .biz-table th{
+    background:#f0fdf4;color:#065f46;
+    font-weight:700;font-size:11px;letter-spacing:.4px;
+    padding:10px 14px;text-align:left;
+    border-bottom:2px solid #bbf7d0;
+  }
+  .biz-table td{
+    padding:11px 14px;
+    border-bottom:1px solid #f1f5f9;
+    color:#334155;
+  }
+  .biz-table tr:last-child td{border-bottom:none;}
+  .good{color:#16a34a;font-weight:700;}
+  .bad{color:#dc2626;font-weight:700;}
+  .neutral{color:#64748b;}
+
+  .outlook-box{
+    background:linear-gradient(135deg,#eff6ff,#dbeafe);
+    border:1.5px solid #93c5fd;
+    border-radius:14px;padding:16px 18px;
+    margin-top:4px;
+  }
+  .outlook-box h3{font-size:14px;font-weight:800;color:#1e40af;margin-bottom:8px;}
+  .outlook-box p{font-size:12.5px;color:#1d4ed8;line-height:1.65;}
+
+  .footer-note{text-align:center;font-size:11px;color:#94a3b8;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 헤더 -->
+  <div class="hdr">
+    <div class="tag">② 2026년 1분기 실적</div>
+    <h1>1Q26 어닝 서프라이즈<br>확인 완료</h1>
+    <p>2026년 4월 27일 공시 기준 · 연결 기준 잠정 실적</p>
+    <div class="surprise-badge">⚡ EPS 서프라이즈 +99.5%</div>
+  </div>
+
+  <!-- 서프라이즈 배너 -->
+  <div class="surprise-banner">
+    <div class="sb-left">
+      <div class="sb-icon">🏆</div>
+      <div class="sb-label">어닝<br>서프라이즈</div>
+    </div>
+    <div class="sb-right">
+      <h2>컨센서스 대비 영업이익 +17.4% 초과</h2>
+      <p>9개 증권사 컨센서스 3,756억 원 vs 실제 4,411억 원 달성. LNG선 중심 고수익 구조와 원가 절감 효과가 복합 작용.</p>
+    </div>
+  </div>
+
+  <!-- 핵심 실적 4종 -->
+  <div class="result-grid">
+    <div class="res-card">
+      <div class="res-label">연결 매출</div>
+      <div class="res-val">3조 2,099억</div>
+      <span class="res-badge badge-down">전년동기 대비 -2%</span>
+      <div class="res-note">조업일수 감소 영향으로 소폭 하락. 실질 수익성은 대폭 개선</div>
+    </div>
+    <div class="res-card highlight">
+      <div class="res-label">연결 영업이익</div>
+      <div class="res-val">4,411억</div>
+      <span class="res-badge badge-up">전년동기 대비 +71%</span>
+      <div class="res-note">컨센서스(3,756억) 대비 +17.4% 초과 달성 — 서프라이즈 핵심</div>
+    </div>
+    <div class="res-card">
+      <div class="res-label">전분기(4Q25) 대비</div>
+      <div class="res-val">+78%↑</div>
+      <span class="res-badge badge-up">QoQ 폭발적 증가</span>
+      <div class="res-note">분기 영업이익 역대 최고 수준 경신</div>
+    </div>
+    <div class="res-card">
+      <div class="res-label">1Q26 수주</div>
+      <div class="res-val">24.5억 달러</div>
+      <span class="res-badge badge-beat">LNG 4척·VLCC 7척</span>
+      <div class="res-note">상선 중심 수주 지속. WTIV 1척 포함</div>
+    </div>
+  </div>
+
+  <!-- 컨센서스 vs 실적 비교 바 -->
+  <div class="card">
+    <div class="card-title">📊 컨센서스 vs 실제 비교</div>
+
+    <div class="comp-row">
+      <div class="comp-label">
+        <span>영업이익</span>
+        <span style="color:#16a34a;font-weight:700">실제 4,411억 vs 예상 3,756억</span>
+      </div>
+      <div class="comp-bar-bg" style="height:14px;">
+        <div class="comp-bar-con" style="width:85%;opacity:.35;"></div>
+        <!-- 실제/최대 = 4411/5200 ≈ 85% -->
+        <div class="comp-bar-act" style="width:85%;"></div>
+        <!-- 컨센서스 선 -->
+        <div style="position:absolute;top:-4px;left:72%;width:3px;height:22px;background:#475569;border-radius:2px;">
+          <div style="position:absolute;top:-18px;left:4px;font-size:10px;color:#475569;white-space:nowrap;">예상 3,756억</div>
+        </div>
+      </div>
+      <div class="comp-note">초과 달성률 +17.4% · 연속 서프라이즈 기록</div>
+    </div>
+
+    <div class="comp-row" style="margin-bottom:0;">
+      <div class="comp-label">
+        <span>매출</span>
+        <span style="color:#dc2626;font-weight:700">실제 3.21조 vs 예상 3.29조 (-2.4%)</span>
+      </div>
+      <div class="comp-bar-bg" style="height:14px;">
+        <div class="comp-bar-con" style="width:98%;opacity:.35;"></div>
+        <div class="comp-bar-act" style="width:95%;background:linear-gradient(90deg,#f59e0b,#d97706);"></div>
+        <div style="position:absolute;top:-4px;left:98%;width:3px;height:22px;background:#475569;border-radius:2px;">
+          <div style="position:absolute;top:-18px;left:4px;font-size:10px;color:#475569;white-space:nowrap;">예상 3.29조</div>
+        </div>
+      </div>
+      <div class="comp-note">매출 소폭 하회 · 조업일수 감소 일시적 요인</div>
+    </div>
+  </div>
+
+  <!-- 사업부별 현황 -->
+  <div class="card">
+    <div class="card-title">🏭 사업부별 실적 현황</div>
+    <table class="biz-table">
+      <tr>
+        <th>사업부</th>
+        <th>흐름</th>
+        <th>핵심 내용</th>
+      </tr>
+      <tr>
+        <td><strong>상선사업부</strong></td>
+        <td class="good">🟢 성장 주도</td>
+        <td>고선가 프로젝트·LNG선 비중 확대로 전체 실적 개선 선도</td>
+      </tr>
+      <tr>
+        <td><strong>특수선사업부</strong></td>
+        <td class="neutral">🟡 안정적</td>
+        <td>잠수함·수상함 건조 중심 안정 매출 유지</td>
+      </tr>
+      <tr>
+        <td><strong>에너지플랜트</strong></td>
+        <td class="bad">🔴 일시 감소</td>
+        <td>프로젝트 종료 영향 일시적 매출 하락. FPSO 수주 시 2027년 회복</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 향후 전망 -->
+  <div class="outlook-box">
+    <h3>📋 회사 전망 및 애널리스트 시각</h3>
+    <p>한화오션 측 "고가 상선 프로젝트 매출 인식 본격화로 수익성 개선 흐름 지속" 공식 발표. NH투자증권은 이번 실적 서프라이즈를 반영해 목표주가 175,000원으로 상향. "반복 건조에 따른 생산성 개선과 조기 인도로 예상보다 높은 수익성"이 핵심. 캐나다·태국 수주전 결과가 향후 실적 분수령.</p>
+  </div>
+
+  <div class="footer-note" style="margin-top:14px;">※ 본 자료는 공시 기반 정보 제공 목적이며 투자 권유가 아닙니다.</div>
+</div>
+</body>
+</html>
