@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPSP 캐나다 순찰잠수함 사업 개요</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Oswald:wght@500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 24px 16px;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .header-card {
+    background: linear-gradient(135deg, #0a2240 0%, #1a4a7a 60%, #0d3561 100%);
+    border-radius: 18px;
+    padding: 32px 28px 24px;
+    color: white;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-card::before {
+    content: '🇨🇦';
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    font-size: 52px;
+    opacity: 0.18;
+  }
+
+  .header-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(255,200,0,0.25);
+    color: #ffd740;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,215,0,0.4);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .header-card h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .header-card p {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 520px) {
+    .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .kpi-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-top: 4px solid #1a4a7a;
+    transition: transform 0.2s;
+  }
+
+  .kpi-card:hover { transform: translateY(-4px); }
+  .kpi-card:nth-child(2) { border-color: #e63946; }
+  .kpi-card:nth-child(3) { border-color: #2a9d8f; }
+  .kpi-card:nth-child(4) { border-color: #f4a261; }
+
+  .kpi-icon { font-size: 26px; margin-bottom: 6px; }
+
+  .kpi-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0a2240;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .info-section {
+    background: white;
+    border-radius: 16px;
+    padding: 22px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a4a7a;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+  }
+
+  .requirement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .req-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border-left: 4px solid #1a4a7a;
+  }
+
+  .req-item:nth-child(2) { border-color: #e63946; }
+  .req-item:nth-child(3) { border-color: #2a9d8f; }
+
+  .req-emoji { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+  .req-text strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 2px;
+  }
+
+  .req-text span {
+    font-size: 12.5px;
+    color: #6b7280;
+    line-height: 1.5;
+  }
+
+  .sea-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .sea-card {
+    background: linear-gradient(145deg, #e8f4fd, #dbeafe);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    border: 1px solid #bfdbfe;
+  }
+
+  .sea-card .icon { font-size: 24px; margin-bottom: 6px; }
+
+  .sea-card .name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e40af;
+  }
+
+  .sea-card .desc {
+    font-size: 11px;
+    color: #3b82f6;
+    margin-top: 2px;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11.5px;
+    color: #94a3b8;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #e2e8f0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-card">
+    <div class="tag">📋 사업 개요</div>
+    <h1>CPSP — 캐나다 순찰잠수함 사업<br>Canadian Patrol Submarine Project</h1>
+    <p>캐나다 역사상 최대 단일 방산 계약 · 한화오션 KSS-III vs 독일 TKMS 212CD 최종 2파전</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">⚓</div>
+      <div class="kpi-value">12척</div>
+      <div class="kpi-label">총 도입<br>잠수함 규모</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-value">최대 176조</div>
+      <div class="kpi-label">유지보수 포함<br>총 사업비 추정</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📅</div>
+      <div class="kpi-value">2026년 6월</div>
+      <div class="kpi-label">우선협상자<br>선정 예정</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">🏭</div>
+      <div class="kpi-value">2043년</div>
+      <div class="kpi-label">12척 전체<br>납품 목표</div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="section-title">🎯 사업 핵심 배경</div>
+    <div class="requirement-list">
+      <div class="req-item">
+        <div class="req-emoji">🛡️</div>
+        <div class="req-text">
+          <strong>노후 빅토리아급 교체 시급</strong>
+          <span>현재 운용 중인 빅토리아급 잠수함 4척의 노후화로 연간 수천억 원 유지비 발생. 조기 대체 시 약 1조 4600억 원 절감 예상</span>
+        </div>
+      </div>
+      <div class="req-item">
+        <div class="req-emoji">🌐</div>
+        <div class="req-text">
+          <strong>NATO GDP 2% 국방비 목표 이행</strong>
+          <span>카니 총리, 향후 10년간 수백억 달러 국방비 증액 계획. 2025~2026 회계연도에만 90억 달러 이상 국방 투자 증액</span>
+        </div>
+      </div>
+      <div class="req-item">
+        <div class="req-emoji">🇺🇸</div>
+        <div class="req-text">
+          <strong>미국 의존도 탈피 · 자주국방 강화</strong>
+          <span>트럼프 행정부 무역 갈등 이후 미국 신뢰도 하락. 캐나다 정부 공식 인사가 의회에서 미국 신뢰성에 공개 의문 표명</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="section-title">🌊 3개 바다 방어 임무</div>
+    <div class="sea-grid">
+      <div class="sea-card">
+        <div class="icon">🌏</div>
+        <div class="name">태평양</div>
+        <div class="desc">인도태평양 감시</div>
+      </div>
+      <div class="sea-card">
+        <div class="icon">🌊</div>
+        <div class="name">대서양</div>
+        <div class="desc">NATO 연합 방어</div>
+      </div>
+      <div class="sea-card">
+        <div class="icon">🧊</div>
+        <div class="name">북극해</div>
+        <div class="desc">북극 주권 수호</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">※ 사업비는 건조비 약 24조 원 + 30년 유지보수 포함 추산치 / 출처: 글로벌이코노믹, 캐나다 디펜스리뷰 (2026.04)</div>
+</div>
+</body>
+</html>
