@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화오션 주가 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    font-family:'Noto Sans KR',sans-serif;
+    background:#f7f8fa;
+    padding:28px 16px;
+  }
+
+  .wrap{max-width:800px;margin:0 auto;}
+
+  /* 헤더 */
+  .header{
+    background:linear-gradient(135deg,#0b2d55 0%,#154f8e 55%,#1a6bbf 100%);
+    border-radius:20px;
+    padding:28px 28px 22px;
+    color:#fff;
+    margin-bottom:18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .header::after{
+    content:'';
+    position:absolute;
+    right:-40px;bottom:-40px;
+    width:220px;height:220px;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+  }
+  .header::before{
+    content:'📈';
+    position:absolute;
+    right:28px;top:22px;
+    font-size:54px;
+    opacity:.18;
+  }
+  .report-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    color:rgba(255,255,255,.9);
+    font-size:11px;font-weight:700;
+    letter-spacing:1.2px;text-transform:uppercase;
+    padding:4px 12px;border-radius:20px;
+    margin-bottom:12px;
+  }
+  .header h1{
+    font-family:'Syne',sans-serif;
+    font-size:24px;font-weight:800;
+    margin-bottom:6px;line-height:1.25;
+  }
+  .header .sub{
+    font-size:13px;color:rgba(255,255,255,.72);
+    line-height:1.55;
+  }
+  .buy-chip{
+    position:absolute;right:28px;bottom:22px;
+    background:#22c55e;color:#fff;
+    font-size:13px;font-weight:800;
+    padding:6px 18px;border-radius:30px;
+    letter-spacing:.5px;
+  }
+
+  /* KPI 3-grid */
+  .kpi-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;margin-bottom:16px;
+  }
+  @media(max-width:500px){.kpi-row{grid-template-columns:1fr 1fr;}}
+
+  .kpi{
+    background:#fff;border-radius:16px;
+    padding:18px 14px;text-align:center;
+    box-shadow:0 2px 12px rgba(0,0,0,.07);
+    border-top:4px solid #154f8e;
+    transition:transform .18s;
+  }
+  .kpi:hover{transform:translateY(-4px);}
+  .kpi:nth-child(2){border-color:#f59e0b;}
+  .kpi:nth-child(3){border-color:#ef4444;}
+
+  .kpi-icon{font-size:26px;margin-bottom:6px;}
+  .kpi-val{
+    font-family:'DM Mono',monospace;
+    font-size:19px;font-weight:500;
+    color:#0b2d55;line-height:1.1;
+    margin-bottom:3px;
+  }
+  .kpi-label{font-size:11px;color:#64748b;line-height:1.35;}
+
+  /* 본문 카드 */
+  .card{
+    background:#fff;border-radius:16px;
+    padding:22px 22px;
+    box-shadow:0 2px 12px rgba(0,0,0,.07);
+    margin-bottom:14px;
+  }
+  .card-title{
+    font-size:13px;font-weight:700;
+    color:#154f8e;letter-spacing:.8px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .card-title::after{content:'';flex:1;height:1px;background:#e2e8f0;}
+
+  /* 가격 바 */
+  .price-bar-wrap{margin-bottom:18px;}
+  .price-labels{
+    display:flex;justify-content:space-between;
+    font-size:12px;color:#64748b;
+    margin-bottom:6px;
+  }
+  .price-bar-bg{
+    width:100%;height:10px;
+    background:#e2e8f0;border-radius:10px;
+    position:relative;
+  }
+  .price-bar-fill{
+    height:100%;border-radius:10px;
+    background:linear-gradient(90deg,#22c55e,#154f8e);
+  }
+  .price-marker{
+    position:absolute;
+    top:-5px;
+    width:20px;height:20px;
+    border-radius:50%;
+    background:#fff;
+    border:3px solid #154f8e;
+    box-shadow:0 0 0 3px rgba(21,79,142,.2);
+    transform:translateX(-50%);
+  }
+  .price-now{
+    text-align:center;
+    font-family:'DM Mono',monospace;
+    font-size:28px;font-weight:500;
+    color:#0b2d55;margin-bottom:4px;
+    margin-top:14px;
+  }
+  .price-change{
+    text-align:center;font-size:12px;
+    color:#64748b;margin-bottom:18px;
+  }
+
+  /* 목표가 테이블 */
+  .tp-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .tp-table th{
+    background:#f1f5f9;color:#475569;
+    font-weight:700;font-size:11px;
+    letter-spacing:.5px;text-transform:uppercase;
+    padding:10px 14px;text-align:left;
+  }
+  .tp-table td{
+    padding:10px 14px;
+    border-bottom:1px solid #f1f5f9;
+    color:#334155;
+  }
+  .tp-table tr:last-child td{border-bottom:none;}
+  .upside{color:#22c55e;font-weight:700;}
+
+  /* 이벤트 목록 */
+  .event-list{display:flex;flex-direction:column;gap:10px;}
+  .event-item{
+    display:flex;align-items:flex-start;gap:12px;
+    padding:12px 14px;border-radius:12px;
+    background:#f8fafc;
+    border-left:4px solid #154f8e;
+  }
+  .event-item.warn{border-color:#ef4444;background:#fff5f5;}
+  .ev-emoji{font-size:20px;flex-shrink:0;margin-top:1px;}
+  .ev-text strong{
+    display:block;font-size:13.5px;
+    font-weight:700;color:#1e293b;margin-bottom:2px;
+  }
+  .ev-text span{font-size:12px;color:#64748b;line-height:1.5;}
+
+  .footer-note{
+    text-align:center;font-size:11px;color:#94a3b8;
+    margin-top:8px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="report-tag">① 주가 분석</div>
+    <h1>한화오션(042660)<br>주가 현황 &amp; 전망</h1>
+    <p class="sub">기준일: 2026년 5월 1일 | 증권사 컨센서스 기반 분석</p>
+    <div class="buy-chip">BUY ▲</div>
+  </div>
+
+  <!-- KPI 3종 -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-val">132,400원</div>
+      <div class="kpi-label">현재 주가<br>(2026.04 기준)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-icon">🎯</div>
+      <div class="kpi-val">175,000원</div>
+      <div class="kpi-label">NH증권 목표주가<br>(최근 상향)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-icon">📊</div>
+      <div class="kpi-val">38조원</div>
+      <div class="kpi-label">시가총액<br>(KOSPI 대형주)</div>
+    </div>
+  </div>
+
+  <!-- 52주 가격 바 -->
+  <div class="card">
+    <div class="card-title">📉 52주 주가 범위</div>
+    <div class="price-bar-wrap">
+      <div class="price-labels">
+        <span>52주 저점<br><strong style="color:#ef4444">71,500원</strong></span>
+        <span style="text-align:right">52주 고점<br><strong style="color:#154f8e">154,800원</strong></span>
+      </div>
+      <!-- 현재가 위치: (132400-71500)/(154800-71500) = 73% -->
+      <div class="price-bar-bg">
+        <div class="price-bar-fill" style="width:73%"></div>
+        <div class="price-marker" style="left:73%"></div>
+      </div>
+    </div>
+    <div class="price-now">₩132,400</div>
+    <div class="price-change">현재가 · 52주 고점 대비 -14.5% · 저점 대비 +85.2%</div>
+
+    <div style="background:#eff6ff;border-radius:12px;padding:14px 16px;">
+      <div style="font-size:12.5px;color:#1e40af;line-height:1.65;">
+        <strong>📌 애널리스트 코멘트</strong><br>
+        20명 매수 · 1명 매도 · 평균 목표가 162,143원. 현 주가 대비 약 <strong>+23% 상승 여력</strong>. 캐나다 CPSP 단독 수주 확정 시 18만 원 이상 밸류구간 개방 가능.
+      </div>
+    </div>
+  </div>
+
+  <!-- 증권사 목표가 -->
+  <div class="card">
+    <div class="card-title">🏦 주요 증권사 목표주가</div>
+    <table class="tp-table">
+      <tr>
+        <th>증권사</th>
+        <th>투자의견</th>
+        <th>목표주가</th>
+        <th>상승여력</th>
+      </tr>
+      <tr>
+        <td>NH투자증권</td>
+        <td>BUY</td>
+        <td>175,000원</td>
+        <td class="upside">+32.2%</td>
+      </tr>
+      <tr>
+        <td>키움증권</td>
+        <td>BUY</td>
+        <td>179,000원</td>
+        <td class="upside">+35.2%</td>
+      </tr>
+      <tr>
+        <td>컨센서스 평균</td>
+        <td>적극매수</td>
+        <td>162,143원</td>
+        <td class="upside">+22.5%</td>
+      </tr>
+      <tr>
+        <td>목표가 최고</td>
+        <td>—</td>
+        <td>180,000원</td>
+        <td class="upside">+36.0%</td>
+      </tr>
+      <tr>
+        <td>목표가 최저</td>
+        <td>SELL</td>
+        <td>72,000원</td>
+        <td style="color:#ef4444;font-weight:700">-45.6%</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 주요 이벤트 -->
+  <div class="card">
+    <div class="card-title">⚡ 주가 핵심 촉매 &amp; 리스크</div>
+    <div class="event-list">
+      <div class="event-item">
+        <div class="ev-emoji">🇨🇦</div>
+        <div class="ev-text">
+          <strong>캐나다 CPSP 수주 결과 (2026년 6월 말)</strong>
+          <span>단독 수주 시 18만 원↑ 밸류구간 개방. 최대 단일 방산 모멘텀. 현재 주가는 절반 반영 수준으로 판단</span>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="ev-emoji">🚢</div>
+        <div class="ev-text">
+          <strong>LNG선 고선가 매출 본격화 (2026~2027)</strong>
+          <span>2022~2024년 수주 물량이 2026년부터 집중 인식. 영업이익률 2%대→13%대 전환 구간</span>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="ev-emoji">🇺🇸</div>
+        <div class="ev-text">
+          <strong>MASGA (미국 조선협력) 본격화</strong>
+          <span>필리 조선소 거점 활용. 트럼프 황금함대 구상에 한화오션 직접 거명. 미국 군함 MRO 수주 기대</span>
+        </div>
+      </div>
+      <div class="event-item warn">
+        <div class="ev-emoji">⚠️</div>
+        <div class="ev-text">
+          <strong>캐나다 수주 분할 또는 실패 시</strong>
+          <span>3월 분할 우려만으로 -14.7% 급락 선례. 완전 실패 시 10만 원 초반 지지선 재시험 가능성</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">※ 본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 투자 결정은 반드시 본인 판단 하에 하시기 바랍니다.</div>
+</div>
+</body>
+</html>
