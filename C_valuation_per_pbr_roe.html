@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화오션 PER PBR ROE 밸류에이션</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Oswald:wght@600;700&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:#faf7ff;padding:28px 16px;}
+  .wrap{max-width:800px;margin:0 auto;}
+
+  .hdr{
+    background:linear-gradient(135deg,#3b0764,#6d28d9,#7c3aed);
+    border-radius:20px;padding:28px 26px 24px;
+    color:#fff;margin-bottom:18px;
+    position:relative;overflow:hidden;
+  }
+  .hdr::before{
+    content:'📐';position:absolute;
+    right:26px;top:20px;font-size:56px;opacity:.18;
+  }
+  .tag{
+    display:inline-block;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.28);
+    color:#ddd6fe;
+    font-size:11px;font-weight:700;
+    letter-spacing:1.2px;text-transform:uppercase;
+    padding:4px 12px;border-radius:20px;margin-bottom:12px;
+  }
+  .hdr h1{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;letter-spacing:.5px;margin-bottom:6px;line-height:1.25;}
+  .hdr p{font-size:13px;color:rgba(255,255,255,.72);line-height:1.55;}
+
+  /* 3대 지표 대형 카드 */
+  .metric-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:12px;margin-bottom:16px;
+  }
+  @media(max-width:520px){.metric-grid{grid-template-columns:1fr;}}
+
+  .metric-card{
+    background:#fff;border-radius:18px;
+    padding:22px 16px;text-align:center;
+    box-shadow:0 2px 14px rgba(109,40,217,.1);
+    border-top:5px solid #7c3aed;
+    position:relative;
+  }
+  .metric-card:nth-child(2){border-color:#0ea5e9;}
+  .metric-card:nth-child(3){border-color:#f59e0b;}
+  .metric-card:hover{transform:translateY(-3px);transition:.2s;}
+
+  .metric-name{
+    font-size:11px;font-weight:700;
+    letter-spacing:1px;text-transform:uppercase;
+    color:#7c3aed;margin-bottom:4px;
+  }
+  .metric-card:nth-child(2) .metric-name{color:#0ea5e9;}
+  .metric-card:nth-child(3) .metric-name{color:#f59e0b;}
+
+  .metric-trailing{
+    font-family:'DM Mono',monospace;
+    font-size:28px;font-weight:500;
+    color:#1e1b4b;line-height:1;margin-bottom:2px;
+  }
+  .metric-trail-label{font-size:10.5px;color:#94a3b8;margin-bottom:12px;}
+  .metric-divider{
+    height:1px;background:#f1f5f9;margin:10px 0;
+  }
+  .metric-fwd-label{font-size:10.5px;color:#64748b;margin-bottom:3px;}
+  .metric-fwd{
+    font-family:'DM Mono',monospace;
+    font-size:20px;font-weight:500;
+    color:#16a34a;
+  }
+  .metric-arrow{
+    position:absolute;top:14px;right:14px;
+    font-size:18px;
+  }
+  .chip-sm{
+    display:inline-block;font-size:10px;font-weight:700;
+    padding:2px 8px;border-radius:10px;margin-top:6px;
+  }
+  .chip-ok{background:#ede9fe;color:#7c3aed;}
+  .chip-watch{background:#fef3c7;color:#92400e;}
+  .chip-up{background:#dcfce7;color:#166534;}
+
+  /* 해설 카드 */
+  .card{
+    background:#fff;border-radius:16px;
+    padding:22px 22px;box-shadow:0 2px 12px rgba(0,0,0,.07);
+    margin-bottom:14px;
+  }
+  .card-title{
+    font-size:13px;font-weight:700;color:#6d28d9;
+    letter-spacing:.8px;text-transform:uppercase;
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .card-title::after{content:'';flex:1;height:1px;background:#ede9fe;}
+
+  /* ROE 상승 바 시각화 */
+  .roe-steps{
+    display:flex;align-items:flex-end;
+    gap:10px;height:120px;margin-bottom:14px;
+  }
+  .roe-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .roe-bar{
+    width:100%;border-radius:8px 8px 0 0;
+    background:linear-gradient(180deg,#7c3aed,#a78bfa);
+  }
+  .roe-bar.fwd{background:linear-gradient(180deg,#16a34a,#4ade80);}
+  .roe-yr{font-size:11.5px;font-weight:700;color:#475569;}
+  .roe-pct{font-family:'DM Mono',monospace;font-size:13px;color:#1e1b4b;font-weight:500;}
+
+  /* 이익 추정 테이블 */
+  .est-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .est-table th{
+    background:#faf5ff;color:#6d28d9;
+    font-weight:700;font-size:11px;letter-spacing:.4px;
+    padding:10px 14px;text-align:left;
+    border-bottom:2px solid #ede9fe;
+  }
+  .est-table td{
+    padding:11px 14px;
+    border-bottom:1px solid #f5f3ff;
+    color:#334155;
+  }
+  .est-table tr:last-child td{border-bottom:none;}
+  .up{color:#16a34a;font-weight:700;}
+
+  /* 결론 박스 */
+  .verdict{
+    background:linear-gradient(135deg,#f5f3ff,#ede9fe);
+    border:2px solid #c4b5fd;border-radius:16px;
+    padding:18px 20px;
+  }
+  .verdict h3{font-size:15px;font-weight:800;color:#4c1d95;margin-bottom:8px;}
+  .verdict p{font-size:13px;color:#5b21b6;line-height:1.65;}
+
+  .footer-note{text-align:center;font-size:11px;color:#94a3b8;margin-top:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 헤더 -->
+  <div class="hdr">
+    <div class="tag">③ 밸류에이션 분석</div>
+    <h1>PER · PBR · ROE<br>한화오션 투자지표 심층 분석</h1>
+    <p>2025년 결산 Trailing + 2026년 Forward 기준 / 공시 데이터·증권사 컨센서스 기반</p>
+  </div>
+
+  <!-- 3대 지표 카드 -->
+  <div class="metric-grid">
+
+    <div class="metric-card">
+      <div class="metric-arrow">📊</div>
+      <div class="metric-name">PER</div>
+      <div class="metric-trailing">50~55배</div>
+      <div class="metric-trail-label">Trailing (2025 기준)</div>
+      <div class="metric-divider"></div>
+      <div class="metric-fwd-label">2026F Forward</div>
+      <div class="metric-fwd">22~27배</div>
+      <span class="chip-watch">이익 급증으로 압축 중</span>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-arrow">🏢</div>
+      <div class="metric-name">PBR</div>
+      <div class="metric-trailing">6.65배</div>
+      <div class="metric-trail-label">2025년 12월 결산 공시</div>
+      <div class="metric-divider"></div>
+      <div class="metric-fwd-label">해석</div>
+      <div class="metric-fwd" style="font-size:16px;color:#0ea5e9;">방산 프리미엄</div>
+      <span class="chip-ok">ROE 상승으로 정당화</span>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-arrow">💹</div>
+      <div class="metric-name">ROE</div>
+      <div class="metric-trailing">12~14%</div>
+      <div class="metric-trail-label">현재 (추정)</div>
+      <div class="metric-divider"></div>
+      <div class="metric-fwd-label">2026~2027F 전망</div>
+      <div class="metric-fwd">25~30%</div>
+      <span class="chip-up">급등 구간 진입 중</span>
+    </div>
+
+  </div>
+
+  <!-- PER 해설 -->
+  <div class="card">
+    <div class="card-title">📌 PER — 겉으로 비싸 보이지만 앞을 봐야 합니다</div>
+    <div style="background:#fdf4ff;border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+      <div style="font-size:13px;color:#4c1d95;line-height:1.7;">
+        Trailing PER 50~55배는 <strong>과거 이익이 낮았기 때문</strong>입니다. 2024년 영업이익률이 2%대에 불과했기에 분자(시가총액)는 유지되면서 분모(이익)가 낮았죠.<br><br>
+        핵심은 <strong>Forward PER 22~27배</strong>입니다. 2026년 예상 영업이익 1조 9,000억 원, 추정 순이익 1조 4,000~1조 6,000억 원을 기준으로 하면, 글로벌 방산·조선 복합기업 밸류에이션으로 결코 비싸지 않습니다.
+      </div>
+    </div>
+
+    <!-- 이익 추정 테이블 -->
+    <table class="est-table">
+      <tr>
+        <th>연도</th>
+        <th>영업이익 (추정)</th>
+        <th>영업이익률</th>
+        <th>Forward PER</th>
+      </tr>
+      <tr>
+        <td>2024년 (실적)</td>
+        <td>2,840억원</td>
+        <td>2.5%대</td>
+        <td style="color:#dc2626;">200배+</td>
+      </tr>
+      <tr>
+        <td>2025년 (실적)</td>
+        <td>1조 1,091억원</td>
+        <td>8.7%대</td>
+        <td>약 50배</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">2026년 (컨센서스)</td>
+        <td class="up">1조 9,000억원</td>
+        <td class="up">13%대</td>
+        <td class="up">22~27배</td>
+      </tr>
+      <tr>
+        <td>2027년 (전망)</td>
+        <td class="up">2조+ (추정)</td>
+        <td class="up">14~16%</td>
+        <td class="up">19배 이하</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- PBR 해설 -->
+  <div class="card">
+    <div class="card-title">🏗️ PBR 6.65배 — 비싼 걸까요?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fdf4ff;border-radius:12px;padding:14px;">
+        <div style="font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:6px;">PBR이 높은 이유</div>
+        <ul style="font-size:12px;color:#4c1d95;line-height:1.75;padding-left:16px;">
+          <li>한화그룹 편입 후 자산 재평가</li>
+          <li>방산 수출 프리미엄 선반영</li>
+          <li>LNG 슈퍼사이클 이익 잉여금 급증 중</li>
+          <li>ROE 상승 → PBR 정당화 구조</li>
+        </ul>
+      </div>
+      <div style="background:#f0fdf4;border-radius:12px;padding:14px;">
+        <div style="font-size:12px;font-weight:700;color:#16a34a;margin-bottom:6px;">정당화 조건</div>
+        <ul style="font-size:12px;color:#166534;line-height:1.75;padding-left:16px;">
+          <li>ROE가 20%↑ 되면 PBR 6배 정당</li>
+          <li>글로벌 방산 복합기업 재평가 적용</li>
+          <li>캐나다 수주 시 BPS 자체가 급증</li>
+          <li>조선업 슈퍼사이클 시 P/B 확장 선례</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROE 상승 시각화 -->
+  <div class="card">
+    <div class="card-title">📈 ROE 상승 궤적 — 지금이 핵심 변곡점</div>
+    <div class="roe-steps">
+      <div class="roe-bar-wrap">
+        <div class="roe-pct">1.2%</div>
+        <div class="roe-bar" style="height:8px;"></div>
+        <div class="roe-yr">2024</div>
+      </div>
+      <div class="roe-bar-wrap">
+        <div class="roe-pct">12~14%</div>
+        <div class="roe-bar" style="height:55px;"></div>
+        <div class="roe-yr">2025</div>
+      </div>
+      <div class="roe-bar-wrap">
+        <div class="roe-pct">20~25%</div>
+        <div class="roe-bar fwd" style="height:80px;"></div>
+        <div class="roe-yr">2026F</div>
+      </div>
+      <div class="roe-bar-wrap">
+        <div class="roe-pct">25~30%</div>
+        <div class="roe-bar fwd" style="height:100px;"></div>
+        <div class="roe-yr">2027F</div>
+      </div>
+    </div>
+    <div style="font-size:12.5px;color:#475569;line-height:1.65;background:#faf5ff;border-radius:10px;padding:12px 14px;">
+      ROE가 빠르게 올라가는 구간에서 PBR이 정당화됩니다. 이것이 현재 주가 상승 논리의 핵심입니다. 1분기 어닝 서프라이즈를 감안하면 2026년 ROE는 예상보다 빠르게 20%대 진입이 가능합니다.
+    </div>
+  </div>
+
+  <!-- 종합 결론 -->
+  <div class="verdict">
+    <h3>🎯 밸류에이션 종합 판단</h3>
+    <p>현재 Trailing 기준으로 비싸 보이는 것은 착시입니다. Forward PER 22~27배, ROE 급등 구간 진입, PBR 6.65배는 방산·조선 복합기업 프리미엄이 반영된 수준으로 현 이익 성장 속도를 감안하면 합리적입니다. 캐나다 수주 확정 시 이익 추정치 추가 상향 → Forward PER 추가 압축 → 밸류에이션 확장의 선순환이 기대됩니다.</p>
+  </div>
+
+  <div class="footer-note">※ 추정치는 증권사 컨센서스 기반이며 실제 수치와 다를 수 있습니다. 투자 권유 아님.</div>
+</div>
+</body>
+</html>
