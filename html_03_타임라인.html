@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>햇빛소득마을 성공사례 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fdf9f2;
+    padding: 44px 20px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-header .badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #ff9f1c, #ffbf69);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #1a2e05;
+    line-height: 1.4;
+  }
+
+  .timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #ff9f1c, #4caf50, #2196f3, #9c27b0, #ff5722, #607d8b);
+    border-radius: 4px;
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    align-items: start;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .tl-year {
+    background: #fff;
+    border: 3px solid #ff9f1c;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 900;
+    color: #ff9f1c;
+    text-align: center;
+    line-height: 1.2;
+    z-index: 2;
+    box-shadow: 0 2px 12px rgba(255,159,28,0.25);
+    flex-shrink: 0;
+    margin: 0 auto;
+  }
+
+  .tl-item:nth-child(2) .tl-year { border-color: #4caf50; color: #4caf50; box-shadow: 0 2px 12px rgba(76,175,80,0.25); }
+  .tl-item:nth-child(3) .tl-year { border-color: #2196f3; color: #2196f3; box-shadow: 0 2px 12px rgba(33,150,243,0.25); }
+  .tl-item:nth-child(4) .tl-year { border-color: #9c27b0; color: #9c27b0; box-shadow: 0 2px 12px rgba(156,39,176,0.25); }
+  .tl-item:nth-child(5) .tl-year { border-color: #ff5722; color: #ff5722; box-shadow: 0 2px 12px rgba(255,87,34,0.25); }
+  .tl-item:nth-child(6) .tl-year { border-color: #607d8b; color: #607d8b; box-shadow: 0 2px 12px rgba(96,125,139,0.25); }
+
+  .tl-left, .tl-right {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+  }
+
+  .tl-left { text-align: right; margin-right: 10px; }
+  .tl-right { margin-left: 10px; }
+
+  .tl-empty { /* empty side */ }
+
+  .tl-region {
+    font-size: 11px;
+    font-weight: 700;
+    color: #ff9f1c;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .tl-item:nth-child(2) .tl-region { color: #4caf50; }
+  .tl-item:nth-child(3) .tl-region { color: #2196f3; }
+  .tl-item:nth-child(4) .tl-region { color: #9c27b0; }
+  .tl-item:nth-child(5) .tl-region { color: #ff5722; }
+  .tl-item:nth-child(6) .tl-region { color: #607d8b; }
+
+  .tl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2e05;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .tl-desc {
+    font-size: 12.5px;
+    color: #555;
+    line-height: 1.75;
+  }
+
+  .tl-stat {
+    display: inline-block;
+    background: #fff8e6;
+    color: #e07b00;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  .tl-item:nth-child(2) .tl-stat { background: #f1f8f1; color: #2e7d32; }
+  .tl-item:nth-child(3) .tl-stat { background: #e3f2fd; color: #1565c0; }
+  .tl-item:nth-child(4) .tl-stat { background: #f9f0ff; color: #6a1b9a; }
+  .tl-item:nth-child(5) .tl-stat { background: #fff3e0; color: #e65100; }
+  .tl-item:nth-child(6) .tl-stat { background: #eceff1; color: #37474f; }
+
+  /* odd: right card / even: left card */
+  .tl-item:nth-child(even) .tl-left { visibility: hidden; }
+  .tl-item:nth-child(odd) .tl-right { visibility: hidden; }
+
+  .future-banner {
+    max-width: 800px;
+    margin: 16px auto 0;
+    background: linear-gradient(135deg, #1a2e05, #2d5016);
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .future-banner .fb-text h3 {
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .future-banner .fb-text p {
+    font-size: 13px;
+    color: #c8e6b0;
+    line-height: 1.6;
+  }
+
+  .future-banner .fb-numbers {
+    display: flex;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .fb-num-item {
+    text-align: center;
+  }
+
+  .fb-num-item .num {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ff9f1c;
+    display: block;
+  }
+
+  .fb-num-item .label {
+    font-size: 11px;
+    color: #a5d6a7;
+    font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .timeline::before { left: 24px; }
+    .tl-item { grid-template-columns: 48px 1fr; }
+    .tl-year { width: 46px; height: 46px; font-size: 10px; }
+    .tl-item:nth-child(even) .tl-left,
+    .tl-item:nth-child(odd) .tl-right { display: none; }
+    .tl-right { margin-left: 8px; }
+    .future-banner { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="section-header">
+  <div class="badge">📍 실제 성공사례</div>
+  <h2>햇빛소득마을 성공 타임라인<br>전국으로 번지는 햇빛 혁명</h2>
+</div>
+
+<div class="timeline">
+
+  <!-- 2018 -->
+  <div class="tl-item">
+    <div class="tl-left">
+      <div class="tl-region">전남 신안군</div>
+      <div class="tl-title">대한민국 최초<br>'햇빛연금' 조례 제정</div>
+      <div class="tl-desc">전국 최초로 태양광 수익을 주민과 나누는 햇빛연금 관련 조례를 제정. 솔라시도 태양광 발전단지 건설 착공.</div>
+      <div class="tl-stat">🏆 전국 1호 모범사례</div>
+    </div>
+    <div class="tl-year">2018</div>
+    <div class="tl-right tl-empty"></div>
+  </div>
+
+  <!-- 2021 -->
+  <div class="tl-item">
+    <div class="tl-left tl-empty"></div>
+    <div class="tl-year">2021</div>
+    <div class="tl-right">
+      <div class="tl-region">경북 봉화군</div>
+      <div class="tl-title">가곡2리 주민수익형<br>태양광 1호 사업</div>
+      <div class="tl-desc">마을 창고·주차장 태양광으로 주민 복지기금 확보. 월 100만 원 수익으로 치매 예방 수업, 장학금 지원 계획 수립.</div>
+      <div class="tl-stat">💚 주민복지 자립 모델</div>
+    </div>
+  </div>
+
+  <!-- 2022 -->
+  <div class="tl-item">
+    <div class="tl-left">
+      <div class="tl-region">경기 여주시 구양리</div>
+      <div class="tl-title">100% 주민 협동조합형<br>1MW 발전소 완공</div>
+      <div class="tl-desc">주민 지분 100% 협동조합으로 운영. 체육시설·창고 유휴부지 활용. 월 순수익 1,000만 원 달성. 무료급식·마을버스 운영 실현.</div>
+      <div class="tl-stat">⭐ 월 1,000만 원 순수익</div>
+    </div>
+    <div class="tl-year">2022</div>
+    <div class="tl-right tl-empty"></div>
+  </div>
+
+  <!-- 2025 -->
+  <div class="tl-item">
+    <div class="tl-left tl-empty"></div>
+    <div class="tl-year">2025</div>
+    <div class="tl-right">
+      <div class="tl-region">전남 신안군 성과</div>
+      <div class="tl-title">군민 49%가 햇빛연금<br>실제 인구 증가 달성</div>
+      <div class="tl-desc">2025년 기준 군민 49%가 가구당 최대 378만 원/년 수령. 인구 감소 마을에 실제 귀농자 유입. 농촌소멸 반전의 증거.</div>
+      <div class="tl-stat">👨‍👩‍👧 가구당 최대 378만 원/년</div>
+    </div>
+  </div>
+
+  <!-- 2025 영광 -->
+  <div class="tl-item">
+    <div class="tl-left">
+      <div class="tl-region">전남 영광군</div>
+      <div class="tl-title">전국 최초 '에너지<br>기본소득' 지급 시작</div>
+      <div class="tl-desc">기본소득 기본 조례 제정. 전라남도형 기본소득 시범도시 선정. 12월부터 전 군민 1인당 연 50만 원 기본소득 지급 개시.</div>
+      <div class="tl-stat">🌟 1인당 연 50만 원 지급</div>
+    </div>
+    <div class="tl-year">2025<br>12월</div>
+    <div class="tl-right tl-empty"></div>
+  </div>
+
+  <!-- 2026 -->
+  <div class="tl-item">
+    <div class="tl-left tl-empty"></div>
+    <div class="tl-year">2026~<br>2030</div>
+    <div class="tl-right">
+      <div class="tl-region">전국 확산 계획</div>
+      <div class="tl-title">정부 목표: 2030년까지<br>전국 2,500개 마을 조성</div>
+      <div class="tl-desc">5,500억 원 국비 투입. 범부처 추진단 구성. 연 500개씩 조성. 제2금융권 금융지원 확대로 소규모 마을도 참여 가능.</div>
+      <div class="tl-stat">🚀 2026년 500개 목표</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="future-banner">
+  <div class="fb-text">
+    <h3>🌞 2030년 햇빛소득마을 목표</h3>
+    <p>정부는 5,500억 원의 국비를 투입해 2030년까지 전국에<br>햇빛소득마을을 확산시킬 계획입니다.</p>
+  </div>
+  <div class="fb-numbers">
+    <div class="fb-num-item">
+      <span class="num">500</span>
+      <span class="label">2026년 목표(개)</span>
+    </div>
+    <div class="fb-num-item">
+      <span class="num">2,500</span>
+      <span class="label">2030년 목표(개)</span>
+    </div>
+    <div class="fb-num-item">
+      <span class="num">5,500억</span>
+      <span class="label">국비 투입</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
