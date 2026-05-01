@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>햇빛소득마을 장점 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f9f6ef;
+    padding: 40px 20px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .section-header .badge {
+    display: inline-block;
+    background: #ff9f1c;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .section-header h2 {
+    font-size: 26px;
+    font-weight: 900;
+    color: #1a2e05;
+    line-height: 1.4;
+  }
+
+  .section-header p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 8px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 22px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    border-top: 4px solid transparent;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  }
+
+  .card:nth-child(1) { border-top-color: #ff9f1c; }
+  .card:nth-child(2) { border-top-color: #4caf50; }
+  .card:nth-child(3) { border-top-color: #2196f3; }
+  .card:nth-child(4) { border-top-color: #9c27b0; }
+  .card:nth-child(5) { border-top-color: #f44336; }
+  .card:nth-child(6) { border-top-color: #009688; }
+
+  .card-icon {
+    font-size: 38px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .card-num {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: 48px;
+    font-weight: 900;
+    color: rgba(0,0,0,0.05);
+    line-height: 1;
+  }
+
+  .card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a2e05;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .card p {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #fff8e6, #fff3cd);
+    border-radius: 14px;
+    padding: 20px 24px;
+    max-width: 900px;
+    margin: 24px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid #ffd166;
+  }
+
+  .highlight-box .hl-icon { font-size: 30px; flex-shrink: 0; }
+  .highlight-box p { font-size: 14px; color: #5a4000; font-weight: 600; line-height: 1.7; }
+  .highlight-box p span { color: #e07b00; font-weight: 900; }
+
+  @media (max-width: 680px) {
+    .cards-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 420px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .section-header h2 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="section-header">
+  <div class="badge">✅ 에너지 전문가 분석</div>
+  <h2>햇빛소득마을이 농촌에 가져오는<br>6가지 핵심 장점</h2>
+  <p>태양이 뜨면 돈이 들어옵니다 — 농작물 공백기부터 귀농 유인까지</p>
+</div>
+
+<div class="cards-grid">
+
+  <div class="card">
+    <span class="card-icon">🌾</span>
+    <span class="card-num">01</span>
+    <h3>농작물 공백기<br>소득 공백 해소</h3>
+    <p>모내기~추수 사이, 수확 후 겨울철 등 농업 비수기에도 태양광은 쉬지 않고 발전합니다. 월 단위 고정 수익으로 현금흐름이 안정됩니다.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-icon">🚜</span>
+    <span class="card-num">02</span>
+    <h3>귀농·귀촌의<br>경제적 안전판</h3>
+    <p>설치 즉시 수익 발생. 초기 귀농 정착기의 재정 불안을 줄여주며 월 50만~200만 원의 태양광 소득이 귀농 결심의 촉매제가 됩니다.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-icon">👥</span>
+    <span class="card-num">03</span>
+    <h3>인구 감소 방어<br>마을 활력 회복</h3>
+    <p>신안군 사례처럼 연 최대 378만 원의 햇빛연금은 실제 인구 증가 효과로 이어졌습니다. 소득이 있어야 마을이 삽니다.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-icon">🏥</span>
+    <span class="card-num">04</span>
+    <h3>마을 자체 복지<br>공동기금 조성</h3>
+    <p>여주 구양리 월 1,000만 원 수익 → 무료급식·마을버스 운행. 봉화 적덕2리 → 치매 예방 수업, 장학금. 복지의 자립이 시작됩니다.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-icon">⚡</span>
+    <span class="card-num">05</span>
+    <h3>에너지 자립으로<br>전기요금 절감</h3>
+    <p>3kW 설치 시 연 50만 원 절감. 시설농가는 더 큰 절감 효과. 전기요금 절감은 실질 소득 증가와 동일한 효과를 냅니다.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-icon">🌍</span>
+    <span class="card-num">06</span>
+    <h3>탄소중립 기여<br>농촌이 ESG 주인공</h3>
+    <p>전국 태양광의 39.1%가 농촌형. RE100 수요 증가로 농촌 태양광의 가치는 계속 상승 중. 농촌이 대한민국 에너지 전환의 핵심입니다.</p>
+  </div>
+
+</div>
+
+<div class="highlight-box">
+  <div class="hl-icon">💡</div>
+  <p>
+    <span>영농형 태양광</span>은 패널 아래에서 기존 농업을 그대로 유지하면서 발전 수익까지 얻는 구조입니다.<br>
+    식량안보를 지키면서 에너지 소득까지 — 두 마리 토끼를 동시에 잡을 수 있는 현실적 대안입니다.
+  </p>
+</div>
+
+</body>
+</html>
