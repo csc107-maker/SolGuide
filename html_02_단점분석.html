@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>햇빛소득마을 단점 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f4f7ff;
+    padding: 40px 20px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .section-header .badge {
+    display: inline-block;
+    background: #e53935;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #1a1a2e;
+    line-height: 1.4;
+  }
+
+  .section-header p {
+    font-size: 13px;
+    color: #666;
+    margin-top: 8px;
+  }
+
+  .risk-list {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .risk-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    border-left: 5px solid #e53935;
+    transition: transform 0.18s;
+  }
+
+  .risk-item:hover { transform: translateX(4px); }
+
+  .risk-item:nth-child(2) { border-left-color: #ff7043; }
+  .risk-item:nth-child(3) { border-left-color: #ffa726; }
+  .risk-item:nth-child(4) { border-left-color: #ab47bc; }
+  .risk-item:nth-child(5) { border-left-color: #5c6bc0; }
+
+  .risk-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    background: #fff3f3;
+    flex-shrink: 0;
+  }
+
+  .risk-item:nth-child(2) .risk-icon { background: #fff4f0; }
+  .risk-item:nth-child(3) .risk-icon { background: #fff8e6; }
+  .risk-item:nth-child(4) .risk-icon { background: #f9f0ff; }
+  .risk-item:nth-child(5) .risk-icon { background: #f0f2ff; }
+
+  .risk-body h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  .risk-body p {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.75;
+  }
+
+  .risk-level {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .risk-level span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #aaa;
+    letter-spacing: 0.5px;
+  }
+
+  .dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e0e0e0;
+  }
+
+  .dot.on { background: #e53935; }
+  .risk-item:nth-child(2) .dot.on { background: #ff7043; }
+  .risk-item:nth-child(3) .dot.on { background: #ffa726; }
+  .risk-item:nth-child(4) .dot.on { background: #ab47bc; }
+  .risk-item:nth-child(5) .dot.on { background: #5c6bc0; }
+
+  .solution-box {
+    max-width: 860px;
+    margin: 24px auto 0;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    border-radius: 16px;
+    padding: 22px 26px;
+    border: 1px solid #a5d6a7;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .solution-box .sol-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .solution-box .sol-text h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1b5e20;
+    margin-bottom: 6px;
+  }
+  .solution-box .sol-text p {
+    font-size: 13px;
+    color: #2e7d32;
+    line-height: 1.75;
+  }
+  .solution-box .sol-text p strong { font-weight: 700; color: #1b5e20; }
+
+  @media (max-width: 580px) {
+    .risk-item {
+      grid-template-columns: 48px 1fr;
+    }
+    .risk-level { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="section-header">
+  <div class="badge">⚠️ 현실 체크</div>
+  <h2>햇빛소득마을의 5가지 핵심 단점<br>장밋빛만 보면 위험합니다</h2>
+  <p>에너지 전문가가 현장에서 발견한 구조적 문제들</p>
+</div>
+
+<div class="risk-list">
+
+  <div class="risk-item">
+    <div class="risk-icon">💰</div>
+    <div class="risk-body">
+      <h3>① 초기 자본 조달의 높은 벽</h3>
+      <p>1MW 규모 발전소 설치에 수억 원이 필요합니다. 지자체 지원형도 20% 자부담이 필수. 고령화된 농촌에서 소액 출자도 쉬운 결정이 아니며, 지자체 재정에 따라 지원이 끊길 위험이 있습니다.</p>
+    </div>
+    <div class="risk-level">
+      <span>심각도</span>
+      <div class="dots">
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="risk-item">
+    <div class="risk-icon">🔌</div>
+    <div class="risk-body">
+      <h3>② 전력계통 포화 — 설치해도 못 쓰는 현실</h3>
+      <p>한전에 접속 신청한 1MW 이하 재생에너지 중 약 15%(3GW)가 접속 대기 중입니다. 발전소를 완공해도 전력망에 연결 못 하면 수익이 늦어집니다. 계통 인프라 확충이 시급합니다.</p>
+    </div>
+    <div class="risk-level">
+      <span>심각도</span>
+      <div class="dots">
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="risk-item">
+    <div class="risk-icon">📋</div>
+    <div class="risk-body">
+      <h3>③ 오락가락 정책 — 10~20년 사업의 신뢰를 무너뜨린다</h3>
+      <p>한국형 FIT(고정가격계약) 폐지, 계통접속 보장제도 폐지 등 정책 변동이 반복됩니다. 장기 투자 결정을 해야 하는 주민 입장에서 정책 일관성 부재는 참여를 망설이게 만드는 가장 큰 요인입니다.</p>
+    </div>
+    <div class="risk-level">
+      <span>심각도</span>
+      <div class="dots">
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="risk-item">
+    <div class="risk-icon">🏘️</div>
+    <div class="risk-body">
+      <h3>④ 경관 훼손·주민 갈등 — 공동체가 먼저 무너질 수 있다</h3>
+      <p>신안군 모범사례도 실제 주민 참여율이 4% 수준. 수익 배분 불균형, 외부 수익 유출 우려로 마을 내 갈등이 수익보다 먼저 찾아올 수 있습니다. 협동조합 운영 미숙도 갈등 원인입니다.</p>
+    </div>
+    <div class="risk-level">
+      <span>심각도</span>
+      <div class="dots">
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="risk-item">
+    <div class="risk-icon">🏭</div>
+    <div class="risk-body">
+      <h3>⑤ 수익 외부 유출 — 마을 땅만 내주고 이익은 기업이 가져간다</h3>
+      <p>재생에너지 85%가 농촌에서 생산되지만 농촌 주민이 혜택을 못 받는 구조가 여전히 존재합니다. 외부 기업 주도 사업에 수동 편입되면 임대료 수준만 받는 결과로 끝납니다.</p>
+    </div>
+    <div class="risk-level">
+      <span>심각도</span>
+      <div class="dots">
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot on"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="solution-box">
+  <div class="sol-icon">🔑</div>
+  <div class="sol-text">
+    <h4>단점 극복의 핵심 원칙</h4>
+    <p>
+      <strong>주민이 진짜 소유 주체가 되어야 합니다.</strong> 투명한 협동조합 거버넌스 구축 + 전문가 컨설팅 지원 + 정책의 지속성 확보 + 전력망 인프라 확충. 이 네 가지가 동시에 갖추어질 때 비로소 태양은 모든 마을을 고르게 비춥니다.
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
