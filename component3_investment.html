@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>히트펌프 투자 회수 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Serif+Display&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    padding: 32px 16px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .header-chip {
+    display: inline-block;
+    background: #bbf7d0;
+    color: #15803d;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    color: #14532d;
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 12px;
+    color: #4b7a5e;
+    line-height: 1.7;
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 760px;
+    margin: 0 auto 20px;
+  }
+
+  @media (max-width: 520px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  .cost-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 4px 16px rgba(0,80,40,0.08);
+  }
+
+  .cost-card.full { grid-column: 1 / -1; }
+
+  .cost-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .cost-label span { font-size: 16px; }
+
+  .big-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 38px;
+    color: #15803d;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .big-unit {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 14px;
+  }
+
+  .divider { height: 1px; background: #f1f5f9; margin: 14px 0; }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 9px;
+  }
+
+  .row-label { font-size: 12px; color: #6b7280; }
+  .row-val   { font-size: 13px; font-weight: 700; color: #1e293b; }
+  .row-val.green { color: #16a34a; }
+  .row-val.red   { color: #dc2626; }
+  .row-val.blue  { color: #2563eb; }
+
+  /* 회수 기간 바 */
+  .recovery-wrap {
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px;
+    max-width: 760px;
+    margin: 0 auto 16px;
+    box-shadow: 0 4px 16px rgba(0,80,40,0.08);
+  }
+
+  .recovery-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 18px;
+  }
+
+  .timeline-bar {
+    position: relative;
+    height: 44px;
+    background: #f8fafc;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .tl-segment {
+    position: absolute;
+    top: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 12px;
+  }
+
+  .tl-recover {
+    left: 0;
+    width: 18%;
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    border-radius: 12px 0 0 12px;
+    z-index: 2;
+    animation: expandW 1.4s cubic-bezier(.22,1,.36,1) forwards;
+  }
+
+  .tl-profit {
+    left: 18%;
+    right: 0;
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+    border-radius: 0 12px 12px 0;
+    z-index: 1;
+    animation: expandW2 1.4s cubic-bezier(.22,1,.36,1) forwards;
+  }
+
+  @keyframes expandW {
+    from { width: 0; }
+    to   { width: 18%; }
+  }
+
+  @keyframes expandW2 {
+    from { width: 0; left: 18%; }
+    to   { width: 82%; left: 18%; }
+  }
+
+  .tl-legend {
+    display: flex;
+    gap: 20px;
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .tl-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 760px;
+    margin: 0 auto 6px;
+  }
+
+  @media (max-width: 520px) {
+    .scenario-grid { grid-template-columns: 1fr; }
+  }
+
+  .scenario-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,80,40,0.07);
+    border-top: 4px solid transparent;
+  }
+
+  .scenario-card:nth-child(1) { border-top-color: #f97316; }
+  .scenario-card:nth-child(2) { border-top-color: #0ea5e9; }
+  .scenario-card:nth-child(3) { border-top-color: #22c55e; }
+
+  .sc-name { font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 10px; }
+  .sc-savings { font-family: 'DM Serif Display', serif; font-size: 26px; color: #1e293b; margin-bottom: 2px; }
+  .sc-unit { font-size: 10px; color: #94a3b8; margin-bottom: 8px; }
+  .sc-recover { font-size: 11px; font-weight: 700; }
+
+  .note {
+    max-width: 760px;
+    margin: 12px auto 0;
+    font-size: 10px;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="header-chip">투자 분석</span>
+  <h2>400만원 투자 — 언제 회수될까?</h2>
+  <p>정부 보조금(최대 70%) 적용 후 소비자 부담 기준<br>3인 가구 84㎡ · 월 15만원 절감 시나리오</p>
+</div>
+
+<!-- 메인 그리드 -->
+<div class="main-grid">
+
+  <!-- 설치비 카드 -->
+  <div class="cost-card">
+    <div class="cost-label"><span>💳</span> 실제 부담 비용</div>
+    <div class="big-number">~400</div>
+    <div class="big-unit">만원 (보조금 70% 적용 후)</div>
+    <div class="divider"></div>
+    <div class="row">
+      <span class="row-label">전체 설치비</span>
+      <span class="row-val red">약 1,400만원</span>
+    </div>
+    <div class="row">
+      <span class="row-label">정부 보조금 (최대 70%)</span>
+      <span class="row-val green">최대 980만원</span>
+    </div>
+    <div class="row">
+      <span class="row-label">소비자 실부담</span>
+      <span class="row-val blue">약 400만원대</span>
+    </div>
+    <div class="row">
+      <span class="row-label">기존 가스보일러 대비</span>
+      <span class="row-val red">설치비 7~8배</span>
+    </div>
+  </div>
+
+  <!-- 절감 카드 -->
+  <div class="cost-card">
+    <div class="cost-label"><span>💚</span> 연간 절감 효과</div>
+    <div class="big-number">180</div>
+    <div class="big-unit">만원/년 (월 15만원 절감 기준)</div>
+    <div class="divider"></div>
+    <div class="row">
+      <span class="row-label">월 절감액 (히트펌프)</span>
+      <span class="row-val green">약 10~15만원</span>
+    </div>
+    <div class="row">
+      <span class="row-label">월 절감액 (+태양광)</span>
+      <span class="row-val green">약 13~20만원</span>
+    </div>
+    <div class="row">
+      <span class="row-label">CO₂ 감축</span>
+      <span class="row-val green">기존 대비 60%↓</span>
+    </div>
+    <div class="row">
+      <span class="row-label">제품 수명</span>
+      <span class="row-val blue">15~20년</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- 투자 회수 타임라인 -->
+<div class="recovery-wrap">
+  <div class="recovery-title">📅 투자 회수 시뮬레이션 (20년 제품 수명 기준)</div>
+  <div class="timeline-bar">
+    <div class="tl-segment tl-recover">회수 2.2년</div>
+    <div class="tl-segment tl-profit">순수 이익 구간 ~17.8년 ✅</div>
+  </div>
+  <div class="tl-legend">
+    <span><span class="tl-dot" style="background:#fbbf24;"></span>투자 회수 기간 (~2.2년)</span>
+    <span><span class="tl-dot" style="background:#4ade80;"></span>순이익 발생 구간 (그 이후)</span>
+  </div>
+</div>
+
+<!-- 시나리오별 비교 -->
+<div class="scenario-grid">
+  <div class="scenario-card">
+    <div class="sc-name">🔥 가스 요금 현 수준</div>
+    <div class="sc-savings">180</div>
+    <div class="sc-unit">만원/년 절감</div>
+    <div class="sc-recover" style="color:#f97316;">회수 기간 약 2.2년</div>
+  </div>
+  <div class="scenario-card">
+    <div class="sc-name">⚡ 가스 요금 10% 인상</div>
+    <div class="sc-savings">200</div>
+    <div class="sc-unit">만원/년 절감</div>
+    <div class="sc-recover" style="color:#0ea5e9;">회수 기간 약 2년</div>
+  </div>
+  <div class="scenario-card">
+    <div class="sc-name">☀️ 태양광 6kW 추가</div>
+    <div class="sc-savings">240</div>
+    <div class="sc-unit">만원/년 절감</div>
+    <div class="sc-recover" style="color:#16a34a;">회수 기간 약 1.7년</div>
+  </div>
+</div>
+
+<p class="note">
+  ※ 실부담 400만원 기준 / 실제 절감액은 주택 단열 등급·지역·사용 패턴에 따라 상이<br>
+  ※ 태양광 6kW 시나리오는 태양광 설치 완료 가정 / 스마트싱스 재생에너지 우선 활용 설정 기준<br>
+  ※ 가스 요금 인상·ESS 추가 시 회수 기간은 더 단축됨
+</p>
+
+</body>
+</html>
