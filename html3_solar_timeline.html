@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 기술 타임라인</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fffbf0; padding: 28px 16px; }
+  .container { max-width: 760px; margin: 0 auto; }
+  .section-title {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #7c3d00;
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    text-align: center;
+    font-size: 0.86rem;
+    color: #a16207;
+    margin-bottom: 28px;
+  }
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #f59e0b, #f97316, #dc2626);
+    border-radius: 3px;
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -24px;
+    top: 12px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f59e0b;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #f59e0b;
+    z-index: 1;
+  }
+  .tl-item:nth-child(2) .tl-dot { background: #f97316; box-shadow: 0 0 0 2px #f97316; }
+  .tl-item:nth-child(3) .tl-dot { background: #ef4444; box-shadow: 0 0 0 2px #ef4444; }
+  .tl-item:nth-child(4) .tl-dot { background: #dc2626; box-shadow: 0 0 0 2px #dc2626; }
+  .tl-item:nth-child(5) .tl-dot { background: #9333ea; box-shadow: 0 0 0 2px #9333ea; }
+  .tl-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 3px 12px rgba(240,120,0,0.1);
+    border-left: 4px solid #f59e0b;
+  }
+  .tl-item:nth-child(2) .tl-card { border-left-color: #f97316; }
+  .tl-item:nth-child(3) .tl-card { border-left-color: #ef4444; }
+  .tl-item:nth-child(4) .tl-card { border-left-color: #dc2626; }
+  .tl-item:nth-child(5) .tl-card { border-left-color: #9333ea; }
+  .tl-year {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #9a3412;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .tl-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #1c1917;
+    margin-bottom: 6px;
+  }
+  .tl-desc {
+    font-size: 0.84rem;
+    color: #57534e;
+    line-height: 1.6;
+  }
+  .tl-eff {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    margin-top: 8px;
+  }
+  .tl-item:nth-child(3) .tl-eff { background: #fee2e2; color: #991b1b; }
+  .tl-item:nth-child(4) .tl-eff { background: #ede9fe; color: #6d28d9; }
+  .tl-item:nth-child(5) .tl-eff { background: #f3e8ff; color: #7e22ce; }
+  .tech-compare {
+    margin-top: 24px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 10px rgba(240,120,0,0.08);
+  }
+  .tech-compare-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #7c3d00;
+    margin-bottom: 14px;
+  }
+  .bar-item { margin-bottom: 12px; }
+  .bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #44403c;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .bar-bg {
+    height: 10px;
+    background: #fef3c7;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
+    transition: width 0.5s;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="section-title">☀️ 태양광 기술 혁신 타임라인</div>
+  <div class="section-sub">실리콘 한계를 넘어선 페로브스카이트까지, 혁신의 흐름</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2010~2015 ·  1세대 상용화</div>
+        <div class="tl-title">실리콘 태양전지 본격 보급</div>
+        <div class="tl-desc">단결정·다결정 실리콘 패널이 주류. 설치 비용이 빠르게 하락하며 가정용 보급 확대. 전력 변환 효율 15~18% 수준.</div>
+        <span class="tl-eff">효율 15~18%</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2018~2022 · 2세대 고효율화</div>
+        <div class="tl-title">고효율 모노PERC / TOPCon 등장</div>
+        <div class="tl-desc">표면 패시베이션 기술로 효율 20~24%까지 상향. 국내 가정용 보급 활성화, 한국형 REC 제도로 시장 급성장.</div>
+        <span class="tl-eff">효율 20~24%</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2024~2025 · 연구 돌파구</div>
+        <div class="tl-title">KAIST, 페로브스카이트 25%+ 안정성 동시 달성</div>
+        <div class="tl-desc">표면 보호막 정밀 제어 기술로 고온·고습 환경에서도 성능 저하 없는 25% 이상 효율 구현. 상용화 걸림돌이던 안정성 문제 해결 실마리.</div>
+        <span class="tl-eff">효율 25%+ · 안정성 확보</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2026 · 상용화 원년</div>
+        <div class="tl-title">페로브스카이트-실리콘 탠덤 첫 상용 출시</div>
+        <div class="tl-desc">34% 이상 전력 변환 효율 달성. 기존 실리콘 인프라와 호환되어 공급망 구축 용이. 소형 옥상·차량·공간 제약 환경에도 적용 가능.</div>
+        <span class="tl-eff">효율 34%+</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2026 ~ 미래 · 우주에서 지상으로</div>
+        <div class="tl-title">플렉셀스페이스 우주용 탠덤 → 지상 BIPV 확장</div>
+        <div class="tl-desc">한화시스템 스핀오프. 페로브스카이트·CIGS 탠덤 구조로 28~30% 효율, 비용 60% 절감. 건물 외벽·창문 일체형(BIPV) 확대로 도시 자체가 발전소화.</div>
+        <span class="tl-eff">효율 28~30% · 비용 -60%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-compare">
+    <div class="tech-compare-title">📊 기술별 전력 변환 효율 비교</div>
+    <div class="bar-item">
+      <div class="bar-label"><span>기존 실리콘 (상용)</span><span>~24%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:60%; background: #d97706;"></div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>페로브스카이트 단층 (연구)</span><span>~28%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:72%; background: #ea580c;"></div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>페로브스카이트-실리콘 탠덤 (2026 상용)</span><span>~34%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:88%; background: linear-gradient(90deg,#f59e0b,#dc2626);"></div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>이론 한계 효율</span><span>~46%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:100%; background: #9333ea;"></div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
