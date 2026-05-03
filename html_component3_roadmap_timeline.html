@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원화 정상화 로드맵</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Mono:wght@500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(160deg, #f0fdf4 0%, #ecfdf5 40%, #f0f9ff 100%);
+    padding: 32px 20px;
+    min-height: 100vh;
+  }
+
+  .wrap { max-width: 780px; margin: 0 auto; }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .top-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #064e3b;
+    line-height: 1.35;
+  }
+
+  .top-sub {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .live-badge {
+    background: #d1fae5;
+    border: 1.5px solid #6ee7b7;
+    color: #065f46;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .live-dot {
+    width: 7px; height: 7px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 24px;
+    bottom: 24px;
+    width: 3px;
+    background: linear-gradient(to bottom, #10b981, #2563eb, #7c3aed, #9ca3af);
+    border-radius: 2px;
+    z-index: 0;
+  }
+
+  .tl-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .tl-dot-wrap {
+    flex-shrink: 0;
+    width: 59px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    flex-shrink: 0;
+  }
+
+  .dot-done { background: #10b981; }
+  .dot-now  { background: #2563eb; animation: glow 2s ease-in-out infinite; }
+  .dot-soon { background: #f59e0b; }
+  .dot-mid  { background: #7c3aed; }
+  .dot-far  { background: #94a3b8; }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(37,99,235,0.15), 0 2px 8px rgba(0,0,0,0.12); }
+    50% { box-shadow: 0 0 0 8px rgba(37,99,235,0.10), 0 2px 8px rgba(0,0,0,0.12); }
+  }
+
+  .tl-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-top: 4px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .tl-card {
+    flex: 1;
+    background: white;
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1.5px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 4px;
+  }
+
+  .tl-card.active {
+    border-color: #93c5fd;
+    background: #eff6ff;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.10);
+  }
+
+  .tl-card.done {
+    border-color: #a7f3d0;
+    background: #f0fdf4;
+  }
+
+  .tl-phase {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .phase-done   { color: #059669; }
+  .phase-now    { color: #1d4ed8; }
+  .phase-soon   { color: #d97706; }
+  .phase-mid    { color: #7c3aed; }
+  .phase-future { color: #9ca3af; }
+
+  .tl-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .tl-desc {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+
+  .tl-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid transparent;
+  }
+
+  .tag-done   { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
+  .tag-warn   { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+  .tag-blue   { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+  .tag-purple { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+  .tag-red    { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+  .tag-gray   { background: #f3f4f6; color: #6b7280; border-color: #d1d5db; }
+
+  .rate-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .pill-red    { background: #fee2e2; color: #dc2626; }
+  .pill-amber  { background: #fef3c7; color: #d97706; }
+  .pill-green  { background: #d1fae5; color: #059669; }
+  .pill-blue   { background: #dbeafe; color: #1d4ed8; }
+  .pill-purple { background: #ede9fe; color: #7c3aed; }
+  .pill-gray   { background: #f3f4f6; color: #6b7280; }
+
+  .bottom-summary {
+    background: white;
+    border-radius: 16px;
+    padding: 22px 24px;
+    border: 1.5px solid #e5e7eb;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .sum-item {
+    text-align: center;
+    padding: 8px 12px;
+    border-right: 1px solid #f1f5f9;
+  }
+
+  .sum-item:last-child { border-right: none; }
+
+  .sum-label {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .sum-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .sum-desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 3px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <div>
+      <div class="top-title">원화 가치 정상화 로드맵 🗺️</div>
+      <div class="top-sub">ING · BofA · Bloomberg · 한국은행 종합 분석 (2026.05)</div>
+    </div>
+    <div class="live-badge"><div class="live-dot"></div> 현재 진행 중</div>
+  </div>
+
+  <div class="timeline">
+
+    <!-- Phase 1: 완료 -->
+    <div class="tl-item">
+      <div class="tl-dot-wrap">
+        <div class="tl-dot dot-done">✅</div>
+        <div class="tl-date">2025<br>Q4</div>
+      </div>
+      <div class="tl-card done">
+        <div class="tl-phase phase-done">PHASE 1 · 완료</div>
+        <div class="tl-title">원화 최저점 형성 — "2009년 이후 최약세"</div>
+        <div class="tl-desc">USD/KRW 1,480원 돌파, BIS 실질실효환율 87.05(2009년 이후 최저). 계엄 정국, 서학개미 달러 수요 폭발, 국민연금 해외 투자 급증이 복합 작용.</div>
+        <div class="tl-tags">
+          <span class="tag tag-done">✓ BIS REER 87.05</span>
+          <span class="tag tag-done">✓ 1,480원 터치</span>
+          <span class="tag tag-warn">⚠ 2009년 이후 최저</span>
+        </div>
+        <div class="rate-pill pill-red">📍 1,480 KRW/USD (고점)</div>
+      </div>
+    </div>
+
+    <!-- Phase 2: 완료 -->
+    <div class="tl-item">
+      <div class="tl-dot-wrap">
+        <div class="tl-dot dot-done">✅</div>
+        <div class="tl-date">2025.12<br>~2026.1</div>
+      </div>
+      <div class="tl-card done">
+        <div class="tl-phase phase-done">PHASE 2 · 완료</div>
+        <div class="tl-title">정부·한은 공동 시장 개입 — 1,435 수준 회복</div>
+        <div class="tl-desc">기재부-한국은행 공동 성명, 국민연금 전략적 환헤지 가동, 외화채권 발행 추진. BofA가 1분기 전망 1,435를 조기 달성으로 상향 조정. 정부 TF 구성.</div>
+        <div class="tl-tags">
+          <span class="tag tag-done">✓ 공동성명 "과도한 약세는 바람직하지 않아"</span>
+          <span class="tag tag-done">✓ 국민연금 환헤지 가동</span>
+        </div>
+        <div class="rate-pill pill-amber">📍 1,435 KRW/USD (BofA Q1 목표 달성)</div>
+      </div>
+    </div>
+
+    <!-- Phase 3: 진행 중 -->
+    <div class="tl-item">
+      <div class="tl-dot-wrap">
+        <div class="tl-dot dot-now">🔵</div>
+        <div class="tl-date">2026<br>Q2<br>현재</div>
+      </div>
+      <div class="tl-card active">
+        <div class="tl-phase phase-now">PHASE 3 · 현재 진행 중</div>
+        <div class="tl-title">WGBI 편입 효과 + 반도체 호황 — 점진적 강세</div>
+        <div class="tl-desc">2026년 4월 WGBI 본격 편입, 500~700억 달러 외국인 자금 유입 기대. 제조업 PMI 51.1 확장 국면, 반도체 수출 최고치. ING: "원화 절상 경로 진입 확인."</div>
+        <div class="tl-tags">
+          <span class="tag tag-blue">🔵 WGBI 편입 (4월~)</span>
+          <span class="tag tag-blue">🔵 PMI 51.1 확장</span>
+          <span class="tag tag-warn">⚠ 중동 전쟁 리스크</span>
+        </div>
+        <div class="rate-pill pill-blue">📍 ~1,420 KRW/USD (현재)</div>
+      </div>
+    </div>
+
+    <!-- Phase 4: 예상 -->
+    <div class="tl-item">
+      <div class="tl-dot-wrap">
+        <div class="tl-dot dot-soon">⏳</div>
+        <div class="tl-date">2026<br>Q3</div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-phase phase-soon">PHASE 4 · 예상 (3~6개월)</div>
+        <div class="tl-title">연준 금리 인하 + 달러 약세 전환 — 1,375 목표</div>
+        <div class="tl-desc">미 연준의 금리 인하 사이클 본격화로 달러 글로벌 강세 완화. 한·미 금리 차 축소. ING 메인 시나리오: 3분기 USD/KRW 1,375 달성. 서학개미 국내 복귀 기대.</div>
+        <div class="tl-tags">
+          <span class="tag tag-blue">📌 연준 금리 인하</span>
+          <span class="tag tag-blue">📌 한·미 금리 차 축소</span>
+          <span class="tag tag-purple">🔮 ING 목표: 1,375</span>
+        </div>
+        <div class="rate-pill pill-green">🎯 ING 전망: 1,375 KRW/USD</div>
+      </div>
+    </div>
+
+    <!-- Phase 5: 중기 -->
+    <div class="tl-item">
+      <div class="tl-dot-wrap">
+        <div class="tl-dot dot-mid">🔮</div>
+        <div class="tl-date">2026<br>연말<br>~2027</div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-phase phase-mid">PHASE 5 · 중기 전망</div>
+        <div class="tl-title">New Normal 정착 — 1,350~1,400 구간</div>
+        <div class="tl-desc">12개 투자은행 평균 1년 전망치 1,424. 노무라 1,380 / HSBC 1,400 / 바클레이스 1,490(비관). 국민연금 구조 개편 + WGBI 안착으로 자본 유출입 균형 회복.</div>
+        <div class="tl-tags">
+          <span class="tag tag-purple">🔮 컨센서스: 1,380~1,490</span>
+          <span class="tag tag-purple">🔮 12개 IB 평균: 1,424</span>
+        </div>
+        <div class="rate-pill pill-purple">🔮 New Normal: 1,350~1,400 구간</div>
+      </div>
+    </div>
+
+    <!-- Phase 6: 장기 -->
+    <div class="tl-item">
+      <div class="tl-dot-wrap">
+        <div class="tl-dot dot-far">❓</div>
+        <div class="tl-date">2027<br>이후</div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-phase phase-future">PHASE 6 · 장기 전망 (불확실)</div>
+        <div class="tl-title">"옛 정상" 1,100~1,200원대 복귀 — 가능하나 요원</div>
+        <div class="tl-desc">국민연금이 3,600조 원으로 성장하며 해외 투자 구조가 근본적으로 바뀌지 않으면 코로나 이전 환율 복귀는 어려움. 딜러 결론: 1,350~1,400이 새로운 정상.</div>
+        <div class="tl-tags">
+          <span class="tag tag-gray">❓ 구조 개혁 필요</span>
+          <span class="tag tag-red">⚠ 단기 복귀 어려움</span>
+        </div>
+        <div class="rate-pill pill-gray">❓ 1,100~1,200원대 — 당분간 어려움</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-summary">
+    <div class="sum-item">
+      <div class="sum-label">외환딜러 기본 시나리오</div>
+      <div class="sum-val" style="color:#059669">1,375</div>
+      <div class="sum-desc">2026년 3분기 목표 (ING)</div>
+    </div>
+    <div class="sum-item">
+      <div class="sum-label">컨센서스 New Normal</div>
+      <div class="sum-val" style="color:#2563eb">1,400</div>
+      <div class="sum-desc">12개 IB 12개월 평균</div>
+    </div>
+    <div class="sum-item">
+      <div class="sum-label">비관 시나리오 상단</div>
+      <div class="sum-val" style="color:#dc2626">1,490</div>
+      <div class="sum-desc">바클레이스 연말 전망</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
