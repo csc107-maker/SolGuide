@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화오션 캐나다 수주 결전 카운트다운</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&family=Syne:wght@800;900&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:#0f172a;padding:28px 16px;}
+  .wrap{max-width:780px;margin:0 auto;}
+
+  /* ── 카운트다운 메인 ── */
+  .countdown-hero{
+    background:linear-gradient(135deg,#1e293b,#0f2045,#0a1628);
+    border-radius:22px;padding:32px 24px;
+    text-align:center;margin-bottom:18px;
+    border:1px solid rgba(255,255,255,.07);
+    position:relative;overflow:hidden;
+  }
+  .countdown-hero::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at center top,rgba(59,130,246,.12),transparent 70%);
+  }
+  .hero-tag{
+    display:inline-block;
+    background:rgba(239,68,68,.15);
+    border:1px solid rgba(239,68,68,.35);
+    color:#fca5a5;font-size:11px;font-weight:700;
+    letter-spacing:1.4px;text-transform:uppercase;
+    padding:4px 14px;border-radius:20px;margin-bottom:18px;
+  }
+  .countdown-label{
+    font-size:13px;color:rgba(255,255,255,.55);
+    letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;
+  }
+  .countdown-days{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:88px;line-height:1;
+    color:#fff;letter-spacing:2px;margin-bottom:8px;
+  }
+  .countdown-sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:24px;}
+
+  .date-pill{
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:40px;padding:10px 22px;
+    color:#fff;
+  }
+  .dp-icon{font-size:18px;}
+  .dp-text{font-size:14px;font-weight:700;}
+  .dp-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px;}
+
+  /* ── 현재 판세 요약 ── */
+  .status-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:12px;margin-bottom:18px;
+  }
+  @media(max-width:480px){.status-grid{grid-template-columns:1fr;}}
+
+  .status-card{
+    border-radius:16px;padding:18px 16px;
+    position:relative;overflow:hidden;
+  }
+  .status-card.ko{
+    background:linear-gradient(135deg,#1e3a5f,#1d4ed8);
+    border:1px solid rgba(59,130,246,.3);
+  }
+  .status-card.de{
+    background:linear-gradient(135deg,#1f2937,#374151);
+    border:1px solid rgba(107,114,128,.3);
+  }
+  .sc-flag{font-size:36px;margin-bottom:8px;}
+  .sc-name{font-size:13px;font-weight:800;color:#fff;margin-bottom:10px;}
+  .sc-point{
+    font-size:12px;color:rgba(255,255,255,.78);
+    line-height:1.65;padding-left:14px;position:relative;margin-bottom:2px;
+  }
+  .sc-point::before{content:'✓';position:absolute;left:0;color:#4ade80;}
+  .status-card.de .sc-point.neg::before{content:'✗';color:#f87171;}
+
+  .sc-verdict{
+    margin-top:12px;display:inline-block;
+    font-size:11px;font-weight:700;
+    padding:4px 12px;border-radius:20px;
+  }
+  .ko .sc-verdict{background:rgba(34,197,94,.2);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
+  .de .sc-verdict{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25);}
+
+  /* ── 시나리오 ── */
+  .scenario-title{
+    font-size:13px;font-weight:700;
+    color:rgba(255,255,255,.55);
+    letter-spacing:.8px;text-transform:uppercase;
+    margin-bottom:12px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .scenario-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1);}
+
+  .sc-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+  .sc{
+    border-radius:14px;padding:16px 18px;
+    display:flex;align-items:flex-start;gap:14px;
+  }
+  .sc.bull{background:linear-gradient(135deg,rgba(5,46,22,.8),rgba(6,78,59,.6));border:1px solid rgba(34,197,94,.25);}
+  .sc.base{background:linear-gradient(135deg,rgba(14,30,70,.8),rgba(30,64,175,.4));border:1px solid rgba(59,130,246,.25);}
+  .sc.bear{background:linear-gradient(135deg,rgba(69,10,10,.8),rgba(127,29,29,.4));border:1px solid rgba(239,68,68,.25);}
+
+  .sc-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
+  .sc-body h3{font-size:14px;font-weight:800;margin-bottom:3px;}
+  .sc.bull h3{color:#4ade80;}
+  .sc.base h3{color:#93c5fd;}
+  .sc.bear h3{color:#fca5a5;}
+  .sc-price{
+    font-family:'DM Mono',monospace;
+    font-size:19px;font-weight:500;margin-bottom:4px;
+  }
+  .sc.bull .sc-price{color:#86efac;}
+  .sc.base .sc-price{color:#bfdbfe;}
+  .sc.bear .sc-price{color:#fca5a5;}
+  .sc-desc{font-size:12.5px;color:rgba(255,255,255,.65);line-height:1.55;}
+  .sc-prob{
+    display:inline-block;font-size:11px;font-weight:700;
+    padding:3px 10px;border-radius:20px;margin-top:6px;
+  }
+  .sc.bull .sc-prob{background:rgba(34,197,94,.2);color:#4ade80;}
+  .sc.base .sc-prob{background:rgba(59,130,246,.2);color:#93c5fd;}
+  .sc.bear .sc-prob{background:rgba(239,68,68,.2);color:#fca5a5;}
+
+  /* ── 최종 한 줄 요약 ── */
+  .final-box{
+    background:linear-gradient(135deg,#fbbf24,#f59e0b);
+    border-radius:16px;padding:20px 22px;
+    display:flex;align-items:flex-start;gap:14px;
+  }
+  .fb-icon{font-size:32px;flex-shrink:0;margin-top:2px;}
+  .fb-text h3{font-size:15px;font-weight:900;color:#1c1917;margin-bottom:6px;}
+  .fb-text p{font-size:13px;color:#44403c;line-height:1.65;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 카운트다운 히어로 -->
+  <div class="countdown-hero">
+    <div class="hero-tag">🔴 결전 카운트다운</div>
+    <div class="countdown-label">캐나다 CPSP 우선협상자 발표까지</div>
+    <div class="countdown-days">~60</div>
+    <div class="countdown-sub">D-Day 기준 / 2026년 6월 말 (마크 카니 총리 선언)</div>
+    <div class="date-pill">
+      <div class="dp-icon">🏆</div>
+      <div>
+        <div class="dp-text">2026년 6월 말 — 우선협상자 발표</div>
+        <div class="dp-sub">한국 방산 역사상 최대 단일 방산 수출 계약 판가름</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 현재 판세 -->
+  <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+    <span>현재 판세</span>
+    <span style="flex:1;height:1px;background:rgba(255,255,255,.1);display:block;"></span>
+  </div>
+
+  <div class="status-grid">
+    <div class="status-card ko">
+      <div class="sc-flag">🇰🇷</div>
+      <div class="sc-name">한화오션 + HD현대<br>KSS-III Batch-II</div>
+      <div class="sc-point">도산안창호함 캐나다 해역 실물 훈련</div>
+      <div class="sc-point">캐나다 3개 주 동시 MOU 체결</div>
+      <div class="sc-point">LG에너지솔루션 배터리 현지 거점</div>
+      <div class="sc-point">납기 2032년 — TKMS보다 2년 앞섬</div>
+      <div class="sc-point">KPMG 102조 경제 효과 공식 제출</div>
+      <span class="sc-verdict">▲ 우세 분위기</span>
+    </div>
+    <div class="status-card de">
+      <div class="sc-flag">🇩🇪</div>
+      <div class="sc-name">TKMS<br>Type 212CD</div>
+      <div class="sc-point neg">폭스바겐 배터리 투자 연계 → CEO 공식 부인</div>
+      <div class="sc-point neg">산업 패키지 핵심 카드 무력화</div>
+      <div class="sc-point neg">212CD 아직 실전 배치 전</div>
+      <div class="sc-point">NATO 동맹 외교 네트워크</div>
+      <div class="sc-point">유럽 방산 공급망 연계 가능</div>
+      <span class="sc-verdict">▼ 열세 분위기</span>
+    </div>
+  </div>
+
+  <!-- 시나리오 -->
+  <div class="scenario-title"><span>6월 말 3대 시나리오</span></div>
+
+  <div class="sc-list">
+    <div class="sc bull">
+      <div class="sc-icon">🚀</div>
+      <div class="sc-body">
+        <h3>Bull Case — 단독 수주 확정</h3>
+        <div class="sc-price">주가: 190,000~210,000원</div>
+        <div class="sc-desc">12척 단독 수주 + MASGA 가시화 동시 발생. 이익 추정치 30%+ 상향, 밸류에이션 확장. 한국 방산 역사 새로 쓰기.</div>
+        <span class="sc-prob">확률 추정 35%</span>
+      </div>
+    </div>
+    <div class="sc base">
+      <div class="sc-icon">📋</div>
+      <div class="sc-body">
+        <h3>Base Case — 분할 수주(6+6) 또는 단독 확정</h3>
+        <div class="sc-price">주가: 155,000~175,000원</div>
+        <div class="sc-desc">6+6 분할 또는 기대치 일부 소화. LNG 고선가 매출이 하방 방어. 목표주가 175,000원 달성 가능 구간.</div>
+        <span class="sc-prob">확률 추정 45%</span>
+      </div>
+    </div>
+    <div class="sc bear">
+      <div class="sc-icon">⚠️</div>
+      <div class="sc-body">
+        <h3>Bear Case — 캐나다 수주 완전 실패</h3>
+        <div class="sc-price">주가: 95,000~110,000원</div>
+        <div class="sc-desc">TKMS 단독 확정 시 단기 급락. 다만 LNG 슈퍼사이클·MASGA·필리 조선소가 하방 방어. 장기 훼손 아님.</div>
+        <span class="sc-prob">확률 추정 20%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 최종 요약 -->
+  <div class="final-box">
+    <div class="fb-icon">📌</div>
+    <div class="fb-text">
+      <h3>6월 말, 결정의 순간 — 애널리스트 한 줄 요약</h3>
+      <p>도산안창호함이 캐나다 해역에서 훈련하고, 앨버타·온타리오·노바스코샤 3개 주가 한화와 MOU를 체결한 지금, 한화의 패키지 딜은 독일이 따라갈 수 없는 '실체'가 됐습니다. 6월 말 단독 수주 확정 시 목표주가 175,000원 이상 상향 조정 검토 예정. 현재 주가는 분할 시나리오를 반영한 저평가 구간.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
