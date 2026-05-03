@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도산안창호함 태평양 횡단 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Syne:wght@700;800;900&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:#f0f4f8;padding:28px 16px;}
+  .wrap{max-width:780px;margin:0 auto;}
+
+  /* ── 헤더 ── */
+  .hdr{
+    background:linear-gradient(135deg,#0b2a4a 0%,#0e4272 55%,#0c5aa6 100%);
+    border-radius:20px;padding:28px 26px 22px;
+    color:#fff;margin-bottom:18px;
+    position:relative;overflow:hidden;
+  }
+  .hdr::before{
+    content:'⚓';position:absolute;right:24px;top:16px;
+    font-size:70px;opacity:.12;
+  }
+  .hdr::after{
+    content:'';position:absolute;
+    bottom:-50px;left:-50px;
+    width:220px;height:220px;border-radius:50%;
+    background:rgba(255,255,255,.04);
+  }
+  .tag{
+    display:inline-block;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.26);
+    color:#bfdbfe;font-size:11px;font-weight:700;
+    letter-spacing:1.3px;text-transform:uppercase;
+    padding:4px 13px;border-radius:20px;margin-bottom:12px;
+  }
+  .hdr h1{font-family:'Syne',sans-serif;font-size:23px;font-weight:900;line-height:1.25;margin-bottom:6px;}
+  .hdr p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.55;}
+  .live-badge{
+    position:absolute;right:24px;bottom:20px;
+    display:flex;align-items:center;gap:7px;
+    background:#ef4444;
+    color:#fff;font-size:12px;font-weight:800;
+    padding:6px 14px;border-radius:30px;
+    letter-spacing:.3px;
+  }
+  .live-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#fff;
+    animation:blink 1.2s infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+  /* ── 거리 KPI ── */
+  .kpi-row{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:12px;margin-bottom:18px;
+  }
+  @media(max-width:480px){.kpi-row{grid-template-columns:1fr;}}
+  .kpi{
+    background:#fff;border-radius:14px;
+    padding:16px 14px;text-align:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    border-top:4px solid #0e4272;
+  }
+  .kpi:nth-child(2){border-color:#f59e0b;}
+  .kpi:nth-child(3){border-color:#22c55e;}
+  .kpi-icon{font-size:24px;margin-bottom:6px;}
+  .kpi-val{
+    font-family:'DM Mono',monospace;
+    font-size:20px;font-weight:500;
+    color:#0b2a4a;line-height:1;margin-bottom:3px;
+  }
+  .kpi-label{font-size:11px;color:#64748b;line-height:1.3;}
+
+  /* ── 항해 경로 바 ── */
+  .route-card{
+    background:#fff;border-radius:16px;
+    padding:22px 22px;
+    box-shadow:0 2px 12px rgba(0,0,0,.07);
+    margin-bottom:16px;
+  }
+  .route-title{
+    font-size:13px;font-weight:700;
+    color:#0e4272;letter-spacing:.8px;
+    text-transform:uppercase;margin-bottom:18px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .route-title::after{content:'';flex:1;height:1px;background:#dbeafe;}
+
+  .route-bar-wrap{
+    position:relative;
+    height:56px;
+    background:linear-gradient(90deg,#dbeafe,#bfdbfe,#93c5fd);
+    border-radius:28px;
+    margin-bottom:14px;
+    overflow:visible;
+    display:flex;align-items:center;
+    padding:0 20px;
+  }
+  .route-sub{
+    font-family:'DM Mono',monospace;
+    font-size:11.5px;color:#1e3a5f;font-weight:500;
+    flex:1;
+  }
+  .sub-flag{font-size:22px;margin-right:6px;}
+  .submarine-icon{
+    position:absolute;
+    font-size:30px;
+    /* 현재 위치: 출항 후 약 7일, 전체 28일 항해 = 25% */
+    left:22%;
+    top:50%;transform:translateY(-50%);
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));
+    animation:sail 8s ease-in-out infinite alternate;
+  }
+  @keyframes sail{
+    0%{transform:translateY(-50%) translateX(0);}
+    100%{transform:translateY(-50%) translateX(8px);}
+  }
+  .progress-line{
+    position:absolute;left:20px;top:50%;
+    height:4px;background:#1d4ed8;border-radius:2px;
+    transform:translateY(-50%);
+    /* 25% 진행 */
+    width:calc(22% - 20px);
+  }
+
+  .route-stops{
+    display:flex;justify-content:space-between;
+    align-items:flex-start;
+    font-size:12px;
+  }
+  .stop{text-align:center;}
+  .stop .dot{
+    width:14px;height:14px;border-radius:50%;
+    margin:0 auto 5px;
+    border:3px solid #fff;
+    box-shadow:0 0 0 2px #0e4272;
+    background:#0e4272;
+  }
+  .stop:last-child .dot{background:#22c55e;box-shadow:0 0 0 2px #22c55e;}
+  .stop:nth-child(2) .dot{background:#f59e0b;box-shadow:0 0 0 2px #f59e0b;} 
+  .stop .name{font-weight:700;color:#1e293b;margin-bottom:2px;}
+  .stop .date{color:#64748b;font-size:10.5px;}
+
+  /* ── 훈련 일정 타임라인 ── */
+  .tl-card{
+    background:#fff;border-radius:16px;
+    padding:22px 22px;
+    box-shadow:0 2px 12px rgba(0,0,0,.07);
+    margin-bottom:16px;
+  }
+  .tl-title{
+    font-size:13px;font-weight:700;
+    color:#0e4272;letter-spacing:.8px;
+    text-transform:uppercase;margin-bottom:16px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .tl-title::after{content:'';flex:1;height:1px;background:#dbeafe;}
+
+  .tl-list{position:relative;padding-left:22px;}
+  .tl-list::before{
+    content:'';position:absolute;
+    left:9px;top:0;bottom:0;
+    width:2px;
+    background:linear-gradient(to bottom,#0e4272 0%,#0e4272 68%,#e5e7eb 68%);
+  }
+
+  .tl-item{
+    position:relative;margin-bottom:12px;
+    padding-left:28px;
+  }
+  .tl-dot{
+    position:absolute;left:-13px;top:8px;
+    width:16px;height:16px;border-radius:50%;
+    border:3px solid #fff;
+    box-shadow:0 0 0 2px #0e4272;
+    background:#0e4272;z-index:1;
+  }
+  .tl-item.done .tl-dot{background:#22c55e;box-shadow:0 0 0 2px #22c55e;}
+  .tl-item.now .tl-dot{
+    background:#f59e0b;box-shadow:0 0 0 2px #f59e0b,0 0 0 5px rgba(245,158,11,.25);
+    animation:glow 1.6s infinite;
+  }
+  @keyframes glow{
+    0%,100%{box-shadow:0 0 0 2px #f59e0b,0 0 0 5px rgba(245,158,11,.25);}
+    50%{box-shadow:0 0 0 2px #f59e0b,0 0 0 10px rgba(245,158,11,.12);}
+  }
+  .tl-item.climax .tl-dot{background:#dc2626;box-shadow:0 0 0 2px #dc2626;}
+  .tl-item.future .tl-dot{background:#fff;box-shadow:0 0 0 2px #d1d5db;}
+
+  .tl-card-inner{
+    background:#f8fafc;border-radius:11px;
+    padding:12px 14px;
+    border-left:4px solid #0e4272;
+  }
+  .tl-item.done .tl-card-inner{border-color:#22c55e;}
+  .tl-item.now .tl-card-inner{border-color:#f59e0b;background:#fffbeb;}
+  .tl-item.climax .tl-card-inner{border-color:#dc2626;background:#fff5f5;}
+  .tl-item.future .tl-card-inner{border-color:#e5e7eb;background:#f9fafb;}
+
+  .tl-date{
+    font-size:11px;font-weight:700;
+    color:#64748b;letter-spacing:.4px;margin-bottom:3px;
+  }
+  .tl-item.now .tl-date{color:#92400e;}
+  .tl-item.climax .tl-date{color:#dc2626;}
+  .tl-headline{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px;line-height:1.3;}
+  .tl-item.climax .tl-headline{color:#991b1b;font-size:14.5px;}
+  .tl-desc{font-size:12px;color:#64748b;line-height:1.5;}
+  .tl-badge{
+    display:inline-block;font-size:10px;font-weight:700;
+    padding:2px 8px;border-radius:10px;margin-top:4px;
+  }
+  .bdg-done{background:#dcfce7;color:#166534;}
+  .bdg-now{background:#fef3c7;color:#92400e;}
+  .bdg-hot{background:#fee2e2;color:#991b1b;}
+
+  /* ── 의미 박스 ── */
+  .meaning-box{
+    background:linear-gradient(135deg,#eff6ff,#dbeafe);
+    border:1.5px solid #93c5fd;border-radius:14px;
+    padding:16px 18px;
+    display:flex;align-items:flex-start;gap:14px;
+  }
+  .meaning-icon{font-size:32px;flex-shrink:0;}
+  .meaning-text h3{font-size:14.5px;font-weight:800;color:#1e40af;margin-bottom:6px;}
+  .meaning-text p{font-size:12.5px;color:#1d4ed8;line-height:1.65;}
+
+  .footer-note{text-align:center;font-size:11px;color:#94a3b8;margin-top:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 헤더 -->
+  <div class="hdr">
+    <div class="tag">🔴 실시간 업데이트</div>
+    <h1>도산안창호함(KSS-III)<br>태평양 횡단 — 지금 항해 중</h1>
+    <p>진해 기지 출항 → 1만 4,000km → 캐나다 에스퀴몰트 기지 입항 예정</p>
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      LIVE 항해 중
+    </div>
+  </div>
+
+  <!-- KPI 3종 -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-icon">🌊</div>
+      <div class="kpi-val">14,000km</div>
+      <div class="kpi-label">태평양 횡단<br>총 항해 거리</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-icon">📅</div>
+      <div class="kpi-val">5월 하순</div>
+      <div class="kpi-label">에스퀴몰트<br>기지 입항 예정</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-icon">🛡️</div>
+      <div class="kpi-val">11일</div>
+      <div class="kpi-label">캐나다 해군·공군<br>대잠전 연합훈련</div>
+    </div>
+  </div>
+
+  <!-- 항해 경로 -->
+  <div class="route-card">
+    <div class="route-title">🗺️ 항해 경로</div>
+    <div class="route-bar-wrap">
+      <div class="progress-line"></div>
+      <div class="submarine-icon">🚢</div>
+      <span class="route-sub"><span class="sub-flag">🇰🇷</span>진해</span>
+      <span class="route-sub" style="text-align:right;"><span class="sub-flag">🇨🇦</span>에스퀴몰트</span>
+    </div>
+    <div class="route-stops">
+      <div class="stop">
+        <div class="dot"></div>
+        <div class="name">진해 기지</div>
+        <div class="date">4월 25일 출항</div>
+      </div>
+      <div class="stop">
+        <div class="dot"></div>
+        <div class="name">태평양 항해 중</div>
+        <div class="date">현재 진행 중 🔴</div>
+      </div>
+      <div class="stop">
+        <div class="dot"></div>
+        <div class="name">에스퀴몰트</div>
+        <div class="date">5월 하순 도착 예정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 타임라인 -->
+  <div class="tl-card">
+    <div class="tl-title">⏱️ 주요 일정 타임라인</div>
+    <div class="tl-list">
+
+      <div class="tl-item done">
+        <div class="tl-dot"></div>
+        <div class="tl-card-inner">
+          <div class="tl-date">2026년 4월 25일</div>
+          <div class="tl-headline">🚀 진해 기지 출항 — 태평양 횡단 시작</div>
+          <div class="tl-desc">한국 해군 KSS-III급 도산안창호함, 1만 4,000km 태평양 항해 공식 출발</div>
+          <span class="tl-badge bdg-done">✓ 완료</span>
+        </div>
+      </div>
+
+      <div class="tl-item now">
+        <div class="tl-dot"></div>
+        <div class="tl-card-inner">
+          <div class="tl-date">2026년 5월 현재</div>
+          <div class="tl-headline">🌊 태평양 항해 진행 중</div>
+          <div class="tl-desc">수천 km의 태평양 횡단 항해 중. KSS-III의 항속 능력·내구성을 실전 증명하는 과정</div>
+          <span class="tl-badge bdg-now">🔴 현재 진행 중</span>
+        </div>
+      </div>
+
+      <div class="tl-item future">
+        <div class="tl-dot"></div>
+        <div class="tl-card-inner">
+          <div class="tl-date">2026년 5월 하순</div>
+          <div class="tl-headline">🇨🇦 에스퀴몰트 기지 입항</div>
+          <div class="tl-desc">캐나다 태평양 해군 기지 공식 입항. 캐나다 해군 관계자·정부 인사 실물 시찰 예정</div>
+        </div>
+      </div>
+
+      <div class="tl-item future">
+        <div class="tl-dot"></div>
+        <div class="tl-card-inner">
+          <div class="tl-date">2026년 5월 23일 ~ 6월 2일</div>
+          <div class="tl-headline">🛡️ 한-캐나다 대잠전 연합훈련 (11일간)</div>
+          <div class="tl-desc">캐나다 해군·공군과 KSS-III 실전 연합 대잠 훈련. 결정권자들이 성능을 직접 확인하는 결정적 장면</div>
+        </div>
+      </div>
+
+      <div class="tl-item climax">
+        <div class="tl-dot"></div>
+        <div class="tl-card-inner">
+          <div class="tl-date">2026년 6월 말 — D-DAY</div>
+          <div class="tl-headline">🏆 캐나다 CPSP 우선협상자 발표</div>
+          <div class="tl-desc">마크 카니 총리가 선언한 최종 결정 시한. 훈련을 통해 성능을 직접 확인한 후 내리는 판단</div>
+          <span class="tl-badge bdg-hot">🔥 결전의 날</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 전략적 의미 -->
+  <div class="meaning-box">
+    <div class="meaning-icon">💡</div>
+    <div class="meaning-text">
+      <h3>왜 이게 결정적인가</h3>
+      <p>6월 말 우선협상자 발표 시한 직전, 캐나다 해군이 KSS-III와 11일간 직접 대잠 훈련을 실시합니다. "계획서가 아닌 실전 검증된 잠수함"을 원하는 캐나다의 핵심 요구를 가장 직접적으로 충족하는 전략적 한 수입니다. TKMS 212CD는 아직 실전 배치 전 신규 개발 기종입니다.</p>
+    </div>
+  </div>
+
+  <div class="footer-note">※ 출처: 딜사이트, 미주중앙일보, 더퍼블릭 (2026.04~05 기준)</div>
+</div>
+</body>
+</html>
