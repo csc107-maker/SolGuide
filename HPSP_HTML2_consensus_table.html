@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPSP 증권사 컨센서스</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Roboto+Mono:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0fdf4;
+    padding: 24px 16px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    background: linear-gradient(135deg, #14532d 0%, #16a34a 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .section-header h3 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .section-header span {
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+  }
+
+  .consensus-summary {
+    background: #fff;
+    border: 1px solid #bbf7d0;
+    border-top: none;
+    padding: 20px 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    text-align: center;
+  }
+
+  .summary-item {
+    padding: 0 16px;
+    border-right: 1px solid #e2e8f0;
+  }
+
+  .summary-item:last-child { border-right: none; }
+
+  .summary-label {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .summary-value {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #15803d;
+  }
+
+  .summary-sub {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 3px;
+  }
+
+  .table-wrap {
+    background: #fff;
+    border: 1px solid #bbf7d0;
+    border-top: none;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    background: #f0fdf4;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #15803d;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #bbf7d0;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover { background: #f0fdf4; }
+  tbody tr:last-child { border-bottom: none; }
+
+  td {
+    padding: 13px 16px;
+    font-size: 13px;
+    color: #334155;
+    vertical-align: middle;
+  }
+
+  .firm-name {
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .target-price {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: #1e293b;
+  }
+
+  .upside {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    color: #dc2626;
+  }
+
+  .opinion-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .buy { background: #dcfce7; color: #15803d; }
+  .strong-buy { background: #bbf7d0; color: #14532d; }
+
+  .bar-cell {
+    width: 120px;
+  }
+
+  .bar-bg {
+    background: #e2e8f0;
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #16a34a, #4ade80);
+  }
+
+  .highlight-row {
+    background: #fffbeb !important;
+  }
+
+  .highlight-row td {
+    border-left: 3px solid #f59e0b;
+  }
+
+  .new-badge {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .bottom-note {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 1px solid #bbf7d0;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 14px 28px;
+  }
+
+  .bottom-note p {
+    font-size: 12px;
+    color: #166534;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .consensus-summary { grid-template-columns: 1fr; gap: 12px; }
+    .summary-item { border-right: none; }
+    td, thead th { padding: 10px 12px; }
+    .bar-cell { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="section-header">
+    <h3>📈 증권사 컨센서스 분석</h3>
+    <span>2026년 4~5월 기준</span>
+  </div>
+
+  <div class="consensus-summary">
+    <div class="summary-item">
+      <div class="summary-label">평균 목표주가</div>
+      <div class="summary-value">48,313</div>
+      <div class="summary-sub">원 (+8.6% 상승여력)</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-label">투자의견</div>
+      <div class="summary-value">전원 매수</div>
+      <div class="summary-sub">8명 BUY / 0명 SELL</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-label">컨센서스 범위</div>
+      <div class="summary-value">35K ~ 65K</div>
+      <div class="summary-sub">최저 ~ 최고 목표가</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>증권사 / 애널리스트</th>
+          <th>투자의견</th>
+          <th>목표주가</th>
+          <th>현재가 대비</th>
+          <th class="bar-cell">상승여력</th>
+          <th>리포트 날짜</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td><span class="firm-name">한국투자증권</span> / 채민숙<span class="new-badge">최신</span></td>
+          <td><span class="opinion-badge strong-buy">매수</span></td>
+          <td class="target-price">54,000원</td>
+          <td class="upside">▲ +21.3%</td>
+          <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div></td>
+          <td style="font-size:12px;color:#64748b;">2026.04.16</td>
+        </tr>
+        <tr>
+          <td><span class="firm-name">대신증권</span></td>
+          <td><span class="opinion-badge buy">매수</span></td>
+          <td class="target-price">50,000원</td>
+          <td class="upside">▲ +12.4%</td>
+          <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div></td>
+          <td style="font-size:12px;color:#64748b;">2026.04.22</td>
+        </tr>
+        <tr>
+          <td><span class="firm-name">삼성증권</span> / 삼성팝</td>
+          <td><span class="opinion-badge strong-buy">BUY</span></td>
+          <td class="target-price">45,000원</td>
+          <td class="upside">▲ +1.1%</td>
+          <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:55%"></div></div></td>
+          <td style="font-size:12px;color:#64748b;">2025.10.20</td>
+        </tr>
+        <tr>
+          <td><span class="firm-name">신영증권</span> / 박상욱</td>
+          <td><span class="opinion-badge buy">매수</span></td>
+          <td class="target-price">37,000원</td>
+          <td class="upside" style="color:#64748b;">▲ 유지</td>
+          <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:35%"></div></div></td>
+          <td style="font-size:12px;color:#64748b;">2025.07.22</td>
+        </tr>
+        <tr>
+          <td><span class="firm-name">NH투자증권</span> / 류영호</td>
+          <td><span class="opinion-badge buy">BUY</span></td>
+          <td class="target-price">40,000원</td>
+          <td class="upside" style="color:#64748b;">유지</td>
+          <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:42%"></div></div></td>
+          <td style="font-size:12px;color:#64748b;">2025.11.17</td>
+        </tr>
+        <tr>
+          <td><span class="firm-name">한화투자증권</span> / 김광진</td>
+          <td><span class="opinion-badge buy">매수</span></td>
+          <td class="target-price">38,000원</td>
+          <td class="upside" style="color:#64748b;">유지</td>
+          <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:38%"></div></div></td>
+          <td style="font-size:12px;color:#64748b;">2025.02.27</td>
+        </tr>
+        <tr>
+          <td><span class="firm-name">BNK투자증권</span></td>
+          <td><span class="opinion-badge buy">매수</span></td>
+          <td class="target-price">35,000원</td>
+          <td class="upside" style="color:#64748b;">유지</td>
+          <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:25%"></div></div></td>
+          <td style="font-size:12px;color:#64748b;">2025.08.19</td>
+        </tr>
+        <tr>
+          <td><span class="firm-name">KB증권</span></td>
+          <td><span class="opinion-badge strong-buy">매수</span></td>
+          <td class="target-price">65,000원</td>
+          <td class="upside" style="color:#dc2626;font-size:15px;">▲ +46.1%</td>
+          <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95%"></div></div></td>
+          <td style="font-size:12px;color:#64748b;">장기 시나리오</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bottom-note">
+    <p>📌 8명 전원 매수 의견 · 2026년 연간 매출 2,341억원(+33%), 영업이익 1,245억원(+37%) 컨센서스</p>
+  </div>
+
+</div>
+</body>
+</html>
