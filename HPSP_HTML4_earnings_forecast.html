@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPSP 실적 전망 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Roboto+Mono:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fdf4ff;
+    padding: 24px 16px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #4a1d96 0%, #7c3aed 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header h3 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-right .label {
+    color: rgba(255,255,255,0.7);
+    font-size: 11px;
+  }
+
+  .header-right .date {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  /* 탭 구조처럼 보이는 섹션 분리 */
+  .tabs {
+    display: flex;
+    background: #f3f4f6;
+    border: 1px solid #e9d5ff;
+    border-top: none;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: default;
+    border-right: 1px solid #e9d5ff;
+  }
+
+  .tab:last-child { border-right: none; }
+
+  .tab.active {
+    background: #7c3aed;
+    color: #fff;
+  }
+
+  .tab.secondary {
+    background: #fff;
+    color: #4a1d96;
+  }
+
+  /* Q1 실적 카드 */
+  .q1-section {
+    background: #fff;
+    border: 1px solid #e9d5ff;
+    border-top: none;
+    padding: 24px 28px;
+  }
+
+  .q1-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #7c3aed;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .q1-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .q1-metric {
+    background: #faf5ff;
+    border: 1px solid #e9d5ff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .q1-metric-label {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .q1-metric-value {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .q1-metric-change {
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 4px;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .down { color: #94a3b8; }
+  .up-color { color: #16a34a; }
+
+  .warning-box {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 1px solid #fcd34d;
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .warning-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .warning-text {
+    font-size: 12px;
+    color: #78350f;
+    line-height: 1.6;
+  }
+
+  .warning-text strong {
+    font-weight: 700;
+    color: #92400e;
+  }
+
+  /* 연간 전망 섹션 */
+  .annual-section {
+    background: #fff;
+    border: 1px solid #e9d5ff;
+    border-top: none;
+    padding: 24px 28px;
+  }
+
+  .annual-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #7c3aed;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .annual-chart {
+    margin-bottom: 20px;
+  }
+
+  .chart-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .chart-label {
+    width: 80px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+    flex-shrink: 0;
+  }
+
+  .chart-bar-wrap {
+    flex: 1;
+    position: relative;
+  }
+
+  .chart-bar-bg {
+    height: 28px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .chart-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+  }
+
+  .bar-2024 { background: linear-gradient(90deg, #c4b5fd, #a78bfa); width: 58%; }
+  .bar-2026e { background: linear-gradient(90deg, #7c3aed, #5b21b6); width: 100%; }
+
+  .chart-bar-fill span {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .chart-value {
+    width: 80px;
+    text-align: right;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+    flex-shrink: 0;
+  }
+
+  .chart-value .growth {
+    color: #16a34a;
+    font-size: 10px;
+  }
+
+  .growth-drivers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .driver-card {
+    background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+    border: 1px solid #d8b4fe;
+    border-radius: 10px;
+    padding: 14px;
+  }
+
+  .driver-emoji {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .driver-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #4a1d96;
+    margin-bottom: 4px;
+  }
+
+  .driver-body {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  /* 분기별 실적 전망 테이블 */
+  .quarter-section {
+    background: #f8f5ff;
+    border: 1px solid #e9d5ff;
+    border-top: none;
+    padding: 20px 28px;
+  }
+
+  .quarter-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #7c3aed;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .q-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e9d5ff;
+  }
+
+  .q-table th {
+    background: #7c3aed;
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .q-table td {
+    padding: 11px 14px;
+    text-align: center;
+    font-size: 13px;
+    border-bottom: 1px solid #f3e8ff;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .q-table tr:last-child td { border-bottom: none; }
+
+  .q-table .q-label {
+    text-align: left;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    color: #4a1d96;
+  }
+
+  .q-table .highlight-row { background: #ede9fe; }
+  .q-table .low { color: #94a3b8; }
+  .q-table .high { color: #16a34a; font-weight: 700; }
+
+  .footer {
+    background: linear-gradient(135deg, #4a1d96, #7c3aed);
+    border-radius: 0 0 16px 16px;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer p {
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+  }
+
+  .footer strong {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  @media (max-width: 480px) {
+    .q1-metrics { grid-template-columns: repeat(2, 1fr); }
+    .growth-drivers { grid-template-columns: 1fr; }
+    .chart-label { width: 60px; }
+    .chart-value { width: 70px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h3>📊 HPSP 실적 전망 분석</h3>
+    <div class="header-right">
+      <div class="label">1분기 실적 발표 예정</div>
+      <div class="date">2026.05.14</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active">1Q26 실적 Preview</div>
+    <div class="tab secondary">2026 연간 전망</div>
+    <div class="tab secondary">성장 드라이버</div>
+  </div>
+
+  <!-- 1분기 실적 -->
+  <div class="q1-section">
+    <div class="q1-label">📉 1Q26 실적 전망 — 계절적 비수기 영향</div>
+    <div class="q1-metrics">
+      <div class="q1-metric">
+        <div class="q1-metric-label">예상 매출액</div>
+        <div class="q1-metric-value">316억</div>
+        <div class="q1-metric-change down">▼ YoY -14%</div>
+      </div>
+      <div class="q1-metric">
+        <div class="q1-metric-label">예상 영업이익</div>
+        <div class="q1-metric-value">158억</div>
+        <div class="q1-metric-change down">▼ YoY -16%</div>
+      </div>
+      <div class="q1-metric">
+        <div class="q1-metric-label">영업이익률</div>
+        <div class="q1-metric-value">~50%</div>
+        <div class="q1-metric-change" style="color:#7c3aed;">유지 전망</div>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <div class="warning-icon">⚠️</div>
+      <div class="warning-text">
+        <strong>1분기 부진은 계절성 + 매출 이연 때문입니다.</strong> 한국투자증권은 컨센서스 영업이익(189억원) 대비 약 16% 하회를 예상하지만, 이는 1분기가 반도체 장비 업종의 전통적 비수기임을 고려해야 합니다. 2분기부터 매 분기 실적 개선이 전망됩니다. 실망 매물 출현 시 오히려 매수 기회일 수 있습니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- 연간 전망 -->
+  <div class="annual-section">
+    <div class="annual-label">📈 2026년 연간 실적 전망 (증권가 컨센서스)</div>
+
+    <div class="annual-chart">
+      <div class="chart-row">
+        <div class="chart-label">2024 매출</div>
+        <div class="chart-bar-wrap">
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill bar-2024"><span>1,814억</span></div>
+          </div>
+        </div>
+        <div class="chart-value">기준</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-label">2026E 매출</div>
+        <div class="chart-bar-wrap">
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill bar-2026e"><span>2,341억</span></div>
+          </div>
+        </div>
+        <div class="chart-value"><span class="growth">+33%↑</span></div>
+      </div>
+
+      <div style="height:12px;"></div>
+
+      <div class="chart-row">
+        <div class="chart-label">2024 영업익</div>
+        <div class="chart-bar-wrap">
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill" style="background:linear-gradient(90deg:#c4b5fd,#a78bfa);width:57%;height:100%;background:linear-gradient(90deg,#c4b5fd,#a78bfa);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;">
+              <span style="color:#fff;font-size:12px;font-weight:700;font-family:'Roboto Mono',monospace;">939억</span>
+            </div>
+          </div>
+        </div>
+        <div class="chart-value">기준</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-label">2026E 영업익</div>
+        <div class="chart-bar-wrap">
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill bar-2026e"><span>1,245억</span></div>
+          </div>
+        </div>
+        <div class="chart-value"><span class="growth">+37%↑</span></div>
+      </div>
+    </div>
+
+    <div class="growth-drivers">
+      <div class="driver-card">
+        <div class="driver-emoji">💾</div>
+        <div class="driver-title">키오시아 NAND</div>
+        <div class="driver-body">인증 완료 후 양산 장비 공급 임박. 300단↑ 고단 NAND 투자 직접 수혜. AI 스토리지 수요 급증.</div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-emoji">🧠</div>
+        <div class="driver-title">DRAM 1d 공정</div>
+        <div class="driver-body">2026년 3분기 1d 공정 개발 완료 예정. 이후 HPA 테스트 장비 납품 본격화. 메모리 매출 레벨업.</div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-emoji">🏭</div>
+        <div class="driver-title">삼성 테일러 팹</div>
+        <div class="driver-body">2026년 하반기 2~3nm 라인 가동 예정. 미국 파운드리 투자 재개로 장비 발주 증가 전망.</div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-emoji">📦</div>
+        <div class="driver-title">후공정 확장</div>
+        <div class="driver-body">신임 CEO 이춘흥(前인텔 수석부사장) 선임. 어드밴스드 패키징으로 TAM(시장) 확대 전략 추진.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 분기별 전망 -->
+  <div class="quarter-section">
+    <div class="quarter-label">📅 2026년 분기별 실적 흐름 (상저하고 패턴)</div>
+    <table class="q-table">
+      <thead>
+        <tr>
+          <th>분기</th>
+          <th>매출액</th>
+          <th>영업이익</th>
+          <th>OPM</th>
+          <th>QoQ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td class="q-label">1Q26 (예상)</td>
+          <td class="low">316억</td>
+          <td class="low">158억</td>
+          <td class="low">50.0%</td>
+          <td class="low">▼ 비수기</td>
+        </tr>
+        <tr>
+          <td class="q-label">2Q26 (예상)</td>
+          <td>443억</td>
+          <td>235억</td>
+          <td>53.0%</td>
+          <td class="high">▲ 회복</td>
+        </tr>
+        <tr>
+          <td class="q-label">3Q26 (예상)</td>
+          <td>600억~</td>
+          <td>330억~</td>
+          <td>~55%</td>
+          <td class="high">▲ 개선</td>
+        </tr>
+        <tr>
+          <td class="q-label">4Q26 (예상)</td>
+          <td>700억~</td>
+          <td>400억~</td>
+          <td>~57%</td>
+          <td class="high">▲ 피크</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <p>출처: 한국투자증권(2026.04.16) · 대신증권(2026.04.22) · KB증권(2025.05) · Investing.com</p>
+    <strong>매수 유지</strong>
+  </div>
+
+</div>
+</body>
+</html>
