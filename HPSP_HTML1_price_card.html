@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPSP 주가 현황 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Roboto+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 24px 16px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a3a6e 0%, #2563eb 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-left h2 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+
+  .header-left p {
+    color: rgba(255,255,255,0.75);
+    font-size: 12px;
+    margin-top: 4px;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .price-hero {
+    background: #ffffff;
+    padding: 24px 28px 20px;
+    border-left: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+  }
+
+  .price-main {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .price-value {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 48px;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1;
+  }
+
+  .price-change-up {
+    font-size: 18px;
+    font-weight: 700;
+    color: #dc2626;
+    background: #fef2f2;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .price-date {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0;
+  }
+
+  .metric-item {
+    padding: 16px 20px;
+    border-right: 1px solid #e2e8f0;
+    position: relative;
+  }
+
+  .metric-item:last-child {
+    border-right: none;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .metric-value {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .metric-value.up { color: #dc2626; }
+  .metric-value.neutral { color: #0f172a; }
+
+  .range-section {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    padding: 18px 28px;
+  }
+
+  .range-title {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .range-bar-wrap {
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .range-bg {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .range-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #1a3a6e);
+    border-radius: 4px;
+    width: 70%;
+  }
+
+  .range-dot {
+    width: 14px;
+    height: 14px;
+    background: #1e293b;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: -3px;
+    left: 70%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .range-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .range-labels span {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: #475569;
+    font-weight: 600;
+  }
+
+  .range-labels span.current {
+    color: #1e293b;
+    font-weight: 700;
+  }
+
+  .footer-card {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1px solid #bfdbfe;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-dot {
+    width: 8px;
+    height: 8px;
+    background: #3b82f6;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .footer-card p {
+    font-size: 12px;
+    color: #1e40af;
+    font-weight: 600;
+  }
+
+  .key-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+  }
+
+  .key-info-item {
+    padding: 14px 20px;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .key-info-item:nth-child(even) { border-right: none; }
+  .key-info-item:nth-last-child(-n+2) { border-bottom: none; }
+
+  .key-info-label {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 4px;
+  }
+
+  .key-info-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .highlight { color: #2563eb; }
+
+  @media (max-width: 480px) {
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .price-value { font-size: 36px; }
+    .header-left h2 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-left">
+      <h2>HPSP · 403870</h2>
+      <p>KOSDAQ · 반도체 및 관련장비 · 2026.05.04 기준</p>
+    </div>
+    <div class="badge">📊 주가 현황</div>
+  </div>
+
+  <div class="price-hero">
+    <div class="price-main">
+      <span class="price-value">44,500</span>
+      <span style="font-size:20px;color:#64748b;font-weight:400;margin-bottom:6px;">원</span>
+      <span class="price-change-up">▲ +350 (+0.79%)</span>
+    </div>
+    <p class="price-date">최근 거래일 기준 (4월 18일 종가, 이후 장 변동 주시 필요)</p>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-item">
+      <div class="metric-label">시가총액</div>
+      <div class="metric-value">3.66조원</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-label">거래대금</div>
+      <div class="metric-value">958억원</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-label">배당수익률</div>
+      <div class="metric-value">1.13%</div>
+    </div>
+  </div>
+
+  <div class="range-section">
+    <div class="range-title">52주 가격 범위</div>
+    <div class="range-bar-wrap">
+      <div class="range-bg">
+        <div class="range-fill"></div>
+      </div>
+      <div class="range-dot"></div>
+    </div>
+    <div class="range-labels">
+      <span>저점 21,150원</span>
+      <span class="current">현재 44,500원</span>
+      <span>고점 53,900원</span>
+    </div>
+  </div>
+
+  <div class="key-info">
+    <div class="key-info-item">
+      <div class="key-info-label">애널리스트 평균 목표가</div>
+      <div class="key-info-value highlight">48,313원</div>
+    </div>
+    <div class="key-info-item">
+      <div class="key-info-label">커버리지 의견</div>
+      <div class="key-info-value">매수 8명 / 매도 0명</div>
+    </div>
+    <div class="key-info-item">
+      <div class="key-info-label">EPS (TTM)</div>
+      <div class="key-info-value">894원</div>
+    </div>
+    <div class="key-info-item">
+      <div class="key-info-label">1분기 실적발표 예정일</div>
+      <div class="key-info-value highlight">2026.05.14</div>
+    </div>
+  </div>
+
+  <div class="footer-card">
+    <div class="footer-dot"></div>
+    <p>자사주 소각(734억원) · 신임 CEO 선임 · 기업가치 제고 계획 공시 완료</p>
+  </div>
+
+</div>
+</body>
+</html>
