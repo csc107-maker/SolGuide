@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 외교 딜레마 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f2f0ec;
+    padding: 32px 16px;
+  }
+
+  .widget {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    border: 1.5px solid #d8d0c4;
+  }
+
+  .hd {
+    background: linear-gradient(135deg, #3a1a0a 0%, #7a3010 60%, #5a2008 100%);
+    padding: 26px 32px;
+  }
+  .hd-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,200,150,0.8);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .hd h2 {
+    color: #fff;
+    font-size: 19px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .hd p {
+    color: rgba(255,255,255,0.6);
+    font-size: 12.5px;
+  }
+
+  /* 시나리오 섹션 */
+  .scenarios {
+    background: #fff;
+    padding: 24px 28px;
+  }
+  .sec-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #5a4030;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .sc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 560px) {
+    .sc-grid { grid-template-columns: 1fr; }
+  }
+
+  .sc-card {
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1.5px solid transparent;
+  }
+  .sc-card.join {
+    background: #fff8f0;
+    border-color: #f0a050;
+  }
+  .sc-card.no-join {
+    background: #f0f5ff;
+    border-color: #5070e0;
+  }
+
+  .sc-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .sc-card.join .sc-label { background: #fde8c8; color: #a05010; }
+  .sc-card.no-join .sc-label { background: #dce8ff; color: #2040a0; }
+
+  .sc-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+
+  .factor-list {
+    list-style: none;
+    font-size: 12.5px;
+    color: #3a3028;
+    line-height: 1.75;
+  }
+  .factor-list li::before {
+    content: '→ ';
+    color: #8a7a6a;
+  }
+
+  /* 핵심 리스크 테이블 */
+  .risk-section {
+    background: #fdf8f4;
+    padding: 20px 28px;
+    border-top: 1px solid #e8e0d4;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    font-size: 13px;
+  }
+  th {
+    background: #3a1a0a;
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  th:first-child { border-radius: 6px 0 0 0; }
+  th:last-child { border-radius: 0 6px 0 0; }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8e0d4;
+    color: #3a3028;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  tr:nth-child(even) td { background: #f5f0ea; }
+  tr:last-child td { border-bottom: none; }
+
+  .chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .chip.high   { background: #fde8e8; color: #b02020; }
+  .chip.mid    { background: #fff3d8; color: #9a6010; }
+  .chip.low    { background: #e8f5e8; color: #1a6020; }
+
+  /* 핵심 수치 */
+  .kpi-row {
+    display: flex;
+    gap: 12px;
+    padding: 20px 28px;
+    background: #fff;
+    border-top: 1px solid #e8e0d4;
+    flex-wrap: wrap;
+  }
+  .kpi {
+    flex: 1;
+    min-width: 130px;
+    background: #fdf8f4;
+    border: 1px solid #e0d8cc;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .kpi-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #3a1a0a;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .kpi-desc {
+    font-size: 11px;
+    color: #7a6858;
+    line-height: 1.4;
+  }
+
+  .footer {
+    background: #3a1a0a;
+    padding: 12px 28px;
+    color: rgba(255,230,200,0.7);
+    font-size: 11.5px;
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="hd">
+    <span class="hd-badge">🧭 DIPLOMATIC DILEMMA ANALYSIS</span>
+    <h2>한국의 선택 — 프로젝트 프리덤 참여 vs. 불참</h2>
+    <p>트럼프의 공개 압박 이후 한국 정부가 직면한 외교·안보 딜레마 분석</p>
+  </div>
+
+  <div class="scenarios">
+    <div class="sec-title">📌 시나리오별 영향 분석</div>
+    <div class="sc-grid">
+      <div class="sc-card join">
+        <span class="sc-label">시나리오 A</span>
+        <div class="sc-title">🇺🇸 프로젝트 프리덤 참여</div>
+        <ul class="factor-list">
+          <li>한미동맹 신뢰 유지</li>
+          <li>트럼프 추가 압박 완화 가능</li>
+          <li>자국 선박·선원 보호 명분</li>
+          <li>호르무즈 개방 시 에너지 수급 정상화</li>
+          <li>이란과 외교 관계 손상</li>
+          <li>중동 에너지 의존국 이미지 훼손</li>
+          <li>헌법·국내법상 절차 문제</li>
+          <li>중국 반발 가능성</li>
+        </ul>
+      </div>
+
+      <div class="sc-card no-join">
+        <span class="sc-label">시나리오 B</span>
+        <div class="sc-title">🇰🇷 불참 — 원인 규명 우선</div>
+        <ul class="factor-list">
+          <li>이란과 외교 채널 유지</li>
+          <li>헌법·국내법 절차 준수</li>
+          <li>중립적 중재 가능성 보존</li>
+          <li>에너지 공급선 다각화 시간 확보</li>
+          <li>트럼프 보복 리스크 (주한미군·관세)</li>
+          <li>한미 관계 균열 우려</li>
+          <li>독일 사례 전철 우려</li>
+          <li>호르무즈 장기 봉쇄 시 에너지 위기</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="risk-section">
+    <div class="sec-title">⚠️ 한국의 핵심 리스크 요인</div>
+    <table>
+      <thead>
+        <tr>
+          <th>리스크 영역</th>
+          <th>구체적 내용</th>
+          <th>수준</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>에너지 안보</strong></td>
+          <td>한국 가스 수입의 20%가 호르무즈 해협 경유. 장기 봉쇄 시 에너지 위기 현실화</td>
+          <td><span class="chip high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td><strong>주한미군 리스크</strong></td>
+          <td>트럼프, 독일 미군 5,000명 감축 선례. 한국 불참 시 주한미군 감축 협박 가능성</td>
+          <td><span class="chip high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td><strong>해운·물류</strong></td>
+          <td>HMM 선박 5척 호르무즈 내 억류 중. 추가 피격 가능성 상존</td>
+          <td><span class="chip mid">MID</span></td>
+        </tr>
+        <tr>
+          <td><strong>이란과의 관계</strong></td>
+          <td>한국-이란 간 동결 자금 문제 등 미해결 현안 존재. 군사 참여 시 관계 급냉각</td>
+          <td><span class="chip mid">MID</span></td>
+        </tr>
+        <tr>
+          <td><strong>중국 변수</strong></td>
+          <td>중국도 프로젝트 프리덤 불참. 한국 참여 시 한중 관계에 파장 가능</td>
+          <td><span class="chip mid">MID</span></td>
+        </tr>
+        <tr>
+          <td><strong>헌법·국내법</strong></td>
+          <td>해외 파병은 국회 동의 필요. 신속 파병 절차적 장벽</td>
+          <td><span class="chip low">LOW</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <span class="kpi-val">20%</span>
+      <div class="kpi-desc">한국 가스 수입 중<br>호르무즈 경유 비중</div>
+    </div>
+    <div class="kpi">
+      <span class="kpi-val">5척</span>
+      <div class="kpi-desc">호르무즈 내<br>HMM 억류 선박</div>
+    </div>
+    <div class="kpi">
+      <span class="kpi-val">4.5만</span>
+      <div class="kpi-desc">주한미군 병력<br>(트럼프 언급)</div>
+    </div>
+    <div class="kpi">
+      <span class="kpi-val">~2000</span>
+      <div class="kpi-desc">호르무즈 억류<br>전 세계 선박 수</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    📌 한국 정부 공식 입장(2026.05.05) : "미측의 제안을 주목하고 있다. 한반도 대비태세·국내법 절차 등 감안해 검토 중" — 외교부
+  </div>
+</div>
+</body>
+</html>
