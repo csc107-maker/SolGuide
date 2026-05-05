@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공매도 메커니즘</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0f4ff; padding: 24px; }
+  .container {
+    max-width: 760px; margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(30,60,180,0.10);
+    overflow: hidden;
+  }
+  .header {
+    background: linear-gradient(135deg, #1e3c8c 0%, #2563eb 100%);
+    color: #fff;
+    padding: 28px 32px 20px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 14px;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+  }
+  .header h2 { font-size: 22px; font-weight: 900; }
+  .header p { font-size: 13px; opacity: 0.80; margin-top: 4px; }
+  .steps { padding: 28px 32px 10px; }
+  .step {
+    display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px;
+    position: relative;
+  }
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 21px; top: 44px;
+    width: 2px; height: calc(100% - 8px);
+    background: #dce7ff;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 900;
+    z-index: 1;
+  }
+  .step-num.s1 { background: #dbeafe; color: #1d4ed8; }
+  .step-num.s2 { background: #fef9c3; color: #b45309; }
+  .step-num.s3 { background: #dcfce7; color: #16a34a; }
+  .step-num.s4 { background: #fee2e2; color: #dc2626; }
+  .step-body { flex: 1; }
+  .step-body .label {
+    font-size: 14px; font-weight: 700; color: #1e3c8c;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .step-body .label .icon { font-size: 18px; }
+  .step-body p { font-size: 13px; color: #444; margin-top: 4px; line-height: 1.7; }
+  .example-box {
+    background: #f8faff;
+    border: 1.5px solid #c7d7ff;
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin: 4px 32px 24px;
+  }
+  .example-box .ex-title { font-size: 13px; font-weight: 700; color: #2563eb; margin-bottom: 10px; }
+  .example-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px dashed #dce7ff;
+  }
+  .example-row:last-child { border-bottom: none; }
+  .example-row .left { font-size: 12px; color: #555; }
+  .example-row .right { font-size: 13px; font-weight: 700; }
+  .right.red { color: #dc2626; }
+  .right.green { color: #16a34a; }
+  .right.blue { color: #2563eb; }
+  .warn-box {
+    background: #fff7ed;
+    border-left: 4px solid #f97316;
+    padding: 14px 24px;
+    margin: 0 32px 28px;
+    border-radius: 0 10px 10px 0;
+    font-size: 12.5px; color: #7c4a1e; line-height: 1.7;
+  }
+  .warn-box strong { color: #c2410c; }
+  .footer-note {
+    text-align: center; padding: 12px; background: #f0f4ff;
+    font-size: 11.5px; color: #7089b8;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">📉 공매도 기초 가이드</div>
+    <h2>공매도(Short Selling)란 무엇인가?</h2>
+    <p>없는 주식을 팔아 이익을 내는 전략 — 4단계로 완전 이해</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num s1">1</div>
+      <div class="step-body">
+        <div class="label"><span class="icon">🏦</span> 증권사에서 주식을 빌린다</div>
+        <p>투자자는 자신이 주식을 보유하지 않은 상태에서 증권사(또는 다른 기관)로부터 주식을 일정 기간 빌립니다. 빌린 대가로 수수료(대차료)를 지불합니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num s2">2</div>
+      <div class="step-body">
+        <div class="label"><span class="icon">💸</span> 빌린 주식을 시장에서 판다</div>
+        <p>빌린 주식을 즉시 현재 시장가에 매도합니다. 이 시점에서 현금이 들어오지만, 나중에 주식을 되돌려줘야 할 의무가 생깁니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num s3">3</div>
+      <div class="step-body">
+        <div class="label"><span class="icon">📉</span> 주가가 내리길 기다린다</div>
+        <p>주가가 하락하면 더 낮은 가격에 동일한 주식을 시장에서 사들여(환매수) 증권사에 돌려줍니다. 주가가 오르면 손실이 발생합니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num s4">4</div>
+      <div class="step-body">
+        <div class="label"><span class="icon">✅</span> 차익을 챙긴다 (또는 손실 확정)</div>
+        <p>매도가와 환매수가의 차이에서 대차료와 수수료를 제외한 금액이 이익 또는 손실이 됩니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="example-box">
+    <div class="ex-title">📊 LS일렉트릭 공매도 예시 시뮬레이션</div>
+    <div class="example-row">
+      <span class="left">① 주식 대차 (빌리는 시점)</span>
+      <span class="right blue">300,000원/주</span>
+    </div>
+    <div class="example-row">
+      <span class="left">② 시장 매도 (공매도 실행)</span>
+      <span class="right blue">300,000원 × 1,000주 = 3억원 수취</span>
+    </div>
+    <div class="example-row">
+      <span class="left">③-A 하락 시나리오 환매수</span>
+      <span class="right green">260,000원 × 1,000주 = 2.6억원</span>
+    </div>
+    <div class="example-row">
+      <span class="left">③-B 상승 시나리오 환매수</span>
+      <span class="right red">340,000원 × 1,000주 = 3.4억원</span>
+    </div>
+    <div class="example-row">
+      <span class="left">④-A 하락 시 이익 (대차료 제외 전)</span>
+      <span class="right green">+4,000만원 이익 🟢</span>
+    </div>
+    <div class="example-row">
+      <span class="left">④-B 상승 시 손실 (이론상 무한대)</span>
+      <span class="right red">-4,000만원 손실 🔴</span>
+    </div>
+  </div>
+  <div class="warn-box">
+    ⚠️ <strong>개인 투자자 주의:</strong> 공매도는 주가 상승 시 손실이 이론상 무한대입니다. 개인은 기관·외국인 대비 대차 비용과 정보력에서 불리하므로, 직접 공매도보다는 공매도 잔고 증가를 <strong>매도 신호 또는 변동성 확대 신호</strong>로 모니터링하는 것이 합리적입니다.
+  </div>
+  <div class="footer-note">※ 본 인포그래픽은 교육 목적으로 작성되었습니다. 투자 판단의 책임은 투자자 본인에게 있습니다.</div>
+</div>
+</body>
+</html>
