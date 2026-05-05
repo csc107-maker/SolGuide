@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>히트펌프 도입 장벽</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  :root {
+    --bg: #fff8f0;
+    --card: #ffffff;
+    --text: #1c1c2e;
+    --sub: #6b7280;
+    --border: #ffe0c8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 32px 20px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+
+  .widget-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    color: #1c1c2e;
+  }
+  .widget-sub {
+    text-align: center;
+    font-size: 13px;
+    color: var(--sub);
+    margin-bottom: 28px;
+  }
+
+  .barriers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .barrier-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 22px 20px;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+    border: 1.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .barrier-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+
+  .card-c1::before { background: linear-gradient(90deg, #ff6b35, #ff9065); }
+  .card-c2::before { background: linear-gradient(90deg, #e74c3c, #ff6b7a); }
+  .card-c3::before { background: linear-gradient(90deg, #f39c12, #f1c40f); }
+  .card-c4::before { background: linear-gradient(90deg, #8e44ad, #9b59b6); }
+  .card-c5::before { background: linear-gradient(90deg, #27ae60, #2ecc71); }
+
+  .barrier-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .barrier-num {
+    font-size: 11px;
+    font-weight: 800;
+    color: #ccc;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .barrier-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .barrier-desc {
+    font-size: 12px;
+    color: var(--sub);
+    line-height: 1.7;
+  }
+
+  .highlight-box {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .hl-orange { background: #fff3ed; color: #ff6b35; }
+  .hl-red { background: #fff0f0; color: #e74c3c; }
+  .hl-yellow { background: #fffbeb; color: #d97706; }
+  .hl-purple { background: #f5f0ff; color: #8e44ad; }
+  .hl-green { background: #ecfdf5; color: #27ae60; }
+
+  .cost-comparison {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 22px 26px;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+    border: 1.5px solid var(--border);
+  }
+
+  .cost-title {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+
+  .cost-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .cost-label { font-size: 13px; font-weight: 600; width: 130px; color: var(--sub); }
+  .cost-bar-wrap { flex: 1; }
+  .cost-bar-track { height: 32px; background: #f3f4f6; border-radius: 8px; overflow: hidden; position: relative; }
+  .cost-bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .fill-heat { background: linear-gradient(90deg, #ff6b35, #ff9065); width: 100%; }
+  .fill-boiler { background: linear-gradient(90deg, #4f8ef7, #6fa8ff); width: 10%; }
+
+  .source-note { font-size: 11px; color: #aab; text-align: right; margin-top: 16px; }
+
+  @media (max-width: 680px) {
+    .barriers-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 440px) {
+    .barriers-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="widget-title">⚠️ 히트펌프 도입 시 현실적 장벽 5가지</p>
+  <p class="widget-sub">좋은 건 알지만… 막상 도입하면 부딪히는 문제들</p>
+
+  <div class="barriers-grid">
+    <div class="barrier-card card-c1">
+      <span class="barrier-icon">💰</span>
+      <div class="barrier-num">Barrier 01</div>
+      <div class="highlight-box hl-orange">설치비 1,000만원+</div>
+      <div class="barrier-title">초기 설치비용<br>콘덴싱보일러의 10배</div>
+      <div class="barrier-desc">본체 구입비 + 배관·전기 공사 합산 시 가구당 1,000만원 초과. 100만원인 콘덴싱보일러 대비 진입장벽 극대화.</div>
+    </div>
+
+    <div class="barrier-card card-c2">
+      <span class="barrier-icon">⚡</span>
+      <div class="barrier-num">Barrier 02</div>
+      <div class="highlight-box hl-red">전기요금 폭탄</div>
+      <div class="barrier-title">주택용 누진제<br>소비자 최대 우려</div>
+      <div class="barrier-desc">겨울철 히트펌프 가동 시 전력 소비 급증 → 누진 3단계 진입 우려. 공동주택은 제도적 불이익이 기숙사 대비 큼.</div>
+    </div>
+
+    <div class="barrier-card card-c3">
+      <span class="barrier-icon">🏠</span>
+      <div class="barrier-num">Barrier 03</div>
+      <div class="highlight-box hl-yellow">온돌 호환 문제</div>
+      <div class="barrier-title">한국형 바닥난방<br>저온수 요구</div>
+      <div class="barrier-desc">온돌 방식은 40~60℃ 저온수 필요. 유럽형 라디에이터 기준 제품 그대로 국내 적용 불가. 내부 배관 전체 교체 필요한 경우도 존재.</div>
+    </div>
+
+    <div class="barrier-card card-c4">
+      <span class="barrier-icon">📋</span>
+      <div class="barrier-num">Barrier 04</div>
+      <div class="highlight-box hl-purple">인증·표준 미비</div>
+      <div class="barrier-title">국내 KS 인증 기준<br>아직 정비 중</div>
+      <div class="barrier-desc">가정용 고효율 히트펌프(공기-물)에 대한 국가표준(KS) 인증 기준 마련 중. 전문 설치기사 수 절대 부족.</div>
+    </div>
+
+    <div class="barrier-card card-c5">
+      <span class="barrier-icon">❄️</span>
+      <div class="barrier-num">Barrier 05</div>
+      <div class="highlight-box hl-green">혹한기 성능 저하</div>
+      <div class="barrier-title">영하 15℃ 이하<br>효율 급격히 하락</div>
+      <div class="barrier-desc">극한 저온 환경에서 보조 전열히터 가동 시 전력 급증, 가스보일러 수준의 효율로 하락. 중부 이북 지역은 특히 주의 필요.</div>
+    </div>
+  </div>
+
+  <!-- Cost comparison -->
+  <div class="cost-comparison">
+    <div class="cost-title">💡 설치비 직접 비교</div>
+    <div class="cost-row">
+      <span class="cost-label">히트펌프 (LG/삼성)</span>
+      <div class="cost-bar-wrap">
+        <div class="cost-bar-track">
+          <div class="cost-bar-fill fill-heat">1,000만원 이상</div>
+        </div>
+      </div>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">콘덴싱 보일러</span>
+      <div class="cost-bar-wrap">
+        <div class="cost-bar-track">
+          <div class="cost-bar-fill fill-boiler">100만원</div>
+        </div>
+      </div>
+    </div>
+    <p class="source-note">출처: 기후에너지환경부 히트펌프 보급 활성화 방안 (2025.12)</p>
+  </div>
+
+</div>
+</body>
+</html>
