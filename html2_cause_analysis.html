@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수주 후 주가 무반응 원인 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: transparent;
+    padding: 16px 0;
+  }
+  .wrapper {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 780px;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    border: 1px solid #e8eefc;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: #1a2f6e;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+  .section-sub {
+    font-size: 12px;
+    color: #8899bb;
+    margin-bottom: 22px;
+  }
+  .analysis-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+  .analysis-table thead tr th {
+    background: #1a2f6e;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: left;
+    letter-spacing: 0.2px;
+  }
+  .analysis-table thead tr th:first-child { border-radius: 10px 0 0 10px; }
+  .analysis-table thead tr th:last-child { border-radius: 0 10px 10px 0; }
+  .analysis-table tbody tr {
+    background: #f7faff;
+    transition: background 0.2s;
+  }
+  .analysis-table tbody tr:hover { background: #eef4ff; }
+  .analysis-table tbody tr td {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #2d3a5e;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .analysis-table tbody tr td:first-child {
+    border-radius: 10px 0 0 10px;
+    white-space: nowrap;
+  }
+  .analysis-table tbody tr td:last-child {
+    border-radius: 0 10px 10px 0;
+  }
+  .num-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #1a2f6e;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 6px;
+    flex-shrink: 0;
+  }
+  .cause-cell {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    font-weight: 700;
+    color: #1a2f6e;
+    font-size: 13px;
+  }
+  .impact-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .impact-high { background: #fde8e8; color: #c0392b; }
+  .impact-mid { background: #fef5e4; color: #e67e22; }
+  .impact-low { background: #e8f5e9; color: #27ae60; }
+  .resolution-cell { font-size: 12px; color: #5a6b8a; }
+  .bottom-note {
+    margin-top: 16px;
+    background: linear-gradient(90deg, #eef4ff, #f5f0ff);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #4a5a8a;
+    border-left: 4px solid #2563eb;
+    line-height: 1.6;
+  }
+  @media (max-width: 600px) {
+    .analysis-table thead { display: none; }
+    .analysis-table, .analysis-table tbody, .analysis-table tr, .analysis-table td { display: block; width: 100%; }
+    .analysis-table tr { margin-bottom: 10px; border-radius: 12px; overflow: hidden; }
+    .analysis-table td { padding: 8px 12px; border-radius: 0 !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="section-title">📊 수주해도 주가가 안 오르는 5가지 이유 — 원인 분석</div>
+  <div class="section-sub">한화오션 주가 무반응 현상의 구조적 원인과 해소 조건 (2026년 기준)</div>
+
+  <table class="analysis-table">
+    <thead>
+      <tr>
+        <th style="width:28%">원인</th>
+        <th style="width:38%">핵심 내용</th>
+        <th style="width:14%">주가 영향</th>
+        <th style="width:20%">해소 조건</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="cause-cell"><span class="num-badge">1</span>매출 인식 지연</div>
+        </td>
+        <td>수주→건조→인도까지 2~4년 소요. 오늘 수주 = 2028년 이후 실적. 즉각 EPS에 반영 안 됨</td>
+        <td><span class="impact-mid">중간 ↓</span></td>
+        <td class="resolution-cell">고선가 물량 매출 인식 본격화 (2026년 하반기부터)</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="cause-cell"><span class="num-badge">2</span>선반영 (Priced-In)</div>
+        </td>
+        <td>2025년 초 대비 주가 213% 상승. 시장은 이미 LNG선·방산 성장 기대를 반영한 상태</td>
+        <td><span class="impact-mid">중간 ↓</span></td>
+        <td class="resolution-cell">예상 못 한 대형 수주(CPSP 등) 발표 시 추가 반응</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="cause-cell"><span class="num-badge">3</span>산은 오버행</div>
+        </td>
+        <td>KDB산업은행 지분 19.5%(약 5,974만 주) 블록딜 매각 진행 중. 잠재적 대량 매도 물량 상존</td>
+        <td><span class="impact-high">높음 ↓↓</span></td>
+        <td class="resolution-cell">산은 잔여 지분 전량 매각 완료 시</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="cause-cell"><span class="num-badge">4</span>해양플랜트 적자</div>
+        </td>
+        <td>상선 이익을 해양부문 경상적자가 상쇄. 올해 해양 수주 실패 시 2027년 상반기까지 분기 적자 지속 전망</td>
+        <td><span class="impact-high">높음 ↓↓</span></td>
+        <td class="resolution-cell">브라질 FPSO 등 해양플랜트 신규 수주 확정</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="cause-cell"><span class="num-badge">5</span>CPSP 불확실성</div>
+        </td>
+        <td>최대 60조원 캐나다 잠수함 분할 수주 우려로 3월 주가 14.7% 폭락. 결과 발표 전까지 불확실성 지속</td>
+        <td><span class="impact-high">높음 ↕</span></td>
+        <td class="resolution-cell">2026년 상반기 수주 결과 발표</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="bottom-note">
+    💡 <strong>핵심 인사이트:</strong> 한화오션의 개별 상선 수주는 "이미 아는 이야기"입니다. 시장이 진짜 기다리는 건 캐나다 잠수함(CPSP) 수주 확정, MASGA 법안 통과, 해양플랜트 신규 수주 등 <strong>예상 외의 빅이벤트</strong>입니다. 오버행이 해소되고 이 트리거들이 하나씩 현실화될 때 주가가 본격 반응할 것으로 시장은 내다보고 있습니다.
+  </div>
+</div>
+</body>
+</html>
