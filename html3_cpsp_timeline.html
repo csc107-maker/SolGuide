@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>캐나다 잠수함 CPSP 프로젝트 타임라인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: transparent;
+    padding: 16px 0;
+  }
+  .container {
+    background: linear-gradient(150deg, #f0f7ff 0%, #faf5ff 100%);
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 780px;
+    margin: 0 auto;
+    border: 1px solid #dce8ff;
+    box-shadow: 0 4px 24px rgba(30,80,200,0.07);
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header h2 {
+    font-size: 16px;
+    font-weight: 900;
+    color: #1a2f6e;
+  }
+  .header p { font-size: 12px; color: #8899bb; margin-top: 4px; }
+  .scale-badge {
+    background: linear-gradient(135deg, #1a2f6e, #2563eb);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .scale-badge .scale-num { font-size: 22px; font-weight: 900; }
+  .scale-badge .scale-label { font-size: 10px; opacity: 0.8; margin-top: 1px; }
+
+  /* 상단 키 팩트 */
+  .key-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 580px) { .key-facts { grid-template-columns: 1fr 1fr; } }
+  .fact-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #dde8ff;
+  }
+  .fact-icon { font-size: 22px; margin-bottom: 5px; }
+  .fact-value { font-size: 16px; font-weight: 900; color: #1a2f6e; }
+  .fact-label { font-size: 10px; color: #8899bb; margin-top: 2px; }
+
+  /* 타임라인 */
+  .timeline-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #4a5a8a;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, #2563eb, #a855f7);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute;
+    left: -25px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #2563eb;
+    background: #2563eb;
+  }
+  .tl-dot.current {
+    background: #f59e0b;
+    box-shadow: 0 0 0 2px #f59e0b, 0 0 12px rgba(245,158,11,0.4);
+  }
+  .tl-dot.future { background: #fff; box-shadow: 0 0 0 2px #a855f7; }
+  .tl-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2563eb;
+    margin-bottom: 2px;
+  }
+  .tl-date.current-date { color: #f59e0b; }
+  .tl-date.future-date { color: #a855f7; }
+  .tl-content {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    border: 1px solid #e2eeff;
+    font-size: 13px;
+    color: #2d3a5e;
+    line-height: 1.55;
+  }
+  .tl-content.current-content { border-color: #fde68a; background: #fffbeb; }
+  .tl-content.future-content { border-color: #e9d5ff; background: #faf5ff; }
+  .tl-content strong { color: #1a2f6e; }
+
+  /* 경쟁자 비교 */
+  .vs-section {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+  .vs-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    border: 2px solid #e2eeff;
+  }
+  .vs-card.us { border-color: #bfdbfe; }
+  .vs-card.de { border-color: #fde68a; }
+  .vs-card-flag { font-size: 22px; margin-bottom: 4px; }
+  .vs-card-name { font-size: 12px; font-weight: 900; color: #1a2f6e; margin-bottom: 6px; }
+  .vs-item { font-size: 11px; color: #5a6b8a; margin-bottom: 3px; }
+  .vs-item strong { color: #2563eb; }
+  .vs-label {
+    font-size: 22px;
+    font-weight: 900;
+    color: #c0392b;
+    text-align: center;
+  }
+  .source-note {
+    text-align: right;
+    font-size: 10px;
+    color: #9aadcc;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div>
+      <h2>🇨🇦 캐나다 패트롤 잠수함 프로젝트 (CPSP)</h2>
+      <p>한화오션의 2026년 최대 주가 트리거 — 단일 방산 수출 한국 역사상 최대 규모</p>
+    </div>
+    <div class="scale-badge">
+      <div class="scale-num">최대 60조원</div>
+      <div class="scale-label">프로젝트 총 규모 (잠수함 12척)</div>
+    </div>
+  </div>
+
+  <div class="key-facts">
+    <div class="fact-card">
+      <div class="fact-icon">🚢</div>
+      <div class="fact-value">12척</div>
+      <div class="fact-label">KSS-III 잠수함 납품 목표</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">📅</div>
+      <div class="fact-value">2035년</div>
+      <div class="fact-label">초도 함 인도 목표</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">👥</div>
+      <div class="fact-value">15,000명</div>
+      <div class="fact-label">연간 캐나다 고용 창출 (KPMG 분석)</div>
+    </div>
+  </div>
+
+  <div class="timeline-title">CPSP 주요 일정</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2021년</div>
+      <div class="tl-content">캐나다 정부, 노후 빅토리아급 대체 위한 CPSP 개념 수립 시작</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025년 8월</div>
+      <div class="tl-content"><strong>한화오션 KSS-III 최종 후보(숏리스트) 선정</strong> — 독일 TKMS와 최종 2파전 구도 확정</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025년 10월</div>
+      <div class="tl-content">KSS-III Batch-II 1번 함 진수 — 실전 생산라인 가동 중임을 입증</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026년 1월</div>
+      <div class="tl-content">캐나다 국방조달부 장관 한국 방문 (1.30~2.6). 한화오션 거제 조선소 시찰. Algoma Steel MOU, Fermeuse LNG MOU 체결</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026년 3월</div>
+      <div class="tl-content"><strong>CPSP 파트너스데이 in 오타와</strong> — 캐나다 기업·대학과 5개 협약 + 3개 MOU 체결. Babcock Canada와 공동 수주 추진 공식화</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot current"></div>
+      <div class="tl-date current-date">▶ 현재 (2026.05)</div>
+      <div class="tl-content current-content"><strong>최종 제안서 심사 중.</strong> 분할 수주 가능성 보도로 주가 변동성 확대. 캐나다 총리(카니) 거제 조선소 방문 완료. 수주 결과 발표 임박</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot future"></div>
+      <div class="tl-date future-date">2026년 상반기 (예정)</div>
+      <div class="tl-content future-content"><strong>최종 수주자 발표 예상</strong> — 한화오션 단독 수주 시 주가 폭등 시나리오. 분할 또는 탈락 시 단기 급락 가능성</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot future"></div>
+      <div class="tl-date future-date">2032년~2043년</div>
+      <div class="tl-content future-content">계약 체결 기준, 2032년 1번 함 인도 → 연 1척씩 2043년까지 12척 전량 납품 완료</div>
+    </div>
+  </div>
+
+  <div class="vs-section">
+    <div class="vs-card us">
+      <div class="vs-card-flag">🇰🇷</div>
+      <div class="vs-card-name">한화오션 (KSS-III)</div>
+      <div class="vs-item">✅ <strong>최단 납기</strong> — 2032년 첫 함 인도</div>
+      <div class="vs-item">✅ <strong>검증된 실전 플랫폼</strong> — 현재 한국 해군 운용 중</div>
+      <div class="vs-item">✅ <strong>리튬이온 + AIP</strong> 추진 시스템</div>
+      <div class="vs-item">✅ 캐나다 내 1만 5천 일자리 창출 약속</div>
+    </div>
+    <div class="vs-label">VS</div>
+    <div class="vs-card de">
+      <div class="vs-card-flag">🇩🇪</div>
+      <div class="vs-card-name">TKMS (Type 212)</div>
+      <div class="vs-item">✅ 독일·유럽 나토 동맹국 신뢰</div>
+      <div class="vs-item">✅ 오랜 서방 잠수함 수출 경험</div>
+      <div class="vs-item">⚠️ 납기 일정 불확실성</div>
+      <div class="vs-item">⚠️ 캐나다 현지화 인프라 약함</div>
+    </div>
+  </div>
+
+  <div class="source-note">※ 출처: Canadian DND, Hanwha Ocean 공식 발표, Defence Post (2026.03), Naval Today (2026.01) | 투자 권유 아님</div>
+</div>
+</body>
+</html>
