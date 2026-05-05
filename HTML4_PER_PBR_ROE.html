@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PER PBR ROE 계산</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0fdf4; padding: 20px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .top-card {
+    background: linear-gradient(135deg, #14532d 0%, #16a34a 100%);
+    border-radius: 18px 18px 0 0;
+    padding: 24px 28px; color: #fff;
+  }
+  .top-card .sub { font-size: 12px; opacity: 0.75; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .top-card h2 { font-size: 20px; font-weight: 900; }
+  .top-card p { font-size: 12.5px; opacity: 0.8; margin-top: 4px; }
+  .metric-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+    background: #fff; border-bottom: 1px solid #d1fae5;
+  }
+  .metric-item {
+    padding: 20px 16px 16px;
+    text-align: center;
+    border-right: 1px solid #d1fae5;
+    position: relative;
+  }
+  .metric-item:last-child { border-right: none; }
+  .m-label { font-size: 11px; font-weight: 700; color: #6b7280; letter-spacing: 0.04em; }
+  .m-title { font-size: 22px; font-weight: 900; color: #14532d; margin: 6px 0; }
+  .m-ko { font-size: 12px; color: #374151; }
+  .m-val { 
+    font-size: 14px; font-weight: 800;
+    padding: 4px 12px; border-radius: 20px;
+    margin-top: 8px; display: inline-block;
+  }
+  .m-val.v1 { background: #dbeafe; color: #1d4ed8; }
+  .m-val.v2 { background: #fce7f3; color: #9d174d; }
+  .m-val.v3 { background: #dcfce7; color: #15803d; }
+  .panels { background: #fff; padding: 0; }
+  .panel { border-bottom: 1px solid #f0fdf4; }
+  .panel-hdr {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 24px 12px;
+    cursor: pointer;
+  }
+  .panel-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .p1 .panel-icon { background: #dbeafe; }
+  .p2 .panel-icon { background: #fce7f3; }
+  .p3 .panel-icon { background: #dcfce7; }
+  .panel-text {}
+  .panel-text .pt { font-size: 15px; font-weight: 800; color: #1e293b; }
+  .panel-text .pd { font-size: 12px; color: #64748b; }
+  .panel-body { padding: 0 24px 20px; }
+  .formula-box {
+    background: #f8faff;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .formula-box .f-label { font-size: 13px; font-weight: 700; color: #2563eb; min-width: 60px; }
+  .formula-box .f-text { font-size: 14px; font-weight: 700; color: #1e293b; font-family: 'Courier New', monospace; }
+  .apply-box { background: #f0fdf4; border-radius: 12px; padding: 14px 18px; }
+  .apply-box .a-title { font-size: 12.5px; font-weight: 700; color: #16a34a; margin-bottom: 10px; }
+  .apply-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #d1fae5; }
+  .apply-row:last-child { border-bottom: none; }
+  .apply-row .al { font-size: 12px; color: #555; }
+  .apply-row .ar { font-size: 13px; font-weight: 700; color: #14532d; }
+  .interp-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .interp-tag { font-size: 11.5px; padding: 4px 12px; border-radius: 20px; }
+  .it-green { background: #dcfce7; color: #16a34a; }
+  .it-yellow { background: #fef9c3; color: #b45309; }
+  .it-red { background: #fee2e2; color: #dc2626; }
+  .footer-bar {
+    background: #f0fdf4; border-radius: 0 0 18px 18px;
+    padding: 14px 24px; text-align: center;
+    font-size: 11.5px; color: #6b7280;
+  }
+  .footer-bar strong { color: #14532d; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-card">
+    <div class="sub">📐 주식 밸류에이션 3대 지표</div>
+    <h2>PER · PBR · ROE 완전 정복 + LS일렉트릭 실전 적용</h2>
+    <p>주식 투자의 기본 — 공식부터 해석까지 한 번에</p>
+  </div>
+  <div class="metric-grid">
+    <div class="metric-item">
+      <div class="m-label">VALUATION</div>
+      <div class="m-title">PER</div>
+      <div class="m-ko">주가수익비율</div>
+      <div class="m-val v1">LS ~ 92배 (2026F)</div>
+    </div>
+    <div class="metric-item">
+      <div class="m-label">BOOK VALUE</div>
+      <div class="m-title">PBR</div>
+      <div class="m-ko">주가순자산비율</div>
+      <div class="m-val v2">LS ~ 17.5배 (추정)</div>
+    </div>
+    <div class="metric-item">
+      <div class="m-label">EFFICIENCY</div>
+      <div class="m-title">ROE</div>
+      <div class="m-ko">자기자본이익률</div>
+      <div class="m-val v3">LS ~ 19.1% (2026F)</div>
+    </div>
+  </div>
+  <div class="panels">
+    <div class="panel p1">
+      <div class="panel-hdr">
+        <div class="panel-icon">📊</div>
+        <div class="panel-text">
+          <div class="pt">PER (Price-Earnings Ratio) — 주가수익비율</div>
+          <div class="pd">"이 회사를 지금 사면 몇 년치 이익을 사는 건가?"</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="formula-box">
+          <span class="f-label">공식</span>
+          <span class="f-text">PER = 현재 주가 ÷ EPS(주당순이익)</span>
+        </div>
+        <div class="apply-box">
+          <div class="a-title">🔢 LS일렉트릭 실제 계산 (2026F 기준)</div>
+          <div class="apply-row">
+            <span class="al">현재 주가</span>
+            <span class="ar">294,000원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">2026F 영업이익 (에프앤가이드)</span>
+            <span class="ar">6,376억원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">추정 순이익 (세율 25% 적용)</span>
+            <span class="ar">~4,782억원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">총 발행 주식수</span>
+            <span class="ar">~1억 4,940만주</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">2026F EPS</span>
+            <span class="ar">~3,200원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">2026F PER</span>
+            <span class="ar" style="color:#dc2626; font-size:15px">약 91.9배</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">2027F PER (EPS 4,663원 기준)</span>
+            <span class="ar">약 63배</span>
+          </div>
+        </div>
+        <div class="interp-row">
+          <span class="interp-tag it-green">PER 10배 이하: 저평가 가능성</span>
+          <span class="interp-tag it-yellow">PER 20~40배: 성장주 수준</span>
+          <span class="interp-tag it-red">PER 90배+: 고성장 기대 프리미엄</span>
+        </div>
+      </div>
+    </div>
+    <div class="panel p2">
+      <div class="panel-hdr">
+        <div class="panel-icon">📚</div>
+        <div class="panel-text">
+          <div class="pt">PBR (Price-to-Book Ratio) — 주가순자산비율</div>
+          <div class="pd">"지금 청산하면 장부가 대비 얼마를 받는가?"</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="formula-box">
+          <span class="f-label">공식</span>
+          <span class="f-text">PBR = 현재 주가 ÷ BPS(주당순자산)</span>
+        </div>
+        <div class="apply-box">
+          <div class="a-title">🔢 LS일렉트릭 실제 계산 (추정)</div>
+          <div class="apply-row">
+            <span class="al">현재 주가</span>
+            <span class="ar">294,000원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">추정 자기자본</span>
+            <span class="ar">~2.5조원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">BPS (주당 순자산)</span>
+            <span class="ar">~16,700원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">PBR</span>
+            <span class="ar" style="color:#9d174d; font-size:15px">약 17.6배</span>
+          </div>
+        </div>
+        <div class="interp-row">
+          <span class="interp-tag it-green">PBR 1배 미만: 자산가치 이하 거래</span>
+          <span class="interp-tag it-yellow">PBR 1~3배: 일반 제조업 수준</span>
+          <span class="interp-tag it-red">PBR 10배+: 강한 성장 프리미엄</span>
+        </div>
+      </div>
+    </div>
+    <div class="panel p3">
+      <div class="panel-hdr">
+        <div class="panel-icon">📈</div>
+        <div class="panel-text">
+          <div class="pt">ROE (Return on Equity) — 자기자본이익률</div>
+          <div class="pd">"주주가 맡긴 돈으로 얼마나 잘 벌었나?"</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="formula-box">
+          <span class="f-label">공식</span>
+          <span class="f-text">ROE = 순이익 ÷ 자기자본 × 100 (%)</span>
+        </div>
+        <div class="apply-box">
+          <div class="a-title">🔢 LS일렉트릭 ROE 추이 및 전망</div>
+          <div class="apply-row">
+            <span class="al">2023년 ROE (과거)</span>
+            <span class="ar">약 6~8%</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">2025년 ROE</span>
+            <span class="ar">약 13~15% (개선 중)</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">2026F 순이익</span>
+            <span class="ar">~4,782억원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">2026F 자기자본</span>
+            <span class="ar">~2.5조원</span>
+          </div>
+          <div class="apply-row">
+            <span class="al">2026F ROE</span>
+            <span class="ar" style="color:#16a34a; font-size:15px">약 19.1% ✅</span>
+          </div>
+        </div>
+        <div class="interp-row">
+          <span class="interp-tag it-green">ROE 15% 이상: 버핏 기준 우수</span>
+          <span class="interp-tag it-yellow">ROE 10~15%: 양호</span>
+          <span class="interp-tag it-red">ROE 5% 미만: 자본 비효율</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <strong>종합 판단:</strong> ROE 19%는 우수하나, PER 92배·PBR 17.6배는 높은 성장 프리미엄 포함. <strong>가치주가 아닌 성장주로 접근</strong>하는 것이 합리적. 2027F PER 63배 기준이면 글로벌 피어 대비 적정 수준.<br>
+    ※ 모든 수치는 공개된 컨센서스 및 추정치 기반이며 실제 수치와 다를 수 있습니다.
+  </div>
+</div>
+</body>
+</html>
