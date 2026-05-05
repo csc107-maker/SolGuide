@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>외국인 공매도 원인 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f5f7fa; padding: 24px; }
+  .container { max-width: 760px; margin: 0 auto; }
+  .title-bar {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-radius: 18px 18px 0 0;
+    padding: 22px 28px;
+    color: #fff;
+  }
+  .title-bar .sub { font-size: 12px; color: #94a3b8; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .title-bar h2 { font-size: 20px; font-weight: 900; }
+  .title-bar p { font-size: 13px; color: #cbd5e1; margin-top: 4px; }
+  .stat-row {
+    background: #fff;
+    display: flex; gap: 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .stat {
+    flex: 1;
+    padding: 18px 20px;
+    text-align: center;
+    border-right: 1px solid #e2e8f0;
+  }
+  .stat:last-child { border-right: none; }
+  .stat .val { font-size: 22px; font-weight: 900; color: #1e293b; }
+  .stat .val.red { color: #dc2626; }
+  .stat .val.green { color: #16a34a; }
+  .stat .val.blue { color: #2563eb; }
+  .stat .lbl { font-size: 11px; color: #64748b; margin-top: 3px; }
+  .cards { background: #fff; padding: 20px 24px 8px; border-radius: 0 0 18px 18px; }
+  .card {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 16px 18px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+  .card:hover { transform: translateX(4px); }
+  .card.c1 { background: #fef2f2; border-left: 4px solid #ef4444; }
+  .card.c2 { background: #fff7ed; border-left: 4px solid #f97316; }
+  .card.c3 { background: #fffbeb; border-left: 4px solid #f59e0b; }
+  .card.c4 { background: #f0fdf4; border-left: 4px solid #22c55e; }
+  .card.c5 { background: #eff6ff; border-left: 4px solid #3b82f6; }
+  .card-icon { font-size: 26px; flex-shrink: 0; }
+  .card-body {}
+  .card-body .num {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    color: #94a3b8; margin-bottom: 2px;
+  }
+  .card-body .title { font-size: 15px; font-weight: 800; color: #1e293b; }
+  .card-body .desc { font-size: 12.5px; color: #475569; margin-top: 5px; line-height: 1.7; }
+  .card-body .tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 10px; border-radius: 20px;
+    margin-top: 7px;
+  }
+  .tag.high { background: #fee2e2; color: #dc2626; }
+  .tag.mid { background: #fef3c7; color: #d97706; }
+  .tag.low { background: #dcfce7; color: #16a34a; }
+  .note { text-align: center; padding: 12px; font-size: 11.5px; color: #94a3b8; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="title-bar">
+    <div class="sub">📌 외국인 공매도 증가 분석 — 2026년 4월 13일 이후</div>
+    <h2>왜 외국인은 LS일렉트릭을 공매도하는가?</h2>
+    <p>5가지 핵심 원인 분석</p>
+  </div>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="val red">294,000원</div>
+      <div class="lbl">현재가 (5/5 기준)</div>
+    </div>
+    <div class="stat">
+      <div class="val">907,000원</div>
+      <div class="lbl">52주 최고가</div>
+    </div>
+    <div class="stat">
+      <div class="val red">-67.6%</div>
+      <div class="lbl">고점 대비 하락률</div>
+    </div>
+    <div class="stat">
+      <div class="val blue">21.35%</div>
+      <div class="lbl">외국인 보유 비중</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card c1">
+      <div class="card-icon">💰</div>
+      <div class="card-body">
+        <div class="num">REASON 01</div>
+        <div class="title">고점 대비 반등 구간의 차익 실현 압박</div>
+        <div class="desc">52주 최고가 907,000원에서 진입한 외국인들의 손절 or 반등 구간 물량 털기. 외국인 보유 비중(21.35%)의 점진적 감소 추세. 고점 매도 미실현 외국인들의 평단가 회복 노력.</div>
+        <span class="tag high">영향도 매우 높음</span>
+      </div>
+    </div>
+    <div class="card c2">
+      <div class="card-icon">📊</div>
+      <div class="card-body">
+        <div class="num">REASON 02</div>
+        <div class="title">1분기 실적 컨센서스 5.8% 하회</div>
+        <div class="desc">영업이익 1,266억원은 사상 최대였지만 시장 기대치(1,344억원) 대비 소폭 미달. '어닝 미스'는 외국인 기관의 공매도 확대 빌미를 제공. 2분기 실적 이연 매출 반영 여부가 관건.</div>
+        <span class="tag high">영향도 높음</span>
+      </div>
+    </div>
+    <div class="card c3">
+      <div class="card-icon">⚗️</div>
+      <div class="card-body">
+        <div class="num">REASON 03</div>
+        <div class="title">은(Silver) 가격 급등 → 원가 리스크</div>
+        <div class="desc">변압기·배전기기 핵심 소재인 은 가격 상승이 원가 부담으로 직결. 판가 인상 시차(국내 3월, 해외 4월 반영 시작)로 1분기는 원가-판가 미스매칭 구간. 지속 시 OPM 악화 우려.</div>
+        <span class="tag mid">영향도 중간</span>
+      </div>
+    </div>
+    <div class="card c4">
+      <div class="card-icon">🌐</div>
+      <div class="card-body">
+        <div class="num">REASON 04</div>
+        <div class="title">미국 관세 불확실성 (단기 노이즈)</div>
+        <div class="desc">트럼프 행정부의 상호 관세 정책이 한국산 전력기기 수출에 미치는 단기 영향. 다만 3분기 관세 환급을 통한 영업이익 증가 가능성도 존재 — 일시적 리스크로 분석됨.</div>
+        <span class="tag mid">영향도 중간 (단기)</span>
+      </div>
+    </div>
+    <div class="card c5">
+      <div class="card-icon">💵</div>
+      <div class="card-body">
+        <div class="num">REASON 05</div>
+        <div class="title">미국 국채 금리 상승 → 신흥국 자금 이탈</div>
+        <div class="desc">10년 미국 국채 수익률 4.42% 수준 상승. 한국 등 신흥국 포트폴리오 리밸런싱 수요 확대. LS일렉트릭 단독 문제가 아닌 한국 시장 전반의 외국인 자금 흐름 변화.</div>
+        <span class="tag low">영향도 낮음 (구조적)</span>
+      </div>
+    </div>
+  </div>
+  <div class="note">※ 외국인 매매는 일방적이지 않음. 4/27 198,583주 순매수 → 4/28 862,911주 순매도 등 엇갈린 수급 지속</div>
+</div>
+</body>
+</html>
