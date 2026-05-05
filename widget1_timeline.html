@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HMM 나무호 사건 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8f6f0;
+    padding: 32px 16px;
+  }
+
+  .widget {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fffefa;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    border: 1.5px solid #e8e2d4;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a2744 0%, #2c3e6e 60%, #1e3a5f 100%);
+    padding: 28px 32px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .badge {
+    display: inline-block;
+    background: #e8453c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .header h1 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .header p {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+  }
+
+  .timeline {
+    padding: 28px 32px;
+  }
+
+  .item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 4px;
+    position: relative;
+  }
+  .item:not(:last-child) .line {
+    position: absolute;
+    left: 42px;
+    top: 44px;
+    width: 2px;
+    height: calc(100% + 4px);
+    background: #e0d9cc;
+    z-index: 0;
+  }
+
+  .left {
+    min-width: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
+  .dot.red    { background: #fde8e8; border: 2px solid #e8453c; }
+  .dot.blue   { background: #e8f0ff; border: 2px solid #2c5fe0; }
+  .dot.orange { background: #fff3e0; border: 2px solid #f07b22; }
+  .dot.green  { background: #e8f7ed; border: 2px solid #22a857; }
+  .dot.gray   { background: #f0ece4; border: 2px solid #8a8070; }
+
+  .time-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #9a8f80;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .content {
+    background: #fdf9f4;
+    border: 1px solid #ede7d9;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  .content-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2744;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .tag.critical { background: #fde8e8; color: #c0392b; }
+  .tag.official { background: #e8f0ff; color: #1a4db5; }
+  .tag.response { background: #e8f7ed; color: #1a7a3e; }
+  .tag.pressure { background: #fff3e0; color: #b85900; }
+  .tag.neutral  { background: #f0ece4; color: #5a5040; }
+
+  .content-desc {
+    font-size: 13px;
+    color: #4a4038;
+    line-height: 1.65;
+  }
+
+  .footer-note {
+    background: #f0ece4;
+    padding: 14px 32px;
+    font-size: 12px;
+    color: #7a6e60;
+    border-top: 1px solid #e0d9cc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="header">
+    <div class="badge">📋 INCIDENT TIMELINE</div>
+    <h1>HMM 나무호 폭발·화재 사건 타임라인</h1>
+    <p>2026년 5월 4일~5일 — 호르무즈 해협 UAE 인근 해역</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="item">
+      <div class="line"></div>
+      <div class="left">
+        <div class="dot red">💥</div>
+        <div class="time-label">5월 4일<br>20:40</div>
+      </div>
+      <div class="content">
+        <div class="content-title">HMM 나무호 기관실 좌현 폭발 발생 <span class="tag critical">긴급</span></div>
+        <div class="content-desc">UAE 샤르자 북쪽, 움알쿠와인항 인근 해역에 정박 중이던 HMM 나무(NAMU)호 기관실 좌현에서 원인 불명의 폭발음과 함께 화재 발생. 한국인 6명, 외국 국적 18명 등 총 24명 승선.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="line"></div>
+      <div class="left">
+        <div class="dot blue">📢</div>
+        <div class="time-label">5월 4일<br>심야</div>
+      </div>
+      <div class="content">
+        <div class="content-title">외교부 공식 발표 — 인명피해 없음 확인 <span class="tag official">공식발표</span></div>
+        <div class="content-desc">외교부 "호르무즈 해협 내측 UAE 인근 해역 정박 중 선박에서 폭발과 화재 발생"을 공식 발표. 한국 국적 선원 6명 포함 24명 전원 무사 확인. 해수부·외교부 중심으로 교신 및 원인 파악 착수.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="line"></div>
+      <div class="left">
+        <div class="dot orange">🇺🇸</div>
+        <div class="time-label">5월 4일<br>+5시간</div>
+      </div>
+      <div class="content">
+        <div class="content-title">트럼프, 이란 소행 단정·한국 참전 공개 압박 <span class="tag pressure">미국 압박</span></div>
+        <div class="content-desc">트럼프 대통령, 트루스소셜에 "이란이 프로젝트 프리덤 관련 한국 화물선 등 공격했다" 게시. "이제 한국도 이 작전에 합류할 때"라며 군사 참여 공개 촉구. 이란은 공식 입장 발표 없음.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="line"></div>
+      <div class="left">
+        <div class="dot green">🔥</div>
+        <div class="time-label">5월 5일<br>자정 이후</div>
+      </div>
+      <div class="content">
+        <div class="content-title">화재 진압 완료 — HMM 공식 확인 <span class="tag response">대응</span></div>
+        <div class="content-desc">HMM, 새벽 화재 진압 완료 공식 발표. 이산화탄소 소방 시스템으로 자체 진화. 엔진룸 CO₂ 잔류로 선원 출입 불가. 전력 차단으로 자력 항행 불가 상태. 비상 발전기 가동 중.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="line"></div>
+      <div class="left">
+        <div class="dot blue">🏛️</div>
+        <div class="time-label">5월 5일<br>12:30</div>
+      </div>
+      <div class="content">
+        <div class="content-title">청와대 긴급 회의 개최 <span class="tag official">공식대응</span></div>
+        <div class="content-desc">강훈식 비서실장 주재 위기관리 회의 개최. 위기관리센터장·해양수산비서관·외교안보비서관·국정상황실장 참석. "원인 규명 후 후속조치"·"국내법 절차 감안 프리덤 프로젝트 검토 중" 입장 표명.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="left">
+        <div class="dot gray">🔍</div>
+        <div class="time-label">조사 진행<br>중</div>
+      </div>
+      <div class="content">
+        <div class="content-title">나무호 두바이항 예인 후 합동 정밀조사 착수 예정 <span class="tag neutral">진행중</span></div>
+        <div class="content-desc">예인선으로 두바이항 이동 추진. 한국선급·중앙해양안전심판원·소방청 감식팀 현지 파견 예정. 탄흔·기뢰 흔적·기계 결함 여부 등 정밀 감식. 정확한 원인 규명까지 수일 소요 전망.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    ⚠️ 사고 원인(이란 피격 vs. 기계 결함 vs. 해상 기뢰)은 현재 조사 중이며, 최종 확인되지 않았습니다.
+  </div>
+</div>
+</body>
+</html>
