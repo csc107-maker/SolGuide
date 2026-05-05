@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나무호 폭발 원인 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f3ef;
+    padding: 32px 16px;
+  }
+
+  .widget {
+    max-width: 780px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    border: 1.5px solid #ddd8ce;
+  }
+
+  .hd {
+    background: linear-gradient(120deg, #2d4a1e 0%, #3d6b2a 100%);
+    padding: 24px 30px;
+    color: #fff;
+  }
+  .hd-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .hd h2 {
+    font-size: 19px;
+    font-weight: 900;
+    line-height: 1.4;
+  }
+  .hd p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 6px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: #fff;
+  }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    padding: 22px 20px;
+    border-right: 1px solid #ede7db;
+    border-bottom: 1px solid #ede7db;
+    transition: background 0.2s;
+  }
+  .card:last-child, .card:nth-child(3) { border-right: none; }
+
+  .prob-bar-wrap {
+    margin-bottom: 14px;
+  }
+  .prob-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .prob-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .prob-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .bar-bg {
+    height: 8px;
+    background: #f0ece4;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+
+  .icon { font-size: 28px; margin-bottom: 10px; display: block; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    line-height: 1.35;
+  }
+
+  .pros, .cons {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #4a4038;
+  }
+  .pros-title, .cons-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    margin-top: 10px;
+  }
+  .pros-title { color: #c0392b; }
+  .cons-title { color: #1a6b3e; }
+
+  .verdict {
+    background: #fdf8f2;
+    border-top: 2px solid #c8b89a;
+    padding: 20px 30px;
+  }
+  .verdict-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .verdict-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+  .verdict-text h3 {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+  .verdict-text p {
+    font-size: 13px;
+    color: #5a4e40;
+    line-height: 1.7;
+  }
+
+  .expert-quote {
+    background: #f5f2ec;
+    border-left: 3px solid #8a7a5a;
+    padding: 12px 16px;
+    margin-top: 14px;
+    border-radius: 0 8px 8px 0;
+  }
+  .expert-quote p {
+    font-size: 12.5px;
+    color: #4a3e2e;
+    line-height: 1.65;
+    font-style: italic;
+  }
+  .expert-quote span {
+    display: block;
+    font-size: 11px;
+    color: #8a7a5a;
+    margin-top: 6px;
+    font-style: normal;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="hd">
+    <div class="hd-label">🔍 CAUSE ANALYSIS</div>
+    <h2>HMM 나무호 폭발 원인 — 3가지 가능성 분석</h2>
+    <p>2026.05.06 현재 기준 | 공식 조사 결과 미발표 상태</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- 이란 공격 -->
+    <div class="card">
+      <span class="icon">🇮🇷</span>
+      <div class="prob-bar-wrap">
+        <div class="prob-label">
+          <span class="prob-name">이란 의도적 공격</span>
+          <span class="prob-val" style="color:#c0392b;">미확인</span>
+        </div>
+        <div class="bar-bg">
+          <div class="bar-fill" style="width:55%; background: linear-gradient(90deg,#e8453c,#ff7c72);"></div>
+        </div>
+      </div>
+      <div class="card-title">프로젝트 프리덤 저지 목적의<br>이란 보복 공격설</div>
+      <div class="pros-title">▲ 이란 소행 정황</div>
+      <div class="pros">
+        • 프로젝트 프리덤 작전 첫날 발생<br>
+        • 같은 날 UAE에 미사일 12발+드론 4기 공격<br>
+        • 동일 해역 3건 연속 선박 피격 보고<br>
+        • 트럼프 대통령 직접 이란 지목<br>
+        • 이란, 공식 부인 성명 없음
+      </div>
+      <div class="cons-title">▼ 의문점</div>
+      <div class="cons">
+        • 이란과 한국은 직접적 적대관계 없음<br>
+        • 구체적 증거(탄흔 등) 미발표<br>
+        • 중립국 민간선 공격은 외교적 자해
+      </div>
+    </div>
+
+    <!-- 해상 기뢰 -->
+    <div class="card">
+      <span class="icon">💣</span>
+      <div class="prob-bar-wrap">
+        <div class="prob-label">
+          <span class="prob-name">표류 해상 기뢰 접촉</span>
+          <span class="prob-val" style="color:#e07020;">미확인</span>
+        </div>
+        <div class="bar-bg">
+          <div class="bar-fill" style="width:25%; background: linear-gradient(90deg,#f0952a,#ffd07a);"></div>
+        </div>
+      </div>
+      <div class="card-title">이란-미군 교전 중<br>표류한 기뢰에 접촉</div>
+      <div class="pros-title">▲ 가능성 근거</div>
+      <div class="pros">
+        • 해상 보안업체들이 가장 유력시<br>
+        • 정박 중에도 표류 기뢰 접촉 가능<br>
+        • 기관실 좌현 폭발 위치와 일치 가능<br>
+        • 이란이 페르시아만에 기뢰 살포 전례
+      </div>
+      <div class="cons-title">▼ 의문점</div>
+      <div class="cons">
+        • 장기 정박 중 기뢰 접촉 이례적<br>
+        • 정박지 주변 안전 확인 후 투묘 통상적
+      </div>
+    </div>
+
+    <!-- 기계 결함 -->
+    <div class="card">
+      <span class="icon">⚙️</span>
+      <div class="prob-bar-wrap">
+        <div class="prob-label">
+          <span class="prob-name">선박 내부 기계 결함</span>
+          <span class="prob-val" style="color:#22a857;">미확인</span>
+        </div>
+        <div class="bar-bg">
+          <div class="bar-fill" style="width:20%; background: linear-gradient(90deg,#22a857,#7fe0a0);"></div>
+        </div>
+      </div>
+      <div class="card-title">장기 정박으로 인한<br>기관실 내부 사고</div>
+      <div class="pros-title">▲ 가능성 근거</div>
+      <div class="pros">
+        • 해상 화재의 상당수는 내부 과실<br>
+        • 장기 정박으로 기관 유지 어려움<br>
+        • 전문가 "군사 공격이라면 탄흔 있어야"<br>
+        • 연료·오일 누출로 인한 자연발화 가능
+      </div>
+      <div class="cons-title">▼ 의문점</div>
+      <div class="cons">
+        • 동시다발 주변 선박 피격 설명 어려움<br>
+        • 미군-이란 교전과 타이밍 우연치고는<br>&nbsp;&nbsp;너무 절묘
+      </div>
+    </div>
+
+  </div>
+
+  <div class="verdict">
+    <div class="verdict-inner">
+      <div class="verdict-icon">⚖️</div>
+      <div class="verdict-text">
+        <h3>결론 — 지금 단계에서 단정은 금물</h3>
+        <p>이란 소행 정황이 가장 많지만, 이란이 중립국 민간 선박을 의도적으로 공격하는 것은 전략적으로 비합리적입니다. 해상 보안 전문가들은 무인 수상정(USV) 또는 표류 기뢰 접촉 가능성을 유력하게 보고 있습니다. 한국 정부가 "원인 규명 우선"을 고수하는 것은 이런 불확실성을 인식한 결과입니다. 정밀 감식까지 최소 수일이 소요될 전망입니다.</p>
+        <div class="expert-quote">
+          <p>"통상적으로 해상에서 발생하는 선박 화재는 과실이 원인인 경우가 많다. 군사적 공격에 따른 사고라면 탄흔 등이 발견돼야 할 것이다."</p>
+          <span>— 공길영 한국해양대 항해융합학부 교수</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
