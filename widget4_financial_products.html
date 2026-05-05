@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>히트펌프 금융상품 전략</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --text: #1a1a35;
+    --sub: #5a6a90;
+    --border: #d8e2f8;
+    --accent: #3b5bdb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 32px 20px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  .widget-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .widget-sub {
+    text-align: center;
+    font-size: 13px;
+    color: var(--sub);
+    margin-bottom: 30px;
+  }
+
+  /* Market size banner */
+  .market-banner {
+    background: linear-gradient(135deg, #3b5bdb, #5c7cfa);
+    border-radius: 16px;
+    padding: 22px 28px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    color: white;
+  }
+
+  .market-stat {
+    text-align: center;
+  }
+  .market-stat .big {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .market-stat .label {
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  .divider { width: 1px; height: 50px; background: rgba(255,255,255,0.3); }
+
+  /* Product cards */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .product-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+  }
+
+  .product-header {
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .p1 .product-header { background: linear-gradient(135deg, #e8f5e9, #f1f8e9); }
+  .p2 .product-header { background: linear-gradient(135deg, #e3f2fd, #e8eaf6); }
+  .p3 .product-header { background: linear-gradient(135deg, #fff8e1, #fce4ec); }
+  .p4 .product-header { background: linear-gradient(135deg, #f3e5f5, #e8eaf6); }
+  .p5 .product-header { background: linear-gradient(135deg, #e0f7fa, #e8f5e9); }
+
+  .product-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .p1 .product-num { background: #27ae60; color: white; }
+  .p2 .product-num { background: #1565c0; color: white; }
+  .p3 .product-num { background: #e67e22; color: white; }
+  .p4 .product-num { background: #8e44ad; color: white; }
+  .p5 .product-num { background: #00897b; color: white; }
+
+  .product-header-text {}
+  .product-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .product-type {
+    font-size: 11px;
+    color: var(--sub);
+    margin-top: 2px;
+  }
+
+  .product-body { padding: 18px 22px; }
+
+  .product-desc {
+    font-size: 12.5px;
+    color: var(--sub);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .product-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .feature-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .feature-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .d-green { background: #27ae60; }
+  .d-blue { background: #1565c0; }
+  .d-orange { background: #e67e22; }
+  .d-purple { background: #8e44ad; }
+  .d-teal { background: #00897b; }
+
+  .product-highlight {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .ph-green { background: #f0fff4; color: #27ae60; border-left: 3px solid #27ae60; }
+  .ph-blue { background: #eff3ff; color: #1565c0; border-left: 3px solid #1565c0; }
+  .ph-orange { background: #fff8f0; color: #e67e22; border-left: 3px solid #e67e22; }
+  .ph-purple { background: #fdf3ff; color: #8e44ad; border-left: 3px solid #8e44ad; }
+  .ph-teal { background: #e8f8f7; color: #00897b; border-left: 3px solid #00897b; }
+
+  /* Strategy summary */
+  .strategy-summary {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    border: 1.5px solid var(--border);
+  }
+
+  .ss-title { font-size: 16px; font-weight: 800; margin-bottom: 18px; }
+
+  .steps-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .step-box {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 14px 12px;
+    background: #f4f6ff;
+    border-radius: 12px;
+    border: 1.5px solid #d8e2f8;
+  }
+
+  .step-box .step-icon { font-size: 24px; margin-bottom: 8px; }
+  .step-box .step-label { font-size: 12px; font-weight: 700; color: var(--text); }
+  .step-arrow { font-size: 18px; color: var(--accent); font-weight: 700; }
+
+  .conclusion {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #3b5bdb, #5c7cfa);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+
+  .source-note { font-size: 11px; color: #aab; text-align: right; margin-top: 16px; }
+
+  @media (max-width: 620px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .market-banner { flex-direction: column; }
+    .divider { display: none; }
+    .steps-row { flex-direction: column; }
+    .step-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="widget-title">💼 히트펌프 시장 장악을 위한 금융상품 전략</p>
+  <p class="widget-sub">35조원 규모 국내 시장 선점을 위한 5가지 금융 솔루션</p>
+
+  <!-- Market Size Banner -->
+  <div class="market-banner">
+    <div class="market-stat">
+      <div class="big">35조원</div>
+      <div class="label">국내 잠재 시장 규모<br>(350만가구 × 1,000만원)</div>
+    </div>
+    <div class="divider"></div>
+    <div class="market-stat">
+      <div class="big">583억원</div>
+      <div class="label">2026년 정부 지원 예산<br>(보조금 + 저리 융자)</div>
+    </div>
+    <div class="divider"></div>
+    <div class="market-stat">
+      <div class="big">CAGR 10%</div>
+      <div class="label">글로벌 히트펌프 시장<br>연평균 성장률</div>
+    </div>
+    <div class="divider"></div>
+    <div class="market-stat">
+      <div class="big">2035년</div>
+      <div class="label">정부 350만 대 보급<br>목표 달성 시점</div>
+    </div>
+  </div>
+
+  <div class="products-grid">
+    <!-- Product 1 -->
+    <div class="product-card p1">
+      <div class="product-header">
+        <div class="product-num">1</div>
+        <div class="product-header-text">
+          <div class="product-name">히트펌프 전용<br>설치할부금융 (BNPL형)</div>
+          <div class="product-type">★★★★★ 시장 선점력 최고</div>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-desc">0~저금리로 설치비 전액 대출, 절감된 에너지비용으로 상환하는 구조. 정부 보조금 선공제 후 잔액만 할부.</div>
+        <div class="product-features">
+          <div class="feature-row"><div class="feature-dot d-green"></div>금리 1~3%, 상환기간 5~10년</div>
+          <div class="feature-row"><div class="feature-dot d-green"></div>정부 보조금(최대 200만원) 선공제 처리</div>
+          <div class="feature-row"><div class="feature-dot d-green"></div>탄소배출권 수익으로 금리 보전 구조</div>
+        </div>
+        <div class="product-highlight ph-green">💬 "매달 가스비만큼 할부금 내면 됩니다" — 강력한 셀링포인트</div>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card p2">
+      <div class="product-header">
+        <div class="product-num">2</div>
+        <div class="product-header-text">
+          <div class="product-name">에너지절감 보증형<br>리스 상품 (구독형)</div>
+          <div class="product-type">★★★★☆ 정수기 렌탈 모델 벤치마킹</div>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-desc">설치비 0원, 월 이용료 납부. 유지보수·AS 포함 패키지형. 10년 계약 후 소유권 이전 또는 재계약.</div>
+        <div class="product-features">
+          <div class="feature-row"><div class="feature-dot d-blue"></div>초기 비용 부담 0원으로 진입장벽 완전 제거</div>
+          <div class="feature-row"><div class="feature-dot d-blue"></div>AS·고장수리 금융사 책임 패키지</div>
+          <div class="feature-row"><div class="feature-dot d-blue"></div>코웨이 정수기, 한화큐셀 태양광 리스 모델 벤치마킹</div>
+        </div>
+        <div class="product-highlight ph-blue">🎯 코웨이·청호 렌탈 모델처럼 대량 고객 락인 가능</div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card p3">
+      <div class="product-header">
+        <div class="product-num">3</div>
+        <div class="product-header-text">
+          <div class="product-name">태양광+ESS+히트펌프<br>녹색 패키지 대출</div>
+          <div class="product-type">★★★★☆ ESG 금융 트렌드 직결</div>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-desc">세 설비를 묶어 그린 모기지형으로 운영. 탄소배출권(VCR) 수익을 원리금 상환에 활용 가능.</div>
+        <div class="product-features">
+          <div class="feature-row"><div class="feature-dot d-orange"></div>녹색금융 ESG 인증 연계 → 저금리 적용</div>
+          <div class="feature-row"><div class="feature-dot d-orange"></div>정부 이차보전 연계 설계 가능</div>
+          <div class="feature-row"><div class="feature-dot d-orange"></div>보험 특약 결합 (고장·누수 보장)</div>
+        </div>
+        <div class="product-highlight ph-orange">🌿 ESG 투자 의무화 환경에서 기관투자자 유치 용이</div>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card p4">
+      <div class="product-header">
+        <div class="product-num">4</div>
+        <div class="product-header-text">
+          <div class="product-name">히트펌프 P2P·<br>크라우드펀딩 투자상품</div>
+          <div class="product-type">★★★☆☆ 혁신 금융 모델</div>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-desc">다수 투자자가 히트펌프 설치 자금 투자, 에너지 절감 수익에서 배당받는 구조.</div>
+        <div class="product-features">
+          <div class="feature-row"><div class="feature-dot d-purple"></div>공동주택·복지시설 대상 집단 투자</div>
+          <div class="feature-row"><div class="feature-dot d-purple"></div>ESG 연계 상품으로 기관투자자 유치</div>
+          <div class="feature-row"><div class="feature-dot d-purple"></div>탄소배출권 수익을 배당으로 전환</div>
+        </div>
+        <div class="product-highlight ph-purple">💡 리츠(REITs) 형태로 소액 투자 접근 가능</div>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product-card p5" style="grid-column: 1 / -1;">
+      <div class="product-header">
+        <div class="product-num">5</div>
+        <div class="product-header-text">
+          <div class="product-name">히트펌프 성능보증 보험 + EPC (에너지성과계약) 상품</div>
+          <div class="product-type">★★★★★ B2B 시장 공략 · 소비자 신뢰도 극대화</div>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-desc">히트펌프 설치 후 성능이 보장치에 못 미치면 차액 보전. 시공사·제조사 가입 의무화로 소비자 신뢰 확보.</div>
+        <div class="product-features">
+          <div class="feature-row"><div class="feature-dot d-teal"></div>에너지절감 목표치 대비 실적 미달 시 차액 보전</div>
+          <div class="feature-row"><div class="feature-dot d-teal"></div>삼성·LG 공식 시공업체 대상 단체 계약 B2B 영업</div>
+          <div class="feature-row"><div class="feature-dot d-teal"></div>EPC(에너지성과계약) 방식으로 공공기관 납품 가능</div>
+        </div>
+        <div class="product-highlight ph-teal">🏆 "설치 후 성능 보장"이라는 강력한 구매 불안 해소 → 시장 신뢰 선점</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Strategy Summary -->
+  <div class="strategy-summary">
+    <div class="ss-title">🚀 시장 장악 원스톱 플랫폼 전략</div>
+    <div class="steps-row">
+      <div class="step-box">
+        <div class="step-icon">🔍</div>
+        <div class="step-label">에너지 진단</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-box">
+        <div class="step-icon">📐</div>
+        <div class="step-label">시스템 설계</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-box">
+        <div class="step-icon">🔧</div>
+        <div class="step-label">시공·설치</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-box">
+        <div class="step-icon">💰</div>
+        <div class="step-label">금융 연결</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-box">
+        <div class="step-icon">🛠️</div>
+        <div class="step-label">AS·보증</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-box">
+        <div class="step-icon">📊</div>
+        <div class="step-label">탄소크레딧</div>
+      </div>
+    </div>
+
+    <div class="conclusion">
+      📌 핵심 전략: 삼성·LG 공식 파트너십 체결로 B2B 채널 확보 + 정부 보조금 신청 대행 서비스로 진입장벽 제거 + 탄소배출권 수익 공유로 고객 락인(Lock-in) 구조 완성. <br>정부 583억원 지원 예산과 민간 금융이 결합될 때 가장 강력한 시장 선점력이 형성됩니다.
+    </div>
+    <p class="source-note">출처: 기후에너지환경부, 그랜드뷰리서치, 매일산업뉴스 (2025)</p>
+  </div>
+
+</div>
+</body>
+</html>
