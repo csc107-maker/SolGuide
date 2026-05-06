@@ -1,277 +1,235 @@
-<!-- [삽입 위치] 기업 분석 섹션 직후 삽입 — 종목 분석 전문 카드 -->
+<!-- [삽입 위치] 추천 종목 섹션(기업 분석) 직후 삽입 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>추천 종목 분석 카드 - 2026.05.06</title>
+<title>종목 분석 카드 — 2026년 5월 7일</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-    background: #faf5ff;
-    padding: 20px;
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: transparent;
+    padding: 16px 0;
   }
+  .container { max-width: 800px; margin: 0 auto; padding: 0 8px; }
   .header {
-    background: linear-gradient(135deg, #4c1d95, #7c3aed);
-    color: white;
-    padding: 18px 20px;
-    border-radius: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 16px rgba(124,58,237,0.25);
     text-align: center;
+    margin-bottom: 22px;
   }
-  .header h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
-  .header p { font-size: 0.82rem; opacity: 0.88; }
+  .header h2 { font-size: 18px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
+  .header p { font-size: 12px; color: #888; }
+
   .stock-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 18px;
   }
   .stock-card {
-    background: white;
     border-radius: 16px;
-    overflow: hidden;
+    padding: 20px;
     box-shadow: 0 3px 14px rgba(0,0,0,0.08);
-    transition: transform 0.2s;
   }
-  .stock-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
-  .card-header {
-    padding: 16px 18px;
-    color: white;
-    position: relative;
+  .s1 { background: #f0f6ff; border-left: 5px solid #3b82f6; }
+  .s2 { background: #f0fdf4; border-left: 5px solid #22c55e; }
+
+  .stock-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+  .stock-name { font-size: 17px; font-weight: 800; color: #111827; }
+  .stock-ticker { font-size: 12px; color: #6b7280; margin-top: 2px; }
+  .rating-badge { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+  .buy { background: #dcfce7; color: #15803d; }
+
+  .price-row {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
   }
-  .card-header .sector-badge {
-    font-size: 0.68rem;
-    background: rgba(255,255,255,0.25);
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    display: inline-block;
-  }
-  .card-header h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 2px; }
-  .card-header .ticker { font-size: 0.8rem; opacity: 0.85; }
-  .card-header .current-price {
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin-top: 8px;
-  }
-  .card-header .target-price {
-    font-size: 0.8rem;
-    opacity: 0.9;
-  }
-  .hynix-header { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-  .samsung-header { background: linear-gradient(135deg, #1e3a5f, #0369a1); }
-  .hanwha-header { background: linear-gradient(135deg, #7c2d12, #dc2626); }
-  .hd-header { background: linear-gradient(135deg, #064e3b, #10b981); }
-  .card-body { padding: 16px 18px; }
-  .val-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
-  .val-table th {
-    font-size: 0.7rem;
-    color: #6b7280;
-    font-weight: 600;
-    text-align: left;
-    padding: 5px 6px;
-    background: #f9fafb;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  .val-table td {
-    font-size: 0.82rem;
-    color: #111827;
-    font-weight: 600;
-    padding: 6px 6px;
-    border-bottom: 1px solid #f3f4f6;
-  }
-  .val-table td:last-child { text-align: right; color: #1d4ed8; }
-  .upside { color: #16a34a !important; font-weight: 800 !important; }
-  .tags-section { margin-top: 8px; }
-  .tags-label { font-size: 0.7rem; color: #6b7280; font-weight: 600; margin-bottom: 5px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
-  .tag {
-    font-size: 0.68rem;
-    padding: 3px 9px;
-    border-radius: 10px;
-    font-weight: 600;
-  }
-  .tag-buy { background: #dcfce7; color: #15803d; }
-  .tag-risk { background: #fee2e2; color: #dc2626; }
-  .disclaimer {
-    font-size: 0.7rem;
-    color: #9ca3af;
+  .current-price { font-size: 22px; font-weight: 800; color: #111; }
+  .target-price { font-size: 13px; color: #2563eb; font-weight: 600; }
+  .upside { font-size: 12px; background: #dbeafe; color: #1d4ed8; padding: 2px 7px; border-radius: 10px; font-weight: 700; }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th {
+    background: rgba(0,0,0,0.05);
+    padding: 6px 10px;
     text-align: center;
-    margin-top: 18px;
-    padding: 10px;
-    background: white;
-    border-radius: 10px;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
   }
-  @media (max-width: 600px) {
-    .stock-grid { grid-template-columns: 1fr; }
+  td {
+    padding: 7px 10px;
+    text-align: center;
+    color: #374151;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
   }
+  tr:last-child td { border-bottom: none; }
+  .highlight { font-weight: 700; color: #2563eb; }
+
+  .tags-section { margin-bottom: 12px; }
+  .tags-label { font-size: 11px; color: #6b7280; margin-bottom: 6px; font-weight: 600; }
+  .tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .buy-tag { font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 600; background: #dcfce7; color: #166534; }
+  .risk-tag { font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 600; background: #fee2e2; color: #991b1b; }
+
+  .earnings-section { margin-top: 12px; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 12px; }
+  .earnings-label { font-size: 11px; color: #6b7280; margin-bottom: 8px; font-weight: 600; }
+
+  .footer-note { text-align: center; margin-top: 14px; font-size: 11px; color: #9ca3af; }
 </style>
 </head>
 <body>
-<div class="header">
-  <h2>🎯 2026년 5월 6일 — 주목 종목 분석 카드</h2>
-  <p>글로벌 지표·뉴스 종합 선정 | ⚠️ 투자 권유 아님 — 참고 정보 목적</p>
-</div>
+<div class="container">
+  <div class="header">
+    <h2>🎯 오늘의 추천 종목 상세 분석 — 2026년 5월 7일</h2>
+    <p>글로벌 지표 + AI 슈퍼사이클 수혜 핵심 종목 | 데이터: 증권사 리포트 종합</p>
+  </div>
 
-<div class="stock-grid">
+  <div class="stock-grid">
 
-  <!-- SK하이닉스 -->
-  <div class="stock-card">
-    <div class="card-header hynix-header">
-      <div class="sector-badge">반도체 · AI메모리 HBM</div>
-      <h3>SK하이닉스</h3>
-      <div class="ticker">KRX: 000660</div>
-      <div class="current-price">143.4만원</div>
-      <div class="target-price">목표주가 173.9만원 (+21% ↑)</div>
-    </div>
-    <div class="card-body">
-      <table class="val-table">
-        <tr><th>지표</th><th>수치</th></tr>
-        <tr><td>2026E 영업이익</td><td class="upside">~100조원</td></tr>
-        <tr><td>영업이익률</td><td>60.7%</td></tr>
-        <tr><td>2026E PER</td><td>9~11배</td></tr>
-        <tr><td>ROE (추정)</td><td class="upside">35%+</td></tr>
-        <tr><td>52주 상승률</td><td class="upside">+11.51% (당일)</td></tr>
-        <tr><td>증권사 컨센서스</td><td class="upside">강력 매수 BUY</td></tr>
-      </table>
-      <div class="tags-section">
-        <div class="tags-label">✅ 매수 근거</div>
-        <div class="tags">
-          <span class="tag tag-buy">HBM4 양산 선도</span>
-          <span class="tag tag-buy">엔비디아 독점 공급</span>
-          <span class="tag tag-buy">AI 수요 폭증</span>
-          <span class="tag tag-buy">영업이익 100조 전망</span>
+    <!-- 삼성전자 -->
+    <div class="stock-card s1">
+      <div class="stock-header">
+        <div>
+          <div class="stock-name">삼성전자</div>
+          <div class="stock-ticker">KRX: 005930 | AI 메모리·파운드리·스마트폰</div>
         </div>
+        <span class="rating-badge buy">BUY ★</span>
+      </div>
+
+      <div class="price-row">
+        <span class="current-price">~250,000원</span>
+        <span class="target-price">↑ 목표 360,000원</span>
+        <span class="upside">+44%</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>지표</th><th>수치</th><th>평가</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PER (2026E)</td><td class="highlight">10~12배</td><td>글로벌 대비 저평가</td></tr>
+            <tr><td>PBR</td><td class="highlight">2.0~2.5배</td><td>적정 수준</td></tr>
+            <tr><td>1Q 매출</td><td class="highlight">133.9조원</td><td>사상 최대</td></tr>
+            <tr><td>1Q 영업이익</td><td class="highlight">57.2조원</td><td>사상 최대</td></tr>
+            <tr><td>시가총액</td><td class="highlight">$1조+</td><td>글로벌 8위권</td></tr>
+            <tr><td>목표주가 범위</td><td class="highlight">300,000~390,000원</td><td>국내외 증권사 평균</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tags-section">
+        <div class="tags-label">📌 매수 근거</div>
+        <div class="tags-row">
+          <span class="buy-tag">HBM4 공급 확대</span>
+          <span class="buy-tag">AI 인프라 투자 지속</span>
+          <span class="buy-tag">파운드리 수주 회복</span>
+          <span class="buy-tag">사상 최대 실적</span>
+        </div>
+      </div>
+      <div class="tags-section">
         <div class="tags-label">⚠️ 리스크</div>
-        <div class="tags">
-          <span class="tag tag-risk">메모리 가격 급락 가능성</span>
-          <span class="tag tag-risk">삼성 추격</span>
-          <span class="tag tag-risk">AI 투자 둔화</span>
+        <div class="tags-row">
+          <span class="risk-tag">TSMC 파운드리 경쟁</span>
+          <span class="risk-tag">원화 급등 시 환차손</span>
+          <span class="risk-tag">단기 차익 실현 물량</span>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 삼성전자 -->
-  <div class="stock-card">
-    <div class="card-header samsung-header">
-      <div class="sector-badge">반도체 · 스마트폰 · 파운드리</div>
-      <h3>삼성전자</h3>
-      <div class="ticker">KRX: 005930</div>
-      <div class="current-price">목표 210,000원</div>
-      <div class="target-price">유진증권 BUY 목표주가 상향</div>
-    </div>
-    <div class="card-body">
-      <table class="val-table">
-        <tr><th>지표</th><th>수치</th></tr>
-        <tr><td>2026E 영업이익</td><td class="upside">60~80조원</td></tr>
-        <tr><td>HBM 성장률(2026E)</td><td class="upside">+105%</td></tr>
-        <tr><td>PBR</td><td>약 1.5배</td></tr>
-        <tr><td>밸류에이션</td><td class="upside">역사적 저평가</td></tr>
-        <tr><td>사업 다각화</td><td>DS·MX·VD/DA</td></tr>
-        <tr><td>배당 수익률</td><td>개선 중</td></tr>
-      </table>
-      <div class="tags-section">
-        <div class="tags-label">✅ 매수 근거</div>
-        <div class="tags">
-          <span class="tag tag-buy">HBM4 반격 준비</span>
-          <span class="tag tag-buy">PBR 1.5배 저평가</span>
-          <span class="tag tag-buy">포트폴리오 다각화</span>
-          <span class="tag tag-buy">배당 개선</span>
+    <!-- SK하이닉스 -->
+    <div class="stock-card s2">
+      <div class="stock-header">
+        <div>
+          <div class="stock-name">SK하이닉스</div>
+          <div class="stock-ticker">KRX: 000660 | HBM 세계 1위·DRAM 2위</div>
         </div>
+        <span class="rating-badge buy">STRONG BUY ★★</span>
+      </div>
+
+      <div class="price-row">
+        <span class="current-price">~1,700,000원</span>
+        <span class="target-price">↑ 목표 2,050,000원</span>
+        <span class="upside">+21%</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>지표</th><th>수치</th><th>평가</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PER (2026E)</td><td class="highlight">4.5배</td><td>극심한 저평가</td></tr>
+            <tr><td>PBR (2026E)</td><td class="highlight">1.7배</td><td>GS 추정</td></tr>
+            <tr><td>1Q 매출</td><td class="highlight">52.5조원</td><td>기대 상회</td></tr>
+            <tr><td>1Q 영업이익</td><td class="highlight">37.6조원</td><td>역대 최대</td></tr>
+            <tr><td>HBM 점유율</td><td class="highlight">60%+</td><td>압도적 1위</td></tr>
+            <tr><td>ROE</td><td class="highlight">40%+</td><td>역대 최고</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tags-section">
+        <div class="tags-label">📌 매수 근거</div>
+        <div class="tags-row">
+          <span class="buy-tag">HBM3E·HBM4 독점 공급</span>
+          <span class="buy-tag">Nvidia 핵심 파트너</span>
+          <span class="buy-tag">AI DC 투자 확대</span>
+          <span class="buy-tag">PER 4.5배 극저평가</span>
+        </div>
+      </div>
+      <div class="tags-section">
         <div class="tags-label">⚠️ 리스크</div>
-        <div class="tags">
-          <span class="tag tag-risk">HBM 기술 열위</span>
-          <span class="tag tag-risk">파운드리 TSMC 격차</span>
-          <span class="tag tag-risk">스마트폰 성장 둔화</span>
+        <div class="tags-row">
+          <span class="risk-tag">단기 급등 후 차익실현</span>
+          <span class="risk-tag">메모리 업황 사이클</span>
+          <span class="risk-tag">미-중 기술 수출 규제</span>
         </div>
       </div>
     </div>
+
   </div>
 
-  <!-- 한화에어로스페이스 -->
-  <div class="stock-card">
-    <div class="card-header hanwha-header">
-      <div class="sector-badge">방산 · K9자주포 · 우주</div>
-      <h3>한화에어로스페이스</h3>
-      <div class="ticker">KRX: 012450</div>
-      <div class="current-price">K-방산 대표주</div>
-      <div class="target-price">글로벌 재무장 최대 수혜</div>
-    </div>
-    <div class="card-body">
-      <table class="val-table">
-        <tr><th>지표</th><th>수치</th></tr>
-        <tr><td>2026E 영업이익 성장</td><td class="upside">+67% 전망</td></tr>
-        <tr><td>주요 수출국</td><td>폴란드·루마니아·호주</td></tr>
-        <tr><td>제품군</td><td>K9자주포·레드백·엔진</td></tr>
-        <tr><td>외국인 수급</td><td class="upside">집중 매수 중</td></tr>
-        <tr><td>중동 지정학 수혜</td><td class="upside">직접 수혜</td></tr>
-        <tr><td>NATO 예산 확대</td><td class="upside">구조적 수혜</td></tr>
+  <!-- 섹터별 관심 종목 추가 -->
+  <div style="margin-top:18px; background:#fffbf0; border-radius:14px; padding:16px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+    <div style="font-size:13px; font-weight:700; color:#1e3a5f; margin-bottom:12px;">📂 추가 관심 섹터 & 종목</div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:12px;">
+        <thead>
+          <tr style="background:rgba(0,0,0,0.05);">
+            <th style="padding:7px 10px; text-align:left; border-bottom:1px solid rgba(0,0,0,0.08);">종목</th>
+            <th style="padding:7px 10px; text-align:center; border-bottom:1px solid rgba(0,0,0,0.08);">섹터</th>
+            <th style="padding:7px 10px; text-align:center; border-bottom:1px solid rgba(0,0,0,0.08);">오늘 테마</th>
+            <th style="padding:7px 10px; text-align:center; border-bottom:1px solid rgba(0,0,0,0.08);">투자포인트</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:7px 10px; font-weight:700; color:#374151;">대한항공 (003490)</td>
+            <td style="padding:7px 10px; text-align:center; color:#6b7280;">항공</td>
+            <td style="padding:7px 10px; text-align:center;"><span style="background:#dcfce7;color:#166534;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700;">유가 하락</span></td>
+            <td style="padding:7px 10px; font-size:11px; color:#374151;">유가 $100 하락 → 항공유 원가 절감</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px; font-weight:700; color:#374151;">KB금융 (105560)</td>
+            <td style="padding:7px 10px; text-align:center; color:#6b7280;">금융</td>
+            <td style="padding:7px 10px; text-align:center;"><span style="background:#dbeafe;color:#1d4ed8;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700;">외국인 매수</span></td>
+            <td style="padding:7px 10px; font-size:11px; color:#374151;">코스피 상승기 금융주 외국인 자금 유입</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px; font-weight:700; color:#374151;">LS일렉트릭 (010120)</td>
+            <td style="padding:7px 10px; text-align:center; color:#6b7280;">전력기기</td>
+            <td style="padding:7px 10px; text-align:center;"><span style="background:#fdf4ff;color:#7e22ce;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700;">AI 전력</span></td>
+            <td style="padding:7px 10px; font-size:11px; color:#374151;">AI 데이터센터 전력 수요 급증 수혜</td>
+          </tr>
+        </tbody>
       </table>
-      <div class="tags-section">
-        <div class="tags-label">✅ 매수 근거</div>
-        <div class="tags">
-          <span class="tag tag-buy">글로벌 재무장 트렌드</span>
-          <span class="tag tag-buy">K방산 가성비 경쟁력</span>
-          <span class="tag tag-buy">중동 긴장 수혜</span>
-          <span class="tag tag-buy">외국인 집중 매수</span>
-        </div>
-        <div class="tags-label">⚠️ 리스크</div>
-        <div class="tags">
-          <span class="tag tag-risk">환율 변동성</span>
-          <span class="tag tag-risk">수출 이행 지연</span>
-          <span class="tag tag-risk">원자재 상승</span>
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- HD현대중공업 -->
-  <div class="stock-card">
-    <div class="card-header hd-header">
-      <div class="sector-badge">조선 · LNG선 · 자율운항</div>
-      <h3>HD현대중공업</h3>
-      <div class="ticker">KRX: 329180</div>
-      <div class="current-price">LNG선 독점자</div>
-      <div class="target-price">WTI $100+ → LNG 수요 직접 수혜</div>
-    </div>
-    <div class="card-body">
-      <table class="val-table">
-        <tr><th>지표</th><th>수치</th></tr>
-        <tr><td>당일 상승률</td><td class="upside">+3.45%</td></tr>
-        <tr><td>2026E 영업이익 성장</td><td class="upside">+75% 전망</td></tr>
-        <tr><td>주요 제품</td><td>LNG선·VLCC</td></tr>
-        <tr><td>수주 잔고</td><td class="upside">사상 최대 수준</td></tr>
-        <tr><td>유가 민감도</td><td class="upside">WTI 상승 수혜</td></tr>
-        <tr><td>외국인 수급</td><td class="upside">순매수 지속</td></tr>
-      </table>
-      <div class="tags-section">
-        <div class="tags-label">✅ 매수 근거</div>
-        <div class="tags">
-          <span class="tag tag-buy">WTI $100+ 수혜</span>
-          <span class="tag tag-buy">LNG선 독점 기술</span>
-          <span class="tag tag-buy">수주 잔고 최대</span>
-          <span class="tag tag-buy">AI 자율운항 시너지</span>
-        </div>
-        <div class="tags-label">⚠️ 리스크</div>
-        <div class="tags">
-          <span class="tag tag-risk">철강가 상승(원가↑)</span>
-          <span class="tag tag-risk">인력 수급 이슈</span>
-          <span class="tag tag-risk">발주 사이클 정점 우려</span>
-        </div>
-      </div>
-    </div>
+  <div class="footer-note">
+    ※ 목표주가·밸류에이션은 국내외 증권사 리포트 종합 기준 | 투자 정보 제공 목적이며 투자 권유가 아닙니다
   </div>
-
-</div>
-
-<div class="disclaimer">
-  ⚠️ 본 종목 분석은 투자 참고 정보 제공 목적이며, 투자 권유가 아닙니다.<br>
-  투자 판단의 최종 책임은 투자자 본인에게 있습니다. 모든 투자에는 원금 손실 위험이 있습니다.<br>
-  수치는 각 증권사 컨센서스 추정치 기반 (2026.05.06 기준) — 실제와 다를 수 있습니다.
 </div>
 </body>
 </html>
