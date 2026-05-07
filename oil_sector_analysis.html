@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원유 재고 급감 업종별 영향 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=DM+Serif+Display&display=swap');
+
+  :root {
+    --bg: #F5F7FA;
+    --card: #FFFFFF;
+    --red: #E53E3E;
+    --red-light: #FFF5F5;
+    --red-border: #FED7D7;
+    --green: #38A169;
+    --green-light: #F0FFF4;
+    --green-border: #C6F6D5;
+    --orange: #DD6B20;
+    --blue: #3182CE;
+    --text: #1A202C;
+    --text-sub: #718096;
+    --shadow: 0 4px 16px rgba(0,0,0,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 26px 18px;
+  }
+
+  .page-title {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .page-title h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: #1A202C;
+    margin-bottom: 6px;
+  }
+
+  .page-title p {
+    font-size: 0.78rem;
+    color: var(--text-sub);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .tag.red { background: var(--red); color: white; }
+  .tag.green { background: var(--green); color: white; }
+
+  /* === TWO COLUMN LAYOUT === */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .col-card {
+    border-radius: 14px;
+    padding: 16px 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .col-card.damage {
+    background: var(--red-light);
+    border: 1px solid var(--red-border);
+  }
+
+  .col-card.benefit {
+    background: var(--green-light);
+    border: 1px solid var(--green-border);
+  }
+
+  .col-header {
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .damage .col-header { color: var(--red); }
+  .benefit .col-header { color: var(--green); }
+
+  .item {
+    background: white;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-left: 3px solid transparent;
+    animation: fadeUp 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .damage .item { border-color: var(--red); }
+  .benefit .item { border-color: var(--green); }
+
+  .item:nth-child(2) { animation-delay: 0.1s; }
+  .item:nth-child(3) { animation-delay: 0.2s; }
+  .item:nth-child(4) { animation-delay: 0.3s; }
+  .item:nth-child(5) { animation-delay: 0.4s; }
+  .item:nth-child(6) { animation-delay: 0.5s; }
+
+  .item-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1A202C;
+    margin-bottom: 3px;
+  }
+
+  .item-desc {
+    font-size: 0.72rem;
+    color: var(--text-sub);
+    line-height: 1.5;
+  }
+
+  .item-ticker {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    background: #EDF2F7;
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-top: 4px;
+    color: var(--blue);
+  }
+
+  /* === TABLE === */
+  .table-section {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    overflow-x: auto;
+  }
+
+  .section-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #1A202C;
+    border-left: 3px solid var(--orange);
+    padding-left: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+  }
+
+  thead tr {
+    background: #EDF2F7;
+  }
+
+  th {
+    padding: 9px 8px;
+    text-align: left;
+    font-weight: 700;
+    color: #4A5568;
+    border-bottom: 2px solid #CBD5E0;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 9px 8px;
+    border-bottom: 1px solid #F7FAFC;
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: #F7FAFC; }
+
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .score-fill {
+    height: 7px;
+    border-radius: 4px;
+    animation: barGrow 1s ease forwards;
+    width: 0%;
+  }
+
+  @keyframes barGrow {
+    to { width: var(--w); }
+  }
+
+  .score-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .badge-risk {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .badge-risk.high { background: #FED7D7; color: #C53030; }
+  .badge-risk.mid { background: #FEEBC8; color: #C05621; }
+  .badge-risk.low { background: #C6F6D5; color: #276749; }
+
+  .source-note {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    text-align: center;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h2>📊 유가 급등 업종 피해 vs 수혜 완전 분석</h2>
+  <p>원유 재고 급감·고유가 국면에서의 업종별 영향도 분석 (2026.05 기준)</p>
+</div>
+
+<!-- 피해 vs 수혜 -->
+<div class="cols">
+  <div class="col-card damage">
+    <div class="col-header">📉 직격탄 피해 업종</div>
+
+    <div class="item">
+      <div class="item-name">✈️ 항공·여행</div>
+      <div class="item-desc">항공유 원가 폭등, 노선 축소, 여행 수요 위축. 가장 민감한 섹터.</div>
+      <span class="item-ticker">KAL / 아시아나 / 델타(DAL)</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">🚢 해운·물류</div>
+      <div class="item-desc">운항 원가 급증. 호르무즈 통항 불능으로 우회항로 비용 폭발.</div>
+      <span class="item-ticker">HMM / 팬오션 / 머스크(MAERSK)</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">🧪 석유화학·정유</div>
+      <div class="item-desc">나프타 등 원료 조달 위기. 중동 의존도 70% 이상으로 원가 압력 극심.</div>
+      <span class="item-ticker">LG화학 / 롯데케미칼 / 한화솔루션</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">🏭 제조업 전반</div>
+      <div class="item-desc">에너지 비용·원자재 가격 동반 상승으로 영업이익률 하락.</div>
+      <span class="item-ticker">현대차 / 삼성전자 / POSCO</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">💊 제약·바이오</div>
+      <div class="item-desc">인플레 → 금리인하 기대 약화 → 밸류에이션 하락 압력.</div>
+      <span class="item-ticker">셀트리온 / 삼성바이오 / 에이치엘비</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">🛒 소비재·유통</div>
+      <div class="item-desc">물류비·에너지비 상승 → 마진 압박. 소비자 실질 구매력 감소.</div>
+      <span class="item-ticker">이마트 / 쿠팡(CPNG)</span>
+    </div>
+  </div>
+
+  <div class="col-card benefit">
+    <div class="col-header">📈 반사 수혜 업종</div>
+
+    <div class="item">
+      <div class="item-name">⛽ 정유·에너지 메이저</div>
+      <div class="item-desc">유가 상승 = 직접 이익 증가. 탐사·생산(E&P) 현금흐름 폭발적 개선.</div>
+      <span class="item-ticker">에쓰오일(S-OIL) / GS칼텍스 / XOM / CVX</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">🛡️ 방산·항공우주</div>
+      <div class="item-desc">지정학 리스크 고조 = 방위비 증가 수혜. 미사일·드론 방어 시스템 수요 급증.</div>
+      <span class="item-ticker">한화에어로스페이스 / LIG넥스원 / ITA ETF</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">🥇 금·원자재</div>
+      <div class="item-desc">안전자산 수요 급증. 인플레 헤지 목적 금 매수세 가속화.</div>
+      <span class="item-ticker">GLD ETF / IAU / 고려아연</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">☀️ 재생에너지·신재생</div>
+      <div class="item-desc">고유가 → 대체에너지 수요 부각. 태양광·풍력·원전 투자 확대.</div>
+      <span class="item-ticker">OCI홀딩스 / 씨에스윈드 / 두산에너빌리티</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">🔋 배터리·전기차</div>
+      <div class="item-desc">고유가 지속 → 내연기관 대비 전기차 경제성 부각.</div>
+      <span class="item-ticker">LG에너지솔루션 / 에코프로비엠 / TSLA</span>
+    </div>
+
+    <div class="item">
+      <div class="item-name">🏦 금융·배당주</div>
+      <div class="item-desc">고금리 지속 환경에서 배당 안정성 높은 종목 선호 심리 강화.</div>
+      <span class="item-ticker">KB금융 / 신한지주 / 메리츠금융지주</span>
+    </div>
+  </div>
+</div>
+
+<!-- 인플레이션 민감도 표 -->
+<div class="table-section">
+  <div class="section-title">🔥 유가 상승 → 인플레이션 파급 품목 분석표</div>
+  <table>
+    <thead>
+      <tr>
+        <th>품목/분야</th>
+        <th>파급 경로</th>
+        <th>인플레 영향도</th>
+        <th>한국 체감</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>휘발유·경유</strong></td>
+        <td>원유가 직결, 수입 의존</td>
+        <td>
+          <div class="score-bar">
+            <div class="score-fill" style="--w:90%; width:90%; background:#E53E3E;"></div>
+            <span class="score-num" style="color:#E53E3E;">매우높음</span>
+          </div>
+        </td>
+        <td><span class="badge-risk high">직격</span></td>
+      </tr>
+      <tr>
+        <td><strong>항공유·운임</strong></td>
+        <td>항공사 비용 → 요금 전가</td>
+        <td>
+          <div class="score-bar">
+            <div class="score-fill" style="--w:85%; width:85%; background:#DD6B20;"></div>
+            <span class="score-num" style="color:#DD6B20;">높음</span>
+          </div>
+        </td>
+        <td><span class="badge-risk high">직격</span></td>
+      </tr>
+      <tr>
+        <td><strong>전기·가스요금</strong></td>
+        <td>LNG 가격 연동, 한전 손실 → 요금 인상</td>
+        <td>
+          <div class="score-bar">
+            <div class="score-fill" style="--w:80%; width:80%; background:#DD6B20;"></div>
+            <span class="score-num" style="color:#DD6B20;">높음</span>
+          </div>
+        </td>
+        <td><span class="badge-risk high">직격</span></td>
+      </tr>
+      <tr>
+        <td><strong>식료품·농산물</strong></td>
+        <td>운송비·비료(석유화학) 상승 → 식품가격 전가</td>
+        <td>
+          <div class="score-bar">
+            <div class="score-fill" style="--w:70%; width:70%; background:#ECC94B;"></div>
+            <span class="score-num" style="color:#D69E2E;">중간</span>
+          </div>
+        </td>
+        <td><span class="badge-risk mid">상당</span></td>
+      </tr>
+      <tr>
+        <td><strong>플라스틱·포장재</strong></td>
+        <td>나프타·에틸렌 원가 상승 직접 반영</td>
+        <td>
+          <div class="score-bar">
+            <div class="score-fill" style="--w:75%; width:75%; background:#ECC94B;"></div>
+            <span class="score-num" style="color:#D69E2E;">중간</span>
+          </div>
+        </td>
+        <td><span class="badge-risk mid">상당</span></td>
+      </tr>
+      <tr>
+        <td><strong>냉난방비(가정)</strong></td>
+        <td>도시가스·등유·전기세 연동</td>
+        <td>
+          <div class="score-bar">
+            <div class="score-fill" style="--w:72%; width:72%; background:#ECC94B;"></div>
+            <span class="score-num" style="color:#D69E2E;">중간</span>
+          </div>
+        </td>
+        <td><span class="badge-risk mid">상당</span></td>
+      </tr>
+      <tr>
+        <td><strong>IT·반도체</strong></td>
+        <td>에너지 집약 공정 → 제조원가 상승(간접)</td>
+        <td>
+          <div class="score-bar">
+            <div class="score-fill" style="--w:35%; width:35%; background:#68D391;"></div>
+            <span class="score-num" style="color:#276749;">낮음</span>
+          </div>
+        </td>
+        <td><span class="badge-risk low">제한적</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="source-note">📌 출처 : 삼성증권 리서치 / DS투자증권 / 딜로이트 코리아 / 메리츠증권 / KDI / 산업부 자료 종합 분석</p>
+
+</body>
+</html>
