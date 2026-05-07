@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK하이닉스 기업분석 — 2026.05.08</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', Arial, sans-serif;
+    background: #fdf3f0;
+    padding: 20px;
+  }
+  .widget-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+    overflow: hidden;
+  }
+
+  /* Header */
+  .widget-header {
+    background: linear-gradient(135deg, #bf360c 0%, #d84315 50%, #e64a19 100%);
+    color: #fff;
+    padding: 20px 24px;
+  }
+  .header-top { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .stock-badge {
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .widget-header h2 { font-size: 20px; font-weight: 800; margin-top: 8px; }
+  .widget-header .subtitle { font-size: 12px; color: #ffccbc; margin-top: 4px; }
+
+  /* 현재가 요약 */
+  .price-bar {
+    background: #fff3e0;
+    padding: 14px 24px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid #ffe0b2;
+  }
+  .price-main { }
+  .price-main .pl { font-size: 11px; color: #ef6c00; font-weight: 600; }
+  .price-main .pv { font-size: 28px; font-weight: 900; color: #bf360c; }
+  .price-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+  .pstat { text-align: center; }
+  .pstat .ps-l { font-size: 10px; color: #9e9e9e; }
+  .pstat .ps-v { font-size: 14px; font-weight: 700; color: #212121; }
+
+  /* 투자의견 배너 */
+  .opinion-bar {
+    background: linear-gradient(90deg, #e8f5e9, #f1f8e9);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid #c8e6c9;
+    flex-wrap: wrap;
+  }
+  .opinion-badge {
+    background: #2e7d32;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 20px;
+  }
+  .opinion-detail { font-size: 12px; color: #388e3c; font-weight: 600; }
+  .target-price { margin-left: auto; font-size: 13px; }
+  .target-price .tp-l { color: #757575; font-size: 11px; }
+  .target-price .tp-v { color: #c62828; font-size: 20px; font-weight: 800; }
+
+  /* 핵심 지표 카드 */
+  .metrics-section { padding: 20px 24px 0; }
+  .metrics-section h3 { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 12px; }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 540px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+  .m-card {
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #eeeeee;
+    text-align: center;
+  }
+  .m-card .m-label { font-size: 10px; color: #9e9e9e; font-weight: 600; margin-bottom: 6px; }
+  .m-card .m-value { font-size: 18px; font-weight: 800; color: #212121; }
+  .m-card .m-sub { font-size: 10px; color: #757575; margin-top: 3px; }
+  .highlight-card { border-color: #ffccbc; background: #fff8f6; }
+  .highlight-card .m-value { color: #bf360c; }
+
+  /* 실적 표 */
+  .earnings-section { padding: 0 24px 20px; }
+  .earnings-section h3 { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th {
+    background: #fbe9e7;
+    color: #bf360c;
+    font-weight: 700;
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 11px;
+  }
+  td { padding: 8px 10px; border-bottom: 1px solid #f5f5f5; text-align: center; color: #424242; }
+  tr:hover td { background: #fff8f6; }
+  td:first-child { text-align: left; font-weight: 600; color: #212121; }
+  .record-row td { color: #c62828; font-weight: 700; }
+
+  /* 성장 가능성 체크리스트 */
+  .checklist-section { padding: 0 24px 20px; }
+  .checklist-section h3 { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 12px; }
+  .check-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #f9f9f9;
+  }
+  .check-item .ci-icon { font-size: 18px; flex: 0 0 24px; }
+  .check-item .ci-text { }
+  .check-item .ci-title { font-size: 13px; font-weight: 700; color: #212121; }
+  .check-item .ci-desc { font-size: 11px; color: #757575; margin-top: 2px; line-height: 1.5; }
+  .check-positive { border-left: 3px solid #4caf50; }
+  .check-warning { border-left: 3px solid #ff9800; }
+
+  /* 목표가 분포 */
+  .target-section { padding: 0 24px 20px; }
+  .target-section h3 { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 12px; }
+  .target-bar-wrap { background: #f5f5f5; border-radius: 8px; padding: 14px; }
+  .target-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .target-row:last-child { margin-bottom: 0; }
+  .target-row .tr-label { font-size: 11px; color: #757575; width: 80px; text-align: right; }
+  .target-row .tr-bar-bg { flex: 1; background: #e0e0e0; border-radius: 4px; height: 8px; }
+  .target-row .tr-bar { height: 8px; border-radius: 4px; }
+  .target-row .tr-val { font-size: 12px; font-weight: 700; width: 90px; }
+  .bar-current { background: #1565c0; }
+  .bar-avg { background: #388e3c; }
+  .bar-max { background: #c62828; }
+
+  .footer {
+    background: #fafafa;
+    border-top: 1px solid #eeeeee;
+    padding: 12px 20px;
+    font-size: 10px;
+    color: #9e9e9e;
+    text-align: center;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+
+  <!-- Header -->
+  <div class="widget-header">
+    <div class="header-top">
+      <span class="stock-badge">KRX: 000660</span>
+      <span class="stock-badge">오늘의 1픽 ★</span>
+    </div>
+    <h2>SK하이닉스 — 기업분석 리포트</h2>
+    <div class="subtitle">AI HBM 메모리 세계 1위 | 2026.05.08 아침 기준</div>
+  </div>
+
+  <!-- 현재가 -->
+  <div class="price-bar">
+    <div class="price-main">
+      <div class="pl">현재 주가 (2026.05.07 종가)</div>
+      <div class="pv">1,654,000원</div>
+    </div>
+    <div class="price-stats">
+      <div class="pstat"><div class="ps-l">시가총액</div><div class="ps-v">약 1,203조원</div></div>
+      <div class="pstat"><div class="ps-l">업종</div><div class="ps-v">반도체</div></div>
+      <div class="pstat"><div class="ps-l">HBM 점유율</div><div class="ps-v" style="color:#c62828;">62%</div></div>
+    </div>
+  </div>
+
+  <!-- 투자의견 -->
+  <div class="opinion-bar">
+    <span class="opinion-badge">⭐ STRONG BUY</span>
+    <span class="opinion-detail">애널리스트 36명 전원 매수 / 매도의견 0명</span>
+    <div class="target-price">
+      <div class="tp-l">SK증권 목표가</div>
+      <div class="tp-v">3,000,000원</div>
+    </div>
+  </div>
+
+  <!-- 핵심 투자 지표 -->
+  <div class="metrics-section">
+    <h3>📊 핵심 투자 지표 (Valuation)</h3>
+    <div class="metrics-grid">
+      <div class="m-card highlight-card">
+        <div class="m-label">선행 PER (12M)</div>
+        <div class="m-value">5.2x</div>
+        <div class="m-sub">글로벌 반도체 평균 15~25x</div>
+      </div>
+      <div class="m-card">
+        <div class="m-label">애널리스트 평균 목표가</div>
+        <div class="m-value">177만원</div>
+        <div class="m-sub">업사이드 약 +7%</div>
+      </div>
+      <div class="m-card">
+        <div class="m-label">SK증권 목표가</div>
+        <div class="m-value">300만원</div>
+        <div class="m-sub">업사이드 약 +81%</div>
+      </div>
+      <div class="m-card">
+        <div class="m-label">2026E 영업이익</div>
+        <div class="m-value">262조</div>
+        <div class="m-sub">2027E 376조 전망</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q1 2026 실적 표 -->
+  <div class="earnings-section">
+    <h3>📈 2026년 1분기 실적 — 역대 최고 경신</h3>
+    <table>
+      <thead>
+        <tr><th>항목</th><th>Q1 2026</th><th>전년동기比</th><th>특이사항</th></tr>
+      </thead>
+      <tbody>
+        <tr class="record-row">
+          <td>매출액</td>
+          <td>52.57조원</td>
+          <td>대폭 증가</td>
+          <td>🏆 역대 최초 50조 돌파</td>
+        </tr>
+        <tr class="record-row">
+          <td>영업이익</td>
+          <td>37.61조원</td>
+          <td>+405%</td>
+          <td>🏆 역대 최고 영업이익</td>
+        </tr>
+        <tr class="record-row">
+          <td>순이익</td>
+          <td>40.35조원</td>
+          <td>약 4배</td>
+          <td>🏆 역대 최고 순이익</td>
+        </tr>
+        <tr>
+          <td>영업이익률</td>
+          <td>약 71.5%</td>
+          <td>—</td>
+          <td>세계 반도체 최상위권</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 지속성장 체크리스트 -->
+  <div class="checklist-section">
+    <h3>✅ 지속가능 성장 가능성 점검</h3>
+
+    <div class="check-item check-positive">
+      <div class="ci-icon">🤖</div>
+      <div class="ci-text">
+        <div class="ci-title">HBM 수요 2027년까지 공급 부족 지속</div>
+        <div class="ci-desc">SK하이닉스 CFO 공식 발표. 엔비디아 등 AI 칩 수요가 메모리 공급을 앞지르는 구조 최소 2년 유지 예상.</div>
+      </div>
+    </div>
+
+    <div class="check-item check-positive">
+      <div class="ci-icon">🏆</div>
+      <div class="ci-text">
+        <div class="ci-title">HBM3E · HBM4 기술 경쟁사 대비 1~2년 앞서</div>
+        <div class="ci-desc">골드만삭스 평가: SK하이닉스가 HBM3/3E에서 2026년 이후까지 50% 이상 점유율 유지 전망. 기술 복제 장벽 높음.</div>
+      </div>
+    </div>
+
+    <div class="check-item check-positive">
+      <div class="ci-icon">🌐</div>
+      <div class="ci-text">
+        <div class="ci-title">빅테크 AI 인프라 투자, 2027~2028년까지 가속</div>
+        <div class="ci-desc">MS, Google, Meta, Amazon 모두 AI 데이터센터 CAPEX를 대폭 확대. HBM 수요의 구조적 증가.</div>
+      </div>
+    </div>
+
+    <div class="check-item check-positive">
+      <div class="ci-icon">💼</div>
+      <div class="ci-text">
+        <div class="ci-title">엔비디아 등과 멀티이어 장기 공급계약 진행 중</div>
+        <div class="ci-desc">단기 가격 변동보다 장기 수주 구조로 안정적 매출 확보. B2B 공급 안정성 높음.</div>
+      </div>
+    </div>
+
+    <div class="check-item check-warning">
+      <div class="ci-icon">⚠️</div>
+      <div class="ci-text">
+        <div class="ci-title">중국 경쟁사(CXMT 등) 추격 가능성 — 중장기 모니터링</div>
+        <div class="ci-desc">저가 DRAM 분야에서 중국 기업의 추격이 진행 중. HBM은 단기 위협 아니나, 범용 메모리 ASP에 영향 가능성.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 목표가 분포 -->
+  <div class="target-section">
+    <h3>🎯 주가 목표 분포</h3>
+    <div class="target-bar-wrap">
+      <div class="target-row">
+        <div class="tr-label">현재가</div>
+        <div class="tr-bar-bg"><div class="tr-bar bar-current" style="width:55%"></div></div>
+        <div class="tr-val" style="color:#1565c0;">1,654,000원</div>
+      </div>
+      <div class="target-row">
+        <div class="tr-label">평균 목표가</div>
+        <div class="tr-bar-bg"><div class="tr-bar bar-avg" style="width:59%"></div></div>
+        <div class="tr-val" style="color:#388e3c;">1,771,866원</div>
+      </div>
+      <div class="target-row">
+        <div class="tr-label">최고 목표가</div>
+        <div class="tr-bar-bg"><div class="tr-bar bar-max" style="width:100%"></div></div>
+        <div class="tr-val" style="color:#c62828;">3,000,000원</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    ※ 출처: Bloomberg, SK Securities, CNBC, TradingKey, Seoul Economic Daily (2026.04~05 기준)<br>
+    본 분석은 공개 데이터 기반 정보 제공용이며 투자 권유가 아닙니다. 투자 손실에 대한 책임은 투자자 본인에게 있습니다.
+  </div>
+</div>
+</body>
+</html>
