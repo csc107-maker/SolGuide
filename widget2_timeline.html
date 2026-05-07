@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>씨티그룹 프레이저 구조개혁 타임라인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #f7f9fc;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 32px 20px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .header .eyebrow {
+    display: inline-block;
+    background: #e8f0fe;
+    color: #1a56cc;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 16px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #1a2740;
+    font-weight: 700;
+  }
+  .header p { font-size: 12.5px; color: #7a8599; margin-top: 8px; }
+
+  .timeline {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 72px;
+    top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #1a6bb5, #e63946, #2a9d8f, #f4a261, #6a4c93, #1a6bb5);
+    border-radius: 4px;
+  }
+
+  .tl-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .tl-date {
+    min-width: 60px;
+    text-align: right;
+    padding-top: 6px;
+  }
+  .tl-date .year {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a2740;
+    display: block;
+  }
+  .tl-date .month {
+    font-size: 10px;
+    color: #8a94a6;
+    display: block;
+  }
+  .tl-dot {
+    position: relative;
+    flex-shrink: 0;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+    margin-left: -2px;
+  }
+  .tl-dot span {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #1a6bb5;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+  .tl-dot span.red { border-color: #e63946; }
+  .tl-dot span.teal { border-color: #2a9d8f; }
+  .tl-dot span.orange { border-color: #f4a261; }
+  .tl-dot span.purple { border-color: #6a4c93; }
+  .tl-dot span.gold { border-color: #d4a017; background: #fffde7; }
+
+  .tl-body {
+    flex: 1;
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-left: 3px solid #1a6bb5;
+  }
+  .tl-body.red { border-left-color: #e63946; }
+  .tl-body.teal { border-left-color: #2a9d8f; }
+  .tl-body.orange { border-left-color: #f4a261; }
+  .tl-body.purple { border-left-color: #6a4c93; }
+  .tl-body.gold { border-left-color: #d4a017; }
+
+  .tl-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1a2740;
+    margin-bottom: 5px;
+  }
+  .tl-desc {
+    font-size: 12px;
+    color: #5a6680;
+    line-height: 1.7;
+  }
+  .tl-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .chip {
+    font-size: 10.5px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    background: #f0f4f8;
+    color: #4a5568;
+  }
+  .chip.blue { background: #e8f0fe; color: #1a56cc; }
+  .chip.red { background: #ffebee; color: #c62828; }
+  .chip.green { background: #e8f5e9; color: #2e7d32; }
+  .chip.orange { background: #fff3e0; color: #e65100; }
+
+  .source-note {
+    text-align: center;
+    font-size: 10.5px;
+    color: #aab0bc;
+    margin-top: 20px;
+    max-width: 700px;
+    margin-left: auto; margin-right: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">🕐 구조개혁 타임라인</div>
+  <h2>제인 프레이저 CEO의 씨티그룹 대개혁 (2021~2026)</h2>
+  <p>취임부터 ROTCE 13.1% 달성까지 — 5년의 여정</p>
+</div>
+
+<div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-date"><span class="year">2021</span><span class="month">Mar</span></div>
+    <div class="tl-dot"><span></span></div>
+    <div class="tl-body">
+      <div class="tl-title">🏛 제인 프레이저, 씨티그룹 CEO 취임</div>
+      <div class="tl-desc">씨티그룹 역사상 최초의 여성 CEO. "복잡성이 최대 리스크"라 진단하고 전략적 단순화 선언. 아시아·EMEA 14개국 소비자금융 철수 계획 발표.</div>
+      <div class="tl-chips">
+        <span class="chip blue">최초 여성 CEO</span>
+        <span class="chip red">14개국 철수 선언</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-date"><span class="year">2022</span><span class="month">Mar</span></div>
+    <div class="tl-dot"><span class="red"></span></div>
+    <div class="tl-body red">
+      <div class="tl-title">📢 제1차 투자자의 날 — 시장의 냉소적 반응</div>
+      <div class="tl-desc">ROTCE 11~12% 달성 목표 발표. 시장과 애널리스트들은 "또 한 번의 빈말 약속"이라며 회의적 반응. 씨티 주가 밸류에이션 할인 지속.</div>
+      <div class="tl-chips">
+        <span class="chip">목표 ROTCE 11~12%</span>
+        <span class="chip red">시장 냉소적 반응</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-date"><span class="year">2023</span><span class="month">Nov</span></div>
+    <div class="tl-dot"><span class="teal"></span></div>
+    <div class="tl-body teal">
+      <div class="tl-title">🏗 '보라보라' 대규모 조직 구조조정 발표</div>
+      <div class="tl-desc">관리 계층 13단계 → 8단계 축소. 60개 이상 내부 위원회 폐지. 5대 핵심 사업부(서비스·마켓·뱅킹·웰스·미국개인금융) 체제로 재편. 약 2만여 명 인력 감축 추진.</div>
+      <div class="tl-chips">
+        <span class="chip">관리층 13→8단계</span>
+        <span class="chip red">2만명 감축</span>
+        <span class="chip blue">5대 사업부 체제</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-date"><span class="year">2024</span><span class="month">Dec</span></div>
+    <div class="tl-dot"><span class="orange"></span></div>
+    <div class="tl-body orange">
+      <div class="tl-title">🌎 글로벌 자산 매각 가속화 — 멕시코 바나멕스 분리</div>
+      <div class="tl-desc">멕시코 법인 바나멕스(Banamex)의 기관금융 부문과 소비자·중소기업 부문 분리 완료. IPO 준비 착수. 러시아 법인(AO Citibank) 르네상스캐피탈에 매각 합의(2025년 12월).</div>
+      <div class="tl-chips">
+        <span class="chip orange">바나멕스 IPO 준비</span>
+        <span class="chip">러시아 법인 매각</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-date"><span class="year">2025</span><span class="month">연간</span></div>
+    <div class="tl-dot"><span class="purple"></span></div>
+    <div class="tl-body purple">
+      <div class="tl-title">⚙️ 변혁 프로그램 90% 완료 단계 진입</div>
+      <div class="tl-desc">9개국 소비자금융 철수 완료. 동의 명령(Consent Order) 이행 막바지 단계. AI 이니셔티브 'Sky' 론칭. 목표 헤드카운트 18만 명 향해 순항 중.</div>
+      <div class="tl-chips">
+        <span class="chip blue">AI 'Sky' 론칭</span>
+        <span class="chip green">9개국 철수 완료</span>
+        <span class="chip">동의명령 이행 중</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-date"><span class="year">2026</span><span class="month">Q1</span></div>
+    <div class="tl-dot"><span class="gold"></span></div>
+    <div class="tl-body gold">
+      <div class="tl-title">🏆 ROTCE 13.1% 달성 — 목표 초과, 20년 만에 주가 최고가</div>
+      <div class="tl-desc">분기 매출 246억 달러(10년 최고), 순이익 58억 달러(+42%), EPS $3.06(+56%). 주가 131.42달러로 20년 만에 신고가 경신. '프레이저 할인' 빠르게 소멸 중.</div>
+      <div class="tl-chips">
+        <span class="chip green">ROTCE 13.1%</span>
+        <span class="chip blue">20년 최고가</span>
+        <span class="chip orange">10년 최고 매출</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-date"><span class="year">2026</span><span class="month">5월</span></div>
+    <div class="tl-dot"><span></span></div>
+    <div class="tl-body">
+      <div class="tl-title">📅 제2차 투자자의 날 — 새로운 중장기 목표 발표 예정</div>
+      <div class="tl-desc">5대 사업부별 성장 로드맵 제시. 2026년 목표를 뛰어넘는 새로운 ROTCE 가이던스 발표 예정. AI(에이전틱 커머스) 전략 및 자본 활용 계획 공개 예정.</div>
+      <div class="tl-chips">
+        <span class="chip blue">新 ROTCE 목표 발표</span>
+        <span class="chip">AI 전략 공개</span>
+        <span class="chip green">성장 단계 진입</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="source-note">출처: Citigroup 공식 발표, CNBC, Reuters (Investing.com), Bloomberg | 2026.05 기준</div>
+
+</body>
+</html>
