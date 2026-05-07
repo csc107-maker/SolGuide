@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이란 전쟁 타임라인 & 종전 후 경제 시나리오</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg: #F0F4FF;
+    --card: #FFFFFF;
+    --blue-dark: #1E3A8A;
+    --blue: #2563EB;
+    --blue-light: #DBEAFE;
+    --teal: #0D9488;
+    --teal-light: #CCFBF1;
+    --orange: #EA580C;
+    --orange-light: #FFEDD5;
+    --green: #15803D;
+    --green-light: #DCFCE7;
+    --red: #DC2626;
+    --text: #111827;
+    --text-sub: #6B7280;
+    --shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 26px 18px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+
+  .header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--blue-dark);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .header p { font-size: 0.78rem; color: var(--text-sub); }
+
+  /* === TIMELINE === */
+  .timeline-section {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 22px;
+  }
+
+  .section-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 16px;
+    border-left: 3px solid var(--blue);
+    padding-left: 10px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 36px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--red), var(--orange), var(--blue), var(--green));
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 18px;
+    animation: fadeUp 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .tl-item:nth-child(1) { animation-delay: 0.1s; }
+  .tl-item:nth-child(2) { animation-delay: 0.2s; }
+  .tl-item:nth-child(3) { animation-delay: 0.3s; }
+  .tl-item:nth-child(4) { animation-delay: 0.4s; }
+  .tl-item:nth-child(5) { animation-delay: 0.5s; }
+  .tl-item:nth-child(6) { animation-delay: 0.6s; }
+  .tl-item:nth-child(7) { animation-delay: 0.7s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -30px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px currentColor;
+  }
+
+  .tl-date {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    margin-bottom: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  .tl-event {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .tl-impact {
+    font-size: 0.73rem;
+    color: var(--text-sub);
+    line-height: 1.5;
+  }
+
+  /* === SCENARIO CARDS === */
+  .scenario-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .scenario-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 16px 14px;
+    box-shadow: var(--shadow);
+    border-top: 4px solid transparent;
+  }
+
+  .s-a { border-color: var(--green); }
+  .s-b { border-color: var(--orange); }
+  .s-c { border-color: var(--red); }
+
+  .sc-header {
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .s-a .sc-header { color: var(--green); }
+  .s-b .sc-header { color: var(--orange); }
+  .s-c .sc-header { color: var(--red); }
+
+  .sc-body { font-size: 0.78rem; color: var(--text); line-height: 1.7; }
+
+  .sc-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .chip {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .chip.up { background: #DCFCE7; color: #15803D; }
+  .chip.down { background: #FEE2E2; color: #DC2626; }
+  .chip.neutral { background: #FEF3C7; color: #92400E; }
+
+  /* === INVESTMENT TABLE === */
+  .invest-section {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+  }
+
+  thead tr { background: var(--blue-light); }
+
+  th {
+    padding: 9px 8px;
+    text-align: left;
+    font-weight: 700;
+    color: var(--blue-dark);
+    border-bottom: 2px solid #BFDBFE;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 9px 8px;
+    border-bottom: 1px solid #F9FAFB;
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #F5F8FF; }
+
+  .timing-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+
+  .t-now { background: #FEE2E2; color: #B91C1C; }
+  .t-after { background: #DCFCE7; color: #166534; }
+  .t-both { background: #FEF3C7; color: #92400E; }
+
+  .source-note {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    text-align: center;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h2>🌏 이란 전쟁 타임라인 &<br>종전 후 세계 경제 시나리오</h2>
+  <p>위키백과 · 나무위키 · KDI · 딜로이트 · 파이낸셜뉴스 종합 (2026.05)</p>
+</div>
+
+<!-- 타임라인 -->
+<div class="timeline-section">
+  <div class="section-title">📅 주요 사건 타임라인</div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#DC2626; color:#DC2626;"></div>
+      <div class="tl-date">2026.02.28</div>
+      <div class="tl-event">🔴 미국·이스라엘 전격 공습 개시</div>
+      <div class="tl-impact">이란 핵시설·군 지휘부 공습 → 이란 반격 시작. 호르무즈 봉쇄 선언.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#EA580C; color:#EA580C;"></div>
+      <div class="tl-date">2026.03.01</div>
+      <div class="tl-event">⚡ 한국 코스피 -12.1%, 코스닥 -14.0% 폭락</div>
+      <div class="tl-impact">환율 달러당 1,500원 돌파. 국내 휘발유 50원, 경유 86원 급등.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#D97706; color:#D97706;"></div>
+      <div class="tl-date">2026.03.13</div>
+      <div class="tl-event">🛢️ WTI $80 돌파, 미국 러시아산 석유 제한 일시 해제</div>
+      <div class="tl-impact">이라크 산유량 -61%, 쿠웨이트 -53%, UAE -44% 급감 확인.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#2563EB; color:#2563EB;"></div>
+      <div class="tl-date">2026.04.중순</div>
+      <div class="tl-event">📊 세계 최대 3,250만명 빈곤 경고 (WSJ·KfW)</div>
+      <div class="tl-impact">에너지 시설 파괴로 유가 정상화 '내년 말까지 어렵다' 전망 등장.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#7C3AED; color:#7C3AED;"></div>
+      <div class="tl-date">2026.05.05</div>
+      <div class="tl-event">🤝 미국 휴전 재확인 / WTI -4% 하락</div>
+      <div class="tl-impact">작전 에픽 퓨리 종료 선언. 이란과 협상 가능성 타진 중.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#0D9488; color:#0D9488;"></div>
+      <div class="tl-date">2026.05.06~07</div>
+      <div class="tl-event">💛 종전 기대감 — 금 급등, 달러 하락, 구리 +3%</div>
+      <div class="tl-impact">트럼프 "중국 방문 전 이란 전쟁 끝낼 수도" 발언. 자산 시장 재편.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#16A34A; color:#16A34A;"></div>
+      <div class="tl-date">2026년 2분기 예상</div>
+      <div class="tl-event">🌿 KDI·현대경제연구원 협상 타결 전제 경제 전망</div>
+      <div class="tl-impact">2분기 중 피크 아웃 → 여름 전후 유가 하향 안정화 시나리오. 2026 성장률 2.7% (0.8%p↑) 상향 조정.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 종전 후 시나리오 -->
+<div class="section-title" style="margin-bottom:14px;">🔮 종전 후 세계 경제 시나리오 3가지</div>
+<div class="scenario-grid">
+
+  <div class="scenario-card s-a">
+    <div class="sc-header">🟢 시나리오 A: 조기 협상 타결 (가장 이상적)</div>
+    <div class="sc-body">
+      2분기 내 이란과 핵 합의 → 호르무즈 재개방. 유가 $70~$85 하향 안정화. 인플레이션 완화, 연준 금리인하 재개. 항공·소비재·신흥국 빠른 회복. 글로벌 공급망 복구 시작. 한국 수출 수혜.
+    </div>
+    <div class="sc-chips">
+      <span class="chip up">📈 항공주 급반등</span>
+      <span class="chip up">📈 소비재 회복</span>
+      <span class="chip up">📈 신흥시장 강세</span>
+      <span class="chip down">📉 에너지주 차익실현</span>
+      <span class="chip up">📈 금리인하 기대</span>
+    </div>
+  </div>
+
+  <div class="scenario-card s-b">
+    <div class="sc-header">🟡 시나리오 B: 교착 지속 / 저강도 분쟁 (현실적 기본 시나리오)</div>
+    <div class="sc-body">
+      협상 진전-후퇴 반복. 호르무즈 부분 재개, 유가 $90~$130 변동성 장세. 스태그플레이션 위험 지속. OPEC+ 감산 여부가 핵심 변수. 중동 에너지 인프라 복구 1년 이상 소요. 글로벌 경기 둔화 속 섹터 차별화 지속.
+    </div>
+    <div class="sc-chips">
+      <span class="chip neutral">🔄 에너지 변동성</span>
+      <span class="chip neutral">🔄 금 강세 지속</span>
+      <span class="chip down">📉 성장주 부진</span>
+      <span class="chip up">📈 배당주 선호</span>
+      <span class="chip neutral">🔄 방산 고점 논란</span>
+    </div>
+  </div>
+
+  <div class="scenario-card s-c">
+    <div class="sc-header">🔴 시나리오 C: 전면전 확전 (극단적 위험 시나리오)</div>
+    <div class="sc-body">
+      호르무즈 완전 봉쇄 장기화. 유가 $180~$200 급등, 글로벌 경기침체 동시 진행. 3,250만명 추가 빈곤. 식량·에너지 복합 위기. 중앙은행 딜레마(인플레 vs 경기침체). 주식시장 전반 폭락. 안전자산(금·달러·채권) 만이 버팀목.
+    </div>
+    <div class="sc-chips">
+      <span class="chip up">📈 금·달러 급등</span>
+      <span class="chip down">📉 전 증시 폭락</span>
+      <span class="chip down">📉 소비 붕괴</span>
+      <span class="chip neutral">🔄 원전·재생에너지 긴급 투자</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- 종전 후 투자 전략 테이블 -->
+<div class="invest-section">
+  <div class="section-title" style="border-color: var(--teal);">💼 종전 전후 투자 전략 정리</div>
+  <table>
+    <thead>
+      <tr>
+        <th>업종/자산</th>
+        <th>전쟁 중 포지션</th>
+        <th>종전 후 포지션</th>
+        <th>타이밍</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>에너지 ETF (XLE)</strong></td>
+        <td>비중 확대</td>
+        <td>비중 축소 / 차익실현</td>
+        <td><span class="timing-badge t-now">현재</span></td>
+      </tr>
+      <tr>
+        <td><strong>방산 (한화에어로 · ITA)</strong></td>
+        <td>비중 확대</td>
+        <td>점진적 축소</td>
+        <td><span class="timing-badge t-now">현재</span></td>
+      </tr>
+      <tr>
+        <td><strong>금 (GLD · IAU)</strong></td>
+        <td>안전자산 보유</td>
+        <td>일부 차익 후 유지</td>
+        <td><span class="timing-badge t-both">전후 모두</span></td>
+      </tr>
+      <tr>
+        <td><strong>항공주 (KAL · DAL)</strong></td>
+        <td>비중 최소화</td>
+        <td>선제 매수 기회</td>
+        <td><span class="timing-badge t-after">종전 후</span></td>
+      </tr>
+      <tr>
+        <td><strong>재생에너지 (씨에스윈드 · OCI)</strong></td>
+        <td>구조적 수혜</td>
+        <td>장기 성장 지속</td>
+        <td><span class="timing-badge t-both">전후 모두</span></td>
+      </tr>
+      <tr>
+        <td><strong>반도체 (삼성전자 · SK하이닉스)</strong></td>
+        <td>유가 간접 영향 제한</td>
+        <td>AI·반도체 사이클 재부각</td>
+        <td><span class="timing-badge t-after">종전 후</span></td>
+      </tr>
+      <tr>
+        <td><strong>소비재 (이마트 · 쿠팡)</strong></td>
+        <td>비중 최소화</td>
+        <td>소비 회복 수혜</td>
+        <td><span class="timing-badge t-after">종전 후</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="source-note">📌 출처 : KDI 경제정보센터 / 현대경제연구원 / 파이낸셜뉴스 / 딜로이트 코리아 / 위키백과 2026년 이란 전쟁 / 나무위키 종합 분석</p>
+
+</body>
+</html>
