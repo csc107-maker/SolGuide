@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>씨티그룹 vs 국내 금융주 비교 분석 보고서</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2240;
+    --blue: #1a6bb5;
+    --lightblue: #4a90d9;
+    --teal: #2a9d8f;
+    --gold: #d4a017;
+    --red: #e63946;
+    --green: #2e7d32;
+    --orange: #e65100;
+    --gray-100: #f7f9fc;
+    --gray-200: #edf1f7;
+    --gray-300: #d8e0ed;
+    --gray-500: #7a8599;
+    --gray-700: #3a4560;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--gray-100);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--gray-700);
+    line-height: 1.7;
+  }
+
+  /* === COVER === */
+  .cover {
+    background: linear-gradient(145deg, #0a1a30 0%, #0d2240 45%, #1a3a6a 100%);
+    padding: 48px 32px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,107,181,0.3) 0%, transparent 70%);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,160,23,0.15) 0%, transparent 70%);
+  }
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.75);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    position: relative; z-index: 1;
+  }
+  .cover h1 span { color: var(--gold); }
+  .cover .subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 28px;
+    position: relative; z-index: 1;
+  }
+  .cover-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    position: relative; z-index: 1;
+  }
+  .cs-item {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+  }
+  .cs-item .cs-val {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    display: block;
+    letter-spacing: 0.5px;
+  }
+  .cs-item .cs-lbl {
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    display: block;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+  }
+  .meta-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    position: relative; z-index: 1;
+  }
+  .meta-chip {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.55);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* === SECTION === */
+  .section { padding: 28px 20px; }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .section-title .num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 600;
+    letter-spacing: 1px;
+    min-width: 28px;
+  }
+  .section-title h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 17px;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .section-title .line {
+    flex: 1;
+    height: 1px;
+    background: var(--gray-300);
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 6px;
+    background: linear-gradient(90deg, var(--navy), var(--blue), var(--teal));
+    margin: 0;
+  }
+  .divider.thin {
+    height: 1px;
+    background: var(--gray-300);
+    margin: 0 20px;
+  }
+
+  /* EXEC SUMMARY */
+  .exec-box {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-left: 4px solid var(--blue);
+    margin-bottom: 16px;
+  }
+  .exec-box p {
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.8;
+  }
+  .exec-box p strong { color: var(--navy); }
+
+  .highlight-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .hl-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    text-align: center;
+    border-top: 3px solid var(--blue);
+  }
+  .hl-card.green { border-top-color: var(--teal); }
+  .hl-card.gold { border-top-color: var(--gold); }
+  .hl-card .hv { font-family: 'Oswald', sans-serif; font-size: 22px; color: var(--navy); font-weight: 600; }
+  .hl-card .hl { font-size: 10.5px; color: var(--gray-500); margin-top: 4px; }
+
+  /* COMPARISON TABLE */
+  .table-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    margin-bottom: 16px;
+  }
+  .table-header {
+    background: var(--navy);
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .table-header h3 { font-size: 13px; color: #fff; font-weight: 700; }
+  .table-header span { font-size: 10.5px; color: rgba(255,255,255,0.5); }
+  table.comp {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table.comp thead tr {
+    background: #f0f4f8;
+  }
+  table.comp thead th {
+    padding: 11px 14px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.8px;
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--gray-300);
+    white-space: nowrap;
+  }
+  table.comp thead th:first-child { text-align: left; }
+  table.comp tbody tr { border-bottom: 1px solid var(--gray-200); transition: background 0.12s; }
+  table.comp tbody tr:last-child { border-bottom: none; }
+  table.comp tbody tr:hover { background: #f7f9ff; }
+  table.comp td {
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--gray-700);
+    text-align: center;
+    vertical-align: middle;
+  }
+  table.comp td:first-child { text-align: left; }
+  .cat-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gray-500);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 14px 4px;
+    background: #f7f9fc;
+    border-bottom: 1px solid var(--gray-200);
+    display: block;
+  }
+  table.comp .row-label { font-size: 12px; font-weight: 600; color: var(--navy); }
+  table.comp .sub-label { display: block; font-size: 10.5px; color: var(--gray-500); font-weight: 400; }
+
+  /* BADGES */
+  .badge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 9px; border-radius: 20px; }
+  .badge.up { background: #e8f5e9; color: var(--green); }
+  .badge.mid { background: #fff3e0; color: var(--orange); }
+  .badge.down { background: #ffebee; color: var(--red); }
+  .badge.blue { background: #e3f0fd; color: var(--blue); }
+  .badge.navy { background: #e8ecf5; color: var(--navy); }
+  .badge.gold { background: #fff8e1; color: #b8860b; }
+
+  /* VALUE CELL */
+  .val-strong { font-family: 'Oswald', sans-serif; font-size: 16px; color: var(--navy); font-weight: 600; letter-spacing: 0.5px; }
+  .val-up { color: #2e7d32; font-weight: 700; }
+  .val-warn { color: var(--orange); font-weight: 700; }
+
+  /* INSIGHT BOX */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .insight-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .insight-card .ic-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .insight-card .ic-icon {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .insight-card .ic-title { font-size: 12.5px; font-weight: 700; color: var(--navy); }
+  .insight-card .ic-body { font-size: 11.5px; color: var(--gray-700); line-height: 1.7; }
+
+  /* LESSON BOX */
+  .lesson-box {
+    background: linear-gradient(135deg, #e8f0fe 0%, #dceeff 100%);
+    border-radius: 14px;
+    padding: 20px 20px;
+    margin-bottom: 16px;
+    border: 1px solid #b8d4f8;
+  }
+  .lesson-box h3 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .lesson-list { display: flex; flex-direction: column; gap: 8px; }
+  .lesson-item {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: #2a3a5c;
+    line-height: 1.6;
+    align-items: flex-start;
+  }
+  .lesson-item .arrow { color: var(--blue); font-weight: 700; flex-shrink: 0; margin-top: 1px; font-size: 13px; }
+
+  /* FOOTER */
+  .report-footer {
+    background: var(--navy);
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .report-footer p { font-size: 10px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">📊 Global Finance Research Report</div>
+  <h1>씨티그룹(Citigroup) vs<br><span>국내 4대 금융지주</span><br>심층 비교 분석</h1>
+  <p class="subtitle">프레이저 CEO 구조개혁의 시사점과 국내 금융주 투자 전략</p>
+  <div class="cover-stats">
+    <div class="cs-item">
+      <span class="cs-val">13.1%</span>
+      <span class="cs-lbl">Citi ROTCE (Q1 '26)</span>
+    </div>
+    <div class="cs-item">
+      <span class="cs-val">13.9%</span>
+      <span class="cs-lbl">KB금융 ROE (Q1 '26)</span>
+    </div>
+    <div class="cs-item">
+      <span class="cs-val">22.7조</span>
+      <span class="cs-lbl">국내 금융지주 순익 전망</span>
+    </div>
+  </div>
+  <div class="meta-row">
+    <span class="meta-chip">📅 2026년 5월 기준</span>
+    <span class="meta-chip">🏦 씨티그룹 · KB금융 · 신한지주 · 하나금융 · 우리금융</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">01</span>
+    <h2>Executive Summary — 핵심 요약</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="exec-box">
+    <p>2026년 글로벌 은행업은 <strong>'저평가 해소'</strong>라는 공통 테마 아래 일제히 재평가 국면에 진입하고 있다. 씨티그룹(Citigroup)은 5년간의 대규모 구조개혁 끝에 Q1 2026 ROTCE 13.1%를 달성하며 20년 만에 주가 최고가를 경신했고, 국내 4대 금융지주 역시 사상 최대 순이익(2025년 18조 3천억 원, 전년比 +11%)과 주주환원율 50% 시대 개막을 배경으로 강한 주가 재평가 흐름을 이어가고 있다.</p>
+    <br>
+    <p>두 시장의 금융주가 동시에 주목받는 이유는 단순한 실적 호조를 넘어, <strong>수익 구조의 질적 전환</strong> — 즉 이자이익 의존도 탈피, 비이자·수수료 이익 확대, 자본 효율성 개선 — 이라는 구조적 변화가 공통적으로 관찰되기 때문이다. 씨티그룹의 성공 공식은 국내 금융주 재평가의 로드맵이자 거울이 될 수 있다.</p>
+  </div>
+
+  <div class="highlight-row">
+    <div class="hl-card">
+      <div class="hv">5년</div>
+      <div class="hl">씨티 구조개혁 소요 기간</div>
+    </div>
+    <div class="hl-card green">
+      <div class="hv">50%</div>
+      <div class="hl">국내 금융지주 주주환원율 목표</div>
+    </div>
+    <div class="hl-card gold">
+      <div class="hv">PBR 1배</div>
+      <div class="hl">KB금융 최초 돌파 (2026.02)</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider thin"></div>
+
+<!-- SECTION 2: 핵심지표 비교표 -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">02</span>
+    <h2>핵심 지표 비교 — 씨티그룹 vs 국내 4대 금융지주</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      <h3>📊 수익성 · 자본비율 · 밸류에이션 비교</h3>
+      <span>2026년 Q1 기준 | 각사 공시 및 증권사 추정치</span>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="comp">
+      <thead>
+        <tr>
+          <th style="min-width:120px; text-align:left;">지표 / 회사</th>
+          <th>씨티그룹<br>(Citi)</th>
+          <th>KB금융<br>(105560)</th>
+          <th>신한지주<br>(055550)</th>
+          <th>하나금융<br>(086790)</th>
+          <th>우리금융<br>(316140)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 수익성 -->
+        <tr><td colspan="6"><span class="cat-label">▶ 수익성 지표</span></td></tr>
+        <tr>
+          <td><span class="row-label">ROTCE / ROE</span><span class="sub-label">유형자기자본이익률</span></td>
+          <td><span class="val-strong val-up">13.1%</span></td>
+          <td><span class="val-strong val-up">13.9%</span></td>
+          <td><span class="val-strong">~10%</span></td>
+          <td><span class="val-strong">~10%</span></td>
+          <td><span class="val-strong">~8~9%</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">Q1 순이익 성장률</span><span class="sub-label">YoY 기준</span></td>
+          <td><span class="val-strong val-up">+42%</span></td>
+          <td><span class="val-strong val-up">+11.5%</span></td>
+          <td><span class="val-strong">+추정치 내</span></td>
+          <td><span class="val-strong">+추정치 내</span></td>
+          <td><span class="val-strong val-warn">+소폭</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">비이자이익 성장</span><span class="sub-label">수수료·트레이딩 등</span></td>
+          <td><span class="badge up">마켓 +19%</span></td>
+          <td><span class="badge up">+27.8%</span></td>
+          <td><span class="badge up">+26.5%</span></td>
+          <td><span class="badge up">+28%</span></td>
+          <td><span class="badge up">+50%↑</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">효율성 비율</span><span class="sub-label">비용/수익 비율</span></td>
+          <td><span class="val-strong val-up">58%</span><br><span style="font-size:10px;color:var(--green);">(전년比-400bp)</span></td>
+          <td><span class="val-strong">~50%대</span></td>
+          <td><span class="val-strong">~50%대</span></td>
+          <td><span class="val-strong">~50%대</span></td>
+          <td><span class="val-strong">~55%대</span></td>
+        </tr>
+
+        <!-- 자본 건전성 -->
+        <tr><td colspan="6"><span class="cat-label">▶ 자본 건전성</span></td></tr>
+        <tr>
+          <td><span class="row-label">CET1 비율</span><span class="sub-label">보통주자본비율</span></td>
+          <td><span class="val-strong">12.7%</span></td>
+          <td><span class="val-strong val-up">13.63%</span></td>
+          <td><span class="val-strong val-up">13.33%</span></td>
+          <td><span class="val-strong val-up">13.37%</span></td>
+          <td><span class="val-strong">12.9%</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">총주주환원율</span><span class="sub-label">배당+자사주매입</span></td>
+          <td><span class="val-strong">—</span><br><span style="font-size:10px">$74억 (Q1)</span></td>
+          <td><span class="val-strong val-up">52.4%</span></td>
+          <td><span class="val-strong val-up">50.2%</span></td>
+          <td><span class="val-strong val-warn">46.8%</span></td>
+          <td><span class="val-strong val-warn">36.6%</span></td>
+        </tr>
+
+        <!-- 밸류에이션 -->
+        <tr><td colspan="6"><span class="cat-label">▶ 밸류에이션</span></td></tr>
+        <tr>
+          <td><span class="row-label">PBR (주가순자산비율)</span><span class="sub-label">낮을수록 저평가</span></td>
+          <td><span class="val-strong val-warn">~1.0×</span></td>
+          <td><span class="val-strong val-up">~1.0×↑</span><br><span style="font-size:10px;color:var(--green)">최초 1배 돌파</span></td>
+          <td><span class="val-strong val-warn">~0.8×</span></td>
+          <td><span class="val-strong val-warn">~0.8×</span></td>
+          <td><span class="val-strong val-warn">~0.6×</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">Forward P/E</span><span class="sub-label">선행 주가수익비율</span></td>
+          <td><span class="val-strong">10.9×</span><br><span style="font-size:10px;color:var(--orange)">업계평균 13.9× 대비 할인</span></td>
+          <td><span class="val-strong">~8~9×</span></td>
+          <td><span class="val-strong">~7~8×</span></td>
+          <td><span class="val-strong">~7~8×</span></td>
+          <td><span class="val-strong">~6~7×</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">2025年 주가 상승률</span></td>
+          <td><span class="badge gold">20년 최고가</span></td>
+          <td><span class="badge up">+130% (2년)</span></td>
+          <td><span class="badge up">+91.5% (2년)</span></td>
+          <td><span class="badge up">+116.8% (2년)</span></td>
+          <td><span class="badge up">+115.4% (2년)</span></td>
+        </tr>
+
+        <!-- 구조적 특성 -->
+        <tr><td colspan="6"><span class="cat-label">▶ 사업 구조 특성</span></td></tr>
+        <tr>
+          <td><span class="row-label">핵심 성장동력</span></td>
+          <td><span style="font-size:11px;">서비스·마켓<br>(ROTCE 27%)</span></td>
+          <td><span style="font-size:11px;">비은행(43%)<br>수수료 +45.5%</span></td>
+          <td><span style="font-size:11px;">수수료이익<br>+26.5%</span></td>
+          <td><span style="font-size:11px;">하나증권<br>+30%</span></td>
+          <td><span style="font-size:11px;">수수료<br>+50%↑</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">이자이익 의존도</span></td>
+          <td><span class="badge blue">낮음 (글로벌 다각화)</span></td>
+          <td><span class="badge mid">중간 (개선 중)</span></td>
+          <td><span class="badge mid">중간 (개선 중)</span></td>
+          <td><span class="badge mid">중간</span></td>
+          <td><span class="badge down">높음</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">구조개혁 단계</span></td>
+          <td><span class="badge up">완료 단계 (90%↑)</span></td>
+          <td><span class="badge up">진행 중 (선진)</span></td>
+          <td><span class="badge up">진행 중</span></td>
+          <td><span class="badge mid">진행 중</span></td>
+          <td><span class="badge mid">초기 단계</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="lesson-box">
+    <h3>🔍 비교 분석 핵심 인사이트</h3>
+    <div class="lesson-list">
+      <div class="lesson-item"><span class="arrow">▶</span><span><strong>수익성:</strong> KB금융 ROE 13.94%는 씨티그룹 ROTCE 13.1%를 이미 상회한다. 그러나 씨티는 글로벌 다각화, 국내사는 이자이익 비중이 아직 높아 수익 구조의 '질'에서 차이가 있다.</span></div>
+      <div class="lesson-item"><span class="arrow">▶</span><span><strong>자본건전성:</strong> CET1 비율은 KB금융(13.63%) > 씨티(12.7%) 수준. 국내 금융주가 자본 여력에서 오히려 우위다. 이는 주주환원 확대의 '연료탱크'로 직결된다.</span></div>
+      <div class="lesson-item"><span class="arrow">▶</span><span><strong>밸류에이션 갭:</strong> 씨티의 Forward P/E(10.9×)도 할인 상태인데, 국내 금융주는 P/E 6~9×, PBR 0.6~1.0×으로 더 큰 재평가 여력이 남아있다. 일본 선례(PBR 1.1~1.2배 도달)를 따라갈 가능성이 높다.</span></div>
+      <div class="lesson-item"><span class="arrow">▶</span><span><strong>주주환원:</strong> 씨티의 Q1 $74억 환원 vs 국내 KB금융 주주환원율 52.4%(3조 600억). 절대금액은 씨티가 크나, 환원율 측면에서 국내 금융주가 빠르게 수렴 중이다.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider thin"></div>
+
+<!-- SECTION 3: 구조적 전환 공통점과 차이점 -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">03</span>
+    <h2>구조적 전환 비교 — 무엇이 같고 무엇이 다른가</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="insight-grid">
+    <div class="insight-card">
+      <div class="ic-header">
+        <div class="ic-icon" style="background:#e3f0fd;">🌐</div>
+        <div class="ic-title">씨티그룹 — 복잡성 제거가 핵심</div>
+      </div>
+      <div class="ic-body">
+        14개국 소매금융 철수, 관리층 13→8단계 축소, 60개 위원회 폐지. "선택과 집중"을 통해 글로벌 트레이딩·서비스 부문에 자원 재배분. 구조조정에 5년 소요, 2026년부터 수확기 진입. 핵심은 <strong>비용 구조의 근본적 혁신과 자본의 고수익 사업 집중</strong>이다.
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="ic-header">
+        <div class="ic-icon" style="background:#e8f5e9;">🇰🇷</div>
+        <div class="ic-title">국내 금융주 — 밸류업이 촉매</div>
+      </div>
+      <div class="ic-body">
+        정부의 기업가치 제고(밸류업) 정책 + 배당소득 분리과세 + 비과세 감액 배당 확산. 제도적 유인이 주주환원을 강제화하는 구조. 씨티처럼 자발적 구조조정보다 <strong>정책 드리븐(Policy-Driven) 재평가</strong>가 주도. 비은행·수수료 이익 확대는 자체 전략 전환.
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="ic-header">
+        <div class="ic-icon" style="background:#fff8e1;">📈</div>
+        <div class="ic-title">공통점 ① — 비이자이익 확대</div>
+      </div>
+      <div class="ic-body">
+        씨티는 마켓(+19%), 뱅킹(+15%)이 이끌고, 국내는 수수료이익(KB +45.5%, 우리금융 +50%+)이 주도. 금리 의존도를 줄이고 <strong>시장 변동성 속에서도 안정적인 수익원</strong>을 확보하는 방향이 일치한다.
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="ic-header">
+        <div class="ic-icon" style="background:#ffebee;">⚙️</div>
+        <div class="ic-title">공통점 ② — AI·디지털 전환</div>
+      </div>
+      <div class="ic-body">
+        씨티는 AI 이니셔티브 'Sky'로 웰스 생산성 향상, 에이전틱 커머스 도입 추진. 국내 금융지주도 디지털 뱅킹 고도화, AI 기반 여신 심사 등에 대규모 투자 중. <strong>기술 투자가 다음 단계 효율성 비율 개선의 핵심 변수</strong>다.
+      </div>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      <h3>🔄 구조적 전환 단계 비교 — 씨티그룹 vs 국내 금융주</h3>
+      <span>씨티 5년 경로를 국내에 투영한 분석</span>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="comp">
+      <thead>
+        <tr>
+          <th style="text-align:left; min-width:110px;">전환 요소</th>
+          <th>씨티그룹 현재</th>
+          <th>KB금융 현재</th>
+          <th>신한지주</th>
+          <th>하나금융</th>
+          <th>우리금융</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="row-label">조직 슬림화</span></td>
+          <td><span class="badge up">완료 (90%+)</span></td>
+          <td><span class="badge up">상당 진행</span></td>
+          <td><span class="badge up">진행 중</span></td>
+          <td><span class="badge mid">진행 중</span></td>
+          <td><span class="badge mid">초기</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">비핵심 자산 정리</span></td>
+          <td><span class="badge up">14개국 철수 완료</span></td>
+          <td><span class="badge up">선진적 정리</span></td>
+          <td><span class="badge up">일부 완료</span></td>
+          <td><span class="badge mid">일부</span></td>
+          <td><span class="badge mid">진행 중</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">수수료 이익 전환</span></td>
+          <td><span class="badge up">선도 (다각화)</span></td>
+          <td><span class="badge up">고속 성장 중</span></td>
+          <td><span class="badge up">성장 중</span></td>
+          <td><span class="badge up">성장 중</span></td>
+          <td><span class="badge mid">성장 초기</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">주주환원 50%</span></td>
+          <td><span class="badge gold">대규모 환원</span></td>
+          <td><span class="badge up">52.4% 달성</span></td>
+          <td><span class="badge up">50.2% 달성</span></td>
+          <td><span class="badge mid">46.8%</span></td>
+          <td><span class="badge down">36.6%</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">규제 리스크 해소</span></td>
+          <td><span class="badge mid">동의명령 진행 중</span></td>
+          <td><span class="badge mid">ELS 과징금 일부</span></td>
+          <td><span class="badge mid">일부 잔존</span></td>
+          <td><span class="badge up">대부분 해소</span></td>
+          <td><span class="badge mid">진행 중</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">AI·디지털 전환</span></td>
+          <td><span class="badge up">Sky 이니셔티브</span></td>
+          <td><span class="badge up">투자 선도</span></td>
+          <td><span class="badge up">투자 확대</span></td>
+          <td><span class="badge mid">진행 중</span></td>
+          <td><span class="badge mid">초기 단계</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">PBR 재평가</span></td>
+          <td><span class="badge gold">~1.0× (20년 최고)</span></td>
+          <td><span class="badge up">1.0× 돌파</span></td>
+          <td><span class="badge mid">~0.8×</span></td>
+          <td><span class="badge mid">~0.8×</span></td>
+          <td><span class="badge down">~0.6×</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div class="divider thin"></div>
+
+<!-- SECTION 4: 일본 선례 분석 -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">04</span>
+    <h2>일본 은행주 선례와 국내 재평가 경로</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="exec-box">
+    <p><strong>일본 은행주의 선례는 국내 금융주 투자자에게 가장 강력한 참고 사례다.</strong> 2020년대 초반까지 국내 은행과 유사하게 PBR 0.5~0.7배 수준에서 만성 저평가를 받던 일본 은행주들은, 도쿄증권거래소(TSE)의 저 PBR 개선 압박 + 주주환원율 확대 정책이 맞물리면서 현재 PBR 1.1~1.2배로 급격히 상승했다. <strong>국내도 동일한 경로를 밟고 있다는 것이 하나증권, 미래에셋증권 등 국내 주요 증권사들의 공통 분석이다.</strong></p>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      <h3>📐 일본 vs 한국 vs 씨티그룹 — 재평가 경로 비교</h3>
+      <span>밸류에이션 재평가 공통 패턴 분석</span>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="comp">
+      <thead>
+        <tr>
+          <th style="text-align:left;">비교 항목</th>
+          <th>일본 은행주<br>(선례)</th>
+          <th>국내 금융주<br>(현재 진행)</th>
+          <th>씨티그룹<br>(구조개혁)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="row-label">재평가 촉매</span></td>
+          <td>TSE 저PBR 개선 압박 + BOJ 금리 정상화</td>
+          <td>정부 밸류업 정책 + 배당소득 분리과세</td>
+          <td>자발적 구조조정 + 비용효율화</td>
+        </tr>
+        <tr>
+          <td><span class="row-label">PBR 출발점</span></td>
+          <td>0.5~0.7배</td>
+          <td>0.4~0.7배 (2023~2024)</td>
+          <td>0.4~0.6배 (2020~2022)</td>
+        </tr>
+        <tr>
+          <td><span class="row-label">PBR 도달점</span></td>
+          <td><span class="badge up">1.1~1.2배 (현재)</span></td>
+          <td><span class="badge mid">0.6~1.0배 (진행 중)</span></td>
+          <td><span class="badge up">~1.0배 (20년 최고)</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">주요 선행 조건</span></td>
+          <td>ROE 10%+ 달성<br>배당성향 40%+<br>금리 상승 환경</td>
+          <td>ROE 10%+ (KB 달성)<br>주주환원 50% (KB·신한 달성)<br>비이자이익 확대</td>
+          <td>ROTCE 10%+ 달성<br>조직 슬림화<br>비핵심 사업 정리</td>
+        </tr>
+        <tr>
+          <td><span class="row-label">향후 추가 상승 여지</span></td>
+          <td><span class="badge navy">1.3~1.5배 가능성</span></td>
+          <td><span class="badge blue">PBR 1.0~1.2배 목표</span></td>
+          <td><span class="badge gold">ROTCE 14~15% 목표</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div class="divider thin"></div>
+
+<!-- SECTION 5: 씨티에서 배울 점 -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">05</span>
+    <h2>씨티그룹 성공 공식 — 국내 금융주에 주는 시사점</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="lesson-box" style="background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%); border-color: #ffe082;">
+    <h3 style="color:#b8860b;">⭐ 씨티그룹 성공의 3대 공식 → 국내 금융주 적용 가능성</h3>
+    <div class="lesson-list">
+      <div class="lesson-item" style="color:#3d2a00;">
+        <span class="arrow" style="color:#b8860b;">①</span>
+        <span><strong>복잡성 해소 → 국내: 비핵심 자회사 정리 가속화</strong><br>씨티가 14개국 철수와 위원회 60개 폐지로 비용구조를 혁신했듯, 국내 금융지주도 비효율 계열사 통폐합과 중복 사업 정리로 효율성 비율을 추가 개선할 수 있다. KB금융이 비은행 이익 비중 43%를 달성한 것은 이 방향의 선행 사례다.</span>
+      </div>
+      <div class="lesson-item" style="color:#3d2a00;">
+        <span class="arrow" style="color:#b8860b;">②</span>
+        <span><strong>글로벌 서비스 수익 → 국내: 글로벌 투자금융(IB) 확대</strong><br>씨티의 '왕관 보석' 서비스 사업부(ROTCE 27%)는 글로벌 자금이동·무역금융이 핵심이다. 국내 금융지주는 아직 글로벌 IB 수익이 제한적이나, 한국 기업들의 글로벌 M&A 증가를 타고 씨티형 글로벌 서비스 수익 창출이 중장기 기회다.</span>
+      </div>
+      <div class="lesson-item" style="color:#3d2a00;">
+        <span class="arrow" style="color:#b8860b;">③</span>
+        <span><strong>AI 활용 생산성 혁신 → 국내: 디지털 뱅킹 2.0</strong><br>씨티 'Sky' AI 이니셔티브로 웰스 사업부 생산성 향상을 추진하듯, 국내 금융지주도 AI 기반 여신심사·자산관리·고객서비스 자동화로 비용 감축과 수익성 개선을 동시에 꾀할 수 있다. 이는 이미 각 지주의 핵심 투자 영역으로 부상했다.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="report-footer">
+  <p>본 보고서는 투자 참고 정보이며, 투자 권유가 아닙니다. 투자에 따른 손익은 전적으로 투자자 본인 책임입니다.<br>
+  데이터 출처: Citigroup Q1 2026 실적발표, CNBC, Reuters/Investing.com, Bloomberg, 하나증권, 미래에셋증권, 삼성증권, NH투자증권, 메리츠증권, 각사 공시(DART)<br>
+  작성 기준일: 2026년 5월 7일</p>
+</div>
+</body>
+</html>
