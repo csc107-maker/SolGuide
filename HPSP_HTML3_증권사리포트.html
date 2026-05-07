@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPSP 증권사 리포트</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:#fafbff;padding:28px 16px}
+.wrap{max-width:820px;margin:0 auto}
+.badge{font-size:11px;font-weight:700;letter-spacing:2px;color:#5c6bc0;text-transform:uppercase;margin-bottom:6px;display:block}
+h2{font-size:19px;font-weight:900;color:#1a237e;margin-bottom:22px}
+
+/* 증권사 카드 */
+.broker-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px}
+.broker-card{background:#fff;border-radius:12px;padding:18px;border:1px solid #e8eaf6;display:flex;align-items:flex-start;gap:14px}
+.broker-icon{width:42px;height:42px;border-radius:10px;background:#e8eaf6;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.bname{font-size:12.5px;font-weight:700;color:#3949ab}
+.bopinion{font-size:11px;color:#7986cb;margin-bottom:4px}
+.btp{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:#1a237e}
+.bupside{font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:#e8f5e9;color:#2e7d32;margin-top:4px;display:inline-block}
+.bdate{font-size:10.5px;color:#bdbdbd;margin-top:3px}
+
+/* 컨센서스 평균 배너 */
+.consensus-bar{background:linear-gradient(90deg,#1a237e,#3949ab);border-radius:12px;padding:18px 24px;color:#fff;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+.cons-num{font-family:'DM Mono',monospace;font-size:36px;font-weight:400;flex-shrink:0}
+.cons-text p{font-size:13px;color:#c5cae9;line-height:1.6}
+.cons-text strong{color:#fff}
+
+/* 경쟁사 비교 테이블 */
+.table-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e8eaf6}
+table{width:100%;border-collapse:collapse}
+thead tr{background:linear-gradient(90deg,#1a237e,#283593)}
+thead th{color:#fff;font-size:11.5px;font-weight:700;padding:12px 14px;text-align:right}
+thead th:first-child{text-align:left}
+tbody tr{border-bottom:1px solid #e8eaf6}
+tbody tr:last-child{border-bottom:none}
+tbody tr:nth-child(1){background:#fffde7;font-weight:700}
+tbody td{padding:11px 14px;font-size:12.5px;color:#37474f;text-align:right}
+tbody td:first-child{text-align:left;font-weight:600;color:#1a237e}
+.best{color:#c62828;font-weight:700}
+
+.sec-label{font-size:13px;font-weight:700;color:#3949ab;margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid #e8eaf6}
+.note{font-size:11px;color:#9e9e9e;text-align:center;margin-top:12px}
+@media(max-width:560px){.broker-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">Analyst Coverage · Target Price</span>
+  <h2>📊 증권사 투자의견 & 목표주가 + 경쟁사 비교</h2>
+
+  <!-- 컨센서스 배너 -->
+  <div class="consensus-bar">
+    <div class="cons-num">48,313원</div>
+    <div class="cons-text">
+      <p>증권사 12개월 목표주가 <strong>평균 (2026.05 기준)</strong><br>
+      애널리스트 8명 전원 <strong>매수(BUY)</strong> 의견 · 매도 0명 · 현재가 대비 약 <strong>+8.6% 상승 여력</strong></p>
+    </div>
+  </div>
+
+  <!-- 증권사별 카드 -->
+  <div class="broker-grid">
+    <div class="broker-card">
+      <div class="broker-icon">🏦</div>
+      <div>
+        <div class="bopinion">BUY · 목표주가</div>
+        <div class="btp">58,000원</div>
+        <div class="bname">대신증권 (류형근)</div>
+        <span class="bupside">현재가 대비 +30.3%</span>
+        <div class="bdate">2026.04.22 · 상향 조정 (기존 42,000원)</div>
+      </div>
+    </div>
+    <div class="broker-card">
+      <div class="broker-icon">🏦</div>
+      <div>
+        <div class="bopinion">매수 · 목표주가</div>
+        <div class="btp">54,000원</div>
+        <div class="bname">한국투자증권 (채민숙)</div>
+        <span class="bupside">현재가 대비 +21.3%</span>
+        <div class="bdate">2026.04.16 · 상향 조정 (기존 42,000원)</div>
+      </div>
+    </div>
+    <div class="broker-card">
+      <div class="broker-icon">🏦</div>
+      <div>
+        <div class="bopinion">매수 · 목표주가</div>
+        <div class="btp">65,000원</div>
+        <div class="bname">BNK투자증권</div>
+        <span class="bupside">현재가 대비 +46.1%</span>
+        <div class="bdate">최근 제시 · 최고 목표가</div>
+      </div>
+    </div>
+    <div class="broker-card">
+      <div class="broker-icon">🏦</div>
+      <div>
+        <div class="bopinion">매수 · 목표주가</div>
+        <div class="btp">35,000원</div>
+        <div class="bname">최저 목표가 증권사</div>
+        <span class="bupside" style="background:#fce4ec;color:#c62828;">최저 목표가 수준</span>
+        <div class="bdate">컨센서스 범위 최하단</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 경쟁사 비교 -->
+  <div class="sec-label">⚔️ 국내 반도체 전공정 열처리·어닐링 장비 업체 수익성 비교 (2025년 실적 기준)</div>
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>기업명</th>
+          <th>매출액</th>
+          <th>영업이익</th>
+          <th>영업이익률</th>
+          <th>주요 장비</th>
+          <th>독점 여부</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>⭐ HPSP (403870)</td>
+          <td>1,730억</td>
+          <td>900억</td>
+          <td class="best">52%</td>
+          <td>고압수소 어닐링</td>
+          <td class="best">글로벌 독점</td>
+        </tr>
+        <tr>
+          <td>유진테크 (084370)</td>
+          <td>~7,500억</td>
+          <td>~1,270억</td>
+          <td>~17%</td>
+          <td>CVD, 어닐링</td>
+          <td>경쟁 다수</td>
+        </tr>
+        <tr>
+          <td>원익IPS (240810)</td>
+          <td>~1조</td>
+          <td>~800억</td>
+          <td>~8%</td>
+          <td>ALD, 열처리</td>
+          <td>경쟁 다수</td>
+        </tr>
+        <tr>
+          <td>주성엔지니어링 (036930)</td>
+          <td>~3,500억</td>
+          <td>~455억</td>
+          <td>~13%</td>
+          <td>ALD, CVD</td>
+          <td>경쟁 다수</td>
+        </tr>
+        <tr>
+          <td>예스티 (예정 경쟁사)</td>
+          <td>미공개</td>
+          <td>미공개</td>
+          <td>—</td>
+          <td>HPA 개발 중</td>
+          <td>진입 시도 중</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">※ 경쟁사 수치는 2025년 추정치 기준. HPSP 영업이익률 52%는 국내 반도체 장비 업종 내 압도적 1위 수준 | 출처: FnGuide, 각사 공시, 대신증권</p>
+</div>
+</body>
+</html>
