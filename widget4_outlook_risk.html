@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>씨티그룹 향후 전망 및 리스크</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #eef2f8;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 28px 16px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .header .eyebrow {
+    display: inline-block;
+    background: #fff;
+    color: #1a6bb5;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 16px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #0d2240;
+  }
+  .header p { font-size: 12px; color: #7a8599; margin-top: 8px; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 740px;
+    margin: 0 auto 20px;
+  }
+  @media (max-width: 520px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .col-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .col-card .col-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1a2740;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f4f8;
+  }
+  .col-card .col-title .icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+
+  .item-list { display: flex; flex-direction: column; gap: 10px; }
+  .list-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #3a4560;
+    line-height: 1.6;
+    align-items: flex-start;
+  }
+  .list-item .dot {
+    min-width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .opportunity .list-item { background: #f0f9f4; }
+  .opportunity .list-item .dot { background: #2a9d8f; }
+  .risk .list-item { background: #fff5f5; }
+  .risk .list-item .dot { background: #e63946; }
+
+  .target-card {
+    max-width: 740px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, #f0f9f4 0%, #e8f5f0 100%);
+    border-radius: 16px;
+    padding: 20px 22px;
+    border: 1px solid #c8e6c9;
+  }
+  .target-card h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1b5e20;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .target-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .target-chip {
+    background: #fff;
+    border: 1px solid #a5d6a7;
+    border-radius: 10px;
+    padding: 10px 16px;
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+  }
+  .target-chip .t-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #1b5e20;
+    display: block;
+    line-height: 1;
+  }
+  .target-chip .t-label {
+    font-size: 10.5px;
+    color: #558b2f;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .guidance-card {
+    max-width: 740px;
+    margin: 0 auto 16px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .guidance-card h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0d2240;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 480px) {
+    .guide-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .guide-item {
+    background: #f7f9ff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .guide-item .g-label {
+    font-size: 10.5px;
+    color: #8a94a6;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .guide-item .g-val {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1a2740;
+  }
+
+  .source-note {
+    text-align: center;
+    font-size: 10.5px;
+    color: #aab0bc;
+    margin-top: 14px;
+    max-width: 740px;
+    margin-left: auto; margin-right: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">🔭 씨티그룹 OUTLOOK 2026~2027</div>
+  <h2>향후 전망 & 리스크 분석</h2>
+  <p>구조개혁 완료 후 '성장 단계'의 기회와 위험 요인</p>
+</div>
+
+<!-- 중기 목표 -->
+<div class="target-card">
+  <h3>🎯 2026년 연간 관리 목표 (Management Guidance)</h3>
+  <div class="target-row">
+    <div class="target-chip">
+      <span class="t-num">10~11%</span>
+      <span class="t-label">연간 목표 ROTCE</span>
+    </div>
+    <div class="target-chip">
+      <span class="t-num">+5~6%</span>
+      <span class="t-label">NII(이자수익) 성장률</span>
+    </div>
+    <div class="target-chip">
+      <span class="t-num">~60%</span>
+      <span class="t-label">연간 효율성비율 목표</span>
+    </div>
+    <div class="target-chip">
+      <span class="t-num">4~4.5%</span>
+      <span class="t-label">신용카드 NCL率 예상</span>
+    </div>
+  </div>
+</div>
+
+<!-- Full-year Guidance -->
+<div class="guidance-card">
+  <h3>📋 2026 연간 비즈니스 전망 (Full-Year Outlook)</h3>
+  <div class="guide-grid">
+    <div class="guide-item">
+      <span class="g-label">Services 매출</span>
+      <span class="g-val">지속 고성장</span>
+    </div>
+    <div class="guide-item">
+      <span class="g-label">AI 이니셔티브 'Sky'</span>
+      <span class="g-val">웰스 생산성↑</span>
+    </div>
+    <div class="guide-item">
+      <span class="g-label">바나멕스 IPO</span>
+      <span class="g-val">2026~2027 예정</span>
+    </div>
+    <div class="guide-item">
+      <span class="g-label">동의명령(Consent Order)</span>
+      <span class="g-val">2026년 내 완료 목표</span>
+    </div>
+    <div class="guide-item">
+      <span class="g-label">M&A 전략</span>
+      <span class="g-val">유기적 성장만</span>
+    </div>
+    <div class="guide-item">
+      <span class="g-label">투자자의 날(5월)</span>
+      <span class="g-val">新 ROTCE 목표 발표</span>
+    </div>
+  </div>
+</div>
+
+<!-- 기회 vs 리스크 -->
+<div class="two-col">
+  <div class="col-card opportunity">
+    <div class="col-title">
+      <div class="icon" style="background:#e8f5e9;">🚀</div>
+      성장 기회 (Opportunities)
+    </div>
+    <div class="item-list">
+      <div class="list-item"><div class="dot"></div><div>서비스 사업부 일 $4조 자금이동 규모 — AI 자동화로 추가 마진 확대 여지</div></div>
+      <div class="list-item"><div class="dot"></div><div>2027년 ROTCE 14~15% 달성 시 업계 선도기업 전환 가능</div></div>
+      <div class="list-item"><div class="dot"></div><div>글로벌 M&A 시장 회복 + 기술·에너지 섹터 딜 증가</div></div>
+      <div class="list-item"><div class="dot"></div><div>웰스 사업부 AI 'Sky' 기반 생산성 개선 → 중장기 수익성 수렴</div></div>
+      <div class="list-item"><div class="dot"></div><div>Forward P/E 10.88배 → 업계 평균(13.99배) 대비 여전한 저평가 매력</div></div>
+    </div>
+  </div>
+  <div class="col-card risk">
+    <div class="col-title">
+      <div class="icon" style="background:#ffebee;">⚠️</div>
+      핵심 리스크 (Key Risks)
+    </div>
+    <div class="item-list">
+      <div class="list-item"><div class="dot"></div><div>글로벌 경기 냉각 시 신용카드 연체율(NCL) 상승 위험</div></div>
+      <div class="list-item"><div class="dot"></div><div>지정학 리스크 — 글로벌 풋프린트 보유로 경쟁사 대비 더 큰 노출</div></div>
+      <div class="list-item"><div class="dot"></div><div>웰스 사업부 ROTCE 10.8% — 모건스탠리(30.4%) 대비 구조적 격차</div></div>
+      <div class="list-item"><div class="dot"></div><div>동의명령 미완료 시 규제 리스크 지속 (Fed, OCC)</div></div>
+      <div class="list-item"><div class="dot"></div><div>1분기 계절적 호조 효과 → 2~4분기 지속성 검증 필요</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="source-note">출처: Citigroup Q1 2026 어닝콜, Reuters/Investing.com 프레이저 인터뷰 (2026.05), CNBC, Bloomberg | 투자 참고용, 투자 권유 아님</div>
+
+</body>
+</html>
