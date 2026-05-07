@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPSP 고객사 분석</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Oswald:wght@500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:#f3f8ff;padding:28px 16px}
+.wrap{max-width:820px;margin:0 auto}
+.title-row{margin-bottom:20px}
+.badge{font-size:11px;font-weight:700;letter-spacing:2px;color:#1565c0;text-transform:uppercase;margin-bottom:6px;display:block}
+h2{font-size:19px;font-weight:900;color:#0d2d5e}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.panel{background:#fff;border-radius:14px;padding:22px;border:1px solid #bbdefb;box-shadow:0 2px 8px rgba(13,45,94,.06)}
+.panel h3{font-size:12.5px;font-weight:700;color:#1565c0;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #e3f2fd}
+
+.customer{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f5f5f5}
+.customer:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.dot{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.d-blue{background:#e3f2fd}
+.d-green{background:#e8f5e9}
+.d-amber{background:#fff8e1}
+.d-grey{background:#f5f5f5}
+.cname{font-size:13px;font-weight:700;color:#1a237e;margin-bottom:2px}
+.cstatus{font-size:11.5px;color:#455a64;line-height:1.5}
+.ctag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px;margin-top:4px}
+.t-green{background:#e8f5e9;color:#2e7d32}
+.t-blue{background:#e3f2fd;color:#1565c0}
+.t-amber{background:#fff8e1;color:#e65100}
+.t-red{background:#ffebee;color:#c62828}
+
+/* NAND expansion timeline */
+.nand-timeline{background:#fff;border-radius:14px;padding:22px;border:1px solid #bbdefb;margin-bottom:16px}
+.nand-timeline h3{font-size:12.5px;font-weight:700;color:#1565c0;margin-bottom:16px}
+.year-row{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.yr-badge{font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;color:#fff;background:#1565c0;padding:4px 12px;border-radius:6px;flex-shrink:0;min-width:56px;text-align:center}
+.yr-bar-bg{flex:1;height:32px;background:#e3f2fd;border-radius:6px;overflow:hidden;position:relative}
+.yr-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:12px;font-weight:700;color:#fff;background:linear-gradient(90deg,#1565c0,#42a5f5)}
+.yr-label{font-size:11.5px;color:#455a64;flex-shrink:0;min-width:130px;text-align:right}
+
+.note{font-size:11px;color:#9e9e9e;text-align:center;margin-top:8px}
+@media(max-width:580px){.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title-row">
+    <span class="badge">Customer Portfolio · 2026</span>
+    <h2>🏭 HPSP 고객사 현황 — TSMC 외에 어디까지 납품하나?</h2>
+  </div>
+
+  <div class="two-col">
+    <!-- 파운드리/로직 -->
+    <div class="panel">
+      <h3>⚙️ 로직/파운드리 고객 (매출 비중 ~60%)</h3>
+      <div class="customer">
+        <div class="dot d-blue">🏭</div>
+        <div>
+          <div class="cname">TSMC</div>
+          <div class="cstatus">최대 고객. 3nm·5nm 등 첨단 공정 주력. 전체 매출 비중 약 35~40% 추정.</div>
+          <span class="ctag t-green">메인 고객</span>
+        </div>
+      </div>
+      <div class="customer">
+        <div class="dot d-blue">🇰🇷</div>
+        <div>
+          <div class="cname">삼성전자 파운드리</div>
+          <div class="cstatus">테슬라 22.8조 계약 수주 후 미국 테일러 팹 투자 재개. 2025H2부터 HPSP 수주 증가 기대.</div>
+          <span class="ctag t-blue">투자 재개 모멘텀</span>
+        </div>
+      </div>
+      <div class="customer">
+        <div class="dot d-amber">🇺🇸</div>
+        <div>
+          <div class="cname">인텔</div>
+          <div class="cstatus">18A 공정 도입 추진 중. 2nm급 공정에서 HPA 장비 수요 발생 전망.</div>
+          <span class="ctag t-amber">신규 확대 기대</span>
+        </div>
+      </div>
+      <div class="customer">
+        <div class="dot d-amber">🇯🇵</div>
+        <div>
+          <div class="cname">라피더스(Rapidus)</div>
+          <div class="cstatus">일본 정부 지원 첨단 파운드리. 2nm 공정 개발 중. HPA 장비 도입 추진.</div>
+          <span class="ctag t-amber">신규 진입 가능</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 메모리 -->
+    <div class="panel">
+      <h3>💾 메모리 고객 (매출 비중 ~35~40%, 확대 중)</h3>
+      <div class="customer">
+        <div class="dot d-green">🇰🇷</div>
+        <div>
+          <div class="cname">SK하이닉스</div>
+          <div class="cstatus">NAND 양산 장비 공급 중. DRAM 1c/1d 공정 전환 시 추가 수주 기대.</div>
+          <span class="ctag t-green">NAND 주력 고객</span>
+        </div>
+      </div>
+      <div class="customer">
+        <div class="dot d-green">🇯🇵</div>
+        <div>
+          <div class="cname">키오시아(Kioxia)</div>
+          <div class="cstatus">장비 인증 완료. 2026년 양산 공급 임박. NAND 신규 고객 중 가장 큰 규모.</div>
+          <span class="ctag t-blue">2026 핵심 성장 동인</span>
+        </div>
+      </div>
+      <div class="customer">
+        <div class="dot d-green">🇺🇸</div>
+        <div>
+          <div class="cname">마이크론</div>
+          <div class="cstatus">DRAM 유일 양산 고객. 대만 팹 확장 중. 고압어닐링 장비 추가 발주 기대.</div>
+          <span class="ctag t-green">DRAM 기존 고객</span>
+        </div>
+      </div>
+      <div class="customer">
+        <div class="dot d-grey">🇰🇷</div>
+        <div>
+          <div class="cname">삼성전자 메모리</div>
+          <div class="cstatus">DRAM 소량 테스트 공급 중. 배치 75매 한계로 대규모 수주 단기간 어려울 수 있음.</div>
+          <span class="ctag t-amber">테스트 단계</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAND 고객 확대 타임라인 -->
+  <div class="nand-timeline">
+    <h3>📈 NAND 고객사 확대 로드맵 (대신증권 추정)</h3>
+    <div class="year-row">
+      <div class="yr-badge">2025</div>
+      <div class="yr-bar-bg"><div class="yr-bar" style="width:20%">1개 고객사</div></div>
+      <div class="yr-label">SK하이닉스만 양산 공급</div>
+    </div>
+    <div class="year-row">
+      <div class="yr-badge">2026</div>
+      <div class="yr-bar-bg"><div class="yr-bar" style="width:80%">4개 고객사</div></div>
+      <div class="yr-label">키오시아 등 3개 추가</div>
+    </div>
+    <div class="year-row">
+      <div class="yr-badge">2027</div>
+      <div class="yr-bar-bg"><div class="yr-bar" style="width:100%">5개 고객사 (전체 완성)</div></div>
+      <div class="yr-label">글로벌 NAND 전사 진입</div>
+    </div>
+    <p class="note" style="text-align:left;color:#1565c0;font-weight:700;font-size:12px;margin-top:12px;">★ 2027년 사실상 모든 글로벌 NAND 공급업체 진입 완료 전망</p>
+  </div>
+  <p class="note">출처: 대신증권(2026.04.22) / 딜사이트(2026.04.13) / 리드경제(2026.04.10) / 각사 IR</p>
+</div>
+</body>
+</html>
