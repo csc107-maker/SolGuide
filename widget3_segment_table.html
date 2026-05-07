@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>씨티그룹 5대 사업부 실적</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #f2f5fa;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 28px 16px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: #0d2240;
+    color: #f0c040;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 16px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .header h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: #0d2240;
+  }
+  .header p { font-size: 12px; color: #7a8599; margin-top: 6px; }
+
+  .table-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    overflow-x: auto;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    min-width: 580px;
+  }
+  thead tr {
+    background: #0d2240;
+    color: #fff;
+  }
+  thead th {
+    padding: 13px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  thead th:first-child { text-align: left; border-radius: 0; }
+  tbody tr {
+    border-bottom: 1px solid #edf0f7;
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: #f7f9ff; }
+  tbody tr:last-child { border-bottom: none; }
+  td {
+    padding: 14px 14px;
+    font-size: 12.5px;
+    text-align: center;
+    color: #2d3a50;
+  }
+  td:first-child { text-align: left; }
+
+  .biz-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .biz-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .biz-name strong { display: block; font-size: 12.5px; font-weight: 700; color: #1a2740; }
+  .biz-name small { display: block; font-size: 10.5px; color: #8a94a6; margin-top: 1px; }
+
+  .rotce-bar-cell { min-width: 140px; }
+  .rotce-bar-wrap { position: relative; }
+  .rotce-val {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 18px;
+    font-weight: 400;
+    color: #0d2240;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .bar-bg {
+    height: 6px;
+    background: #edf0f7;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+
+  .badge-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+  }
+  .up { background: #e8f5e9; color: #2e7d32; }
+  .mid { background: #fff3e0; color: #e65100; }
+  .crown {
+    background: linear-gradient(90deg, #f0c040, #e8a000);
+    color: #3d2a00;
+  }
+
+  .note-row td {
+    background: #f7f9ff;
+    font-size: 11px;
+    color: #7a8599;
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .legend {
+    max-width: 760px;
+    margin: 14px auto 0;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    color: #7a8599;
+    justify-content: flex-end;
+  }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .legend .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .source-note {
+    text-align: center; font-size: 10.5px; color: #aab0bc;
+    margin-top: 12px; max-width: 760px; margin-left: auto; margin-right: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Q1 2026 SEGMENT RESULTS</div>
+  <h2>씨티그룹 5대 사업부 실적 분석</h2>
+  <p>2026년 1분기 사업부별 매출 성장률 및 ROTCE 비교</p>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th style="min-width:160px">사업부</th>
+      <th>Q1 매출 성장률</th>
+      <th>순이익</th>
+      <th class="rotce-bar-cell">ROTCE</th>
+      <th>특이사항</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="biz-name">
+          <div class="biz-icon" style="background:#e8f0fe;">💼</div>
+          <div><strong>서비스(Services)</strong><small>글로벌 자금·무역금융</small></div>
+        </div>
+      </td>
+      <td><strong style="color:#1a6bb5;font-size:15px;">+17%</strong></td>
+      <td>$22억</td>
+      <td class="rotce-bar-cell">
+        <div class="rotce-bar-wrap">
+          <div class="rotce-val">27.0%</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:90%; background:linear-gradient(90deg,#1a6bb5,#4a90d9);"></div></div>
+        </div>
+      </td>
+      <td><span class="badge-pill crown">👑 Crown Jewel</span></td>
+    </tr>
+    <tr>
+      <td>
+        <div class="biz-name">
+          <div class="biz-icon" style="background:#fff3e0;">📈</div>
+          <div><strong>마켓(Markets)</strong><small>채권·주식 트레이딩</small></div>
+        </div>
+      </td>
+      <td><strong style="color:#1a6bb5;font-size:15px;">+19%</strong></td>
+      <td>$26억</td>
+      <td class="rotce-bar-cell">
+        <div class="rotce-bar-wrap">
+          <div class="rotce-val">~20%+</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:68%; background:linear-gradient(90deg,#f4a261,#e76f51);"></div></div>
+        </div>
+      </td>
+      <td><span class="badge-pill up">10년 만에 $70억+ 돌파</span></td>
+    </tr>
+    <tr>
+      <td>
+        <div class="biz-name">
+          <div class="biz-icon" style="background:#e8f5e9;">🏦</div>
+          <div><strong>뱅킹(Banking)</strong><small>M&A · ECM · DCM</small></div>
+        </div>
+      </td>
+      <td><strong style="color:#1a6bb5;font-size:15px;">+15%</strong></td>
+      <td>$3억</td>
+      <td class="rotce-bar-cell">
+        <div class="rotce-bar-wrap">
+          <div class="rotce-val">15.8%</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:53%; background:linear-gradient(90deg,#2a9d8f,#52b788);"></div></div>
+        </div>
+      </td>
+      <td><span class="badge-pill up">M&A +19%, ECM +64%</span></td>
+    </tr>
+    <tr>
+      <td>
+        <div class="biz-name">
+          <div class="biz-icon" style="background:#f3e8ff;">💰</div>
+          <div><strong>웰스(Wealth)</strong><small>자산관리 $1.3조</small></div>
+        </div>
+      </td>
+      <td><strong style="color:#6a4c93;font-size:15px;">+11%</strong></td>
+      <td>$4.3억</td>
+      <td class="rotce-bar-cell">
+        <div class="rotce-bar-wrap">
+          <div class="rotce-val">10.8%</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:36%; background:linear-gradient(90deg,#6a4c93,#9b72cf);"></div></div>
+        </div>
+      </td>
+      <td><span class="badge-pill mid">개선 필요 (모간Stanley 30.4%)</span></td>
+    </tr>
+    <tr>
+      <td>
+        <div class="biz-name">
+          <div class="biz-icon" style="background:#ffebee;">💳</div>
+          <div><strong>미국개인금융(USPB)</strong><small>신용카드 · 소매금융</small></div>
+        </div>
+      </td>
+      <td><strong style="color:#1a6bb5;font-size:15px;">+두자릿수</strong></td>
+      <td>—</td>
+      <td class="rotce-bar-cell">
+        <div class="rotce-bar-wrap">
+          <div class="rotce-val">—</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:30%; background:linear-gradient(90deg,#e63946,#f87171);"></div></div>
+        </div>
+      </td>
+      <td><span class="badge-pill mid">NCL 4.0~4.5% 예상</span></td>
+    </tr>
+    <tr class="note-row">
+      <td colspan="5">📌 <strong>그룹 합계:</strong> 매출 $246억(+14%) | 순이익 $58억(+42%) | ROTCE <strong>13.1%</strong>(목표 10~11% 초과) | 효율성비율 58%(-400bp)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="legend">
+  <span><div class="dot" style="background:#1a6bb5;"></div>서비스·마켓·뱅킹 = 고수익</span>
+  <span><div class="dot" style="background:#6a4c93;"></div>웰스 = 성장 잠재력</span>
+  <span><div class="dot" style="background:#e63946;"></div>USPB = 경기 민감</span>
+</div>
+<div class="source-note">출처: Citigroup Q1 2026 실적발표 콜 (2026.04.14) | CNBC, Reuters Investing.com, Bloomberg</div>
+
+</body>
+</html>
