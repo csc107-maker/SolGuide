@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국내 4대 금융지주 심층 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2240;
+    --blue: #1a6bb5;
+    --teal: #2a9d8f;
+    --gold: #d4a017;
+    --red: #c62828;
+    --green: #2e7d32;
+    --orange: #e65100;
+    --gray-100: #f7f9fc;
+    --gray-200: #edf1f7;
+    --gray-300: #d8e0ed;
+    --gray-500: #7a8599;
+    --gray-700: #3a4560;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--gray-100);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--gray-700);
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, #1a6bb5 0%, #0d2240 100%);
+    padding: 32px 24px;
+  }
+  .page-header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.8);
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .page-header h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 21px;
+    color: #fff;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+  .page-header p { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 8px; }
+
+  .divider { height: 5px; background: linear-gradient(90deg, var(--teal), var(--blue), var(--navy)); }
+  .divider.thin { height: 1px; background: var(--gray-300); margin: 0 20px; }
+
+  .section { padding: 26px 20px; }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .section-title .num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    color: var(--blue);
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .section-title h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .section-title .line { flex: 1; height: 1px; background: var(--gray-300); }
+
+  /* 4대 금융지주 카드 */
+  .bank-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .bank-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .bank-card .bc-header {
+    padding: 14px 16px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .bc-header .bh-left .bh-name { font-size: 14px; font-weight: 700; }
+  .bc-header .bh-left .bh-ticker { font-size: 10.5px; opacity: 0.7; margin-top: 2px; }
+  .bc-header .bh-right { text-align: right; }
+  .bc-header .bh-right .bh-roe { font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 600; }
+  .bc-header .bh-right .bh-roelbl { font-size: 9.5px; opacity: 0.7; }
+
+  .bc-body { padding: 14px 16px; }
+  .bc-kpi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .bc-kpi { text-align: center; background: var(--gray-100); border-radius: 8px; padding: 8px 6px; }
+  .bc-kpi .kv { font-family: 'Oswald', sans-serif; font-size: 15px; color: var(--navy); font-weight: 600; letter-spacing: 0.3px; }
+  .bc-kpi .kl { font-size: 9.5px; color: var(--gray-500); margin-top: 3px; }
+
+  .bc-points { display: flex; flex-direction: column; gap: 6px; }
+  .bc-point {
+    display: flex; gap: 7px; font-size: 11.5px; color: var(--gray-700);
+    line-height: 1.5; align-items: flex-start;
+  }
+  .bc-point .pt { font-size: 12px; flex-shrink: 0; }
+
+  .bc-footer {
+    padding: 10px 16px;
+    background: var(--gray-100);
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bc-footer .pill {
+    font-size: 10px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .pill.buy { background: #e8f5e9; color: var(--green); }
+  .pill.buy-m { background: #e3f0fd; color: var(--blue); }
+  .pill.hold { background: #fff3e0; color: var(--orange); }
+  .bc-footer .tp { font-size: 10.5px; color: var(--gray-500); }
+
+  /* KB = blue, 신한 = teal, 하나 = navy, 우리 = gold-dark */
+  .bc-kb { background: linear-gradient(135deg, #1a6bb5 0%, #1256a0 100%); }
+  .bc-sh { background: linear-gradient(135deg, #1e7d6b 0%, #155e50 100%); }
+  .bc-ha { background: linear-gradient(135deg, #1a3a6a 0%, #0d2240 100%); }
+  .bc-woo { background: linear-gradient(135deg, #b8860b 0%, #8a6200 100%); }
+
+  /* 지주별 상세표 */
+  .table-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    margin-bottom: 16px;
+  }
+  .table-header {
+    background: var(--navy);
+    padding: 13px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .table-header h3 { font-size: 13px; color: #fff; font-weight: 700; }
+  .table-header span { font-size: 10.5px; color: rgba(255,255,255,0.5); }
+  table.comp { width: 100%; border-collapse: collapse; min-width: 540px; }
+  table.comp thead tr { background: #f0f4f8; }
+  table.comp thead th {
+    padding: 10px 13px; font-size: 10.5px; font-weight: 700;
+    color: var(--navy); letter-spacing: 0.8px; text-align: center;
+    border-bottom: 2px solid var(--gray-300); white-space: nowrap; text-transform: uppercase;
+  }
+  table.comp thead th:first-child { text-align: left; }
+  table.comp tbody tr { border-bottom: 1px solid var(--gray-200); transition: background 0.12s; }
+  table.comp tbody tr:last-child { border-bottom: none; }
+  table.comp tbody tr:hover { background: #f7f9ff; }
+  table.comp td { padding: 11px 13px; font-size: 12px; text-align: center; color: var(--gray-700); vertical-align: middle; }
+  table.comp td:first-child { text-align: left; }
+  .row-label { font-size: 12px; font-weight: 600; color: var(--navy); }
+  .sub-label { display: block; font-size: 10.5px; color: var(--gray-500); font-weight: 400; }
+
+  .val-strong { font-family: 'Oswald', sans-serif; font-size: 15px; color: var(--navy); font-weight: 600; letter-spacing: 0.3px; }
+  .val-up { color: var(--green); }
+  .val-warn { color: var(--orange); }
+  .val-red { color: var(--red); }
+
+  .badge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 9px; border-radius: 20px; }
+  .badge.up { background: #e8f5e9; color: var(--green); }
+  .badge.mid { background: #fff3e0; color: var(--orange); }
+  .badge.down { background: #ffebee; color: var(--red); }
+  .badge.blue { background: #e3f0fd; color: var(--blue); }
+  .badge.navy { background: #e8ecf5; color: var(--navy); }
+
+  /* 리스크 섹션 */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .risk-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-top: 3px solid var(--red);
+  }
+  .risk-card.opp { border-top-color: var(--teal); }
+  .risk-card h4 { font-size: 12.5px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .risk-card ul { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .risk-card li { font-size: 11.5px; color: var(--gray-700); padding-left: 14px; position: relative; line-height: 1.6; }
+  .risk-card li::before { content: '•'; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+  .risk-card.opp li::before { color: var(--teal); }
+
+  /* 투자환경 박스 */
+  .env-box {
+    background: linear-gradient(135deg, #edf7f5 0%, #e0f4f0 100%);
+    border-radius: 14px;
+    padding: 20px 18px;
+    margin-bottom: 16px;
+    border: 1px solid #b2dfdb;
+  }
+  .env-box h3 { font-size: 13.5px; font-weight: 700; color: #1a4a40; margin-bottom: 12px; }
+  .env-list { display: flex; flex-direction: column; gap: 9px; }
+  .env-item {
+    display: grid; grid-template-columns: 24px 1fr; gap: 8px;
+    font-size: 12px; color: #1a3a34; line-height: 1.6; align-items: flex-start;
+  }
+  .env-item .ei-num {
+    background: var(--teal); color: #fff; border-radius: 50%;
+    width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+
+  .report-footer {
+    background: var(--navy);
+    padding: 14px 20px;
+    text-align: center;
+  }
+  .report-footer p { font-size: 10px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">Part II · Domestic Financial Groups</div>
+  <h1>국내 4대 금융지주 심층 분석<br>실적·밸류에이션·투자 포인트</h1>
+  <p>2026년 Q1 실적 기준 | 각사 공시 · 증권사 리서치 종합 분석</p>
+</div>
+<div class="divider"></div>
+
+<!-- SECTION 1: 4대 금융지주 현황 카드 -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">01</span>
+    <h2>4대 금융지주 Q1 2026 실적 현황</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="bank-cards">
+    <!-- KB금융 -->
+    <div class="bank-card">
+      <div class="bc-header bc-kb">
+        <div class="bh-left">
+          <div class="bh-name">KB금융그룹</div>
+          <div class="bh-ticker">KRX 105560 | NYSE KB</div>
+        </div>
+        <div class="bh-right">
+          <div class="bh-roe">13.94%</div>
+          <div class="bh-roelbl">ROE (Q1 '26)</div>
+        </div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-kpi-row">
+          <div class="bc-kpi">
+            <div class="kv">1.89조</div>
+            <div class="kl">Q1 순이익</div>
+          </div>
+          <div class="bc-kpi">
+            <div class="kv">+11.5%</div>
+            <div class="kl">YoY 성장</div>
+          </div>
+          <div class="bc-kpi">
+            <div class="kv">13.63%</div>
+            <div class="kl">CET1 비율</div>
+          </div>
+        </div>
+        <div class="bc-points">
+          <div class="bc-point"><span class="pt">✅</span><span>비이자이익 +27.8%, 수수료이익 +45.5% — 수익구조 다각화 가속</span></div>
+          <div class="bc-point"><span class="pt">✅</span><span>PBR 1배 최초 돌파 (2026년 2월) — '만성 저평가' 구조적 해소 신호</span></div>
+          <div class="bc-point"><span class="pt">✅</span><span>총주주환원율 52.4% 달성 — 국내 금융주 최초 50% 돌파</span></div>
+          <div class="bc-point"><span class="pt">⚠️</span><span>ELS 과징금 일회성 충당금(980억) 반영에도 실적 견조</span></div>
+        </div>
+      </div>
+      <div class="bc-footer">
+        <span class="pill buy">매수 / BUY</span>
+        <span class="tp">목표주가: 미래에셋 216,000원 / 하나증권 200,000원</span>
+      </div>
+    </div>
+
+    <!-- 신한지주 -->
+    <div class="bank-card">
+      <div class="bc-header bc-sh">
+        <div class="bh-left">
+          <div class="bh-name">신한금융그룹</div>
+          <div class="bh-ticker">KRX 055550 | NYSE SHG</div>
+        </div>
+        <div class="bh-right">
+          <div class="bh-roe">~10%</div>
+          <div class="bh-roelbl">ROE 목표 (2026)</div>
+        </div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-kpi-row">
+          <div class="bc-kpi">
+            <div class="kv">~1.3조</div>
+            <div class="kl">Q1 순이익 추정</div>
+          </div>
+          <div class="bc-kpi">
+            <div class="kv">+13.6%</div>
+            <div class="kl">2025年 YoY</div>
+          </div>
+          <div class="bc-kpi">
+            <div class="kv">13.33%</div>
+            <div class="kl">CET1 비율</div>
+          </div>
+        </div>
+        <div class="bc-points">
+          <div class="bc-point"><span class="pt">✅</span><span>비이자이익 +26.5% — 증권 수탁수수료 큰 폭 증가</span></div>
+          <div class="bc-point"><span class="pt">✅</span><span>총주주환원율 50.2% 달성 — 목표 조기 완료</span></div>
+          <div class="bc-point"><span class="pt">✅</span><span>CET1 비율 32bp 개선 — 추가 환원 여력 확보</span></div>
+          <div class="bc-point"><span class="pt">⚠️</span><span>PBR ~0.8배 — KB대비 할인 거래 중 (캐치업 여지 존재)</span></div>
+        </div>
+      </div>
+      <div class="bc-footer">
+        <span class="pill buy">매수 / BUY</span>
+        <span class="tp">목표주가: 하나증권 126,000원</span>
+      </div>
+    </div>
+
+    <!-- 하나금융 -->
+    <div class="bank-card">
+      <div class="bc-header bc-ha">
+        <div class="bh-left">
+          <div class="bh-name">하나금융그룹</div>
+          <div class="bh-ticker">KRX 086790</div>
+        </div>
+        <div class="bh-right">
+          <div class="bh-roe">~10%</div>
+          <div class="bh-roelbl">ROE 추정</div>
+        </div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-kpi-row">
+          <div class="bc-kpi">
+            <div class="kv">~1.0조</div>
+            <div class="kl">Q1 순이익 추정</div>
+          </div>
+          <div class="bc-kpi">
+            <div class="kv">+8.8%</div>
+            <div class="kl">2025年 YoY</div>
+          </div>
+          <div class="bc-kpi">
+            <div class="kv">13.37%</div>
+            <div class="kl">CET1 비율</div>
+          </div>
+        </div>
+        <div class="bc-points">
+          <div class="bc-point"><span class="pt">✅</span><span>수수료이익 +28%, 하나증권 순이익 +30% 이상</span></div>
+          <div class="bc-point"><span class="pt">✅</span><span>이자이익 +4.6% — 4대 지주 중 가장 높은 이자이익 성장률</span></div>
+          <div class="bc-point"><span class="pt">⚠️</span><span>총주주환원율 46.8% — KB·신한 대비 소폭 뒤처짐</span></div>
+          <div class="bc-point"><span class="pt">⚠️</span><span>50% 달성 시 주가 캐치업 모멘텀 강화 예상</span></div>
+        </div>
+      </div>
+      <div class="bc-footer">
+        <span class="pill buy-m">매수</span>
+        <span class="tp">목표주가: 하나증권 157,000원</span>
+      </div>
+    </div>
+
+    <!-- 우리금융 -->
+    <div class="bank-card">
+      <div class="bc-header bc-woo">
+        <div class="bh-left">
+          <div class="bh-name">우리금융그룹</div>
+          <div class="bh-ticker">KRX 316140</div>
+        </div>
+        <div class="bh-right">
+          <div class="bh-roe">~8~9%</div>
+          <div class="bh-roelbl">ROE 추정</div>
+        </div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-kpi-row">
+          <div class="bc-kpi">
+            <div class="kv">6,038억</div>
+            <div class="kl">Q1 순이익</div>
+          </div>
+          <div class="bc-kpi">
+            <div class="kv">+전년 수준</div>
+            <div class="kl">YoY (소폭)</div>
+          </div>
+          <div class="bc-kpi">
+            <div class="kv">12.9%</div>
+            <div class="kl">CET1 비율</div>
+          </div>
+        </div>
+        <div class="bc-points">
+          <div class="bc-point"><span class="pt">✅</span><span>수수료이익 +50%↑ — 4대 지주 중 증가율 최고 (5,768억, 최대치)</span></div>
+          <div class="bc-point"><span class="pt">✅</span><span>비과세 감액 배당 최초 도입 — 개인 투자자 세후 수익률 향상</span></div>
+          <div class="bc-point"><span class="pt">⚠️</span><span>수수료 확대에도 시장 변수(환율·유가증권) 반영으로 순이익 제약</span></div>
+          <div class="bc-point"><span class="pt">⚠️</span><span>주주환원율 36.6% — 경쟁사 대비 가장 낮은 수준, 개선 필요</span></div>
+        </div>
+      </div>
+      <div class="bc-footer">
+        <span class="pill hold">중립 관찰 중</span>
+        <span class="tp">목표주가: 하나증권 43,000원</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider thin"></div>
+
+<!-- SECTION 2: 상세 실적 비교표 -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">02</span>
+    <h2>4대 금융지주 실적 · 재무지표 상세 비교</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      <h3>📋 2025년 연간 실적 및 2026년 전망</h3>
+      <span>각사 공시(DART), 삼성·하나·NH·메리츠증권 추정치</span>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="comp">
+      <thead>
+        <tr>
+          <th style="min-width:130px; text-align:left;">지표</th>
+          <th>KB금융</th>
+          <th>신한지주</th>
+          <th>하나금융</th>
+          <th>우리금융</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="5" style="background:#f7f9fc; padding:7px 13px; font-size:10px; font-weight:700; color:var(--gray-500); letter-spacing:1px; text-transform:uppercase;">2025년 연간 실적</td></tr>
+        <tr>
+          <td><span class="row-label">당기순이익</span></td>
+          <td><span class="val-strong val-up">5.84조원</span><br><span style="font-size:10px">+15.1% YoY</span></td>
+          <td><span class="val-strong val-up">4.97조원</span><br><span style="font-size:10px">+11.7% YoY</span></td>
+          <td><span class="val-strong val-up">4.00조원</span><br><span style="font-size:10px">+8.8% YoY</span></td>
+          <td><span class="val-strong">3.75조원</span><br><span style="font-size:10px">역대 최대</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">순이자이익</span></td>
+          <td>13.07조<br><span style="font-size:10px">+1.9%</span></td>
+          <td>11.69조<br><span style="font-size:10px">+2.6%</span></td>
+          <td>9.16조<br><span style="font-size:10px">+4.6%</span></td>
+          <td>9.03조<br><span style="font-size:10px">+1.6%</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">4대지주 합산</span></td>
+          <td colspan="4" style="text-align:left; padding-left:14px;">
+            <span class="badge up">총 18.56조원 → 사상 최대 기록 (전년比 +11.1%)</span>
+          </td>
+        </tr>
+
+        <tr><td colspan="5" style="background:#f7f9fc; padding:7px 13px; font-size:10px; font-weight:700; color:var(--gray-500); letter-spacing:1px; text-transform:uppercase;">2026년 Q1 핵심 지표</td></tr>
+        <tr>
+          <td><span class="row-label">Q1 순이익</span></td>
+          <td><span class="val-strong val-up">1.89조원</span><br><span style="font-size:10px">+11.5%</span></td>
+          <td><span class="val-strong">추정치 내</span></td>
+          <td><span class="val-strong">추정치 내</span></td>
+          <td><span class="val-strong val-warn">6,038억</span><br><span style="font-size:10px">전년 수준</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">NIM (순이자마진)</span></td>
+          <td>1.99% (+0.04p)</td>
+          <td>추정치 내</td>
+          <td>추정치 내</td>
+          <td>추정치 내</td>
+        </tr>
+        <tr>
+          <td><span class="row-label">비이자이익 성장</span></td>
+          <td><span class="badge up">+27.8%</span></td>
+          <td><span class="badge up">+26.5%</span></td>
+          <td><span class="badge up">+28%</span></td>
+          <td><span class="badge up">+50%↑</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">수수료이익 성장</span></td>
+          <td><span class="badge up">+45.5%</span></td>
+          <td><span class="badge up">증권 수탁↑</span></td>
+          <td><span class="badge up">+28%</span></td>
+          <td><span class="badge up">+50%↑ (최대치)</span></td>
+        </tr>
+
+        <tr><td colspan="5" style="background:#f7f9fc; padding:7px 13px; font-size:10px; font-weight:700; color:var(--gray-500); letter-spacing:1px; text-transform:uppercase;">자본 · 주주환원</td></tr>
+        <tr>
+          <td><span class="row-label">CET1 비율</span></td>
+          <td><span class="val-strong val-up">13.63%</span><br><span style="font-size:10px">+7bp</span></td>
+          <td><span class="val-strong val-up">13.33%</span><br><span style="font-size:10px">+32bp</span></td>
+          <td><span class="val-strong val-up">13.37%</span><br><span style="font-size:10px">+15bp</span></td>
+          <td><span class="val-strong">12.9%</span><br><span style="font-size:10px">+80bp</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">2025년 주주환원</span></td>
+          <td>3조 600억<br>환원율 <span class="val-strong val-up">52.4%</span></td>
+          <td>~2.5조<br>환원율 <span class="val-strong val-up">50.2%</span></td>
+          <td>1.87조<br>환원율 <span class="val-strong val-warn">46.8%</span></td>
+          <td>비과세배당<br>환원율 <span class="val-strong val-red">36.6%</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">2026년 환원 전망</span></td>
+          <td><span class="badge up">53% 목표</span><br>2조 8,200억 예고</td>
+          <td><span class="badge up">50% 달성 유지</span></td>
+          <td><span class="badge mid">50% 달성 목표</span></td>
+          <td><span class="badge down">36→50% 격차</span></td>
+        </tr>
+
+        <tr><td colspan="5" style="background:#f7f9fc; padding:7px 13px; font-size:10px; font-weight:700; color:var(--gray-500); letter-spacing:1px; text-transform:uppercase;">밸류에이션 (2026년 5월 기준)</td></tr>
+        <tr>
+          <td><span class="row-label">PBR</span></td>
+          <td><span class="badge up">~1.0× (최초 돌파)</span></td>
+          <td><span class="badge mid">~0.8×</span></td>
+          <td><span class="badge mid">~0.8×</span></td>
+          <td><span class="badge down">~0.6×</span></td>
+        </tr>
+        <tr>
+          <td><span class="row-label">증권사 투자의견</span></td>
+          <td><span class="badge up">매수 (컨센서스)</span></td>
+          <td><span class="badge up">매수 (컨센서스)</span></td>
+          <td><span class="badge up">매수</span></td>
+          <td><span class="badge mid">중립 혼재</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div class="divider thin"></div>
+
+<!-- SECTION 3: 투자 환경 -->
+<div class="section">
+  <div class="section-title">
+    <span class="num">03</span>
+    <h2>2026년 국내 금융주 투자 환경 — 5가지 구조적 변화</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="env-box">
+    <h3>🌱 국내 금융주 재평가를 이끄는 5대 구조 변화</h3>
+    <div class="env-list">
+      <div class="env-item">
+        <div class="ei-num">1</div>
+        <div><strong>총주주환원율 50% 시대 개막</strong> — CET1 비율이 안정적으로 유지되는 가운데 KB금융·신한지주가 50%를 달성했고, 하나금융·우리금융도 빠르게 수렴 중. 하나증권 최정욱 애널리스트는 "채권 대체재이자 배당주로서의 진면목을 발휘한다"고 평가했다.</div>
+      </div>
+      <div class="env-item">
+        <div class="ei-num">2</div>
+        <div><strong>배당소득 분리과세 도입</strong> — 배당성향 40% 이상 또는 배당 10%+ 증가 기업에 적용. 종합소득 합산 없이 분리 과세하여 고배당 개인 투자자의 실질 수익률을 대폭 개선. KB·신한·하나금융 모두 해당 요건 충족 예상.</div>
+      </div>
+      <div class="env-item">
+        <div class="ei-num">3</div>
+        <div><strong>비과세 감액 배당 확산</strong> — 우리금융에서 시작해 전 금융지주로 확산. 자본준비금을 이익잉여금으로 전환 후 배당 재원 활용 — 수령 시 비과세. KB금융의 비과세 배당 재원은 11조원 이상. 개인 투자자 유입 확대로 "국민 배당주" 지위 부상.</div>
+      </div>
+      <div class="env-item">
+        <div class="ei-num">4</div>
+        <div><strong>비은행·수수료이익 고성장</strong> — 금리인하기에도 증권·보험 자회사와 자산관리 수수료이익이 두 자릿수 성장. 자본시장 거래대금 증가가 실적을 뒷받침. 이자이익 의존도 구조적 감소 → 씨티그룹 성공 공식과 동일 경로.</div>
+      </div>
+      <div class="env-item">
+        <div class="ei-num">5</div>
+        <div><strong>규제 불확실성 해소 진행 중</strong> — 홍콩 ELS 과징금, LTV 담합 의혹 과징금 등 주요 리스크 대부분 제재심의 완료 또는 진행 중. 과징금 규모도 당초 우려 대비 완화 가능성. KB금융 일회성 충당금(980억)을 반영하고도 실적 견조가 리스크 내성 입증.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기회 vs 리스크 -->
+  <div class="risk-grid">
+    <div class="risk-card opp">
+      <h4>🚀 국내 금융주 업사이드 요인</h4>
+      <ul>
+        <li>PBR 0.6~1.0배 → 일본 선례(1.1~1.2배) 추격 시 30~50% 추가 업사이드</li>
+        <li>삼성증권 2026년 은행 섹터 순이익 22조 7천억 전망 (+2.9% YoY)</li>
+        <li>KB금융 목표주가 미래에셋 216,000원 → 현재 대비 30%+ 업사이드</li>
+        <li>비과세 배당 + 분리과세로 개인 투자자 실질 수익률 구조적 개선</li>
+        <li>코스피 자금 유입 확대 → "국민 배당주" 포지션 강화</li>
+        <li>비이자이익 확대로 금리 인하 환경에서도 실적 방어력 향상</li>
+      </ul>
+    </div>
+    <div class="risk-card">
+      <h4>⚠️ 국내 금융주 다운사이드 리스크</h4>
+      <ul>
+        <li>KRX은행 지수 2월 +22% 급등 이후 단기 기술적 과열 신호</li>
+        <li>연초 이후 30%+ 급등 → 외국인 차익실현 시 수급 공백 위험</li>
+        <li>NIM 축소 우려 — 기준금리 추가 인하 시 이자이익 압박</li>
+        <li>증권 계열사 비중 확대 → 자본시장 변동성 노출도 증가</li>
+        <li>우리금융 주주환원율 36.6% — 경쟁사 대비 모멘텀 열위</li>
+        <li>기업대출 경쟁 심화 → 가격 경쟁으로 마진 축소 가능성</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="report-footer">
+  <p>출처: 각사 공시(DART) · 삼성증권 · 하나증권 · 미래에셋증권 · NH투자증권 · 메리츠증권 · 대신증권 리서치<br>
+  파이낸셜투데이 · BusinessPost · 글로벌에픽 · 이지경제 · ZDNet Korea · Investing.com KR<br>
+  본 보고서는 투자 권유가 아닙니다. 투자에 따른 손익은 전적으로 투자자 본인 책임입니다. 기준일: 2026년 5월 7일</p>
+</div>
+</body>
+</html>
