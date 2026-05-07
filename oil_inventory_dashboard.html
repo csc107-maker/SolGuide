@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세계 원유 재고 현황 대시보드 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Oswald:wght@600;700&display=swap');
+
+  :root {
+    --bg: #FFF9F0;
+    --card-bg: #FFFFFF;
+    --accent1: #D94F2B;
+    --accent2: #E8820C;
+    --accent3: #2563EB;
+    --accent4: #16A34A;
+    --text-main: #1A1A2E;
+    --text-sub: #555577;
+    --border: #E8E0D0;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    padding: 28px 20px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .header h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.6rem;
+    color: var(--accent1);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .header p {
+    font-size: 0.82rem;
+    color: var(--text-sub);
+    margin-top: 6px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--accent1);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* === STAT CARDS === */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 18px 16px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid transparent;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .stat-card:nth-child(1) { border-color: var(--accent1); animation-delay: 0.1s; }
+  .stat-card:nth-child(2) { border-color: var(--accent2); animation-delay: 0.2s; }
+  .stat-card:nth-child(3) { border-color: var(--accent3); animation-delay: 0.3s; }
+  .stat-card:nth-child(4) { border-color: var(--accent4); animation-delay: 0.4s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-card:nth-child(1) .stat-value { color: var(--accent1); }
+  .stat-card:nth-child(2) .stat-value { color: var(--accent2); }
+  .stat-card:nth-child(3) .stat-value { color: var(--accent3); }
+  .stat-card:nth-child(4) .stat-value { color: var(--accent4); }
+
+  .stat-note {
+    font-size: 0.72rem;
+    color: var(--text-sub);
+    line-height: 1.5;
+  }
+
+  /* === PROGRESS BAR SECTION === */
+  .section-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    padding-left: 10px;
+    border-left: 3px solid var(--accent1);
+  }
+
+  .bar-section {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 18px 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+  }
+
+  .bar-row {
+    margin-bottom: 14px;
+  }
+
+  .bar-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-main);
+  }
+
+  .bar-track {
+    height: 10px;
+    background: #F0EDE6;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    animation: barGrow 1.2s ease forwards;
+    width: 0%;
+  }
+
+  @keyframes barGrow {
+    to { width: var(--target-width); }
+  }
+
+  /* === ALERT BOX === */
+  .alert-box {
+    background: linear-gradient(135deg, #FFF3CD, #FFEAA0);
+    border: 1px solid #FFCD3C;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+
+  .alert-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+  .alert-text strong {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #7A4F00;
+    margin-bottom: 4px;
+  }
+
+  .alert-text p {
+    font-size: 0.78rem;
+    color: #7A4F00;
+    line-height: 1.6;
+  }
+
+  /* === SCENARIO CHIPS === */
+  .scenario-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .scenario-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .scenario-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .scenario-text { font-size: 0.8rem; color: var(--text-main); line-height: 1.5; }
+  .scenario-text strong { font-weight: 700; display: block; margin-bottom: 2px; }
+
+  .source-note {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    text-align: center;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="badge">🔴 LIVE 2026.05</span>
+  <h2>세계 원유 재고 현황 대시보드</h2>
+  <p>S&P 글로벌 에너지 · 골드만삭스 · FT · IEA 데이터 종합</p>
+</div>
+
+<!-- 핵심 수치 카드 -->
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-label">4월 한 달 재고 감소량</div>
+    <div class="stat-value">2억 bbl</div>
+    <div class="stat-note">하루 평균 660만 배럴 감소 — 역대 최대 속도(팬데믹 제외)</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">전쟁 이후 누적 공급 손실</div>
+    <div class="stat-value">10억 bbl</div>
+    <div class="stat-note">호르무즈 봉쇄·에너지 시설 공격 누적(S&P 글로벌)</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">WTI 현재 유가</div>
+    <div class="stat-value">~$100</div>
+    <div class="stat-note">휴전 기대감에 $110 → $100 아래로 하락(2026.05.07 기준)</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">브렌트유 현재 유가</div>
+    <div class="stat-value">~$110</div>
+    <div class="stat-note">전쟁 전 대비 고수준 유지 중 — 8월 재급등 경고</div>
+  </div>
+</div>
+
+<!-- 주요국 산유량 감소 -->
+<div class="bar-section">
+  <div class="section-title">⚡ 중동 주요국 산유량 감소율 (전쟁 이후)</div>
+
+  <div class="bar-row">
+    <div class="bar-header">
+      <span>🇮🇶 이라크</span><span>-61%</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" style="--target-width:61%; background: #D94F2B;"></div>
+    </div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-header">
+      <span>🇰🇼 쿠웨이트</span><span>-53%</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" style="--target-width:53%; background: #E8820C;"></div>
+    </div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-header">
+      <span>🇦🇪 UAE</span><span>-44%</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" style="--target-width:44%; background: #F5B63E;"></div>
+    </div>
+  </div>
+  <div class="bar-row" style="margin-bottom:0;">
+    <div class="bar-header">
+      <span>🇸🇦 사우디아라비아</span><span>-23%</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" style="--target-width:23%; background: #2563EB;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 경고 박스 -->
+<div class="alert-box">
+  <div class="alert-icon">⚠️</div>
+  <div class="alert-text">
+    <strong>티핑포인트 경고 — 골드만삭스</strong>
+    <p>세계 원유 재고가 8년 만의 최저 수준 근접. 이대로라면 8월 말 미국 원유 재고는 일주일치 수요분인 2억 배럴 아래로 떨어질 수 있으며, 이 경우 시장 전체에 '통제 불능' 경고 신호 발령 가능.</p>
+  </div>
+</div>
+
+<!-- 유가 시나리오 -->
+<div class="section-title">📊 유가 시나리오별 전망</div>
+<div class="scenario-row">
+  <div class="scenario-card">
+    <div class="scenario-dot" style="background:#16A34A;"></div>
+    <div class="scenario-text">
+      <strong>🟢 협상 타결 시나리오</strong>
+      이란 종전·협상 타결 → WTI $70~$85, 유가 하향 안정화. 여름 이후 물가 압력 완화.
+    </div>
+  </div>
+  <div class="scenario-card">
+    <div class="scenario-dot" style="background:#F5B63E;"></div>
+    <div class="scenario-text">
+      <strong>🟡 교착 지속 시나리오</strong>
+      호르무즈 부분 재개, 전쟁 지속 → WTI $100~$130 유지. 스태그플레이션 압력 고조.
+    </div>
+  </div>
+  <div class="scenario-card">
+    <div class="scenario-dot" style="background:#D94F2B;"></div>
+    <div class="scenario-text">
+      <strong>🔴 전면전 확전 시나리오</strong>
+      호르무즈 완전 봉쇄 → 유가 $180~$200 급등 가능. 글로벌 경기침체 동시 유발.
+    </div>
+  </div>
+</div>
+
+<p class="source-note">📌 데이터 출처 : S&P 글로벌 에너지 / Financial Times / Goldman Sachs / OPEC / IEA / KDI / 딜로이트 코리아 (2026.05 기준)</p>
+
+</body>
+</html>
