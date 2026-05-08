@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 SMP·REC 가격 동향 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fce4ec;
+    padding: 36px 16px;
+  }
+  .wrapper { max-width: 780px; margin: 0 auto; }
+  .badge {
+    display: inline-block;
+    background: #c62828;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  h2 { font-size: 21px; font-weight: 900; color: #880e4f; margin-bottom: 6px; }
+  .sub { font-size: 13px; color: #ad1457; margin-bottom: 28px; }
+
+  .summary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  @media(max-width:560px){ .summary-row { grid-template-columns: 1fr; } }
+  .sum-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(194,24,91,0.12);
+    border-bottom: 4px solid;
+  }
+  .sum-card:nth-child(1) { border-color: #e53935; }
+  .sum-card:nth-child(2) { border-color: #8e24aa; }
+  .sum-card:nth-child(3) { border-color: #1e88e5; }
+  .sum-label { font-size: 11px; color: #9e9e9e; margin-bottom: 6px; }
+  .sum-val { font-size: 24px; font-weight: 900; }
+  .sum-card:nth-child(1) .sum-val { color: #e53935; }
+  .sum-card:nth-child(2) .sum-val { color: #8e24aa; }
+  .sum-card:nth-child(3) .sum-val { color: #1e88e5; }
+  .sum-note { font-size: 11px; color: #9e9e9e; margin-top: 5px; }
+
+  .table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(194,24,91,0.1);
+    margin-bottom: 20px;
+  }
+  .table-title {
+    background: #880e4f;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 12px 20px;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: #fce4ec;
+    color: #880e4f;
+    font-weight: 700;
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 2px solid #f48fb1;
+  }
+  td { padding: 11px 16px; border-bottom: 1px solid #fce4ec; color: #424242; vertical-align: top; }
+  tr:hover td { background: #fce4ec; }
+  .tag {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .up { background: #ffebee; color: #c62828; }
+  .down { background: #fce4ec; color: #880e4f; }
+  .caution { background: #fff3e0; color: #e65100; }
+  .stable { background: #e8f5e9; color: #2e7d32; }
+
+  .insight-box {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 0 3px 14px rgba(194,24,91,0.1);
+  }
+  .insight-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #880e4f;
+    margin-bottom: 14px;
+  }
+  .insight-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #424242;
+    line-height: 1.7;
+  }
+  .insight-icon { font-size: 18px; flex-shrink: 0; }
+  .source {
+    text-align: right;
+    font-size: 11px;
+    color: #bdbdbd;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="badge">2026년 5월 최신 시장 분석</div>
+  <h2>SMP · REC 가격 동향 & 투자자 전망 리포트</h2>
+  <p class="sub">발전사업자와 소규모 투자자 모두를 위한 핵심 지표 요약</p>
+
+  <div class="summary-row">
+    <div class="sum-card">
+      <div class="sum-label">SMP 현재 수준 (2026년)</div>
+      <div class="sum-val">120~140원</div>
+      <div class="sum-note">kWh당 / 상승 기조 유지</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">REC 현물 가격 (2026년)</div>
+      <div class="sum-val">3~5만 원</div>
+      <div class="sum-note">1REC당 / 현물시장 일몰 논의</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">2030년 발전 단가 목표</div>
+      <div class="sum-val">250원</div>
+      <div class="sum-note">kWh / 태양광+스토리지 기준</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-title">📊 주요 뉴스별 SMP·REC 영향 분석</div>
+    <table>
+      <tr>
+        <th>뉴스</th>
+        <th>날짜</th>
+        <th>SMP 영향</th>
+        <th>REC 영향</th>
+        <th>투자자 시사점</th>
+      </tr>
+      <tr>
+        <td>SGC에너지 하반기 실적 성장 전망</td>
+        <td>2026.05.07</td>
+        <td><span class="tag up">↑ 상승 전망</span></td>
+        <td><span class="tag stable">장기계약 유리</span></td>
+        <td>SMP 연동 수익 확대 기대</td>
+      </tr>
+      <tr>
+        <td>RE100 컨퍼런스 PPA 시장 전환</td>
+        <td>2026.04.28</td>
+        <td><span class="tag stable">중립</span></td>
+        <td><span class="tag caution">⚠ 현물 일몰</span></td>
+        <td>현물 대신 장기계약(PPA) 전환 권장</td>
+      </tr>
+      <tr>
+        <td>상반기 풍력 입찰 상한가 역대 최대 하락</td>
+        <td>2026.03.31</td>
+        <td><span class="tag down">하방 압력</span></td>
+        <td><span class="tag down">입찰 미달 반복</span></td>
+        <td>단기 현물시장 의존 위험. 장기고정가 확보 필요</td>
+      </tr>
+      <tr>
+        <td>신용보증기금 정책금융 강화</td>
+        <td>2026.05.06</td>
+        <td><span class="tag stable">중립</span></td>
+        <td><span class="tag stable">신규 사업 기회</span></td>
+        <td>저금리 대출로 초기 진입 비용 절감</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-title">🔍 전문가 분석: 2026년 하반기 투자 전략 포인트</div>
+    <div class="insight-item">
+      <span class="insight-icon">⚡</span>
+      <div><strong>SMP는 우상향 구조</strong> — 데이터센터 전력 수요 급증 + LNG 가격 유지로 하방 경직성 강화. 단기 변동에 흔들리지 않는 장기 시각 필요.</div>
+    </div>
+    <div class="insight-item">
+      <span class="insight-icon">🏅</span>
+      <div><strong>REC 현물시장 일몰 대비</strong> — RE100 기업들의 PPA 직접 구매 확대로 의무수요 기반 흔들림. 현물보다 <strong>20년 고정가 장기계약</strong>이 안전.</div>
+    </div>
+    <div class="insight-item">
+      <span class="insight-icon">🏠</span>
+      <div><strong>주택 소규모 태양광 투자자</strong> — 현물시장 변동과 무관하게 자가소비 절감 + SMP 잉여 판매 + 에너지공단 20년 고정 REC 계약 조합이 최적.</div>
+    </div>
+    <div class="insight-item">
+      <span class="insight-icon">🌍</span>
+      <div><strong>중국 공급망 리스크</strong> — 중국이 글로벌 태양광 생산의 80% 통제. 공급망 재편 국면에서 국산·EU산 모듈 지원 우대 정책 강화 예상.</div>
+    </div>
+    <div class="source">출처: SGC에너지 실적 보고, RE100 컨퍼런스, 전력거래소, 에너지공단 (2026.05 기준)</div>
+  </div>
+</div>
+</body>
+</html>
