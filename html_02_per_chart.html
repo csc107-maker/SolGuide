@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PER 비교 차트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@500;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F8FAFC;
+    padding: 24px 16px;
+  }
+
+  .wrapper { max-width: 820px; margin: 0 auto; }
+
+  .chart-header { margin-bottom: 24px; }
+  .chart-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #64748B;
+    margin-bottom: 6px;
+  }
+  .chart-title { font-size: 20px; font-weight: 900; color: #0F172A; margin-bottom: 4px; }
+  .chart-desc { font-size: 13px; color: #64748B; }
+
+  .chart-area {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 16px;
+  }
+
+  .bar-group { margin-bottom: 22px; }
+  .bar-group:last-child { margin-bottom: 0; }
+
+  .bar-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .bar-name { font-size: 13px; font-weight: 700; color: #1E293B; }
+  .bar-sub { font-size: 11px; color: #94A3B8; margin-left: 8px; font-weight: 400; }
+  .bar-value {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--bar-color);
+  }
+
+  .bar-track {
+    background: #F1F5F9;
+    border-radius: 8px;
+    height: 22px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    background: var(--bar-color);
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  .bar-inner-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    white-space: nowrap;
+  }
+
+  .tsmc-trail { --bar-color: #3B82F6; }
+  .tsmc-fwd { --bar-color: #93C5FD; }
+  .hynix { --bar-color: #10B981; }
+  .samsung { --bar-color: #6366F1; }
+
+  .divider {
+    border: none;
+    border-top: 1px dashed #E2E8F0;
+    margin: 18px 0;
+  }
+
+  .section-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #94A3B8;
+    margin-bottom: 14px;
+  }
+
+  .insight-box {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #92400E;
+    line-height: 1.7;
+  }
+
+  .insight-box strong { color: #B45309; }
+
+  .note { font-size: 11px; color: #94A3B8; margin-top: 10px; text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="chart-header">
+    <div class="chart-label">Valuation Comparison</div>
+    <h2 class="chart-title">PER 비교 — 반도체 3사</h2>
+    <p class="chart-desc">Trailing PER(최근 실적 기준) vs Forward PER(2026년 추정 기준) 비교</p>
+  </div>
+
+  <div class="chart-area">
+    <div class="section-name">TSMC (NYSE: TSM · $419.50)</div>
+
+    <div class="bar-group tsmc-trail">
+      <div class="bar-meta">
+        <div><span class="bar-name">Trailing PER</span><span class="bar-sub">최근 12개월 실적 기준</span></div>
+        <div class="bar-value">30.6배</div>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:61.2%; background:#3B82F6;">
+          <span class="bar-inner-label">30.6×</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-group tsmc-fwd">
+      <div class="bar-meta">
+        <div><span class="bar-name">Forward PER</span><span class="bar-sub">2026E 추정 기준</span></div>
+        <div class="bar-value">21.3배</div>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:42.6%; background:#93C5FD;">
+          <span class="bar-inner-label">21.3×</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="section-name">SK하이닉스 (KRX: 000660 · 1,527,000원)</div>
+
+    <div class="bar-group hynix">
+      <div class="bar-meta">
+        <div><span class="bar-name">Forward PER (2026E)</span><span class="bar-sub">1Q26 어닝 이후 컨센서스 상향 중</span></div>
+        <div class="bar-value">7~12배 추정</div>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:19%; background:#10B981;">
+          <span class="bar-inner-label">~9×</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="section-name">삼성전자 (KRX: 005930 · 264,000원)</div>
+
+    <div class="bar-group samsung">
+      <div class="bar-meta">
+        <div><span class="bar-name">Forward PER (2026E)</span><span class="bar-sub">iM증권 분석 기준</span></div>
+        <div class="bar-value">5.7배</div>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:11.4%; background:#6366F1;">
+          <span class="bar-inner-label">5.7×</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    💡 <strong>PER 해석 포인트:</strong> TSMC의 Trailing PER 30.6배는 성장주 프리미엄을 반영하지만 Forward PER은 21.3배로 낮아집니다. 삼성전자 5.7배·SK하이닉스 7~12배는 이익 급성장이 주가를 압도하는 구간입니다. 낮은 Forward PER이 반드시 '싸다'는 뜻은 아니며, 이익 지속성 여부가 핵심 변수입니다.
+  </div>
+
+  <p class="note">출처: Macrotrends, iM증권, SK증권, FnGuide (2026년 5월 기준) · 투자 참고용, 투자 권유 아님</p>
+</div>
+</body>
+</html>
