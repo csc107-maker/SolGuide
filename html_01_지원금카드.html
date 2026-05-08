@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 태양광·히트펌프 지원금 비교</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f7ff;
+    padding: 32px 16px;
+  }
+  .wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .section-label {
+    display: inline-block;
+    background: #1565c0;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0d2b5e;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #607d8b;
+    margin-bottom: 28px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  @media(max-width:600px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 20px rgba(21,101,192,0.1);
+    border-top: 5px solid;
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card:nth-child(1) { border-color: #f9a825; }
+  .card:nth-child(2) { border-color: #1e88e5; }
+  .card:nth-child(3) { border-color: #43a047; }
+  .card-icon { font-size: 34px; margin-bottom: 12px; }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a237e;
+    margin-bottom: 8px;
+  }
+  .card-rate {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+  .card:nth-child(1) .card-rate { color: #f9a825; }
+  .card:nth-child(2) .card-rate { color: #1e88e5; }
+  .card:nth-child(3) .card-rate { color: #43a047; }
+  .card-desc { font-size: 12px; color: #546e7a; line-height: 1.7; }
+  .card-tag {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 11px;
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #90a4ae;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="section-label">2026년 기준 최신 정보</div>
+  <h2>태양광 · 히트펌프 정부 지원금 한눈에 비교</h2>
+  <p class="subtitle">국비 + 지방비 합산 기준 / 단독주택 1가구 기준 / 2026년 상반기 공고 기준</p>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">☀️</div>
+      <div class="card-title">주택 태양광 설치</div>
+      <div class="card-rate">최대 70%</div>
+      <div class="card-desc">
+        국비 50% + 지방비 20%<br>
+        3kW 기준 설치비 약 450만원<br>
+        자부담 <strong>약 135만원</strong><br>
+        에너지공단 등록업체 시공 필수
+      </div>
+      <span class="card-tag">한국에너지공단 주택지원사업</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔥</div>
+      <div class="card-title">히트펌프(전기보일러) 교체</div>
+      <div class="card-rate">100~300만원</div>
+      <div class="card-desc">
+        노후 가스보일러 교체 시 지급<br>
+        에너지효율 1등급 제품 대상<br>
+        투자 회수 기간 <strong>5~6년</strong><br>
+        LG 써마브이 · 삼성 EHS 해당
+      </div>
+      <span class="card-tag">산업부·환경부 보급사업</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏦</div>
+      <div class="card-title">청정에너지 정책금융</div>
+      <div class="card-rate">저금리 보증</div>
+      <div class="card-desc">
+        신용보증기금 국정과제 가동<br>
+        태양광·풍력·그린수소 대상<br>
+        사업자 대상 <strong>저금리 대출+보증</strong><br>
+        2026년 5월~하반기 확대 예정
+      </div>
+      <span class="card-tag">신용보증기금 정책금융</span>
+    </div>
+  </div>
+  <p class="footer-note">※ 지자체별 추가 지원 상이 / 예산 소진 시 조기 마감 / 출처: 한국에너지공단, 신용보증기금 (2026.05)</p>
+</div>
+</body>
+</html>
