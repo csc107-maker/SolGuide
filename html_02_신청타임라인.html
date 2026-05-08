@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 지원금 신청 타임라인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fffde7;
+    padding: 36px 16px;
+  }
+  .wrapper { max-width: 720px; margin: 0 auto; }
+  .badge {
+    display: inline-block;
+    background: #f57f17;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 13px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: 21px;
+    font-weight: 900;
+    color: #4e342e;
+    margin-bottom: 6px;
+  }
+  .sub { font-size: 13px; color: #8d6e63; margin-bottom: 32px; }
+
+  .timeline { position: relative; padding-left: 48px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #ffca28, #ff8f00);
+    border-radius: 2px;
+  }
+  .step {
+    position: relative;
+    margin-bottom: 24px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+    border-left: 4px solid;
+  }
+  .step:nth-child(1) { border-color: #ffd600; }
+  .step:nth-child(2) { border-color: #ffb300; }
+  .step:nth-child(3) { border-color: #ff8f00; }
+  .step:nth-child(4) { border-color: #e65100; }
+  .step:nth-child(5) { border-color: #bf360c; }
+  .step:nth-child(6) { border-color: #4caf50; }
+
+  .dot {
+    position: absolute;
+    left: -38px;
+    top: 18px;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border: 3px solid #ffb300;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 900;
+    color: #e65100;
+  }
+  .step-when {
+    font-size: 11px;
+    font-weight: 700;
+    color: #ff8f00;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+  .step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #3e2723;
+    margin-bottom: 7px;
+  }
+  .step-desc { font-size: 13px; color: #5d4037; line-height: 1.7; }
+  .tip {
+    background: #fff8e1;
+    border-left: 4px solid #ffd600;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #6d4c41;
+    margin-top: 28px;
+    line-height: 1.8;
+  }
+  .tip strong { color: #e65100; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="badge">STEP BY STEP</div>
+  <h2>태양광 지원금 신청 A to Z — 단계별 완전 가이드</h2>
+  <p class="sub">신청부터 설치 완료 + 수익 발생까지 / 2026년 기준</p>
+
+  <div class="timeline">
+    <div class="step">
+      <div class="dot">1</div>
+      <div class="step-when">매년 12월~1월 | 준비 단계</div>
+      <div class="step-title">📋 공고 확인 & 사전 준비</div>
+      <div class="step-desc">
+        한국에너지공단(www.knrec.or.kr) 또는 주소지 지자체 홈페이지에서 주택 지원사업 공고 확인<br>
+        → 지역마다 예산이 달라 빠르게 소진되므로 <strong>연초 즉시 확인</strong>이 핵심
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot">2</div>
+      <div class="step-when">공고 후 즉시 | 신청 단계</div>
+      <div class="step-title">📝 온라인 또는 방문 신청</div>
+      <div class="step-desc">
+        한국에너지공단 주택지원사업 포털 온라인 신청 or 지자체(시·군·구청) 에너지 담당부서 방문<br>
+        제출 서류: 주민등록등본, 건축물대장(또는 등기사항증명서), 전기요금 청구서 1개월분, 설치 지붕 사진
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot">3</div>
+      <div class="step-when">신청 후 1~2주 | 심사 단계</div>
+      <div class="step-title">🔍 현장 실사 및 적합성 심사</div>
+      <div class="step-desc">
+        지자체 또는 공단 담당자가 지붕 방향·면적·일조량 조건 확인<br>
+        → 남향 지붕, 음영 없는 구조일수록 유리 / 평지붕도 신청 가능
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot">4</div>
+      <div class="step-when">승인 후 2~4주 | 시공 단계</div>
+      <div class="step-title">🔧 에너지공단 등록 업체 시공</div>
+      <div class="step-desc">
+        반드시 <strong>에너지공단 등록 시공업체</strong>를 통해 KC 인증 모듈 + 등록 인버터 설치<br>
+        미등록 업체 시공 시 지원금 환수 주의 / 시공 완료 후 확인서 발급
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot">5</div>
+      <div class="step-when">시공 완료 후 | 정산 단계</div>
+      <div class="step-title">💰 지원금 정산 및 한전 계통 연계</div>
+      <div class="step-desc">
+        시공 확인서 제출 → 지원금 지자체 직접 지급(자부담만 소비자 부담)<br>
+        한전에 소규모 발전사업자 등록 → 잉여전력 판매 계약 체결
+      </div>
+    </div>
+    <div class="step">
+      <div class="dot">✓</div>
+      <div class="step-when">운영 시작 | 수익 단계</div>
+      <div class="step-title">📈 SMP + REC 수익 발생 시작</div>
+      <div class="step-desc">
+        전력 판매(SMP) + REC 발급·판매 수익 월별 정산<br>
+        장기계약(20년 고정가) 선택 시 안정적 수익 확보 가능<br>
+        연간 수익 목표: 3kW 기준 약 <strong>60~68만 원</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">
+    💡 <strong>핵심 팁:</strong> 매년 1~3월 공고 → 예산 소진 즉시 마감 → 하반기 추가 공고 여부는 지자체별 상이<br>
+    신용보증기금 정책금융(저금리 대출)과 병행 시 초기 자부담 부담을 크게 줄일 수 있습니다.<br>
+    📞 문의처: 한국에너지공단 신·재생에너지센터 1600-3151
+  </div>
+</div>
+</body>
+</html>
