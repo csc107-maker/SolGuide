@@ -1,227 +1,241 @@
-<!-- [삽입 위치] 뉴스 TOP 5 섹션 직후 삽입 -->
+<!-- [삽입 위치] 뉴스 TOP 5 섹션 직후 삽입 | 파일명: html_02_news_timeline.html | 2026-05-09 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오늘의 핵심 뉴스 타임라인 — 2026년 5월 7일</title>
+<title>오늘의 핵심 뉴스 TOP 5 | 2026-05-09</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    background: transparent;
-    padding: 16px 0;
+    background: #f8faff;
+    padding: 24px 16px;
+    color: #1a2340;
   }
-  .container { max-width: 760px; margin: 0 auto; padding: 0 8px; }
   .header {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
-  .header h2 { font-size: 18px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
-  .header p { font-size: 12px; color: #888; }
+  .header h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1a3a8f;
+    margin-bottom: 6px;
+  }
+  .header p { font-size: 0.82rem; color: #6b7280; }
 
-  .timeline { position: relative; padding-left: 32px; }
+  .timeline {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    padding-left: 40px;
+  }
   .timeline::before {
     content: '';
     position: absolute;
-    left: 14px; top: 0; bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, #3b82f6, #a855f7, #22c55e, #f97316, #ef4444);
-    border-radius: 2px;
+    left: 16px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #10b981, #f59e0b, #ef4444);
+    border-radius: 99px;
   }
-  .news-item {
+
+  .item {
     position: relative;
-    margin-bottom: 20px;
-  }
-  .dot {
-    position: absolute;
-    left: -25px;
-    top: 14px;
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-  }
-  .news-card {
+    margin-bottom: 22px;
+    background: #ffffff;
     border-radius: 14px;
-    padding: 16px 18px;
+    padding: 18px 18px 14px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    border-left: 4px solid #ccc;
   }
-  .news-meta {
+  .item::before {
+    content: attr(data-num);
+    position: absolute;
+    left: -40px;
+    top: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #1a3a8f;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 28px;
+    box-shadow: 0 2px 6px rgba(26,58,143,0.3);
+  }
+
+  .item.record  { border-color: #3b82f6; }
+  .item.geopolitics { border-color: #f59e0b; }
+  .item.chip    { border-color: #10b981; }
+  .item.export  { border-color: #8b5cf6; }
+  .item.analyst { border-color: #f97316; }
+
+  .item-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 8px;
+  }
+  .item-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #1a2340;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .badges {
+    display: flex;
+    gap: 6px;
     flex-wrap: wrap;
+    margin-bottom: 8px;
   }
-  .tag {
-    font-size: 10px;
+  .badge {
+    font-size: 0.7rem;
     font-weight: 700;
-    padding: 2px 9px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
+    padding: 3px 10px;
+    border-radius: 99px;
   }
-  .tag-bullish { background: #dcfce7; color: #15803d; }
-  .tag-bearish { background: #fee2e2; color: #dc2626; }
-  .tag-neutral { background: #f3f4f6; color: #6b7280; }
-  .source-badge {
-    font-size: 10px;
-    background: #f1f5f9;
-    color: #475569;
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-weight: 600;
-  }
-  .news-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 6px;
-    line-height: 1.4;
-  }
-  .news-desc {
-    font-size: 12px;
-    color: #64748b;
+  .badge.bullish  { background: #dcfce7; color: #15803d; }
+  .badge.bearish  { background: #fee2e2; color: #b91c1c; }
+  .badge.caution  { background: #fef9c3; color: #a16207; }
+  .badge.neutral  { background: #e0e7ff; color: #3730a3; }
+  .badge.source   { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+
+  .item-body {
+    font-size: 0.83rem;
+    color: #374151;
     line-height: 1.6;
   }
-  .impact-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(0,0,0,0.06);
+  .date-label {
+    font-size: 0.72rem;
+    color: #9ca3af;
+    margin-top: 8px;
+    display: block;
   }
-  .impact-label { font-size: 11px; color: #94a3b8; }
-  .impact-value { font-size: 11px; font-weight: 700; }
-
-  /* card colors */
-  .n1 { background: #f0f9ff; } .n1 .dot { background: #3b82f6; }
-  .n2 { background: #f0fdf4; } .n2 .dot { background: #22c55e; }
-  .n3 { background: #fdf4ff; } .n3 .dot { background: #a855f7; }
-  .n4 { background: #fffbeb; } .n4 .dot { background: #f59e0b; }
-  .n5 { background: #fff1f2; } .n5 .dot { background: #f43f5e; }
 
   .footer-note {
     text-align: center;
-    margin-top: 10px;
-    font-size: 11px;
+    font-size: 0.72rem;
     color: #9ca3af;
+    margin-top: 20px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 500px) {
+    .timeline { padding-left: 36px; }
+    .item::before { left: -36px; width: 24px; height: 24px; line-height: 24px; font-size: 0.75rem; }
   }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <h2>📰 오늘의 핵심 뉴스 TOP 5 — 2026년 5월 7일</h2>
-    <p>한국 증시 개장 전 꼭 알아야 할 글로벌 이슈</p>
-  </div>
-  <div class="timeline">
 
-    <!-- 뉴스 1 -->
-    <div class="news-item">
-      <div class="dot" style="background:#3b82f6;"></div>
-      <div class="news-card n1">
-        <div class="news-meta">
-          <span class="tag tag-bullish">🚀 호재</span>
-          <span class="source-badge">Bloomberg · CNBC</span>
-          <span style="font-size:10px;color:#94a3b8;">2026.05.06</span>
-        </div>
-        <div class="news-title">코스피, 사상 첫 7,000선 돌파 — 종가 7,384.56p (+6.45%)</div>
-        <div class="news-desc">한국 증시가 역사적인 7,000선을 처음 돌파했습니다. 연초 대비 수익률 +75%, 올해 하루 5% 이상 급등이 8번째. JPMorgan 목표 8,500, Goldman Sachs 목표 8,000 상향 제시.</div>
-        <div class="impact-row">
-          <span class="impact-label">코스피 영향:</span>
-          <span class="impact-value" style="color:#16a34a;">강력 긍정 ✅</span>
-          <span class="impact-label">| 주목 종목:</span>
-          <span class="impact-value" style="color:#2563eb;">지수 전 종목</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 뉴스 2 -->
-    <div class="news-item">
-      <div class="dot" style="background:#22c55e;"></div>
-      <div class="news-card n2">
-        <div class="news-meta">
-          <span class="tag tag-bullish">🚀 호재</span>
-          <span class="source-badge">Reuters · Seoul Economic Daily</span>
-          <span style="font-size:10px;color:#94a3b8;">2026.05.06</span>
-        </div>
-        <div class="news-title">삼성전자 시가총액 $1조 돌파 — 주가 하루 +14% 급등</div>
-        <div class="news-desc">1분기 영업이익 57.2조원 사상 최대 실적 기록. HBM4 고객 만족도 높다는 소식 함께 전해져. 국내 증권사 목표주가 평균 330,000~390,000원 상향.</div>
-        <div class="impact-row">
-          <span class="impact-label">코스피 영향:</span>
-          <span class="impact-value" style="color:#16a34a;">강력 긍정 ✅</span>
-          <span class="impact-label">| 주목 종목:</span>
-          <span class="impact-value" style="color:#2563eb;">삼성전자 (005930)</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 뉴스 3 -->
-    <div class="news-item">
-      <div class="dot" style="background:#a855f7;"></div>
-      <div class="news-card n3">
-        <div class="news-meta">
-          <span class="tag tag-bullish">🚀 호재</span>
-          <span class="source-badge">KoreaTimes · The Investor</span>
-          <span style="font-size:10px;color:#94a3b8;">2026.05.06</span>
-        </div>
-        <div class="news-title">SK하이닉스 +10.6% 사상 최고가 — 1Q 영업이익 37.6조</div>
-        <div class="news-desc">HBM 시장점유율 60%+, Nvidia 주요 공급사 지위 유지. 다올투자증권 목표주가 2,100,000원 상향. AI 슈퍼사이클 수혜 최전선.</div>
-        <div class="impact-row">
-          <span class="impact-label">코스피 영향:</span>
-          <span class="impact-value" style="color:#16a34a;">강력 긍정 ✅</span>
-          <span class="impact-label">| 주목 종목:</span>
-          <span class="impact-value" style="color:#2563eb;">SK하이닉스 (000660)</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 뉴스 4 -->
-    <div class="news-item">
-      <div class="dot" style="background:#f59e0b;"></div>
-      <div class="news-card n4">
-        <div class="news-meta">
-          <span class="tag tag-bullish">🟢 호재</span>
-          <span class="source-badge">Bloomberg · EconoTimes</span>
-          <span style="font-size:10px;color:#94a3b8;">2026.05.06</span>
-        </div>
-        <div class="news-title">미-이란 핵 협상 진전 — 호르무즈 해협 긴장 완화, 유가 하락</div>
-        <div class="news-desc">트럼프 행정부 주도 협상 진행 중. WTI 유가 $106 고점 → $100 하락. 지정학적 리스크 감소가 글로벌 증시 전반에 긍정 작용. 한국 에너지 수입 원가 부담 완화.</div>
-        <div class="impact-row">
-          <span class="impact-label">코스피 영향:</span>
-          <span class="impact-value" style="color:#16a34a;">긍정 ✅</span>
-          <span class="impact-label">| 주목 종목:</span>
-          <span class="impact-value" style="color:#2563eb;">항공·해운·화학주</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 뉴스 5 -->
-    <div class="news-item">
-      <div class="dot" style="background:#f43f5e;"></div>
-      <div class="news-card n5">
-        <div class="news-meta">
-          <span class="tag tag-bullish">🟢 호재</span>
-          <span class="source-badge">S&P Global · Korea Herald</span>
-          <span style="font-size:10px;color:#94a3b8;">2026.05.06</span>
-        </div>
-        <div class="news-title">한국 제조업 PMI 53.6 — 4년여 만에 최고치</div>
-        <div class="news-desc">반도체 수요 급증으로 생산·신규주문 동반 증가. PMI 50 이상은 경기 확장 구간. 수출 중심 기업들의 실적 모멘텀 지속 시사. 코스피 시가총액 6,000조원 돌파.</div>
-        <div class="impact-row">
-          <span class="impact-label">코스피 영향:</span>
-          <span class="impact-value" style="color:#16a34a;">긍정 ✅</span>
-          <span class="impact-label">| 주목 종목:</span>
-          <span class="impact-value" style="color:#2563eb;">반도체·수출 대형주</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="footer-note">
-    ※ 투자 정보 제공 목적이며 투자 권유가 아닙니다 | 데이터 출처: Bloomberg, Reuters, CNBC, KoreaTimes 등
-  </div>
+<div class="header">
+  <h2>📰 오늘의 핵심 뉴스 TOP 5 — 2026년 5월 9일</h2>
+  <p>월요일(5/11) 한국 증시 개장 전 반드시 체크해야 할 이슈</p>
 </div>
+
+<div class="timeline">
+
+  <!-- 뉴스 1 -->
+  <div class="item record" data-num="1">
+    <div class="item-top">
+      <div class="item-title">🏆 코스피 7,000선 돌파 — 사상 첫 기록</div>
+    </div>
+    <div class="badges">
+      <span class="badge bullish">📈 호재</span>
+      <span class="badge source">Bloomberg</span>
+      <span class="badge source">CNBC</span>
+      <span class="badge source">Korea Times</span>
+    </div>
+    <div class="item-body">
+      코스피가 사상 처음으로 7,000선을 돌파하며 5월 7일(목) 7,384.56으로 마감. Bloomberg는 "2026년 한국 주식시장이 이미 75% 상승했다"며 G20 최고 성과 시장으로 한국을 지목. 시가총액이 6,000조원을 최초 돌파하며 세계 7위 증시로 부상.
+    </div>
+    <span class="date-label">📅 5월 6~7일 | 한국 증시 역사상 최초 기록</span>
+  </div>
+
+  <!-- 뉴스 2 -->
+  <div class="item geopolitics" data-num="2">
+    <div class="item-top">
+      <div class="item-title">🌍 미-이란 협상 근접 / 중동 리스크 지속</div>
+    </div>
+    <div class="badges">
+      <span class="badge bullish">📈 호재(협상)</span>
+      <span class="badge caution">⚠️ 주의(유가)</span>
+      <span class="badge source">Reuters</span>
+      <span class="badge source">Bloomberg</span>
+    </div>
+    <div class="item-body">
+      미국과 이란이 양해각서(MOU) 체결에 근접했다는 보도가 달러 약세와 글로벌 증시 상승 배경이 됨. 그러나 WTI가 $94 이상을 유지하며 유가 변동성 지속. 협상 결렬 시 리스크 오프 전환 가능성 있음.
+    </div>
+    <span class="date-label">📅 5월 8일 | DXY 98.16 하락 원인</span>
+  </div>
+
+  <!-- 뉴스 3 -->
+  <div class="item chip" data-num="3">
+    <div class="item-top">
+      <div class="item-title">💾 SK하이닉스 2026년 전 생산능력 완판 확인</div>
+    </div>
+    <div class="badges">
+      <span class="badge bullish">📈 강력 호재</span>
+      <span class="badge source">TrendForce</span>
+      <span class="badge source">Tom's Hardware</span>
+    </div>
+    <div class="item-body">
+      SK하이닉스의 2026년 전 제품 라인업 생산능력 완판. 삼성전자 HBM4도 사전 예약 마감. "역사상 최악의 메모리 공급 부족, 향후 2년 해소 어렵다"는 분석. HBM3E 가격 +20% 인상, DRAM 가격 상반기 +40~50% 전망. SK하이닉스가 HBM4 시장 70% 점유(UBS 전망).
+    </div>
+    <span class="date-label">📅 상시 | 반도체 슈퍼사이클 핵심 동력</span>
+  </div>
+
+  <!-- 뉴스 4 -->
+  <div class="item export" data-num="4">
+    <div class="item-top">
+      <div class="item-title">📦 한국 1분기 반도체 수출 +139% 역대 최고</div>
+    </div>
+    <div class="badges">
+      <span class="badge bullish">📈 호재</span>
+      <span class="badge source">산업통상자원부</span>
+      <span class="badge source">KED Global</span>
+    </div>
+    <div class="item-body">
+      한국의 2026년 1분기 수출이 역대 최고치를 기록하며, 반도체 수출이 전년 동기 대비 +139% 폭증. HBM 수요 폭발과 범용 DRAM 가격 동반 상승이 실적 서프라이즈 기대. MSCI Korea 2026 이익 성장률 전망 +30%(아태 평균 +15% 대비 2배).
+    </div>
+    <span class="date-label">📅 4월 발표 | 코스피 상승의 근본 원인</span>
+  </div>
+
+  <!-- 뉴스 5 -->
+  <div class="item analyst" data-num="5">
+    <div class="item-top">
+      <div class="item-title">🎯 글로벌 IB, 코스피 목표가 릴레이 상향</div>
+    </div>
+    <div class="badges">
+      <span class="badge bullish">📈 호재</span>
+      <span class="badge source">JP모건</span>
+      <span class="badge source">골드만삭스</span>
+      <span class="badge source">NH증권</span>
+    </div>
+    <div class="item-body">
+      JP모건 8,500pt, 골드만삭스·노무라 8,000pt, 신한투자증권 8,600pt, NH증권 9,000pt — 글로벌 투자은행과 국내 증권사들이 코스피 목표가를 일제히 대폭 상향. "반도체 업사이클이 유가 부담과 매크로 역풍을 압도할 것"(노무라).
+    </div>
+    <span class="date-label">📅 5월 | 외국인 매수 구조적 지지 근거</span>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  ※ 본 내용은 투자 정보 제공 목적으로 작성되었으며, 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.
+</div>
+
 </body>
 </html>
