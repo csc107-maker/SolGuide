@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>반도체 3사 핵심 지표 요약</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@500;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F8FAFC;
+    padding: 24px 16px;
+  }
+
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #64748B;
+    margin-bottom: 8px;
+  }
+
+  .main-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #0F172A;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #94A3B8;
+    margin-bottom: 28px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 5px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.06;
+  }
+
+  .card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .card-name {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0F172A;
+    margin-bottom: 2px;
+  }
+
+  .card-ticker {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: #94A3B8;
+    margin-bottom: 16px;
+  }
+
+  .card-price {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  .metrics-list { list-style: none; }
+
+  .metrics-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #F1F5F9;
+    font-size: 13px;
+  }
+
+  .metrics-list li:last-child { border-bottom: none; }
+
+  .metric-key { color: #64748B; font-weight: 500; }
+
+  .metric-val {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: #0F172A;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 6px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .badge-high { background: #FEF2F2; color: #EF4444; }
+  .badge-low { background: #F0FDF4; color: #22C55E; }
+  .badge-mid { background: #FFF7ED; color: #F97316; }
+
+  .tsmc { --accent: #0066CC; --accent-bg: #EFF6FF; }
+  .hynix { --accent: #059669; --accent-bg: #ECFDF5; }
+  .samsung { --accent: #1B4FA8; --accent-bg: #EFF6FF; }
+
+  .note {
+    text-align: center;
+    font-size: 11px;
+    color: #94A3B8;
+    margin-top: 18px;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <p class="section-title">반도체 빅3 밸류에이션 비교</p>
+  <h2 class="main-title">PER · PBR · ROE 핵심 지표 한눈에</h2>
+  <p class="subtitle">2026년 5월 기준 | SK하이닉스 1,527,000원 · 삼성전자 264,000원 · TSMC $419.50</p>
+
+  <div class="cards-grid">
+
+    <!-- TSMC -->
+    <div class="card tsmc">
+      <div class="card-label">파운드리 독점</div>
+      <div class="card-name">TSMC</div>
+      <div class="card-ticker">NYSE: TSM</div>
+      <div class="card-price">$419.50</div>
+      <ul class="metrics-list">
+        <li>
+          <span class="metric-key">PER (Trailing)</span>
+          <span class="metric-val">30.6배 <span class="badge badge-high">고</span></span>
+        </li>
+        <li>
+          <span class="metric-key">PER (Forward)</span>
+          <span class="metric-val">21.3배</span>
+        </li>
+        <li>
+          <span class="metric-key">PBR</span>
+          <span class="metric-val">10.95~11.8배 <span class="badge badge-high">고</span></span>
+        </li>
+        <li>
+          <span class="metric-key">ROE (2025A)</span>
+          <span class="metric-val">35.4% ↑</span>
+        </li>
+        <li>
+          <span class="metric-key">영업이익률</span>
+          <span class="metric-val">50.8%</span>
+        </li>
+        <li>
+          <span class="metric-key">시가총액</span>
+          <span class="metric-val">~$10.9조</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SK하이닉스 -->
+    <div class="card hynix">
+      <div class="card-label">HBM 패권 1위</div>
+      <div class="card-name">SK하이닉스</div>
+      <div class="card-ticker">KRX: 000660</div>
+      <div class="card-price">1,527,000원</div>
+      <ul class="metrics-list">
+        <li>
+          <span class="metric-key">PER (2026E)</span>
+          <span class="metric-val">7~12배 <span class="badge badge-low">저</span></span>
+        </li>
+        <li>
+          <span class="metric-key">PBR (추정)</span>
+          <span class="metric-val">7~11배</span>
+        </li>
+        <li>
+          <span class="metric-key">ROE (2024A)</span>
+          <span class="metric-val">31.1% ↑</span>
+        </li>
+        <li>
+          <span class="metric-key">영업이익률</span>
+          <span class="metric-val">72% (1Q26)</span>
+        </li>
+        <li>
+          <span class="metric-key">HBM 점유율</span>
+          <span class="metric-val">53%</span>
+        </li>
+        <li>
+          <span class="metric-key">1Q26 영업이익</span>
+          <span class="metric-val">37.6조원</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 삼성전자 -->
+    <div class="card samsung">
+      <div class="card-label">복합 반도체 대장주</div>
+      <div class="card-name">삼성전자</div>
+      <div class="card-ticker">KRX: 005930</div>
+      <div class="card-price">264,000원</div>
+      <ul class="metrics-list">
+        <li>
+          <span class="metric-key">PER (2026E)</span>
+          <span class="metric-val">5.7배 <span class="badge badge-low">저</span></span>
+        </li>
+        <li>
+          <span class="metric-key">PBR</span>
+          <span class="metric-val">1.85~1.9배 <span class="badge badge-low">저</span></span>
+        </li>
+        <li>
+          <span class="metric-key">ROE (2026E)</span>
+          <span class="metric-val">~39% 전망</span>
+        </li>
+        <li>
+          <span class="metric-key">영업이익 전망</span>
+          <span class="metric-val">100조 가시권</span>
+        </li>
+        <li>
+          <span class="metric-key">외국인 지분율</span>
+          <span class="metric-val">~48.7%</span>
+        </li>
+        <li>
+          <span class="metric-key">목표주가(iM증권)</span>
+          <span class="metric-val">280,000원</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <p class="note">
+    ※ TSMC: Macrotrends, GuruFocus, TSMC IR (2026.01) | SK하이닉스: SK증권·FnGuide, 1Q26 실적 반영 추정치<br>
+    ※ 삼성전자: iM증권·버틀러, Investing.com | 본 자료는 투자 참고용이며 투자 권유가 아닙니다.
+  </p>
+</div>
+</body>
+</html>
