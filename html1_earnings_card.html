@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화오션 2026년 1분기 실적 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Oswald:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f5ff;
+    padding: 28px 20px;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #0d2f6e 0%, #1a56c4 60%, #2b7de9 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 24px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-left h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .header-left p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 4px;
+  }
+
+  .badge {
+    background: #f0c030;
+    color: #0d2f6e;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background: #fff;
+    border: 1px solid #dce7f7;
+    border-top: none;
+  }
+
+  .card {
+    padding: 22px 20px;
+    border-right: 1px solid #dce7f7;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .card:last-child { border-right: none; }
+  .card:hover { background: #f7fbff; }
+
+  .card-label {
+    font-size: 12px;
+    color: #7a8fae;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    color: #0d2f6e;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .card-unit {
+    font-size: 13px;
+    color: #4a6fa5;
+    font-weight: 400;
+  }
+
+  .card-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .delta-up { background: #e6f9ef; color: #1a8c46; }
+  .delta-down { background: #fff0f0; color: #d63030; }
+  .delta-neutral { background: #fff8e0; color: #b8860b; }
+
+  .card-sub {
+    font-size: 11px;
+    color: #9aa8bc;
+    margin-top: 6px;
+  }
+
+  .section-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: #f6faff;
+    border: 1px solid #dce7f7;
+    border-top: none;
+  }
+
+  .order-item {
+    padding: 18px 22px;
+    border-right: 1px solid #dce7f7;
+  }
+
+  .order-item:last-child { border-right: none; }
+
+  .order-label {
+    font-size: 12px;
+    color: #7a8fae;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .order-ships {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .ship-tag {
+    background: #e8f0ff;
+    color: #1a56c4;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #c4d4f5;
+  }
+
+  .ship-tag.special {
+    background: #fff3e0;
+    color: #e65c00;
+    border-color: #ffcc99;
+  }
+
+  .footer-bar {
+    background: linear-gradient(90deg, #1a56c4, #2b7de9);
+    border-radius: 0 0 16px 16px;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .eps-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* bar chart */
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 0 22px 18px;
+    background: #fff;
+    border: 1px solid #dce7f7;
+    border-top: none;
+  }
+
+  .bar-group {
+    flex: 1;
+  }
+
+  .bar-title {
+    font-size: 11px;
+    color: #7a8fae;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .bar-track {
+    height: 12px;
+    background: #e9edf5;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    animation: growBar 1.2s ease forwards;
+    transform-origin: left;
+  }
+
+  @keyframes growBar {
+    from { width: 0; }
+    to { width: var(--w); }
+  }
+
+  .bar-label {
+    font-size: 11px;
+    text-align: center;
+    margin-top: 4px;
+    font-weight: 700;
+    color: #1a56c4;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-left">
+      <h2>한화오션 2026년 1분기 실적 요약</h2>
+      <p>2026.04.27 공시 기준 | 연결 기준 | 한화오션(042660)</p>
+    </div>
+    <div class="badge">1Q26 EARNINGS</div>
+  </div>
+
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-label">매출액</div>
+      <div class="card-value">3조 2,099<span class="card-unit">억</span></div>
+      <div class="card-delta delta-down">▼ 전년비 2.1%</div>
+      <div class="card-sub">조업일수 감소 영향 (전분기비 △3%)</div>
+    </div>
+    <div class="card">
+      <div class="card-label">영업이익</div>
+      <div class="card-value">4,411<span class="card-unit">억</span></div>
+      <div class="card-delta delta-up">▲ 전년비 +70.6%</div>
+      <div class="card-sub">전분기 대비 +78% 급증</div>
+    </div>
+    <div class="card">
+      <div class="card-label">EPS 서프라이즈</div>
+      <div class="card-value">+99.5<span class="card-unit">%</span></div>
+      <div class="card-delta delta-up">▲ 시장 예상 2배 상회</div>
+      <div class="card-sub">애널리스트 컨센서스 대비</div>
+    </div>
+  </div>
+
+  <!-- 수익 개선 바 차트 -->
+  <div class="bar-row" style="padding-top:18px; flex-direction: column; gap: 10px;">
+    <div style="font-size:12px; font-weight:700; color:#0d2f6e; padding:0 0 4px;">영업이익 개선 궤적 (2026년 증권가 전망 포함)</div>
+    <div style="display:flex; gap:12px; width:100%; align-items:flex-end;">
+      <div class="bar-group">
+        <div class="bar-title">2024 연간 OPM</div>
+        <div class="bar-track"><div class="bar-fill" style="--w:15%; background: #b0c4e8;"></div></div>
+        <div class="bar-label">약 2%</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-title">1Q26 OPM</div>
+        <div class="bar-track"><div class="bar-fill" style="--w:55%; background: #1a56c4;"></div></div>
+        <div class="bar-label">약 13.7%</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-title">2026 연간 전망 OPM</div>
+        <div class="bar-track"><div class="bar-fill" style="--w:67%; background: #f0a500; opacity:0.85;"></div></div>
+        <div class="bar-label">약 13%~14%</div>
+      </div>
+    </div>
+    <div style="font-size:10px; color:#aab; text-align:right;">※ 2026 연간 전망: 증권사 컨센서스 기준 (매출 14.4조, 영업이익 1.9조)</div>
+  </div>
+
+  <div class="section-2">
+    <div class="order-item">
+      <div class="order-label">📦 1Q26 수주 실적 (총 $24.5억)</div>
+      <div class="order-ships">
+        <span class="ship-tag">LNG선 4척</span>
+        <span class="ship-tag">VLCC 7척</span>
+        <span class="ship-tag special">WTIV 1척</span>
+      </div>
+    </div>
+    <div class="order-item">
+      <div class="order-label">📊 애널리스트 투자의견 현황</div>
+      <div class="order-ships">
+        <span class="ship-tag">매수 19명</span>
+        <span class="ship-tag special">매도 1명</span>
+        <span class="ship-tag" style="background:#e6f9ef;color:#1a8c46;border-color:#a0e0b8;">목표주가 평균 ₩164,500</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span class="footer-note">현재 주가 ₩126,100 (5/9 기준) | 상승여력 +30.4%</span>
+    <span class="eps-badge">적극매수 (Strong Buy)</span>
+  </div>
+
+</div>
+</body>
+</html>
