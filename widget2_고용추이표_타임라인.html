@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미국 고용지표 추이 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=DM+Mono:wght@400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #EFF6FF;
+    padding: 32px 16px;
+  }
+
+  .widget-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 20px;
+  }
+
+  .section-header .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #2563EB;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .section-header h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1E3A8A;
+  }
+
+  /* ===== TABLE ===== */
+  .table-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 16px rgba(37,99,235,0.10);
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+
+  .table-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E40AF;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #DBEAFE;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead {
+    background: #EFF6FF;
+  }
+
+  thead th {
+    padding: 10px 14px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #3B82F6;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #F1F5F9;
+    transition: background 0.15s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #F8FAFF; }
+
+  tbody td {
+    padding: 11px 14px;
+    text-align: center;
+    color: #334155;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+  }
+
+  tbody td:first-child {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 600;
+    text-align: left;
+    color: #1E293B;
+  }
+
+  .highlight-row {
+    background: #EFF6FF !important;
+    font-weight: 700;
+  }
+
+  .highlight-row td { font-weight: 700 !important; color: #1D4ED8 !important; }
+
+  .val-up   { color: #16A34A; font-weight: 700; }
+  .val-down { color: #DC2626; font-weight: 700; }
+  .val-flat { color: #D97706; font-weight: 700; }
+
+  /* ===== TIMELINE ===== */
+  .timeline-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 16px rgba(37,99,235,0.10);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, #3B82F6, #BFDBFE);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 18px;
+    padding-left: 16px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--dot-color, #3B82F6);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--dot-color, #3B82F6);
+  }
+
+  .tl-item.highlight::before { --dot-color: #16A34A; }
+  .tl-item.negative::before  { --dot-color: #DC2626; }
+  .tl-item.neutral::before   { --dot-color: #D97706; }
+
+  .tl-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94A3B8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .tl-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1E293B;
+    margin-bottom: 3px;
+  }
+
+  .tl-desc {
+    font-size: 12.5px;
+    color: #64748B;
+    line-height: 1.55;
+  }
+
+  .tl-number {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 13px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--chip-bg, #EFF6FF);
+    color: var(--chip-color, #1D4ED8);
+    margin-top: 4px;
+  }
+
+  .tl-item.highlight .tl-number { --chip-bg: #DCFCE7; --chip-color: #15803D; }
+  .tl-item.negative  .tl-number { --chip-bg: #FEE2E2; --chip-color: #B91C1C; }
+  .tl-item.neutral   .tl-number { --chip-bg: #FEF9C3; --chip-color: #92400E; }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #94A3B8;
+    margin-top: 18px;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+
+  <!-- TABLE 섹션 -->
+  <div class="section-header">
+    <div class="eyebrow">📋 Data Table</div>
+    <h3>미국 고용지표 월별 추이 (2025년 12월 ~ 2026년 4월)</h3>
+  </div>
+
+  <div class="table-card">
+    <div class="table-title">📊 비농업 고용자수 & 실업률 변화</div>
+    <table>
+      <thead>
+        <tr>
+          <th>발표월</th>
+          <th>비농업 고용<br>변동(천 명)</th>
+          <th>실업률</th>
+          <th>시장 예상<br>(고용)</th>
+          <th>수정 여부</th>
+          <th>주요 특이사항</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2025년 12월</td>
+          <td class="val-down">-17</td>
+          <td>4.2%</td>
+          <td>+48K</td>
+          <td>하향 (-65K)</td>
+          <td>하향 수정 기록</td>
+        </tr>
+        <tr>
+          <td>2026년 1월</td>
+          <td class="val-up">+126</td>
+          <td>4.1%</td>
+          <td>+130K</td>
+          <td>하향 (-4K)</td>
+          <td>예상 소폭 하회</td>
+        </tr>
+        <tr>
+          <td>2026년 2월</td>
+          <td class="val-down">-92</td>
+          <td>4.2%</td>
+          <td>+59K</td>
+          <td>—</td>
+          <td>의료 파업 영향</td>
+        </tr>
+        <tr>
+          <td>2026년 3월</td>
+          <td class="val-up">+185</td>
+          <td>4.3%</td>
+          <td>+60K</td>
+          <td>상향 (+7K)</td>
+          <td>2024년 12월 후 최다</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>2026년 4월 ★</td>
+          <td class="val-up">+115</td>
+          <td>4.3%</td>
+          <td>+55K</td>
+          <td>발표 확정</td>
+          <td>예상치 2배↑ 서프라이즈</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TIMELINE 섹션 -->
+  <div class="section-header">
+    <div class="eyebrow">🕐 Timeline</div>
+    <h3>주요 이벤트 타임라인</h3>
+  </div>
+
+  <div class="timeline-card">
+    <div class="table-title">📅 2026년 고용·금리 주요 이벤트 흐름</div>
+    <div class="timeline">
+
+      <div class="tl-item negative">
+        <div class="tl-date">2026년 2월</div>
+        <div class="tl-title">2월 고용 쇼크 — 의료 파업 직격</div>
+        <div class="tl-desc">의사 사무실(-37,000), 병원, 제조업 동반 감소. 예상치(+59K) 대비 대폭 하회.</div>
+        <div class="tl-number">-92,000명</div>
+      </div>
+
+      <div class="tl-item highlight">
+        <div class="tl-date">2026년 3월</div>
+        <div class="tl-title">3월 반등 — 2024년 12월 이후 최대</div>
+        <div class="tl-desc">파업 복귀 효과 + 서비스업 회복. 시장 예상치(+60K)를 크게 상회.</div>
+        <div class="tl-number">+185,000명</div>
+      </div>
+
+      <div class="tl-item neutral">
+        <div class="tl-date">2026년 4월 29일</div>
+        <div class="tl-title">FOMC 기준금리 동결 — 파월 마지막 회견</div>
+        <div class="tl-desc">3.50~3.75% 동결 확정. 8대 4 분열 투표. 파월, 이사직 유지 발표.</div>
+        <div class="tl-number">금리 3.50~3.75% 동결</div>
+      </div>
+
+      <div class="tl-item highlight">
+        <div class="tl-date">2026년 5월 8일</div>
+        <div class="tl-title">4월 고용 서프라이즈 + 5월 미시간 신뢰 최저</div>
+        <div class="tl-desc">고용(+115K)은 예상의 2배 초과, 미시간 소비자신뢰(48.2)는 역대 최저치 재경신.</div>
+        <div class="tl-number">고용 +115K / 소비신뢰 48.2</div>
+      </div>
+
+      <div class="tl-item neutral">
+        <div class="tl-date">2026년 5월 15일 (예정)</div>
+        <div class="tl-title">케빈 워시 신임 연준 의장 취임</div>
+        <div class="tl-desc">트럼프 지명 케빈 워시 취임. 차기 금리 경로 결정의 핵심 변수.</div>
+        <div class="tl-number">차기 의장 취임 예정</div>
+      </div>
+
+    </div><!-- /timeline -->
+  </div>
+
+  <div class="footer-note">
+    출처: BLS · Fed · Trading Economics · Bloomberg | ※ 투자 권유 아님
+  </div>
+</div>
+</body>
+</html>
