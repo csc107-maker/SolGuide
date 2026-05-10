@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미국 경제지표 핵심 요약</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Bebas+Neue&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F7F9FC;
+    padding: 32px 16px;
+  }
+
+  .widget-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .widget-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .widget-header .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #2563EB;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .widget-header h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1E293B;
+    line-height: 1.3;
+  }
+
+  .widget-header .subtitle {
+    font-size: 13px;
+    color: #64748B;
+    margin-top: 6px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 560px) {
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 4px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.11);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.06;
+  }
+
+  .card--blue   { --accent: #2563EB; }
+  .card--green  { --accent: #16A34A; }
+  .card--red    { --accent: #DC2626; }
+  .card--amber  { --accent: #D97706; }
+
+  .card-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #94A3B8;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .card-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .card-unit {
+    font-size: 18px;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E293B;
+    margin-bottom: 6px;
+    margin-top: 8px;
+  }
+
+  .card-desc {
+    font-size: 12.5px;
+    color: #64748B;
+    line-height: 1.6;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+
+  .badge-up   { background: #DCFCE7; color: #15803D; }
+  .badge-down { background: #FEE2E2; color: #DC2626; }
+  .badge-flat { background: #FEF9C3; color: #92400E; }
+
+  .divider {
+    border: none;
+    border-top: 1px dashed #E2E8F0;
+    margin-top: 14px;
+    padding-top: 10px;
+  }
+
+  .compare-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #94A3B8;
+    margin-top: 8px;
+  }
+
+  .compare-row span:last-child {
+    font-weight: 700;
+    color: #475569;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #94A3B8;
+    margin-top: 18px;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="widget-header">
+    <div class="eyebrow">📊 2026년 5월 8일 발표 기준</div>
+    <h2>미국 핵심 경제지표 한눈에 보기</h2>
+    <div class="subtitle">BLS · 미시간대학교 · FOMC 공식 발표치 기반</div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- 비농업 고용 -->
+    <div class="card card--blue">
+      <div class="card-label">Apr 2026 · 비농업 고용</div>
+      <div>
+        <span class="card-value">115</span><span class="card-unit">천 명</span>
+      </div>
+      <div class="card-title">4월 비농업 고용자수 변동</div>
+      <div class="card-desc">예상치(55천 명)의 두 배 이상 초과. 보건·운송·소매 중심 증가.</div>
+      <span class="badge badge-up">▲ 서프라이즈 +60K 상회</span>
+      <hr class="divider">
+      <div class="compare-row">
+        <span>시장 예상치</span><span>+55,000명</span>
+      </div>
+      <div class="compare-row">
+        <span>전월(3월 최종)</span><span>+185,000명</span>
+      </div>
+    </div>
+
+    <!-- 실업률 -->
+    <div class="card card--green">
+      <div class="card-label">Apr 2026 · 실업률</div>
+      <div>
+        <span class="card-value">4.3</span><span class="card-unit">%</span>
+      </div>
+      <div class="card-title">4월 실업률</div>
+      <div class="card-desc">전월과 동일 유지. 전문가 예상치 부합. 구인배율 0.95로 소폭 개선.</div>
+      <span class="badge badge-flat">→ 전월 동일 유지</span>
+      <hr class="divider">
+      <div class="compare-row">
+        <span>시장 예상치</span><span>4.3%</span>
+      </div>
+      <div class="compare-row">
+        <span>전월(3월)</span><span>4.3%</span>
+      </div>
+    </div>
+
+    <!-- 미시간 소비자신뢰 -->
+    <div class="card card--red">
+      <div class="card-label">May 2026 예비치 · 미시간 소비자신뢰</div>
+      <div>
+        <span class="card-value">48.2</span>
+      </div>
+      <div class="card-title">5월 미시간 소비자신뢰지수</div>
+      <div class="card-desc">역대 최저 수준 재차 경신. 2022년 6월 저점에 필적. 휘발유·관세 우려 지속.</div>
+      <span class="badge badge-down">▼ 예상치(49.7) 하회</span>
+      <hr class="divider">
+      <div class="compare-row">
+        <span>시장 예상치</span><span>49.7</span>
+      </div>
+      <div class="compare-row">
+        <span>전월 최종치(4월)</span><span>49.8</span>
+      </div>
+    </div>
+
+    <!-- FOMC 기준금리 -->
+    <div class="card card--amber">
+      <div class="card-label">Apr 29, 2026 · FOMC</div>
+      <div>
+        <span class="card-value">3.75</span><span class="card-unit">%</span>
+      </div>
+      <div class="card-title">연준 기준금리 상단</div>
+      <div class="card-desc">3.50~3.75% 목표 범위 동결. 파월 의장 마지막 기자회견. 8-4 분열 투표.</div>
+      <span class="badge badge-flat">→ 3회 연속 동결</span>
+      <hr class="divider">
+      <div class="compare-row">
+        <span>목표 범위</span><span>3.50 ~ 3.75%</span>
+      </div>
+      <div class="compare-row">
+        <span>차기 의장 취임일</span><span>2026년 5월 15일</span>
+      </div>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+  <div class="footer-note">
+    출처: BLS(미국 노동통계국) · 미시간대학교 소비자조사(SCA) · Fed FOMC 성명 · Bloomberg · Reuters<br>
+    ※ 본 위젯은 정보 제공 목적이며, 투자 권유가 아닙니다.
+  </div>
+</div>
+</body>
+</html>
