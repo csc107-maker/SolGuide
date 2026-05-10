@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOMC 분석 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=Playfair+Display:wght@700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #FFFBEB;
+    padding: 32px 16px;
+  }
+
+  .widget-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #D97706;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #78350F;
+    line-height: 1.3;
+  }
+
+  .main-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 4px 20px rgba(217,119,6,0.12);
+    margin-bottom: 20px;
+    border: 1px solid #FDE68A;
+  }
+
+  .rate-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 2px dashed #FDE68A;
+  }
+
+  .rate-block {
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .rate-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #92400E;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .rate-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 46px;
+    font-weight: 700;
+    color: #D97706;
+    line-height: 1;
+  }
+
+  .rate-sub {
+    font-size: 12px;
+    color: #92400E;
+    margin-top: 4px;
+  }
+
+  .rate-arrow {
+    font-size: 32px;
+    color: #FCD34D;
+    font-weight: 900;
+  }
+
+  .vote-section {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .vote-box {
+    flex: 1;
+    min-width: 140px;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .vote-box.for   { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .vote-box.against { background: #FEE2E2; border: 1px solid #FECACA; }
+
+  .vote-number {
+    font-size: 40px;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+
+  .vote-box.for .vote-number     { color: #15803D; }
+  .vote-box.against .vote-number { color: #DC2626; }
+
+  .vote-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  .vote-desc {
+    font-size: 11.5px;
+    color: #64748B;
+    margin-top: 4px;
+  }
+
+  .vote-note {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    color: #92400E;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  /* 파월 발언 카드 */
+  .quotes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 560px) {
+    .quotes-grid { grid-template-columns: 1fr; }
+    .rate-row { flex-direction: column; }
+  }
+
+  .quote-item {
+    background: #FFFBEB;
+    border-left: 3px solid #F59E0B;
+    padding: 14px 16px;
+    border-radius: 0 10px 10px 0;
+  }
+
+  .quote-tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #D97706;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .quote-text {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* 전망 섹션 */
+  .outlook-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .outlook-grid { grid-template-columns: 1fr; }
+  }
+
+  .outlook-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-top: 3px solid var(--color);
+    text-align: center;
+  }
+
+  .outlook-icon {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .outlook-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #94A3B8;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .outlook-val {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--color);
+    margin-bottom: 4px;
+  }
+
+  .outlook-desc {
+    font-size: 11.5px;
+    color: #64748B;
+    line-height: 1.5;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #94A3B8;
+    margin-top: 18px;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+
+  <div class="section-header">
+    <div class="eyebrow">🏛️ 2026년 4월 29일 FOMC</div>
+    <h3>파월의 마지막 기자회견 — 무엇을 결정했나?</h3>
+  </div>
+
+  <div class="main-card">
+
+    <!-- 금리 결정 -->
+    <div class="rate-row">
+      <div class="rate-block">
+        <div class="rate-label">이전 금리 (하단)</div>
+        <div class="rate-value">3.50<span style="font-size:22px">%</span></div>
+        <div class="rate-sub">이전과 동일</div>
+      </div>
+      <div class="rate-arrow">⟶</div>
+      <div class="rate-block">
+        <div class="rate-label">현재 목표 범위</div>
+        <div class="rate-value" style="color:#B45309">3.50<span style="font-size:22px">%</span></div>
+        <div class="rate-sub" style="color:#D97706; font-weight:700">~ 3.75%</div>
+      </div>
+      <div class="rate-arrow">→</div>
+      <div class="rate-block">
+        <div class="rate-label">결정 유형</div>
+        <div class="rate-value" style="font-size:26px; padding-top:8px">HOLD</div>
+        <div class="rate-sub">3회 연속 동결</div>
+      </div>
+    </div>
+
+    <!-- 투표 결과 -->
+    <div style="font-size:13px; font-weight:700; color:#78350F; margin-bottom:12px;">🗳️ FOMC 투표 결과</div>
+    <div class="vote-section">
+      <div class="vote-box for">
+        <div class="vote-number">8</div>
+        <div class="vote-label">✅ 동결 찬성</div>
+        <div class="vote-desc">현행 금리 유지</div>
+      </div>
+      <div class="vote-box against">
+        <div class="vote-number">4</div>
+        <div class="vote-label">❌ 반대</div>
+        <div class="vote-desc">1명: 25bp 인하 지지<br>3명: 금리인하 재개 성명 반대</div>
+      </div>
+    </div>
+
+    <div class="vote-note">
+      ⚠️ <strong>1992년 이후 최다 반대표</strong> — 이번 8-4 분열 투표는 1992년 10월 이후 처음으로 네 명의 관료가 FOMC 결정에 반대한 것으로, 연준 내부의 정책 방향 갈등을 여실히 드러냅니다.
+    </div>
+
+    <!-- 파월 주요 발언 -->
+    <div style="font-size:13px; font-weight:700; color:#78350F; margin-bottom:12px;">💬 파월 의장 주요 발언 요약</div>
+    <div class="quotes-grid">
+      <div class="quote-item">
+        <div class="quote-tag">연준 독립성</div>
+        <div class="quote-text">정치권 압박이 통화정책 결정에 영향을 미쳐서는 안 된다고 거듭 강조</div>
+      </div>
+      <div class="quote-item">
+        <div class="quote-tag">이사직 유지</div>
+        <div class="quote-text">5월 15일 의장 임기 종료 후에도 이사직을 유지하겠다. 조용히 소임을 다할 계획</div>
+      </div>
+      <div class="quote-item">
+        <div class="quote-tag">경제 불확실성</div>
+        <div class="quote-text">중동의 발전이 경제 전망에 대한 높은 불확실성을 초래하고 있다고 성명에 명시</div>
+      </div>
+      <div class="quote-item">
+        <div class="quote-tag">임기 종료</div>
+        <div class="quote-text">기관과 국민에게 가장 이익이 되는 방향을 기준으로 판단할 것</div>
+      </div>
+    </div>
+
+  </div><!-- /main-card -->
+
+  <!-- 향후 전망 -->
+  <div class="main-card">
+    <div style="font-size:13px; font-weight:700; color:#78350F; margin-bottom:16px;">📈 시장이 보는 향후 금리 경로</div>
+    <div class="outlook-grid">
+      <div class="outlook-item" style="--color: #2563EB;">
+        <div class="outlook-icon">📊</div>
+        <div class="outlook-label">2026년 금리 변동</div>
+        <div class="outlook-val">동결</div>
+        <div class="outlook-desc">시장 컨센서스: 연내 금리 변동 없을 것으로 예상</div>
+      </div>
+      <div class="outlook-item" style="--color: #D97706;">
+        <div class="outlook-icon">📅</div>
+        <div class="outlook-label">워시 취임 효과</div>
+        <div class="outlook-val">5월 15일</div>
+        <div class="outlook-desc">케빈 워시 취임 후 첫 발언이 단기 최대 변수</div>
+      </div>
+      <div class="outlook-item" style="--color: #DC2626;">
+        <div class="outlook-icon">⛽</div>
+        <div class="outlook-label">에너지 리스크</div>
+        <div class="outlook-val">고위험</div>
+        <div class="outlook-desc">이란 분쟁·유가 상승으로 인플레이션 재점화 우려 지속</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    출처: Fed FOMC 성명 · 파이낸셜뉴스 · 헤럴드경제 · Trading Economics · Bloomberg<br>
+    ※ 본 위젯은 정보 제공 목적이며 투자 권유가 아닙니다.
+  </div>
+</div>
+</body>
+</html>
