@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화오션 Corporate Day 예상 발표 내용</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f8ff;
+    padding: 28px 20px;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .top-bar {
+    background: linear-gradient(135deg, #14336b 0%, #1e5cb8 100%);
+    padding: 20px 28px;
+    border-radius: 14px 14px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .top-bar h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .top-bar .sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 3px;
+  }
+
+  .event-info {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .info-pill {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .timeline {
+    background: #fff;
+    border: 1px solid #dce7f7;
+    border-top: none;
+    padding: 28px;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 0 18px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .item:last-child { margin-bottom: 0; }
+
+  .item::after {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 44px;
+    bottom: -20px;
+    width: 2px;
+    background: linear-gradient(to bottom, #d0dff5, transparent);
+  }
+
+  .item:last-child::after { display: none; }
+
+  .num-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1;
+  }
+
+  .c1 { background: linear-gradient(135deg, #1a56c4, #2b7de9); }
+  .c2 { background: linear-gradient(135deg, #0d6b50, #16a873); }
+  .c3 { background: linear-gradient(135deg, #8b2fc9, #b060ff); }
+  .c4 { background: linear-gradient(135deg, #c45c00, #f0821a); }
+  .c5 { background: linear-gradient(135deg, #1a4a8c, #2e6fd4); }
+
+  .content-box {
+    background: #f8fbff;
+    border: 1px solid #dce7f7;
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: box-shadow 0.2s;
+  }
+
+  .content-box:hover {
+    box-shadow: 0 4px 16px rgba(26, 86, 196, 0.12);
+  }
+
+  .item-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0d2f6e;
+    margin-bottom: 6px;
+  }
+
+  .item-desc {
+    font-size: 13px;
+    color: #4a5e7a;
+    line-height: 1.7;
+  }
+
+  .keyword-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .ktag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+
+  .ktag-blue { background: #e8f0ff; color: #1a56c4; border-color: #c4d4f5; }
+  .ktag-green { background: #e6f9ef; color: #0d6b50; border-color: #a0e0c0; }
+  .ktag-purple { background: #f3e8ff; color: #8b2fc9; border-color: #d4aaff; }
+  .ktag-orange { background: #fff3e0; color: #c45c00; border-color: #ffcc99; }
+
+  .impact-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .impact-label {
+    font-size: 11px;
+    color: #7a8fae;
+    font-weight: 600;
+  }
+
+  .impact-dots {
+    display: flex;
+    gap: 3px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot-on { background: #f0a500; }
+  .dot-off { background: #dce7f7; }
+
+  .bot-bar {
+    background: #f0f5ff;
+    border: 1px solid #dce7f7;
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    padding: 14px 28px;
+    font-size: 12px;
+    color: #7a8fae;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .notice-dot {
+    width: 8px; height: 8px;
+    background: #f0a500;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-bar">
+    <div>
+      <h2>Hanwha Ocean · Corporate Day NY 예상 발표</h2>
+      <div class="sub">2026년 5월 12~13일 | 미국 뉴욕 | 해외 기관투자자 대상 IR</div>
+    </div>
+    <div class="event-info">
+      <div class="info-pill">📍 뉴욕</div>
+      <div class="info-pill">🏦 기관 IR</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="item">
+      <div class="num-circle c1">1</div>
+      <div class="content-box">
+        <div class="item-title">1Q26 실적의 '질적 해석' — 마진 개선의 지속성 설명</div>
+        <div class="item-desc">영업이익 4,411억원(+70.6% YoY)의 배경인 LNG선 고선가 구조의 지속 기간과 2026년 하반기 마진 가시성 제시. 2022~2024년 체결 고선가 계약의 매출 인식 일정 공개 예상.</div>
+        <div class="keyword-tags">
+          <span class="ktag ktag-blue">LNG선 마진</span>
+          <span class="ktag ktag-blue">2026 연간 가이던스</span>
+          <span class="ktag ktag-blue">영업이익률 13%</span>
+        </div>
+        <div class="impact-row">
+          <span class="impact-label">투자자 관심도</span>
+          <div class="impact-dots">
+            <div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num-circle c2">2</div>
+      <div class="content-box">
+        <div class="item-title">MASGA & 필리조선소 — 미국 해군 시장 진입 전략</div>
+        <div class="item-desc">NGLS 개념설계 수주(VARD 협력) 성과 설명 및 2028년 예정된 상세설계·건조 입찰 전략. 필리조선소 2억달러+ 투자 계획과 현지 인력 확충 현황.</div>
+        <div class="keyword-tags">
+          <span class="ktag ktag-green">MASGA</span>
+          <span class="ktag ktag-green">필리조선소</span>
+          <span class="ktag ktag-green">미해군 NGLS</span>
+          <span class="ktag ktag-green">방산 수주</span>
+        </div>
+        <div class="impact-row">
+          <span class="impact-label">투자자 관심도</span>
+          <div class="impact-dots">
+            <div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num-circle c3">3</div>
+      <div class="content-box">
+        <div class="item-title">캐나다 잠수함 수주 현황 — 60조원 빅딜 업데이트</div>
+        <div class="item-desc">CPSP 입찰 보완 진행 상황 및 결과 시점 예상 공유. 단독 vs. 컨소시엄 구성 전략. 캐나다 국방산업전략(2026.02)과의 정합성 설명 예정.</div>
+        <div class="keyword-tags">
+          <span class="ktag ktag-purple">캐나다 잠수함</span>
+          <span class="ktag ktag-purple">CPSP</span>
+          <span class="ktag ktag-purple">60조 수주</span>
+        </div>
+        <div class="impact-row">
+          <span class="impact-label">주가 영향도</span>
+          <div class="impact-dots">
+            <div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num-circle c4">4</div>
+      <div class="content-box">
+        <div class="item-title">해양플랜트 FPSO — 하반기 수주 파이프라인 공개</div>
+        <div class="item-desc">브라질 페트로브라스, 토탈에너지 나미비아 비너스 가스전 FPSO 입찰 현황. 연내 2건 이상 수주 시 4Q26 실적 턴어라운드 기대. 클락슨 전망치 27년까지 18건.</div>
+        <div class="keyword-tags">
+          <span class="ktag ktag-orange">FPSO</span>
+          <span class="ktag ktag-orange">브라질 페트로브라스</span>
+          <span class="ktag ktag-orange">해양플랜트</span>
+        </div>
+        <div class="impact-row">
+          <span class="impact-label">투자자 관심도</span>
+          <div class="impact-dots">
+            <div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-off"></div><div class="dot dot-off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num-circle c5">5</div>
+      <div class="content-box">
+        <div class="item-title">주주환원 정책 & 중장기 재무 전략 — 해외 투자자 최대 관심</div>
+        <div class="item-desc">2025년 순이익 1조 1,727억원 달성 이후 배당 성향·자사주 매입 로드맵. 글로벌 투자자들의 ESG·거버넌스 요구 대응 전략 공개 여부.</div>
+        <div class="keyword-tags">
+          <span class="ktag ktag-blue">주주환원</span>
+          <span class="ktag ktag-blue">배당정책</span>
+          <span class="ktag ktag-blue">ESG</span>
+        </div>
+        <div class="impact-row">
+          <span class="impact-label">외국인 수급 영향</span>
+          <div class="impact-dots">
+            <div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-on"></div><div class="dot dot-off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bot-bar">
+    <div class="notice-dot"></div>
+    본 내용은 공개 자료 기반 예상이며 실제 발표 내용과 다를 수 있습니다. 투자 판단은 공식 IR 자료 확인 후 개인이 결정하시기 바랍니다.
+  </div>
+
+</div>
+</body>
+</html>
