@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>은행주 주가 영향 시나리오</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F0F4F8;
+    padding: 28px 14px;
+  }
+
+  .container { max-width: 720px; margin: 0 auto; }
+
+  .header { margin-bottom: 26px; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #1A5276;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #17202A;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    font-size: 12.5px;
+    color: #7F8C8D;
+    line-height: 1.6;
+  }
+
+  .scenario-tabs {
+    display: flex;
+    gap: 0;
+    background: #E8ECF0;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 20px;
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 9px 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #7F8C8D;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .scenario-block {
+    margin-bottom: 18px;
+  }
+
+  .period-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .period-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .period-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, currentColor, transparent);
+    opacity: 0.3;
+  }
+
+  .period-short { background: #FDEDEC; color: #C0392B; }
+  .period-mid { background: #FEF9E7; color: #B7770D; }
+  .period-long { background: #E9F7EF; color: #1E8449; }
+
+  .scenario-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 500px) {
+    .scenario-cards { grid-template-columns: 1fr; }
+    .title { font-size: 17px; }
+  }
+
+  .s-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+
+  .s-card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .s-icon { font-size: 22px; }
+
+  .s-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .s-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #17202A;
+    margin-bottom: 7px;
+    line-height: 1.4;
+  }
+
+  .s-desc {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.65;
+  }
+
+  .s-impact {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #E8ECF0;
+  }
+
+  .s-impact-label { font-size: 11px; color: #999; }
+  .s-impact-val {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 8px;
+  }
+
+  .neg { background: #FDEDEC; color: #C0392B; }
+  .pos { background: #E9F7EF; color: #1E8449; }
+  .neu { background: #EAF2FF; color: #1A5276; }
+
+  .divider { height: 1px; background: #DCE3EA; margin: 20px 0; }
+
+  .expert-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+
+  .expert-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #17202A;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #E8ECF0;
+  }
+
+  .expert-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .expert-row:last-child { margin-bottom: 0; }
+
+  .expert-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .e-blue { background: #EAF2FF; }
+  .e-orange { background: #FEF9E7; }
+  .e-green { background: #E9F7EF; }
+
+  .expert-content {}
+  .expert-name { font-size: 11px; font-weight: 700; color: #17202A; margin-bottom: 3px; }
+  .expert-quote { font-size: 12px; color: #555; line-height: 1.6; }
+
+  .source {
+    font-size: 11px;
+    color: #aaa;
+    text-align: right;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="section-label">📉 투자 영향 분석</div>
+    <div class="title">은행주 주가, 어떻게 될까?<br>시기별 시나리오 분석</div>
+    <div class="subtitle">세무조사 착수 이후 하나금융지주 및 은행주 전반에 미칠 주가 영향을 단기·중기·장기로 나눠 분석합니다.</div>
+  </div>
+
+  <!-- 단기 -->
+  <div class="scenario-block">
+    <div class="period-header">
+      <span class="period-badge period-short">단기 | 1~3개월</span>
+    </div>
+    <div class="scenario-cards">
+      <div class="s-card">
+        <div class="s-card-top">
+          <div class="s-icon">⚡</div>
+          <div>
+            <div class="s-label" style="color:#C0392B;">직접 영향</div>
+          </div>
+        </div>
+        <div class="s-title">하나금융지주 주가<br>하방 압력</div>
+        <div class="s-desc">규제 리스크와 정치적 불확실성이 투자 심리를 짓누를 수 있음. 기관·외국인 투자자의 단기 차익 실현 빌미.</div>
+        <div class="s-impact">
+          <span class="s-impact-label">예상 영향</span>
+          <span class="s-impact-val neg">단기 하락 압력</span>
+        </div>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-top">
+          <div class="s-icon">🌊</div>
+          <div>
+            <div class="s-label" style="color:#C0392B;">간접 영향</div>
+          </div>
+        </div>
+        <div class="s-title">은행섹터 전반<br>투자심리 냉각</div>
+        <div class="s-desc">조사 확산 우려로 KB금융, 신한지주, 우리금융 등 다른 금융지주에도 단기 조정 압력 전이 가능성.</div>
+        <div class="s-impact">
+          <span class="s-impact-label">예상 영향</span>
+          <span class="s-impact-val neg">섹터 전반 약세</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 중기 -->
+  <div class="scenario-block">
+    <div class="period-header">
+      <span class="period-badge period-mid">중기 | 3~12개월</span>
+    </div>
+    <div class="scenario-cards">
+      <div class="s-card">
+        <div class="s-card-top">
+          <div class="s-icon">💸</div>
+          <div>
+            <div class="s-label" style="color:#B7770D;">추징 시나리오</div>
+          </div>
+        </div>
+        <div class="s-title">세금 추징 현실화 시<br>이익 충격</div>
+        <div class="s-desc">과거 2002년 1조 7천억원 추징 거론 선례. 실제 수천억원 추징 시 순이익 일정 감소. 단, 1분기 순이익 1.2조원 수준의 체력은 있어 흡수 가능.</div>
+        <div class="s-impact">
+          <span class="s-impact-label">최악 시나리오</span>
+          <span class="s-impact-val neg">이익 축소</span>
+        </div>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-top">
+          <div class="s-icon">🛡️</div>
+          <div>
+            <div class="s-label" style="color:#B7770D;">방어 요인</div>
+          </div>
+        </div>
+        <div class="s-title">탄탄한 펀더멘털이<br>하단 지지</div>
+        <div class="s-desc">4대 금융지주의 CET1 비율, 배당소득 분리과세 혜택, 주주환원 50% 시대 진입 등 구조적 강점은 여전히 유효.</div>
+        <div class="s-impact">
+          <span class="s-impact-label">방어력</span>
+          <span class="s-impact-val pos">중장기 지지력</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 장기 -->
+  <div class="scenario-block">
+    <div class="period-header">
+      <span class="period-badge period-long">장기 | 1년 이상</span>
+    </div>
+    <div class="scenario-cards">
+      <div class="s-card">
+        <div class="s-card-top">
+          <div class="s-icon">🏛️</div>
+          <div>
+            <div class="s-label" style="color:#1E8449;">정책 리스크</div>
+          </div>
+        </div>
+        <div class="s-title">금융공공성 강화 정책<br>이익 구조 변화</div>
+        <div class="s-desc">정부가 은행 이익 일부 환수 · 사회공헌 확대를 제도화할 경우 장기 수익성 압박. 이자이익 의존도 높은 지방 금융지주가 상대적으로 불리.</div>
+        <div class="s-impact">
+          <span class="s-impact-label">장기 변수</span>
+          <span class="s-impact-val neg">이익 구조 변화</span>
+        </div>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-top">
+          <div class="s-icon">🌱</div>
+          <div>
+            <div class="s-label" style="color:#1E8449;">회복 시나리오</div>
+          </div>
+        </div>
+        <div class="s-title">조사 결과 미미 시<br>빠른 반등 기대</div>
+        <div class="s-desc">조사 결과 추징이 없거나 경미할 경우 주가는 빠르게 반등 가능. 2026년 배당소득 분리과세 혜택이 장기 주주환원 매력을 유지.</div>
+        <div class="s-impact">
+          <span class="s-impact-label">낙관 시나리오</span>
+          <span class="s-impact-val pos">조기 반등 가능</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 전문가 의견 -->
+  <div class="expert-box">
+    <div class="expert-title">💬 시장 시각 — 주요 분석 의견</div>
+
+    <div class="expert-row">
+      <div class="expert-avatar e-orange">📊</div>
+      <div class="expert-content">
+        <div class="expert-name">시장 우려 시각</div>
+        <div class="expert-quote">"조사4국이 움직였다는 것 자체만으로도 업계 전반이 긴장. 최근 금융권 여론·정책 분위기를 감안하면 다른 은행들도 리스크 점검에 나설 가능성이 크다." — 금융권 관계자 (EBN뉴스)</div>
+      </div>
+    </div>
+
+    <div class="expert-row">
+      <div class="expert-avatar e-blue">📈</div>
+      <div class="expert-content">
+        <div class="expert-name">신중론 시각</div>
+        <div class="expert-quote">"조사4국이 투입됐다고 반드시 중대 위법 혐의가 확인된 것은 아니다. 실제 과세 여부는 상당 기간이 지나야 드러난다. 확대 해석을 경계해야 한다." — 증권업계 전문가</div>
+      </div>
+    </div>
+
+    <div class="expert-row">
+      <div class="expert-avatar e-green">💰</div>
+      <div class="expert-content">
+        <div class="expert-name">증권가 (미래에셋증권)</div>
+        <div class="expert-quote">KB금융 목표주가 21만 6,000원, 하나금융 목표주가 15만 7,000원 제시. 배당소득 분리과세와 CET1 개선이 중장기 은행주 투자 매력을 유지시키는 핵심 요인.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="source">출처: EBN뉴스, 조세금융신문, 미래에셋증권, 에프앤가이드 (2026.05)</div>
+</div>
+</body>
+</html>
