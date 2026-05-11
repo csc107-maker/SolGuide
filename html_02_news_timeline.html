@@ -1,253 +1,209 @@
-<!-- [삽입 위치] 뉴스 TOP5 섹션 직후 — html_02_news_timeline.html -->
+<!-- [삽입 위치] 핵심 뉴스 TOP 5 섹션 직후 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오늘의 핵심 뉴스 타임라인 — 2026년 5월 11일</title>
+<title>핵심 뉴스 타임라인 — 2026.05.12</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
     background: #f0fdf4;
     padding: 24px 16px;
   }
-  .report-header {
+  .header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
   }
-  .report-header h2 {
-    font-size: 1.3rem;
-    color: #14532d;
+  .header h2 {
+    font-size: 1.25rem;
     font-weight: 700;
-    margin-bottom: 6px;
+    color: #14532d;
   }
-  .report-header p { font-size: 0.85rem; color: #4b7c5c; }
+  .header p {
+    font-size: 0.82rem;
+    color: #4a7c59;
+    margin-top: 4px;
+  }
   .timeline {
-    position: relative;
-    max-width: 780px;
+    max-width: 800px;
     margin: 0 auto;
-    padding-left: 24px;
+    position: relative;
+    padding-left: 32px;
   }
   .timeline::before {
     content: '';
     position: absolute;
-    left: 10px;
+    left: 11px;
     top: 0;
     bottom: 0;
-    width: 3px;
-    background: linear-gradient(to bottom, #34d399, #059669, #065f46);
-    border-radius: 2px;
+    width: 2px;
+    background: linear-gradient(to bottom, #86efac, #bbf7d0);
   }
   .news-item {
     position: relative;
+    margin-bottom: 22px;
     background: #ffffff;
     border-radius: 14px;
-    padding: 18px 20px;
-    margin-bottom: 18px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    border-left: 4px solid #10b981;
+    padding: 18px 18px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
   }
-  .news-item.bullish  { border-left-color: #22c55e; }
-  .news-item.bearish  { border-left-color: #ef4444; }
-  .news-item.neutral  { border-left-color: #f59e0b; }
-  .timeline-dot {
+  .news-item::before {
+    content: '';
     position: absolute;
-    left: -30px;
-    top: 22px;
+    left: -26px;
+    top: 20px;
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: #10b981;
-    border: 3px solid #f0fdf4;
-    box-shadow: 0 0 0 2px #10b981;
+    background: #22c55e;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 2px #86efac;
   }
-  .bullish .timeline-dot  { background: #22c55e; box-shadow: 0 0 0 2px #22c55e; }
-  .bearish .timeline-dot  { background: #ef4444; box-shadow: 0 0 0 2px #ef4444; }
-  .neutral .timeline-dot  { background: #f59e0b; box-shadow: 0 0 0 2px #f59e0b; }
   .news-meta {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
     flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 10px;
   }
-  .rank-badge {
-    font-size: 0.78rem;
-    font-weight: 700;
-    background: #1a3a6c;
-    color: white;
-    padding: 2px 9px;
-    border-radius: 10px;
+  .date-badge {
+    font-size: 0.73rem;
+    color: #64748b;
+    font-weight: 500;
   }
   .source-badge {
     font-size: 0.72rem;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 2px 8px;
+    border-radius: 20px;
     font-weight: 600;
-    background: #e5e7eb;
-    color: #374151;
-    padding: 2px 9px;
-    border-radius: 10px;
   }
   .tag {
     font-size: 0.72rem;
-    font-weight: 700;
     padding: 2px 9px;
-    border-radius: 10px;
+    border-radius: 20px;
+    font-weight: 700;
   }
-  .tag.bull { background: #dcfce7; color: #15803d; }
-  .tag.bear { background: #fee2e2; color: #b91c1c; }
-  .tag.neu  { background: #fef3c7; color: #92400e; }
+  .tag-bull { background: #dcfce7; color: #16a34a; }
+  .tag-bear { background: #fee2e2; color: #dc2626; }
+  .tag-neutral { background: #fef3c7; color: #d97706; }
   .news-title {
     font-size: 1rem;
     font-weight: 700;
-    color: #111827;
-    margin-bottom: 8px;
+    color: #1c2b3a;
+    margin-bottom: 6px;
     line-height: 1.4;
   }
-  .news-body {
+  .news-desc {
     font-size: 0.84rem;
-    color: #4b5563;
+    color: #475569;
     line-height: 1.6;
   }
-  .impact-bar-wrap {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .highlight {
+    font-weight: 700;
+    color: #059669;
   }
-  .impact-label { font-size: 0.72rem; color: #6b7280; font-weight: 600; }
-  .impact-bar {
-    flex: 1;
-    height: 6px;
-    background: #e5e7eb;
-    border-radius: 3px;
-    overflow: hidden;
+  .highlight-red {
+    font-weight: 700;
+    color: #dc2626;
   }
-  .impact-fill { height: 100%; border-radius: 3px; }
-  .fill-bull { background: linear-gradient(to right, #34d399, #059669); }
-  .fill-bear { background: linear-gradient(to right, #fca5a5, #ef4444); }
-  .fill-neu  { background: linear-gradient(to right, #fcd34d, #f59e0b); }
   .disclaimer {
     text-align: center;
+    margin-top: 16px;
     font-size: 0.72rem;
-    color: #9ca3af;
-    margin-top: 20px;
+    color: #94a3b8;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
-  @media (max-width: 600px) {
-    .timeline { padding-left: 20px; }
-    .timeline-dot { left: -26px; }
-    .news-title { font-size: 0.92rem; }
+  @media (max-width: 480px) {
+    .timeline { padding-left: 24px; }
+    .news-item::before { left: -20px; }
   }
 </style>
 </head>
 <body>
-<div class="report-header">
-  <h2>📰 오늘의 핵심 뉴스 TOP 5 타임라인</h2>
-  <p>2026년 5월 11일 | 코스피 개장 전 핵심 이슈 정리</p>
+
+<div class="header">
+  <h2>📰 오늘의 핵심 뉴스 타임라인 — 2026년 5월 12일</h2>
+  <p>Bloomberg · CNBC · 서울경제 · KED Global · Reuters 종합</p>
 </div>
+
 <div class="timeline">
 
   <!-- 뉴스 1 -->
-  <div class="news-item bullish">
-    <div class="timeline-dot"></div>
+  <div class="news-item">
     <div class="news-meta">
-      <span class="rank-badge">TOP 1</span>
-      <span class="source-badge">서울경제 / Bloomberg</span>
-      <span class="tag bull">🟢 호재</span>
-      <span class="tag bull">코스피</span>
+      <span class="date-badge">2026.05.11</span>
+      <span class="source-badge">CNBC · 서울경제</span>
+      <span class="tag tag-bull">📈 호재</span>
     </div>
-    <div class="news-title">코스피 장중 7,500 돌파 시도 — 이번주 8,000 목표 시야권</div>
-    <div class="news-body">
-      코스피가 장중 7,500을 돌파하며 사상 최고 기록을 경신했습니다. NH투자증권은 이번 주 코스피 예상 밴드를 6,900~7,800으로 제시했으며, 골드만삭스의 연말 목표 8,000선이 현실적 목표로 떠오르고 있습니다. 대신증권은 선행 PER 8배 기준 7,822선, 9배 기준 8,800선까지 상승 여력이 있다고 분석합니다.
-    </div>
-    <div class="impact-bar-wrap">
-      <span class="impact-label">코스피 영향</span>
-      <div class="impact-bar"><div class="impact-fill fill-bull" style="width:92%"></div></div>
-      <span class="impact-label">매우 긍정</span>
-    </div>
+    <div class="news-title">코스피, 7,822pt 장중 사상 최고치 경신 — +4.32% 급등</div>
+    <p class="news-desc">
+      SK하이닉스가 <span class="highlight">+11% 이상 폭등</span>하며 지수 상승을 견인. 코스피가 역대 최초로 7,800pt를 돌파하며 일본·한국 증시 동반 신고가 경신. 골드만삭스는 12개월 목표를 <span class="highlight">9,000pt로 상향</span>하며 "톱 컨빅션" 유지.
+    </p>
   </div>
 
   <!-- 뉴스 2 -->
-  <div class="news-item bullish">
-    <div class="timeline-dot"></div>
+  <div class="news-item">
     <div class="news-meta">
-      <span class="rank-badge">TOP 2</span>
-      <span class="source-badge">Bloomberg / TechTimes</span>
-      <span class="tag bull">🟢 호재</span>
-      <span class="tag bull">삼성전자</span>
+      <span class="date-badge">2026.05.11</span>
+      <span class="source-badge">Reuters · Bloomberg</span>
+      <span class="tag tag-bear">⚠️ 악재</span>
     </div>
-    <div class="news-title">삼성전자 시총 1조 달러 돌파 — 아시아 2번째 기업</div>
-    <div class="news-body">
-      삼성전자가 시가총액 1조 달러를 돌파하며 TSMC에 이어 아시아에서 두 번째 1조 달러 기업이 됐습니다. AI 반도체 수요 폭증과 HBM4 공급 기대감이 주요 원인으로, 지난주 +5.44% 상승했습니다. SK증권은 삼성전자 목표주가를 50만원으로 상향 조정했습니다.
-    </div>
-    <div class="impact-bar-wrap">
-      <span class="impact-label">코스피 영향</span>
-      <div class="impact-bar"><div class="impact-fill fill-bull" style="width:88%"></div></div>
-      <span class="impact-label">긍정</span>
-    </div>
+    <div class="news-title">트럼프, 이란 협상 전면 거부 → WTI $97 급등</div>
+    <p class="news-desc">
+      트럼프 대통령이 이란의 최신 협상 제안을 <span class="highlight-red">"TOTALLY UNACCEPTABLE"</span>이라며 거부. 호르무즈 해협 봉쇄 우려 재점화로 WTI 원유가 <span class="highlight-red">+2% 급등</span>. 글로벌 인플레이션 재확산 우려 상존.
+    </p>
   </div>
 
   <!-- 뉴스 3 -->
-  <div class="news-item bullish">
-    <div class="timeline-dot"></div>
+  <div class="news-item">
     <div class="news-meta">
-      <span class="rank-badge">TOP 3</span>
-      <span class="source-badge">서울경제 / Seeking Alpha</span>
-      <span class="tag bull">🟢 호재</span>
-      <span class="tag bull">SK하이닉스</span>
+      <span class="date-badge">2026.05.07</span>
+      <span class="source-badge">서울경제</span>
+      <span class="tag tag-neutral">🔄 중립</span>
     </div>
-    <div class="news-title">SK하이닉스, 외국인 순매수에 +12.52% 급등 — HBM 공급 부족 장기화</div>
-    <div class="news-body">
-      SK하이닉스가 지난주 외국인 대규모 순매수에 힘입어 12.52% 급등했습니다. HBM3E 가격은 2026년 주문분 기준 20% 이상 인상됐으며 공급 용량은 2026년 말까지 완판 상태입니다. SK증권은 목표주가를 300만원으로 상향했으며, 선행 PER은 5.2배로 저평가 판단합니다.
-    </div>
-    <div class="impact-bar-wrap">
-      <span class="impact-label">코스피 영향</span>
-      <div class="impact-bar"><div class="impact-fill fill-bull" style="width:95%"></div></div>
-      <span class="impact-label">매우 긍정</span>
-    </div>
+    <div class="news-title">외국인, EWY 10억 달러 순유출 vs. DRAM ETF 19.5억 달러 순유입</div>
+    <p class="news-desc">
+      5월 1~7일, 광범위 한국 ETF(EWY)에서 <span class="highlight-red">-10.1억 달러 유출</span>이 발생하는 동시에, 메모리 반도체 집중 ETF에는 <span class="highlight">+19.5억 달러 유입</span>. 외국인은 '한국 전체'가 아닌 '반도체 집중 매수' 전략 구사.
+    </p>
   </div>
 
   <!-- 뉴스 4 -->
-  <div class="news-item bullish">
-    <div class="timeline-dot"></div>
+  <div class="news-item">
     <div class="news-meta">
-      <span class="rank-badge">TOP 4</span>
-      <span class="source-badge">한국은행 / Reuters</span>
-      <span class="tag bull">🟢 호재</span>
-      <span class="tag bull">경상수지</span>
+      <span class="date-badge">2026.05</span>
+      <span class="source-badge">Seoulz · TradingKey</span>
+      <span class="tag tag-bull">📈 호재</span>
     </div>
-    <div class="news-title">한국 3월 경상수지 흑자 $373억 — 반도체 수출 급증 역대 최대</div>
-    <div class="news-body">
-      한국의 3월 경상수지 흑자가 373억 달러를 기록, 역대 최대 수준에 근접했습니다. 반도체 수출 급증이 주요 원인으로, 이는 원화 구조적 강세와 외국인 자금 유입 지속의 근거가 됩니다. 달러 인덱스(DXY) 97.84와 맞물려 원/달러 환율은 1,471원대로 안정되어 있습니다.
-    </div>
-    <div class="impact-bar-wrap">
-      <span class="impact-label">코스피 영향</span>
-      <div class="impact-bar"><div class="impact-fill fill-bull" style="width:78%"></div></div>
-      <span class="impact-label">긍정</span>
-    </div>
+    <div class="news-title">HBM, 3개 공급사 모두 2026년 말까지 완전 Sold Out</div>
+    <p class="news-desc">
+      삼성전자·SK하이닉스·마이크론 모두 2026년 HBM 물량이 이미 완판 상태. TAM은 <span class="highlight">2025년 $350억 → 2028년 $1,000억</span>으로 성장 전망. SK하이닉스는 HBM 공급 부족이 <span class="highlight">2028년까지 지속</span>될 것으로 분석.
+    </p>
   </div>
 
   <!-- 뉴스 5 -->
-  <div class="news-item neutral">
-    <div class="timeline-dot"></div>
+  <div class="news-item">
     <div class="news-meta">
-      <span class="rank-badge">TOP 5</span>
-      <span class="source-badge">Reuters / Investing.com</span>
-      <span class="tag neu">🟡 중립→호재</span>
-      <span class="tag neu">유가</span>
+      <span class="date-badge">2026.04.23</span>
+      <span class="source-badge">CNBC · 미래에셋</span>
+      <span class="tag tag-bull">📈 호재</span>
     </div>
-    <div class="news-title">WTI 유가 $95대 안정 — 호르무즈 리스크 완화, 하지만 재점화 가능성</div>
-    <div class="news-body">
-      5월 1일 $106까지 급등했던 WTI 유가가 $95.42로 안정됐습니다. 미국-이란 간 임시 휴전 기대감으로 공급 우려가 약화됐으나, 갈등이 재점화될 경우 $100 재돌파 가능성이 있습니다. $100 미만 유지 시 정유·항공·화학 기업 수혜 기대됩니다.
-    </div>
-    <div class="impact-bar-wrap">
-      <span class="impact-label">코스피 영향</span>
-      <div class="impact-bar"><div class="impact-fill fill-neu" style="width:55%"></div></div>
-      <span class="impact-label">중립</span>
-    </div>
+    <div class="news-title">SK하이닉스, 1분기 사상 최대 실적 발표 — AI 메모리 수요 폭발</div>
+    <p class="news-desc">
+      SK하이닉스 Q1 2026 실적: 메모리 가격 상승과 HBM 수요 급증으로 <span class="highlight">사상 최대 분기 순이익</span> 달성. 2026F 매출 230조원(+136% YoY), 영업이익 148조원(+213% YoY) 전망. 미래에셋증권 목표주가 <span class="highlight">1,370,000원</span>으로 상향.
+    </p>
   </div>
 
 </div>
-<p class="disclaimer">※ 본 내용은 투자 정보 제공 목적이며 투자 권유가 아닙니다. | 출처: Bloomberg, Reuters, 서울경제, NH투자증권, 한국은행 (2026.05.11)</p>
+
+<p class="disclaimer">
+  ⚠️ 본 내용은 투자 정보 제공 목적으로 작성되었으며, 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.
+</p>
+
 </body>
 </html>
