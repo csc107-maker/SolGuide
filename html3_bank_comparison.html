@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4대 금융지주 세무조사 파급 영향 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F8FAFB;
+    padding: 28px 14px;
+  }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #1A5276;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #17202A;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 12.5px;
+    color: #7F8C8D;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 14px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 540px;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  thead tr {
+    background: linear-gradient(135deg, #1A5276, #2980B9);
+  }
+
+  thead th {
+    padding: 13px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+
+  thead th:first-child { text-align: left; }
+
+  tbody tr {
+    border-bottom: 1px solid #F0F3F6;
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover { background: #EAF2FF; }
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody tr.highlight-row { background: #FEF5E7; }
+  tbody tr.highlight-row:hover { background: #FDEBD0; }
+
+  td {
+    padding: 12px 14px;
+    font-size: 12.5px;
+    color: #333;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td:first-child {
+    text-align: left;
+    font-weight: 700;
+    color: #17202A;
+  }
+
+  .company-name { font-weight: 900; font-size: 13px; }
+  .company-sub { font-size: 11px; color: #999; font-weight: 400; margin-top: 2px; }
+
+  .risk-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+  .risk-high { background: #FDEDEC; color: #C0392B; border: 1px solid #F5B7B1; }
+  .risk-mid { background: #FEF9E7; color: #B7770D; border: 1px solid #F9E79F; }
+  .risk-low { background: #E9F7EF; color: #1E8449; border: 1px solid #A9DFBF; }
+  .risk-watch { background: #EAF2FF; color: #1A5276; border: 1px solid #AED6F1; }
+
+  .profit-val { font-weight: 700; color: #17202A; }
+  .profit-up { color: #1E8449; font-size: 11px; }
+
+  .divider { height: 1px; background: #E8ECF0; margin: 24px 0; }
+
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 560px) {
+    .cards-row { grid-template-columns: 1fr; }
+    .title { font-size: 17px; }
+  }
+
+  .mini-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+
+  .mini-card-icon { font-size: 24px; margin-bottom: 8px; }
+  .mini-card-label { font-size: 11px; color: #999; margin-bottom: 4px; font-weight: 600; }
+  .mini-card-value { font-size: 17px; font-weight: 900; color: #17202A; }
+  .mini-card-sub { font-size: 11px; color: #7F8C8D; margin-top: 3px; }
+
+  .note-box {
+    background: #FFF3CD;
+    border: 1px solid #F9E79F;
+    border-radius: 10px;
+    padding: 13px 15px;
+    font-size: 12px;
+    color: #7D6608;
+    line-height: 1.65;
+  }
+
+  .source {
+    font-size: 11px;
+    color: #aaa;
+    text-align: right;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="section-label">📊 금융권 파급 분석</div>
+  <div class="title">4대 금융지주 — 세무조사 리스크 & 실적 현황</div>
+  <div class="subtitle">2026년 1분기 기준 실적 및 세무조사 확산 가능성 분석. 하나금융이 직격탄을 맞은 가운데 다른 지주들의 긴장감도 높아지고 있습니다.</div>
+
+  <div class="cards-row">
+    <div class="mini-card">
+      <div class="mini-card-icon">💵</div>
+      <div class="mini-card-label">4대 금융지주 합산 순이익 (2025년)</div>
+      <div class="mini-card-value">18.3조원</div>
+      <div class="mini-card-sub">전년 대비 +12.24%</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-card-icon">📈</div>
+      <div class="mini-card-label">하나금융 1Q 2026 순이익</div>
+      <div class="mini-card-value">1.2조원+</div>
+      <div class="mini-card-sub">역대 최대 분기 실적</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-card-icon">🔍</div>
+      <div class="mini-card-label">세무조사 착수일</div>
+      <div class="mini-card-value">2026.05.08</div>
+      <div class="mini-card-sub">2022년 이후 약 4년만</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>금융지주</th>
+          <th>2025년 순이익</th>
+          <th>2025년 주가 상승률</th>
+          <th>정기조사 주기</th>
+          <th>세무조사 리스크</th>
+          <th>주요 우려</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>
+            <div class="company-name">🏦 하나금융지주</div>
+            <div class="company-sub">세무조사 직접 대상</div>
+          </td>
+          <td><span class="profit-val">약 3.9조원</span><br><span class="profit-up">↑ 최대 실적</span></td>
+          <td><span style="color:#E74C3C;font-weight:700;">+65.7%</span></td>
+          <td>2022년 정기조사</td>
+          <td><span class="risk-badge risk-high">🔴 매우 높음</span></td>
+          <td style="font-size:11px;">세금 추징, 지배구조 논란, 경영진 거취</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">🏦 KB금융</div>
+            <div class="company-sub">이자장사 비판 1위</div>
+          </td>
+          <td><span class="profit-val">약 5.1조원</span><br><span class="profit-up">↑ PBR 1배 돌파</span></td>
+          <td><span style="color:#E74C3C;font-weight:700;">+50.4%</span></td>
+          <td>통상 4~5년 주기</td>
+          <td><span class="risk-badge risk-mid">🟡 중간 우려</span></td>
+          <td style="font-size:11px;">이자이익 의존도, 정책 압박 가능성</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">🏦 신한지주</div>
+            <div class="company-sub">비은행 다각화 우수</div>
+          </td>
+          <td><span class="profit-val">약 4.7조원</span><br><span class="profit-up">↑ BIS 16.1%</span></td>
+          <td><span style="color:#E74C3C;font-weight:700;">+61.4%</span></td>
+          <td>통상 4~5년 주기</td>
+          <td><span class="risk-badge risk-mid">🟡 중간 우려</span></td>
+          <td style="font-size:11px;">ELS 과징금, 조사 확산 가능성</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">🏦 우리금융</div>
+            <div class="company-sub">주주환원율 아직 낮아</div>
+          </td>
+          <td><span class="profit-val">약 3.4조원</span><br><span class="profit-up">↑ 비과세 배당 도입</span></td>
+          <td><span style="color:#E74C3C;font-weight:700;">+115.4%</span> (2년)</td>
+          <td>통상 4~5년 주기</td>
+          <td><span class="risk-badge risk-watch">🔵 관찰 단계</span></td>
+          <td style="font-size:11px;">주주환원 36.6%, 지방 영업망 중심</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box">
+    ⚠️ <strong>투자 주의사항:</strong> 세무조사 확대 우려가 현실화될 경우 단기적으로 은행주 투자심리 냉각이 불가피합니다. 다만 4대 금융지주의 펀더멘털(CET1 비율, 이익 규모)은 여전히 탄탄하며, 조사 결과 확정 전까지 확대 해석은 주의가 필요합니다. 이 표는 투자 권유 목적이 아닌 정보 제공 목적입니다.
+  </div>
+
+  <div class="source">출처: 에프앤가이드, 조세금융신문, 한국거래소, 각 금융지주 공시 (2025~2026)</div>
+</div>
+</body>
+</html>
