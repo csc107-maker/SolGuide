@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>하나은행 세무조사 — 은행주 주가 영향 시나리오</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0D1117;
+  --surface:  #161B22;
+  --surface2: #21262D;
+  --border:   #30363D;
+  --text:     #E6EDF3;
+  --muted:    #8B949E;
+  --red:      #FF4C4C;
+  --red-dim:  rgba(255,76,76,0.12);
+  --orange:   #F5A623;
+  --orange-dim: rgba(245,166,35,0.12);
+  --green:    #3FB950;
+  --green-dim:rgba(63,185,80,0.12);
+  --blue:     #58A6FF;
+  --blue-dim: rgba(88,166,255,0.12);
+  --gold:     #E3B341;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 32px 18px 40px;
+  min-height: 100vh;
+}
+
+/* ── 헤더 ── */
+.page-header {
+  max-width: 860px;
+  margin: 0 auto 36px;
+  position: relative;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px; height: 2px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+.page-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(22px, 4vw, 34px);
+  line-height: 1.25;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.page-sub {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+/* ── 탭 네비게이션 ── */
+.tab-nav {
+  max-width: 860px;
+  margin: 0 auto 24px;
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.tab-btn .tab-icon { font-size: 18px; }
+.tab-btn .tab-period { font-size: 10px; font-weight: 400; opacity: 0.7; }
+
+.tab-btn.active-short  { background: var(--red-dim);    color: var(--red);    border: 1px solid rgba(255,76,76,0.35); }
+.tab-btn.active-mid    { background: var(--orange-dim);  color: var(--orange); border: 1px solid rgba(245,166,35,0.35); }
+.tab-btn.active-long   { background: var(--green-dim);   color: var(--green);  border: 1px solid rgba(63,185,80,0.35); }
+.tab-btn.active-expert { background: var(--blue-dim);    color: var(--blue);   border: 1px solid rgba(88,166,255,0.35); }
+
+.tab-btn:not(.active-short):not(.active-mid):not(.active-long):not(.active-expert):hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+/* ── 패널 ── */
+.panels { max-width: 860px; margin: 0 auto; }
+.panel { display: none; animation: fadeUp 0.35s ease both; }
+.panel.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 상단 요약 바 ── */
+.summary-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-chip-label { font-size: 10.5px; color: var(--muted); font-weight: 600; letter-spacing: 0.5px; }
+.stat-chip-value { font-size: 18px; font-weight: 900; }
+.stat-chip-sub   { font-size: 11px; color: var(--muted); }
+
+.val-red    { color: var(--red); }
+.val-orange { color: var(--orange); }
+.val-green  { color: var(--green); }
+.val-blue   { color: var(--blue); }
+.val-gold   { color: var(--gold); }
+
+/* ── 카드 그리드 ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 540px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .summary-bar { grid-template-columns: 1fr 1fr; }
+  .tab-btn .tab-period { display: none; }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 14px 14px 0 0;
+}
+
+.card-red::before    { background: linear-gradient(90deg, var(--red), transparent); }
+.card-red:hover    { border-color: rgba(255,76,76,0.45); }
+.card-orange::before { background: linear-gradient(90deg, var(--orange), transparent); }
+.card-orange:hover { border-color: rgba(245,166,35,0.45); }
+.card-green::before  { background: linear-gradient(90deg, var(--green), transparent); }
+.card-green:hover  { border-color: rgba(63,185,80,0.45); }
+.card-blue::before   { background: linear-gradient(90deg, var(--blue), transparent); }
+.card-blue:hover   { border-color: rgba(88,166,255,0.45); }
+
+.card-icon-wrap {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.icon-red    { background: var(--red-dim); }
+.icon-orange { background: var(--orange-dim); }
+.icon-green  { background: var(--green-dim); }
+.icon-blue   { background: var(--blue-dim); }
+
+.card-tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.tag-red    { color: var(--red); }
+.tag-orange { color: var(--orange); }
+.tag-green  { color: var(--green); }
+.tag-blue   { color: var(--blue); }
+
+.card-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.card-body {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.impact-label { font-size: 10.5px; color: var(--muted); }
+
+.impact-pill {
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.pill-red    { background: var(--red-dim);    color: var(--red);    border: 1px solid rgba(255,76,76,0.3); }
+.pill-orange { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(245,166,35,0.3); }
+.pill-green  { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(63,185,80,0.3); }
+.pill-blue   { background: var(--blue-dim);   color: var(--blue);   border: 1px solid rgba(88,166,255,0.3); }
+
+/* ── 스파크라인 SVG ── */
+.sparkline-wrap {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.spark-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.spark-svg { width: 100%; height: 70px; display: block; }
+
+/* ── 전문가 의견 (expert panel) ── */
+.expert-list { display: flex; flex-direction: column; gap: 14px; }
+
+.expert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.expert-card:hover {
+  border-color: var(--blue);
+  transform: translateX(4px);
+}
+
+.expert-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.expert-info { flex: 1; }
+.expert-role { font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.expert-name { font-size: 13.5px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.expert-quote {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.7;
+  border-left: 3px solid var(--border);
+  padding-left: 12px;
+  font-style: italic;
+}
+
+.verdict-bar {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-top: 14px;
+}
+.verdict-title { font-size: 12px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: 0.5px; }
+
+.verdict-meter { margin-bottom: 12px; }
+.meter-label {
+  display: flex; justify-content: space-between;
+  font-size: 11.5px; margin-bottom: 5px;
+}
+.meter-label span:first-child { color: var(--muted); }
+.meter-track {
+  height: 7px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.meter-fill {
+  height: 100%;
+  border-radius: 10px;
+  animation: fillAnim 1.2s ease both;
+  animation-delay: 0.2s;
+}
+@keyframes fillAnim {
+  from { width: 0; }
+}
+.fill-red    { background: var(--red);    width: 75%; }
+.fill-orange { background: var(--orange); width: 55%; }
+.fill-green  { background: var(--green);  width: 35%; }
+
+/* ── 하단 면책 ── */
+.disclaimer {
+  max-width: 860px;
+  margin: 24px auto 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+.disclaimer-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.disclaimer-text { font-size: 11px; color: var(--muted); line-height: 1.65; }
+.disclaimer-text strong { color: var(--text); }
+
+.source-line {
+  max-width: 860px;
+  margin: 12px auto 0;
+  text-align: right;
+  font-size: 11px;
+  color: rgba(139,148,158,0.6);
+}
+</style>
+</head>
+<body>
+
+<!-- ── 헤더 ── -->
+<div class="page-header">
+  <div class="eyebrow">Stock Impact Analysis</div>
+  <h1 class="page-title">하나은행 세무조사<br>은행주 주가 영향 시나리오</h1>
+  <p class="page-sub">2026년 5월 8일 국세청 조사4국 착수 이후 단기·중기·장기 시나리오를 분석합니다. 시나리오 탭을 선택해 각 기간별 영향을 확인하세요.</p>
+</div>
+
+<!-- ── 탭 네비게이션 ── -->
+<div class="tab-nav">
+  <button class="tab-btn active-short" onclick="switchTab('short', this)">
+    <span class="tab-icon">⚡</span>
+    단기
+    <span class="tab-period">1~3개월</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('mid', this)">
+    <span class="tab-icon">📊</span>
+    중기
+    <span class="tab-period">3~12개월</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('long', this)">
+    <span class="tab-icon">🌱</span>
+    장기
+    <span class="tab-period">1년 이상</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('expert', this)">
+    <span class="tab-icon">💬</span>
+    전문가 의견
+    <span class="tab-period">시장 시각</span>
+  </button>
+</div>
+
+<div class="panels">
+
+  <!-- ── 단기 패널 ── -->
+  <div class="panel active" id="panel-short">
+    <div class="summary-bar">
+      <div class="stat-chip">
+        <span class="stat-chip-label">투자심리 강도</span>
+        <span class="stat-chip-value val-red">매우 부정</span>
+        <span class="stat-chip-sub">불확실성 최고조</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip-label">하나금융지주 방향</span>
+        <span class="stat-chip-value val-red">하방 압력</span>
+        <span class="stat-chip-sub">규제 리스크 반영</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip-label">섹터 전반 영향</span>
+        <span class="stat-chip-value val-orange">단기 냉각</span>
+        <span class="stat-chip-sub">KB·신한·우리 포함</span>
+      </div>
+    </div>
+
+    <!-- 스파크라인 -->
+    <div class="sparkline-wrap">
+      <div class="spark-title">📉 단기 가상 주가 흐름 — 하나금융지주 (조사 착수 기준)</div>
+      <svg class="spark-svg" viewBox="0 0 400 70" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FF4C4C" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#FF4C4C" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- 구역 레이블 -->
+        <text x="8"   y="12" font-size="8" fill="#8B949E" font-family="sans-serif">착수 전</text>
+        <text x="130" y="12" font-size="8" fill="#FF4C4C" font-family="sans-serif">착수 직후 ↓</text>
+        <text x="270" y="12" font-size="8" fill="#F5A623" font-family="sans-serif">관망 구간</text>
+        <!-- 영역 채우기 -->
+        <path d="M 0 22 L 60 20 L 100 25 L 140 42 L 190 50 L 240 46 L 280 44 L 330 48 L 380 45 L 400 43 L 400 70 L 0 70 Z"
+              fill="url(#gRed)" />
+        <!-- 라인 -->
+        <polyline
+          points="0,22 60,20 100,25 140,42 190,50 240,46 280,44 330,48 380,45"
+          fill="none" stroke="#FF4C4C" stroke-width="2.2" stroke-linejoin="round"
+          stroke-dasharray="600" stroke-dashoffset="600"
+          style="animation: drawLine 1.8s ease forwards 0.3s;" />
+        <!-- 착수 시점 수직선 -->
+        <line x1="120" y1="10" x2="120" y2="65" stroke="#FF4C4C" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+        <text x="122" y="66" font-size="7.5" fill="#FF4C4C" font-family="sans-serif">세무조사 착수</text>
+        <style>
+          @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+          }
+        </style>
+      </svg>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card card-red">
+        <div class="card-icon-wrap icon-red">⚡</div>
+        <div class="card-tag tag-red">직접 영향 · 하나금융지주</div>
+        <div class="card-title">주가 단기 하방 압력</div>
+        <div class="card-body">규제 리스크와 정치적 불확실성이 투자심리를 즉각 짓누릅니다. 기관·외국인 투자자의 단기 차익 실현 빌미로 작용할 수 있습니다. 연초 대비 이미 크게 오른 상태라 조정 폭이 클 수 있습니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">예상 영향도</span>
+          <span class="impact-pill pill-red">▼ 단기 조정 가능</span>
+        </div>
+      </div>
+
+      <div class="card card-red">
+        <div class="card-icon-wrap icon-red">🌊</div>
+        <div class="card-tag tag-red">간접 영향 · 은행섹터 전반</div>
+        <div class="card-title">KRX 은행지수 전반 냉각</div>
+        <div class="card-body">조사 확산 우려로 KB금융, 신한지주, 우리금융에도 단기 하방 압력이 전이될 수 있습니다. 4대 금융지주 합산 순이익 18.3조원이 오히려 세무·정치 리스크 표적이 되는 역설적 상황.</div>
+        <div class="card-footer">
+          <span class="impact-label">예상 영향도</span>
+          <span class="impact-pill pill-red">▼ 섹터 전반 약세</span>
+        </div>
+      </div>
+
+      <div class="card card-orange">
+        <div class="card-icon-wrap icon-orange">⏳</div>
+        <div class="card-tag tag-orange">관망 국면 · 투자자 행동</div>
+        <div class="card-title">결과 확정 전 관망 심리 팽배</div>
+        <div class="card-body">세무조사 결과는 수개월~수년이 지나야 확정됩니다. 그 사이 투자자들은 뚜렷한 방향을 잡지 못하는 관망 구간에 진입합니다. 거래량 감소, 변동성 확대가 예상됩니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">예상 영향도</span>
+          <span class="impact-pill pill-orange">◆ 변동성 확대</span>
+        </div>
+      </div>
+
+      <div class="card card-blue">
+        <div class="card-icon-wrap icon-blue">🛡️</div>
+        <div class="card-tag tag-blue">방어 요인 · 지지력</div>
+        <div class="card-title">탄탄한 1Q 실적이 낙폭 제한</div>
+        <div class="card-body">하나금융지주 2026년 1분기 순이익 1.2조원 이상 역대 최대. 펀더멘털 자체는 변하지 않았기 때문에 과도한 낙폭은 매수 기회로 작용할 수 있다는 시각도 존재합니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">예상 영향도</span>
+          <span class="impact-pill pill-blue">▲ 낙폭 제한 요인</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 중기 패널 ── -->
+  <div class="panel" id="panel-mid">
+    <div class="summary-bar">
+      <div class="stat-chip">
+        <span class="stat-chip-label">추징 시 순이익 영향</span>
+        <span class="stat-chip-value val-orange">수천억원</span>
+        <span class="stat-chip-sub">흡수 가능 수준 추정</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip-label">지배구조 리스크</span>
+        <span class="stat-chip-value val-orange">중간</span>
+        <span class="stat-chip-sub">경영진 논란 가능성</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip-label">배당 매력도</span>
+        <span class="stat-chip-value val-green">유지</span>
+        <span class="stat-chip-sub">분리과세 혜택 지속</span>
+      </div>
+    </div>
+
+    <div class="sparkline-wrap">
+      <div class="spark-title">📊 중기 가상 흐름 — 추징 여부에 따른 분기 (시나리오)</div>
+      <svg class="spark-svg" viewBox="0 0 400 70" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3FB950" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#3FB950" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="gOrange" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F5A623" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#F5A623" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- 추징 없음 시나리오 (녹색) -->
+        <path d="M 200 45 L 250 38 L 300 28 L 360 18 L 400 14 L 400 70 L 200 70 Z" fill="url(#gGreen)" />
+        <polyline points="200,45 250,38 300,28 360,18 400,14"
+          fill="none" stroke="#3FB950" stroke-width="2" stroke-linejoin="round" stroke-dasharray="300" stroke-dashoffset="300"
+          style="animation: drawLine2 1.5s ease forwards 0.5s;"/>
+        <!-- 추징 확정 시나리오 (주황) -->
+        <path d="M 200 45 L 250 50 L 300 54 L 360 52 L 400 48 L 400 70 L 200 70 Z" fill="url(#gOrange)" />
+        <polyline points="200,45 250,50 300,54 360,52 400,48"
+          fill="none" stroke="#F5A623" stroke-width="2" stroke-linejoin="round" stroke-dasharray="300" stroke-dashoffset="300"
+          style="animation: drawLine2 1.5s ease forwards 0.7s;"/>
+        <!-- 공통 구간 -->
+        <polyline points="0,30 60,32 100,36 140,42 200,45"
+          fill="none" stroke="#8B949E" stroke-width="2" stroke-linejoin="round"/>
+        <!-- 분기점 -->
+        <line x1="200" y1="10" x2="200" y2="65" stroke="#8B949E" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+        <text x="202" y="20" font-size="8" fill="#8B949E" font-family="sans-serif">결과 발표</text>
+        <text x="310" y="14" font-size="8" fill="#3FB950" font-family="sans-serif">추징 無 ↑</text>
+        <text x="310" y="60" font-size="8" fill="#F5A623" font-family="sans-serif">추징 有 →</text>
+        <style>
+          @keyframes drawLine2 { to { stroke-dashoffset: 0; } }
+        </style>
+      </svg>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card card-orange">
+        <div class="card-icon-wrap icon-orange">💸</div>
+        <div class="card-tag tag-orange">최악 시나리오 · 추징 확정</div>
+        <div class="card-title">세금 추징 → 이익 충격</div>
+        <div class="card-body">과거 2002년 하나-서울은행 역합병 건에서 추징세액 1조 7,000억원이 거론된 선례가 있습니다. 이번에 수천억원 추징 시 순이익 일부 감소가 불가피하지만, 1분기 1.2조원 이상의 체력으로 흡수 가능 수준이라는 분석도 있습니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">최악 시나리오</span>
+          <span class="impact-pill pill-orange">▼ 이익 일부 축소</span>
+        </div>
+      </div>
+
+      <div class="card card-orange">
+        <div class="card-icon-wrap icon-orange">🏛️</div>
+        <div class="card-tag tag-orange">제도적 리스크 · 금감원 연계</div>
+        <div class="card-title">금융당국 검사 연계 가능성</div>
+        <div class="card-body">세무조사에서 부당 거래가 확인되면 금융감독원의 추가 검사·제재로 이어질 수 있습니다. 지배구조 문제까지 불거질 경우 경영진 거취 논란도 주가에 영향을 줄 수 있습니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">리스크 수준</span>
+          <span class="impact-pill pill-orange">◆ 중간 수준</span>
+        </div>
+      </div>
+
+      <div class="card card-green">
+        <div class="card-icon-wrap icon-green">🛡️</div>
+        <div class="card-tag tag-green">방어 요인 · 배당 매력</div>
+        <div class="card-title">배당소득 분리과세 혜택 유지</div>
+        <div class="card-body">2026년부터 시행된 배당소득 분리과세로 은행주 배당 매력은 여전히 높습니다. 하나금융도 이 혜택 대상에 포함돼 있어 세무조사와 무관하게 주주환원 기조는 이어집니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">긍정 요인</span>
+          <span class="impact-pill pill-green">▲ 배당 매력 유지</span>
+        </div>
+      </div>
+
+      <div class="card card-green">
+        <div class="card-icon-wrap icon-green">🔄</div>
+        <div class="card-tag tag-green">낙관 시나리오 · 반등</div>
+        <div class="card-title">추징 미미 시 빠른 주가 회복</div>
+        <div class="card-body">조사 결과 추징이 없거나 경미하다면 주가는 빠르게 반등할 수 있습니다. CET1 비율 개선과 비이자이익 확대가 중장기 실적 기반을 단단하게 받쳐주고 있습니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">낙관 시나리오</span>
+          <span class="impact-pill pill-green">▲ 조기 반등 가능</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 장기 패널 ── -->
+  <div class="panel" id="panel-long">
+    <div class="summary-bar">
+      <div class="stat-chip">
+        <span class="stat-chip-label">정책 리스크</span>
+        <span class="stat-chip-value val-red">이익 구조 변화</span>
+        <span class="stat-chip-sub">공공성 강화 정책</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip-label">2026년 금융지주 순이익 추정</span>
+        <span class="stat-chip-value val-gold">22.7조원</span>
+        <span class="stat-chip-sub">삼성증권·에프앤가이드</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip-label">주주환원율 방향</span>
+        <span class="stat-chip-value val-green">50%+ 시대</span>
+        <span class="stat-chip-sub">KB·신한 조기 달성</span>
+      </div>
+    </div>
+
+    <div class="sparkline-wrap">
+      <div class="spark-title">🌱 장기 가상 흐름 — 정책 방향에 따른 두 갈래</div>
+      <svg class="spark-svg" viewBox="0 0 400 70" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#58A6FF" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#58A6FF" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- 은행공공성 규제 강화 시나리오 -->
+        <polyline points="0,35 80,30 160,32 240,36 320,44 400,50"
+          fill="none" stroke="#FF4C4C" stroke-width="2" stroke-linejoin="round" stroke-dasharray="500" stroke-dashoffset="500"
+          style="animation: drawLine3 2s ease forwards 0.3s;"/>
+        <!-- 규제 현상유지 시나리오 -->
+        <path d="M 0 35 L 80 28 L 160 20 L 240 15 L 320 10 L 400 7 L 400 70 L 0 70 Z" fill="url(#gBlue)"/>
+        <polyline points="0,35 80,28 160,20 240,15 320,10 400,7"
+          fill="none" stroke="#58A6FF" stroke-width="2" stroke-linejoin="round" stroke-dasharray="500" stroke-dashoffset="500"
+          style="animation: drawLine3 2s ease forwards 0.5s;"/>
+        <text x="315" y="8"  font-size="8" fill="#58A6FF" font-family="sans-serif">정책 완화 ↑</text>
+        <text x="315" y="52" font-size="8" fill="#FF4C4C" font-family="sans-serif">규제 강화 ↓</text>
+        <style>@keyframes drawLine3 { to { stroke-dashoffset: 0; } }</style>
+      </svg>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card card-red">
+        <div class="card-icon-wrap icon-red">⚖️</div>
+        <div class="card-tag tag-red">정책 리스크 · 공공성 규제</div>
+        <div class="card-title">금융공공성 강화가<br>이익 구조를 바꾼다</div>
+        <div class="card-body">은행 이익 일부 환수, 사회공헌 강제 확대 등이 제도화될 경우 장기 수익성 압박이 불가피합니다. 이자이익 의존도가 높은 지방 금융지주가 상대적으로 더 큰 타격을 받을 수 있습니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">장기 변수</span>
+          <span class="impact-pill pill-red">▼ 이익 구조 변화</span>
+        </div>
+      </div>
+
+      <div class="card card-orange">
+        <div class="card-icon-wrap icon-orange">🏦</div>
+        <div class="card-tag tag-orange">구조 변화 · 준공공화 압력</div>
+        <div class="card-title">은행의 '준공공기관화'<br>장기 밸류에이션 압박</div>
+        <div class="card-body">이재명 정부가 은행을 '준공공기관'으로 규정하는 정책 기조를 이어간다면 PBR 재평가(리레이팅) 흐름에 찬물을 끼얹을 수 있습니다. 2026년 초 시작된 구조적 재평가가 중단될 리스크가 있습니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">리스크 수준</span>
+          <span class="impact-pill pill-orange">◆ 밸류 상승 제한</span>
+        </div>
+      </div>
+
+      <div class="card card-green">
+        <div class="card-icon-wrap icon-green">💰</div>
+        <div class="card-tag tag-green">구조적 강점 · 주주환원</div>
+        <div class="card-title">주주환원 50% 시대<br>장기 배당주 매력</div>
+        <div class="card-body">KB금융 주주환원율 52.4%, 신한금융 50.2% 조기 달성. 하나금융도 이 흐름에 동참 중입니다. 세무조사 결과와 무관하게 장기 배당주로서의 매력은 구조적으로 유지됩니다.</div>
+        <div class="card-footer">
+          <span class="impact-label">긍정 요인</span>
+          <span class="impact-pill pill-green">▲ 배당 구조 강화</span>
+        </div>
+      </div>
+
+      <div class="card card-blue">
+        <div class="card-icon-wrap icon-blue">🔭</div>
+        <div class="card-tag tag-blue">전망 · 국민주 도약</div>
+        <div class="card-title">2026년, 은행주가<br>'국민주'로 도약할까</div>
+        <div class="card-body">NH투자증권은 2026년을 "은행주가 국민주로 발돋움하는 원년"으로 전망했습니다. 배당소득 분리과세 + 비과세 감액배당이 개인 투자자 유입을 이끄는 핵심 동력. 세무조사가 이 흐름을 얼마나 꺾을지가 관건.</div>
+        <div class="card-footer">
+          <span class="impact-label">장기 전망</span>
+          <span class="impact-pill pill-blue">▲ 중장기 긍정</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 전문가 의견 패널 ── -->
+  <div class="panel" id="panel-expert">
+    <div class="summary-bar">
+      <div class="stat-chip">
+        <span class="stat-chip-label">미래에셋 하나금융 목표가</span>
+        <span class="stat-chip-value val-blue">15.7만원</span>
+        <span class="stat-chip-sub">Buy 의견 유지</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip-label">미래에셋 KB금융 목표가</span>
+        <span class="stat-chip-value val-blue">21.6만원</span>
+        <span class="stat-chip-sub">최선호주 선정</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip-label">2026년 금융지주 순이익</span>
+        <span class="stat-chip-value val-gold">22.7조원</span>
+        <span class="stat-chip-sub">시장 컨센서스 추정</span>
+      </div>
+    </div>
+
+    <div class="expert-list">
+
+      <div class="expert-card">
+        <div class="expert-avatar" style="background:rgba(255,76,76,0.15);">⚠️</div>
+        <div class="expert-info">
+          <div class="expert-role" style="color:var(--red);">금융권 관계자 · 우려 시각</div>
+          <div class="expert-name">EBN뉴스 인용</div>
+          <div class="expert-quote">"조사4국이 움직였다는 것 자체만으로도 업계 전반이 긴장할 수밖에 없다. 최근 금융권 여론·정책 분위기를 감안하면 다른 은행들도 리스크 점검에 나설 가능성이 크다."</div>
+        </div>
+      </div>
+
+      <div class="expert-card">
+        <div class="expert-avatar" style="background:rgba(245,166,35,0.15);">📊</div>
+        <div class="expert-info">
+          <div class="expert-role" style="color:var(--orange);">증권업계 전문가 · 신중론</div>
+          <div class="expert-name">조세금융신문 인용</div>
+          <div class="expert-quote">"조사4국이 투입됐다고 해서 반드시 중대 위법 혐의가 확인된 것은 아니다. 실제 과세 여부는 상당 기간이 지나야 드러날 수 있다. 지금은 확대 해석을 경계해야 한다."</div>
+        </div>
+      </div>
+
+      <div class="expert-card">
+        <div class="expert-avatar" style="background:rgba(88,166,255,0.15);">📈</div>
+        <div class="expert-info">
+          <div class="expert-role" style="color:var(--blue);">미래에셋증권 · Buy 의견 유지</div>
+          <div class="expert-name">미래에셋증권 리서치</div>
+          <div class="expert-quote">KB금융 목표주가 21만 6,000원, 하나금융 목표주가 15만 7,000원 제시. CET1 비율 14%에 육박하는 펀더멘털을 감안하면 목표주가는 지나친 낙관이 아니며, 중장기 구조적 재평가 흐름은 유효하다는 입장.</div>
+        </div>
+      </div>
+
+      <div class="expert-card">
+        <div class="expert-avatar" style="background:rgba(63,185,80,0.15);">💰</div>
+        <div class="expert-info">
+          <div class="expert-role" style="color:var(--green);">NH투자증권 · 국민주 전망</div>
+          <div class="expert-name">정준섭 NH투자증권 연구원</div>
+          <div class="expert-quote">"2026년은 은행주가 국민주로 발돋움하는 원년이 될 것. 배당소득 분리과세 + 비과세 감액배당이 개인 주주에게 제2의 월급이 되고, 자사주 매입·소각은 자산가치 상승으로 이어질 것."</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 종합 판단 미터 -->
+    <div class="verdict-bar">
+      <div class="verdict-title">⚖️ 종합 리스크·기회 강도 — 시장 컨센서스 기반</div>
+
+      <div class="verdict-meter">
+        <div class="meter-label">
+          <span>단기 하방 리스크</span>
+          <span style="color:var(--red); font-weight:700;">높음 (75%)</span>
+        </div>
+        <div class="meter-track"><div class="meter-fill fill-red"></div></div>
+      </div>
+
+      <div class="verdict-meter">
+        <div class="meter-label">
+          <span>중기 불확실성</span>
+          <span style="color:var(--orange); font-weight:700;">중간 (55%)</span>
+        </div>
+        <div class="meter-track"><div class="meter-fill fill-orange"></div></div>
+      </div>
+
+      <div class="verdict-meter">
+        <div class="meter-label">
+          <span>장기 구조적 리스크</span>
+          <span style="color:var(--green); font-weight:700;">낮음 (35%)</span>
+        </div>
+        <div class="meter-track"><div class="meter-fill fill-green"></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── 면책 ── -->
+<div class="disclaimer">
+  <span class="disclaimer-icon">⚠️</span>
+  <p class="disclaimer-text"><strong>투자 유의사항:</strong> 이 자료는 공개 언론 보도 및 증권사 리포트를 기반으로 작성된 정보 제공 목적의 분석입니다. 세무조사는 현재 진행 중이며 결과에 따라 상황이 크게 달라질 수 있습니다. 특정 종목 투자를 권유하는 내용이 아닙니다. 투자 결정은 반드시 본인의 판단과 책임 하에 이루어져야 합니다.</p>
+</div>
+<div class="source-line">출처: 경향신문 · EBN뉴스 · 조세금융신문 · 미래에셋증권 · NH투자증권 · 에프앤가이드 (2026.05)</div>
+
+<script>
+const tabClasses = {
+  short:  'active-short',
+  mid:    'active-mid',
+  long:   'active-long',
+  expert: 'active-expert'
+};
+
+function switchTab(id, btn) {
+  // 모든 패널 닫기
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  // 모든 탭 버튼 초기화
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    Object.values(tabClasses).forEach(c => b.classList.remove(c));
+  });
+  // 선택된 패널 열기
+  document.getElementById('panel-' + id).classList.add('active');
+  // 선택된 버튼 활성화
+  btn.classList.add(tabClasses[id]);
+}
+</script>
+</body>
+</html>
