@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>타임라인 - 이재명 발언과 세무조사</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F0F4F8;
+    padding: 28px 16px;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #1A5276;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .main-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #17202A;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .sub {
+    font-size: 12.5px;
+    color: #7F8C8D;
+    line-height: 1.6;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: linear-gradient(to bottom, #2980B9, #E74C3C, #E74C3C, #C0392B);
+    border-radius: 3px;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 22px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -26px;
+    top: 14px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px currentColor;
+  }
+
+  .dot-blue { color: #2980B9; background: #2980B9; }
+  .dot-orange { color: #F39C12; background: #F39C12; }
+  .dot-red { color: #E74C3C; background: #E74C3C; }
+  .dot-darkred { color: #C0392B; background: #C0392B; }
+  .dot-purple { color: #8E44AD; background: #8E44AD; }
+
+  .item-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+
+  .item-date {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .date-blue { color: #2980B9; }
+  .date-orange { color: #F39C12; }
+  .date-red { color: #E74C3C; }
+  .date-darkred { color: #C0392B; }
+  .date-purple { color: #8E44AD; }
+
+  .item-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #17202A;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .item-desc {
+    font-size: 12.5px;
+    color: #555;
+    line-height: 1.65;
+  }
+
+  .quote-box {
+    background: #EAF2FF;
+    border-left: 3px solid #2980B9;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #1A5276;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 12px;
+    margin-top: 8px;
+  }
+  .tag-gov { background: #EAF2FF; color: #1A5276; }
+  .tag-action { background: #FDEDEC; color: #C0392B; }
+  .tag-market { background: #FEF9E7; color: #B7770D; }
+  .tag-watch { background: #E9F7EF; color: #1E8449; }
+
+  .gap-note {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    font-weight: 900;
+    color: #E74C3C;
+    letter-spacing: 2px;
+  }
+
+  .conclusion-box {
+    background: linear-gradient(135deg, #FFF3CD, #FFF8E1);
+    border: 1px solid #F9E79F;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-top: 24px;
+  }
+
+  .conclusion-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #B7770D;
+    margin-bottom: 6px;
+  }
+
+  .conclusion-text {
+    font-size: 12.5px;
+    color: #555;
+    line-height: 1.65;
+  }
+
+  .source {
+    font-size: 11px;
+    color: #aaa;
+    text-align: right;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="label">⏱️ 주요 사건 타임라인</div>
+    <div class="main-title">이재명 발언 → 세무조사 착수<br>단 48시간의 경로</div>
+    <div class="sub">우연인가, 신호인가? 날짜로 읽는 금융권 압박의 흐름</div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-blue"></div>
+      <div class="item-card">
+        <div class="item-date date-blue">2026년 4월 28일</div>
+        <div class="item-title">임광현 국세청장, 국무회의 참석</div>
+        <div class="item-desc">청와대에서 열린 국무회의 겸 비상경제점검회의에 임광현 국세청장 배석. 대통령 질문에 답변하는 모습 포착.</div>
+        <span class="tag tag-gov">🏛 정부 동향</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-orange"></div>
+      <div class="item-card">
+        <div class="item-date date-orange">2026년 5월 6일</div>
+        <div class="item-title">이재명 대통령, 국무회의서 금융기관 강도 높은 비판</div>
+        <div class="item-desc">국무회의 겸 비상경제점검회의에서 금융권을 정면 겨냥한 발언 쏟아냄.</div>
+        <div class="quote-box">
+          "금융기관들이 돈 버는 게 능사라고, 그것이 존립 목적이라고 생각하는 자체가 문제. 금융기관은 금융질서 유지를 위해 필요한 국가 질서의 일부이기도 하다."
+        </div>
+        <span class="tag tag-gov">🏛 대통령 발언</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-orange"></div>
+      <div class="item-card">
+        <div class="item-date date-orange">2026년 5월 6일 (同日)</div>
+        <div class="item-title">김용범 대통령실 정책실장, SNS 금융개혁 글 게시</div>
+        <div class="item-desc">정책실장이 개인 SNS에 금융구조 문제를 직접 거론하며 정부의 의지를 공개 천명.</div>
+        <div class="quote-box">
+          "금융은 완전한 자유시장이 아니다. 국가의 면허를 받고, 공적 자금의 지원 아래 작동하는 제도적 산물. 은행은 준공공기관이다."
+        </div>
+        <span class="tag tag-gov">🏛 청와대 정책실장</span>
+      </div>
+    </div>
+
+    <div class="gap-note">↓ 48시간 후 ↓</div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-red"></div>
+      <div class="item-card">
+        <div class="item-date date-red">2026년 5월 8일 오전 10시</div>
+        <div class="item-title">🚨 국세청 조사4국, 하나금융 본사 전격 투입</div>
+        <div class="item-desc">서울지방국세청 조사4국이 서울 중구 하나금융지주 및 하나은행 본사에 조사 인력 파견. 회계·세무 관련 자료 확보 착수.</div>
+        <span class="tag tag-action">🔍 비정기 특별 세무조사</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-darkred"></div>
+      <div class="item-card">
+        <div class="item-date date-darkred">2026년 5월 9일</div>
+        <div class="item-title">언론 일제 보도 — 금융권 긴장 최고조</div>
+        <div class="item-desc">경향신문, 파이낸셜뉴스, 조세금융신문 등 주요 매체가 특별 세무조사 착수 보도. 금융업계 전반으로 충격파 확산.</div>
+        <span class="tag tag-market">📰 시장 반응</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-purple"></div>
+      <div class="item-card">
+        <div class="item-date date-purple">향후 수개월 ~ 수년</div>
+        <div class="item-title">조사 결과 및 추징 여부 — 주목 구간</div>
+        <div class="item-desc">세무조사 결과 확정까지 통상 수개월 이상 소요. 세금 추징 여부, 금융당국 검사 연계 가능성, 다른 금융지주 조사 확대 여부 주목.</div>
+        <span class="tag tag-watch">👁 모니터링 필요</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="conclusion-box">
+    <div class="conclusion-title">⚠️ 핵심 판단 포인트</div>
+    <div class="conclusion-text">이재명 대통령의 금융공공성 발언(5/6)과 세무조사 착수(5/8) 사이의 시간 간격은 불과 <strong>48시간</strong>입니다. 국세청은 "직접 연결을 확인할 수 없다"는 입장이지만, 금융권에서는 이 타이밍을 단순 우연으로 보는 시각이 거의 없습니다.</div>
+  </div>
+
+  <div class="source">출처: 파이낸셜뉴스, 경향신문, 인사이트, 알파경제 (2026.05.08~09)</div>
+</div>
+</body>
+</html>
