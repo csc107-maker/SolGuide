@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한광통신(010170) 주가 전망 분석 — 28,300원 기준</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #f4f6fb;
+  --surface:   #ffffff;
+  --surface2:  #f0f3fa;
+  --navy:      #0b1d3a;
+  --blue:      #1757c2;
+  --blue-lt:   #e8effe;
+  --green:     #0e8a5c;
+  --green-lt:  #e3f8f0;
+  --red:       #c0392b;
+  --red-lt:    #fdecea;
+  --amber:     #c07d00;
+  --amber-lt:  #fff8e6;
+  --text:      #1a1e2e;
+  --text2:     #5a6080;
+  --text3:     #9099b8;
+  --border:    #e2e7f5;
+  --accent:    #1757c2;
+  --up:        #0e8a5c;
+  --down:      #c0392b;
+  --radius:    12px;
+  --radius-lg: 18px;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.report-header {
+  background: var(--navy);
+  padding: 44px 0 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.report-header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: rgba(23,87,194,0.18);
+}
+
+.report-header::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: 20%;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(23,87,194,0.10);
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.ticker-chip {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #a8c4ff;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 30px;
+  letter-spacing: 0.08em;
+}
+
+.market-chip {
+  background: rgba(23,87,194,0.4);
+  color: #90b8ff;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.report-date {
+  color: rgba(255,255,255,0.4);
+  font-size: 11px;
+  margin-left: auto;
+  font-family: 'DM Mono', monospace;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.header-title h1 {
+  font-size: 32px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.header-title p {
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+}
+
+.price-display {
+  text-align: right;
+}
+
+.price-now {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  color: #ffffff;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.price-won {
+  font-size: 22px;
+  color: rgba(255,255,255,0.6);
+  margin-left: 4px;
+}
+
+.price-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(14,138,92,0.25);
+  border: 1px solid rgba(14,138,92,0.4);
+  color: #5dffc6;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 30px;
+  margin-top: 6px;
+}
+
+/* ALERT BANNER */
+.alert-banner {
+  background: linear-gradient(90deg, #fff3cd, #fff8e1);
+  border-left: 5px solid #f0a500;
+  padding: 14px 24px;
+  font-size: 13px;
+  color: #7a5000;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-icon { font-size: 18px; flex-shrink: 0; }
+.alert-bold { font-weight: 900; color: #c07d00; }
+
+/* MAIN BODY */
+.main-body { padding: 32px 0 60px; }
+
+/* SECTION TITLES */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+
+.section-label::before {
+  content: '';
+  width: 20px; height: 3px;
+  background: var(--blue);
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--navy);
+  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(11,29,58,0.10);
+}
+
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.kpi-card.blue::after  { background: var(--blue); }
+.kpi-card.green::after { background: var(--green); }
+.kpi-card.red::after   { background: var(--red); }
+.kpi-card.amber::after { background: var(--amber); }
+.kpi-card.navy::after  { background: var(--navy); }
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.kpi-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.kpi-value.big { font-size: 28px; }
+
+.kpi-sub {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.badge-up   { display:inline-block; background:var(--green-lt); color:var(--green); font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; }
+.badge-down { display:inline-block; background:var(--red-lt);   color:var(--red);   font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; }
+.badge-warn { display:inline-block; background:var(--amber-lt); color:var(--amber); font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; }
+
+/* CHART SECTION */
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 28px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chart-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.chart-subtitle { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+.legend-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-line {
+  width: 20px; height: 2px;
+  flex-shrink: 0;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+/* SCENARIO SECTION */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.scenario-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.scenario-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(11,29,58,0.12);
+}
+
+.scenario-card.bull { border-top: 4px solid var(--green); }
+.scenario-card.base { border-top: 4px solid var(--amber); }
+.scenario-card.bear { border-top: 4px solid var(--red); }
+
+.scenario-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.bull .scenario-tag { background: var(--green-lt); color: var(--green); }
+.base .scenario-tag { background: var(--amber-lt); color: var(--amber); }
+.bear .scenario-tag { background: var(--red-lt);   color: var(--red); }
+
+.scenario-prob {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.scenario-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.bull .scenario-price { color: var(--green); }
+.base .scenario-price { color: var(--amber); }
+.bear .scenario-price { color: var(--red); }
+
+.scenario-list {
+  list-style: none;
+  font-size: 12.5px;
+  color: var(--text2);
+  line-height: 1.8;
+}
+
+.scenario-list li::before {
+  content: '·';
+  margin-right: 6px;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* CATALYST TABLE */
+.catalyst-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.catalyst-header {
+  background: var(--navy);
+  padding: 16px 24px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.catalyst-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.catalyst-table th {
+  background: var(--surface2);
+  color: var(--text3);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 11px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.catalyst-table td {
+  padding: 14px 20px;
+  font-size: 13px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.catalyst-table tr:last-child td { border-bottom: none; }
+.catalyst-table tr:hover td { background: var(--surface2); }
+
+.importance-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.tag-pos { background: var(--green-lt); color: var(--green); }
+.tag-neg { background: var(--red-lt);   color: var(--red); }
+.tag-neu { background: var(--blue-lt);  color: var(--blue); }
+
+.event-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+/* TECH ANALYSIS */
+.tech-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 28px;
+}
+
+.levels-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.level-group-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid;
+}
+
+.level-group-title.resist { color: var(--green); border-color: var(--green); }
+.level-group-title.support { color: var(--red); border-color: var(--red); }
+
+.level-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.level-item.current {
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+}
+
+.level-item.r1 { background: rgba(14,138,92,0.08); }
+.level-item.r2 { background: rgba(14,138,92,0.05); }
+.level-item.r3 { background: rgba(14,138,92,0.03); }
+.level-item.s1 { background: rgba(192,57,43,0.08); }
+.level-item.s2 { background: rgba(192,57,43,0.05); }
+.level-item.s3 { background: rgba(192,57,43,0.03); }
+
+.level-name { color: var(--text2); font-size: 12px; }
+.level-val  { font-family: 'DM Mono', monospace; font-weight: 500; }
+.level-item.current .level-name { color: rgba(255,255,255,0.7); }
+.level-item.current .level-val  { color: #fff; font-size: 15px; }
+
+/* STRATEGY SECTION */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.strategy-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  transition: box-shadow 0.2s;
+}
+
+.strategy-card:hover { box-shadow: 0 8px 24px rgba(11,29,58,0.09); }
+
+.strategy-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+.strategy-icon.blue   { background: var(--blue-lt); }
+.strategy-icon.green  { background: var(--green-lt); }
+.strategy-icon.amber  { background: var(--amber-lt); }
+
+.strategy-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.strategy-desc {
+  font-size: 12.5px;
+  color: var(--text2);
+  line-height: 1.75;
+}
+
+/* RISK MATRIX */
+.risk-matrix {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 28px;
+}
+
+.risk-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.risk-row:last-child { border-bottom: none; }
+
+.risk-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+  min-width: 160px;
+}
+
+.risk-impact {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.impact-high { background: var(--red-lt); color: var(--red); }
+.impact-mid  { background: var(--amber-lt); color: var(--amber); }
+.impact-low  { background: var(--green-lt); color: var(--green); }
+
+.risk-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 2;
+  min-width: 140px;
+}
+
+.risk-bar-track {
+  flex: 1;
+  height: 7px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.risk-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.risk-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text3);
+  min-width: 28px;
+  text-align: right;
+}
+
+/* COUNTDOWN */
+.countdown-card {
+  background: linear-gradient(135deg, var(--navy), #1a3a7a);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 28px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cd-left h3 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+}
+
+.cd-left p {
+  font-size: 22px;
+  font-weight: 900;
+  color: white;
+  line-height: 1.2;
+}
+
+.cd-left span { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 400; }
+
+.cd-right {
+  display: flex;
+  gap: 12px;
+}
+
+.cd-box {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 64px;
+}
+
+.cd-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  color: #fff;
+  line-height: 1;
+}
+
+.cd-unit {
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* FOOTER */
+.report-footer {
+  background: var(--navy);
+  padding: 24px 0;
+  color: rgba(255,255,255,0.35);
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.report-footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+
+/* DIVIDER */
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.kpi-card, .scenario-card, .strategy-card {
+  animation: fadeUp 0.5s ease both;
+}
+
+.kpi-card:nth-child(1) { animation-delay: 0.05s; }
+.kpi-card:nth-child(2) { animation-delay: 0.10s; }
+.kpi-card:nth-child(3) { animation-delay: 0.15s; }
+.kpi-card:nth-child(4) { animation-delay: 0.20s; }
+.kpi-card:nth-child(5) { animation-delay: 0.25s; }
+.kpi-card:nth-child(6) { animation-delay: 0.30s; }
+
+.scenario-card:nth-child(1) { animation-delay: 0.10s; }
+.scenario-card:nth-child(2) { animation-delay: 0.20s; }
+.scenario-card:nth-child(3) { animation-delay: 0.30s; }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .header-title h1  { font-size: 22px; }
+  .price-now        { font-size: 40px; }
+  .levels-grid      { grid-template-columns: 1fr; }
+  .header-main      { flex-direction: column; }
+  .price-display    { text-align: left; }
+  .cd-num           { font-size: 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ HEADER -->
+<header class="report-header">
+  <div class="container">
+    <div class="header-top">
+      <span class="ticker-chip">KQ · 010170</span>
+      <span class="market-chip">KOSDAQ · 전기전자</span>
+      <span class="report-date">2026.05.12 기준</span>
+    </div>
+    <div class="header-main">
+      <div class="header-title">
+        <h1>대한광통신<br>주가 전망 분석 보고서</h1>
+        <p>AI 광통신 · 미국 BEAD · 방산 '천광' — 3대 성장 엔진 종합 분석</p>
+      </div>
+      <div class="price-display">
+        <div class="price-now">28,300<span class="price-won">원</span></div>
+        <div style="margin-top:8px;">
+          <div class="price-change">▲ +26.5% &nbsp;|&nbsp; 전일比 +5,950원</div>
+        </div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px;font-family:'DM Mono',monospace;">52주 저가 582원 대비 +4,762%</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ALERT BANNER -->
+<div class="alert-banner">
+  <div class="alert-icon">⚡</div>
+  <div>
+    <span class="alert-bold">D-6 · 실적 발표 임박</span> — 2026년 5월 18일 분기 실적 공시 예정. 흑자 전환 여부가 향후 주가 방향의 최대 분수령. 현재 주가는 전일 기준 상한가(28,300원) 돌파 구간으로, 변동성 극도 확대 국면.
+  </div>
+</div>
+
+<!-- ============================================================ MAIN -->
+<main class="main-body">
+<div class="container">
+
+  <!-- KPI 카드 -->
+  <div class="section-label">핵심 지표</div>
+  <div class="section-title">현재 주가 위치 진단</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card blue">
+      <div class="kpi-label">현재가 (05.12)</div>
+      <div class="kpi-value big">28,300<span style="font-size:13px;">원</span></div>
+      <div class="kpi-sub"><span class="badge-up">▲ +26.5% 전일比</span></div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">52주 저가 대비 수익률</div>
+      <div class="kpi-value big">+4,762<span style="font-size:13px;">%</span></div>
+      <div class="kpi-sub">582원 → 28,300원</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">추정 PBR</div>
+      <div class="kpi-value big">~60<span style="font-size:13px;">배</span></div>
+      <div class="kpi-sub"><span class="badge-down">밸류에이션 극한 수준</span></div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-label">추정 시가총액</div>
+      <div class="kpi-value big">4,830<span style="font-size:13px;">억</span></div>
+      <div class="kpi-sub">코스닥 중형주 수준</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="kpi-label">PER</div>
+      <div class="kpi-value" style="font-size:16px;margin-top:4px;">산출 불가</div>
+      <div class="kpi-sub"><span class="badge-down">3년 연속 영업적자</span></div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">실적 발표 D-Day</div>
+      <div class="kpi-value big" style="color:#c07d00;">D-6</div>
+      <div class="kpi-sub"><span class="badge-warn">2026.05.18 예정</span></div>
+    </div>
+  </div>
+
+  <!-- 카운트다운 -->
+  <div class="countdown-card">
+    <div class="cd-left">
+      <h3>실적 발표 카운트다운</h3>
+      <p>2026년 5월 18일 <span>— 1분기 실적 공시</span></p>
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:400;margin-top:6px;">흑자 전환 확인 시 → 추가 리레이팅 / 실망 시 → 급격한 차익 실현 예상</p>
+    </div>
+    <div class="cd-right">
+      <div class="cd-box">
+        <div class="cd-num" id="cdDays">6</div>
+        <div class="cd-unit">Days</div>
+      </div>
+      <div class="cd-box">
+        <div class="cd-num" id="cdHours">--</div>
+        <div class="cd-unit">Hours</div>
+      </div>
+      <div class="cd-box">
+        <div class="cd-num" id="cdMins">--</div>
+        <div class="cd-unit">Mins</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 주가 흐름 차트 -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">주가 흐름 &amp; 향후 시나리오</div>
+        <div class="chart-subtitle">2025년 12월 ~ 2026년 3분기 전망 (단위: 원)</div>
+      </div>
+      <div class="legend-row">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#1757c2;"></div>실제 주가
+        </div>
+        <div class="legend-item">
+          <div class="legend-line" style="background:#0e8a5c;border-top:2px dashed #0e8a5c;background:none;"></div>강세
+        </div>
+        <div class="legend-item">
+          <div class="legend-line" style="border-top:2px dashed #c07d00;"></div>기본
+        </div>
+        <div class="legend-item">
+          <div class="legend-line" style="border-top:2px dashed #c0392b;"></div>약세
+        </div>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="mainChart" role="img" aria-label="대한광통신 주가 흐름 및 시나리오 차트"></canvas>
+    </div>
+  </div>
+
+  <!-- 시나리오 분석 -->
+  <div class="section-label">시나리오 분석</div>
+  <div class="section-title">3대 주가 시나리오</div>
+
+  <div class="scenario-grid">
+    <!-- 강세 -->
+    <div class="scenario-card bull">
+      <span class="scenario-tag">강세 시나리오</span>
+      <div class="scenario-prob">확률 25% · 6개월 목표</div>
+      <div class="scenario-price">38,000~<br>50,000원</div>
+      <ul class="scenario-list">
+        <li>5/18 실적 영업흑자 수치 확인</li>
+        <li>'천광' 레이저 모듈 수주 공시</li>
+        <li>BEAD 대규모 수주 계약 체결</li>
+        <li>증권사 커버리지 신규 개시 + 목표가 대폭 상향</li>
+        <li>AI 광섬유 단가 추가 상승</li>
+        <li>방산 업종 리레이팅 (PER 재평가)</li>
+      </ul>
+    </div>
+
+    <!-- 기본 -->
+    <div class="scenario-card base">
+      <span class="scenario-tag">기본 시나리오</span>
+      <div class="scenario-prob">확률 45% · 6개월 목표</div>
+      <div class="scenario-price">22,000~<br>30,000원</div>
+      <ul class="scenario-list">
+        <li>실적 개선 확인, 기대치 부합 수준</li>
+        <li>인캡아메리카 연결 실적 순항</li>
+        <li>방산·BEAD 점진적 진행</li>
+        <li>단기 차익 실현 후 박스권 등락</li>
+        <li>추가 유증 없이 자금 집행</li>
+        <li>미국향 매출 성장세 유지</li>
+      </ul>
+    </div>
+
+    <!-- 약세 -->
+    <div class="scenario-card bear">
+      <span class="scenario-tag">약세 시나리오</span>
+      <div class="scenario-prob">확률 30% · 6개월 목표</div>
+      <div class="scenario-price">12,000~<br>18,000원</div>
+      <ul class="scenario-list">
+        <li>실적 발표 실망 (영업적자 지속)</li>
+        <li>'천광' 방산 수주 계약 지연</li>
+        <li>추가 유상증자 발표 (주주가치 희석)</li>
+        <li>미중 관계 완화 → 중국산 저가 공세</li>
+        <li>빅테크 CAPEX 삭감 우려 확산</li>
+        <li>대주주 지배력 추가 약화</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 기술적 분석 -->
+  <div class="section-label">기술적 분석</div>
+  <div class="section-title">지지·저항 레벨</div>
+
+  <div class="tech-card">
+    <div class="levels-grid">
+      <!-- 저항선 -->
+      <div>
+        <div class="level-group-title resist">저항선 (Resistance)</div>
+        <div class="level-item r3">
+          <span class="level-name">강세 타깃 목표</span>
+          <span class="level-val" style="color:var(--green);">45,000+원</span>
+        </div>
+        <div class="level-item r2">
+          <span class="level-name">2차 저항 (강세)</span>
+          <span class="level-val" style="color:var(--green);">38,000원</span>
+        </div>
+        <div class="level-item r1">
+          <span class="level-name">1차 저항 (심리)</span>
+          <span class="level-val" style="color:var(--green);">30,000원</span>
+        </div>
+        <div class="level-item current">
+          <span class="level-name">★ 현재가</span>
+          <span class="level-val">28,300원</span>
+        </div>
+      </div>
+      <!-- 지지선 -->
+      <div>
+        <div class="level-group-title support">지지선 (Support)</div>
+        <div class="level-item s1">
+          <span class="level-name">1차 지지 (전 고점)</span>
+          <span class="level-val" style="color:var(--red);">22,000원</span>
+        </div>
+        <div class="level-item s2">
+          <span class="level-name">2차 지지 (4월 중순)</span>
+          <span class="level-val" style="color:var(--red);">17,000원</span>
+        </div>
+        <div class="level-item s3">
+          <span class="level-name">3차 지지 (4월 초)</span>
+          <span class="level-val" style="color:var(--red);">9,000원</span>
+        </div>
+        <div class="level-item" style="background:rgba(192,57,43,0.02);">
+          <span class="level-name">강한 지지 (1월)</span>
+          <span class="level-val" style="color:var(--red);">3,500원</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:22px;background:var(--surface2);border-radius:10px;padding:16px;font-size:12.5px;color:var(--text2);line-height:1.8;">
+      <strong style="color:var(--navy);">📊 기술적 진단:</strong>
+      현재 주가 28,300원은 전일 상한가 수준을 돌파하며 신고가 갱신 국면. 단기 RSI 과매수 영역 진입 가능성이 높으며, 1조 5,000억 원을 넘는 일간 거래대금은 투기적 수급이 혼재되어 있음을 시사. 30,000원 심리적 저항 돌파 여부가 단기 방향의 분기점. 5/18 실적 전까지는 '뉴스 드리븐' 장세로 변동성 확대 구간 지속 예상.
+    </div>
+  </div>
+
+  <!-- 핵심 촉매제 -->
+  <div class="section-label">핵심 촉매제</div>
+  <div class="section-title">주가 방향을 결정할 변수 분석</div>
+
+  <div class="catalyst-card">
+    <div class="catalyst-header">📋 주요 이벤트 및 중요도 평가</div>
+    <table class="catalyst-table">
+      <thead>
+        <tr>
+          <th>이벤트</th>
+          <th>구분</th>
+          <th>예상 시점</th>
+          <th>중요도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>1Q26 실적 발표 — 영업흑자 전환 여부</strong><br>
+            <span style="font-size:11px;color:var(--text3);">컨센서스: 매출 약 600억, 영업이익 흑전 예상</span>
+          </td>
+          <td><span class="event-tag tag-pos">긍정요인</span></td>
+          <td><strong>2026.05.18</strong></td>
+          <td>
+            <div class="importance-bar">
+              <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--blue);"></div></div>
+              <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">100%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>'천광' 레이저 모듈 수주 공시</strong><br>
+            <span style="font-size:11px;color:var(--text3);">방산 업종 리레이팅 → PBR·PER 재평가 계기</span>
+          </td>
+          <td><span class="event-tag tag-pos">긍정요인</span></td>
+          <td>2026 하반기</td>
+          <td>
+            <div class="importance-bar">
+              <div class="bar-track"><div class="bar-fill" style="width:95%;background:var(--green);"></div></div>
+              <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">95%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>인캡아메리카 BEAD 수주 실적 본격 반영</strong><br>
+            <span style="font-size:11px;color:var(--text3);">INCAB 2026E 매출 약 500억 연결 편입 기여</span>
+          </td>
+          <td><span class="event-tag tag-pos">긍정요인</span></td>
+          <td>2Q26~3Q26</td>
+          <td>
+            <div class="importance-bar">
+              <div class="bar-track"><div class="bar-fill" style="width:85%;background:#8b5cf6;"></div></div>
+              <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">85%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>증권사 목표주가 신규 제시 또는 대폭 상향</strong><br>
+            <span style="font-size:11px;color:var(--text3);">현재 공식 목표가 SK증권 2,150원 — 현 주가 크게 상회 중</span>
+          </td>
+          <td><span class="event-tag tag-pos">긍정요인</span></td>
+          <td>실적 후 즉시</td>
+          <td>
+            <div class="importance-bar">
+              <div class="bar-track"><div class="bar-fill" style="width:80%;background:#f59e0b;"></div></div>
+              <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">80%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>추가 유상증자 공시 리스크</strong><br>
+            <span style="font-size:11px;color:var(--text3);">5년간 4회 CB/유증, 대주주 지분 16.58%까지 하락</span>
+          </td>
+          <td><span class="event-tag tag-neg">부정요인</span></td>
+          <td>상시 리스크</td>
+          <td>
+            <div class="importance-bar">
+              <div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--red);"></div></div>
+              <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">75%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>글로벌 AI CAPEX 삭감 우려</strong><br>
+            <span style="font-size:11px;color:var(--text3);">빅테크 투자 축소 시 광섬유 수요 감소 가능성</span>
+          </td>
+          <td><span class="event-tag tag-neg">부정요인</span></td>
+          <td>상시 리스크</td>
+          <td>
+            <div class="importance-bar">
+              <div class="bar-track"><div class="bar-fill" style="width:65%;background:#f97316;"></div></div>
+              <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">65%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>중국산 광섬유 저가 공세 재개</strong><br>
+            <span style="font-size:11px;color:var(--text3);">미중 관계 완화 시 미국 시장 경쟁 심화 가능</span>
+          </td>
+          <td><span class="event-tag tag-neg">부정요인</span></td>
+          <td>미중 협상 결과</td>
+          <td>
+            <div class="importance-bar">
+              <div class="bar-track"><div class="bar-fill" style="width:55%;background:#64748b;"></div></div>
+              <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">55%</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 리스크 매트릭스 -->
+  <div class="section-label">리스크 분석</div>
+  <div class="section-title">투자 리스크 매트릭스</div>
+
+  <div class="risk-matrix">
+    <div class="risk-row">
+      <div class="risk-name">① 실적 실망 리스크<br><span style="font-size:11px;color:var(--text3);">기대 흑자 미달 시 단기 30~40% 급락 가능</span></div>
+      <span class="risk-impact impact-high">충격 HIGH</span>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar-track"><div class="risk-bar-fill" style="width:90%;background:var(--red);"></div></div>
+        <span class="risk-pct">90%</span>
+      </div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">② 밸류에이션 과열 (PBR ~60배)<br><span style="font-size:11px;color:var(--text3);">실적 미확인 상태의 극단적 고평가</span></div>
+      <span class="risk-impact impact-high">충격 HIGH</span>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar-track"><div class="risk-bar-fill" style="width:85%;background:var(--red);"></div></div>
+        <span class="risk-pct">85%</span>
+      </div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">③ 추가 유상증자 리스크<br><span style="font-size:11px;color:var(--text3);">대주주 지분 16.58%, 추가 자금 조달 가능성</span></div>
+      <span class="risk-impact impact-high">충격 HIGH</span>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar-track"><div class="risk-bar-fill" style="width:75%;background:#f97316;"></div></div>
+        <span class="risk-pct">75%</span>
+      </div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">④ 단기 투기 수급 과열<br><span style="font-size:11px;color:var(--text3);">일간 거래대금 1.5조 이상, 시총 대비 30%+</span></div>
+      <span class="risk-impact impact-mid">충격 MID</span>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar-track"><div class="risk-bar-fill" style="width:70%;background:#f59e0b;"></div></div>
+        <span class="risk-pct">70%</span>
+      </div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">⑤ 방산 수주 지연 리스크<br><span style="font-size:11px;color:var(--text3);">'천광' 계약 미체결 시 기대감 소멸</span></div>
+      <span class="risk-impact impact-mid">충격 MID</span>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar-track"><div class="risk-bar-fill" style="width:65%;background:#f59e0b;"></div></div>
+        <span class="risk-pct">65%</span>
+      </div>
+    </div>
+    <div class="risk-row" style="border-bottom:none;">
+      <div class="risk-name">⑥ 글로벌 AI 버블 논란<br><span style="font-size:11px;color:var(--text3);">테마 전반 조정 시 동반 하락 가능성</span></div>
+      <span class="risk-impact impact-low">충격 LOW</span>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar-track"><div class="risk-bar-fill" style="width:50%;background:var(--green);"></div></div>
+        <span class="risk-pct">50%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 투자자 전략 -->
+  <div class="section-label">투자 전략</div>
+  <div class="section-title">투자자 유형별 접근 전략</div>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-icon blue">📈</div>
+      <div class="strategy-title">기존 보유자 (수익권)</div>
+      <div class="strategy-desc">
+        5/18 실적 발표 전까지 보유를 유지하되, 실적 발표 당일 수급 변화를 예의주시. 흑자 전환 수치가 확인되면 홀딩 또는 추가 매수, 적자 지속이면 일부(30~50%) 익절 대응. 전량 매도보다 분할 대응이 리스크 관리 측면에서 유리.
+      </div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon amber">⏳</div>
+      <div class="strategy-title">신규 진입 희망자</div>
+      <div class="strategy-desc">
+        현재 28,300원(PBR ~60배)은 추격 매수 고위험 구간. 실적 발표 후 눌림목(20,000~22,000원)을 기다리는 것이 합리적. 분할 매수 1차 / 2차 진입 전략 권장. 5/18 결과를 확인 후 진입이 안전.
+      </div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon green">⚡</div>
+      <div class="strategy-title">단기 트레이더</div>
+      <div class="strategy-desc">
+        5/18 실적 전후 변동성 극대 구간. 30,000원 돌파 여부와 거래대금 1.5조 유지 여부로 단기 방향성 판단. 양방향 리스크 존재하므로 손절 원칙 필수. 실적 서프라이즈 시 38,000원까지 단기 타깃 가능.
+      </div>
+    </div>
+  </div>
+
+  <!-- 결론 요약 -->
+  <div style="background:var(--navy);border-radius:var(--radius-lg);padding:30px 32px;margin-bottom:20px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:12px;">종합 결론</div>
+    <p style="font-size:16px;font-weight:700;color:#ffffff;line-height:1.7;margin-bottom:16px;">
+      대한광통신은 "실적 없는 기대 주가"에서 "실적 확인 구간"으로 넘어가는 역사적 전환점에 서 있습니다.
+    </p>
+    <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.9;">
+      AI 데이터센터 광섬유 수요 폭증 · 미국 BEAD 425억 달러 · 레이저 방산 '천광'이라는 3개의 구조적 성장 엔진은 실재합니다. 그러나 PBR 60배에 달하는 현재 주가는 2026~2027년 이상의 미래 가치를 이미 상당 부분 선반영했습니다. <strong style="color:#a8c4ff;">5월 18일 실적이 모든 것을 결정합니다.</strong> 흑자 전환 확인 → 추가 상승 모멘텀, 실망 → 급격한 차익 실현. 현재 위치에서는 분할 접근 + 실적 확인 원칙을 절대 포기하지 마십시오.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;text-align:center;">
+      <div style="background:rgba(14,138,92,0.15);border:1px solid rgba(14,138,92,0.3);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;">강세 목표 (25%)</div>
+        <div style="font-family:'DM Mono',monospace;font-size:18px;color:#5dffc6;font-weight:500;">38,000~50,000원</div>
+      </div>
+      <div style="background:rgba(192,125,0,0.15);border:1px solid rgba(192,125,0,0.3);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;">기본 목표 (45%)</div>
+        <div style="font-family:'DM Mono',monospace;font-size:18px;color:#ffd580;font-weight:500;">22,000~30,000원</div>
+      </div>
+      <div style="background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.3);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;">약세 목표 (30%)</div>
+        <div style="font-family:'DM Mono',monospace;font-size:18px;color:#ff9e9e;font-weight:500;">12,000~18,000원</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 면책 조항 -->
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;font-size:11.5px;color:var(--text3);line-height:1.8;">
+    ⚠️ <strong style="color:var(--text2);">투자 유의사항:</strong> 본 보고서는 공개 데이터(Investing.com, 블로터, 딜사이트, 이투데이, FnGuide, DART 공시, SK증권·신영증권 리서치)를 바탕으로 작성된 <strong>정보 제공 목적의 분석 자료</strong>입니다. 특정 종목의 매수·매도를 권유하지 않으며, 주식 투자는 원금 손실의 위험이 있습니다. 모든 투자 결정과 그 결과는 투자자 본인에게 귀속됩니다. 2026년 5월 12일 기준 작성.
+  </div>
+
+</div><!-- /container -->
+</main>
+
+<!-- FOOTER -->
+<footer class="report-footer">
+  <div class="container">
+    <p>대한광통신 (010170) 주가 전망 분석 보고서 · 2026.05.12 기준</p>
+    <p>데이터 출처: Investing.com · 블로터 · 딜사이트 · 이투데이 · FnGuide · 전자공시(DART) · SK증권 · 신영증권</p>
+    <p style="margin-top:6px;">본 자료는 투자 권유가 아닙니다. 투자 판단과 결과는 투자자 본인에게 귀속됩니다.</p>
+  </div>
+</footer>
+
+<script>
+/* ── 카운트다운 ── */
+(function(){
+  const target = new Date('2026-05-18T09:00:00+09:00');
+  function update(){
+    const diff = target - Date.now();
+    if(diff <= 0){ document.getElementById('cdDays').textContent='D-0'; return; }
+    const d = Math.floor(diff/864e5);
+    const h = Math.floor((diff%864e5)/36e5);
+    const m = Math.floor((diff%36e5)/6e4);
+    document.getElementById('cdDays').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cdHours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cdMins').textContent  = String(m).padStart(2,'0');
+  }
+  update();
+  setInterval(update, 10000);
+})();
+
+/* ── 주가 흐름 차트 ── */
+(function(){
+  const labels  = ['25.12','26.01','26.02','26.03','04초','04중','05.08','05.12','05.18\n실적','2Q26','3Q26'];
+  const actual  = [582, 3530, 4200, 6800, 9410, 17770, 22350, 28300, null, null, null];
+  const bull    = [null,null,null,null,null,null,null,28300, 35000, 42000, 50000];
+  const base    = [null,null,null,null,null,null,null,28300, 24000, 26000, 29000];
+  const bear    = [null,null,null,null,null,null,null,28300, 20000, 16000, 13000];
+
+  new Chart(document.getElementById('mainChart'),{
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {
+          label:'실제 주가',
+          data: actual,
+          borderColor:'#1757c2',
+          backgroundColor:'rgba(23,87,194,0.06)',
+          borderWidth: 2.5,
+          pointRadius:[3,4,3,3,4,4,5,7,0,0,0],
+          pointBackgroundColor:'#1757c2',
+          pointBorderColor:'#fff',
+          pointBorderWidth:1.5,
+          fill:true,
+          tension:0.35,
+          spanGaps:false
+        },
+        {
+          label:'강세',
+          data: bull,
+          borderColor:'#0e8a5c',
+          borderWidth:2,
+          borderDash:[7,4],
+          pointRadius:[0,0,0,0,0,0,0,0,6,6,6],
+          pointBackgroundColor:'#0e8a5c',
+          fill:false,
+          tension:0.3,
+          spanGaps:false
+        },
+        {
+          label:'기본',
+          data: base,
+          borderColor:'#c07d00',
+          borderWidth:2,
+          borderDash:[7,4],
+          pointRadius:[0,0,0,0,0,0,0,0,6,6,6],
+          pointBackgroundColor:'#c07d00',
+          fill:false,
+          tension:0.3,
+          spanGaps:false
+        },
+        {
+          label:'약세',
+          data: bear,
+          borderColor:'#c0392b',
+          borderWidth:2,
+          borderDash:[7,4],
+          pointRadius:[0,0,0,0,0,0,0,0,6,6,6],
+          pointBackgroundColor:'#c0392b',
+          fill:false,
+          tension:0.3,
+          spanGaps:false
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          backgroundColor:'rgba(11,29,58,0.92)',
+          titleColor:'#a8c4ff',
+          bodyColor:'#e0e8ff',
+          borderColor:'rgba(255,255,255,0.1)',
+          borderWidth:1,
+          padding:12,
+          callbacks:{
+            label: ctx => {
+              if(ctx.parsed.y===null) return null;
+              return ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString() + '원';
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          ticks:{ font:{size:11}, maxRotation:35, color:'#9099b8', autoSkip:false },
+          grid:{ color:'rgba(0,0,0,0.05)' }
+        },
+        y:{
+          ticks:{
+            font:{size:11},
+            color:'#9099b8',
+            callback: v => v >= 1000 ? (v/1000).toFixed(0)+'K' : v
+          },
+          grid:{ color:'rgba(0,0,0,0.05)' },
+          min:0
+        }
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
