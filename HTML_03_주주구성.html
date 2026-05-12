@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한광통신 주주 구성</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f7ff;
+    padding: 28px 20px;
+  }
+
+  .wrapper { max-width: 820px; margin: 0 auto; }
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 900;
+    color: #0d47a1;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 5px; height: 20px;
+    background: #1976d2;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .section-sub {
+    font-size: 12px;
+    color: #9e9e9e;
+    margin-bottom: 20px;
+    padding-left: 13px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #616161;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e3f2fd;
+  }
+
+  /* PIE CHART via CSS conic-gradient */
+  .pie-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .pie {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: conic-gradient(
+      #1565c0 0% 7.29%,
+      #1976d2 7.29% 13.4%,
+      #42a5f5 13.4% 16.15%,
+      #90caf9 16.15% 16.58%,
+      #e57373 16.58% 20.54%,
+      #ef9a9a 20.54% 26.54%,
+      #eeeeee 26.54% 100%
+    );
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    position: relative;
+  }
+
+  .pie::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 55px; height: 55px;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .legend { flex: 1; min-width: 140px; }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-text {
+    font-size: 12px;
+    color: #424242;
+    flex: 1;
+  }
+
+  .legend-pct {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a237e;
+    min-width: 42px;
+    text-align: right;
+  }
+
+  /* TREND TABLE */
+  .trend-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+    margin-bottom: 18px;
+  }
+
+  .trend-card-header {
+    background: linear-gradient(135deg, #0d47a1, #1565c0);
+    color: white;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .trend-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .trend-table th {
+    background: #e8f0fe;
+    color: #1a237e;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 16px;
+    text-align: center;
+  }
+
+  .trend-table td {
+    padding: 11px 16px;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 1px solid #f0f4ff;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .trend-table td:first-child {
+    font-family: 'Noto Sans KR', sans-serif;
+    text-align: left;
+    color: #424242;
+    font-weight: 600;
+  }
+
+  .val-down { color: #c62828; font-weight: 700; }
+  .val-now { color: #0d47a1; font-weight: 700; background: #e8f0fe; border-radius: 6px; padding: 2px 6px; }
+
+  /* RISK BOX */
+  .risk-box {
+    background: linear-gradient(135deg, #fff3e0, #fbe9e7);
+    border: 1px solid #ffb74d;
+    border-left: 5px solid #f57c00;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #5d4037;
+    line-height: 1.7;
+  }
+
+  .risk-box strong { color: #bf360c; }
+
+  .footer-note {
+    font-size: 11px;
+    color: #9e9e9e;
+    text-align: right;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 560px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="section-title">대한광통신 주주 구성 분석</div>
+  <div class="section-sub">2026년 5월 기준 | DART 공시 기준 | 최대주주 지배력 변화 추이 포함</div>
+
+  <div class="two-col">
+    <!-- 파이 차트 -->
+    <div class="card">
+      <div class="card-title">📊 주요 주주 지분 구성 (2026년 5월)</div>
+      <div class="pie-wrap">
+        <div class="pie"></div>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="dot" style="background:#1565c0;"></div>
+            <div class="legend-text">티에프오인더스트리</div>
+            <div class="legend-pct">7.29%</div>
+          </div>
+          <div class="legend-item">
+            <div class="dot" style="background:#1976d2;"></div>
+            <div class="legend-text">설윤석 대표 (직접)</div>
+            <div class="legend-pct">6.11%</div>
+          </div>
+          <div class="legend-item">
+            <div class="dot" style="background:#42a5f5;"></div>
+            <div class="legend-text">양귀애 명예회장</div>
+            <div class="legend-pct">2.75%</div>
+          </div>
+          <div class="legend-item">
+            <div class="dot" style="background:#90caf9;"></div>
+            <div class="legend-text">기타 특수관계인</div>
+            <div class="legend-pct">0.43%</div>
+          </div>
+          <div class="legend-item">
+            <div class="dot" style="background:#e57373;"></div>
+            <div class="legend-text">국민연금</div>
+            <div class="legend-pct">3.96%</div>
+          </div>
+          <div class="legend-item">
+            <div class="dot" style="background:#ef9a9a;"></div>
+            <div class="legend-text">타임폴리오·기관</div>
+            <div class="legend-pct">~6%</div>
+          </div>
+          <div class="legend-item">
+            <div class="dot" style="background:#eeeeee; border:1px solid #bbb;"></div>
+            <div class="legend-text">소액주주 등</div>
+            <div class="legend-pct">~73%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 텍스트 카드 -->
+    <div class="card">
+      <div class="card-title">🏢 최대주주 구조</div>
+      <div style="font-size:13px; line-height:1.9; color:#424242;">
+        <div style="background:#e3f2fd; border-radius:10px; padding:14px; margin-bottom:12px;">
+          <div style="font-weight:700; color:#0d47a1; font-size:14px; margin-bottom:4px;">설윤석 대표이사</div>
+          <div>대한전선 창업주 설경동 회장의 <strong>3세</strong></div>
+          <div>2017년 PEF로부터 콜옵션 행사, 경영권 재확보</div>
+          <div style="color:#c62828; font-size:12px; margin-top:6px;">⚠ 현재 직·간접 합산 지분 약 16.58%</div>
+        </div>
+
+        <div style="font-size:12.5px; color:#616161; line-height:1.8;">
+          <div>• <strong>티에프오인더스트리</strong>: 설윤석·설윤성 형제 각 50% 보유</div>
+          <div>• 대한광통신 구조: 과거 대한전선 자회사</div>
+          <div>• 경영난 → PEF 매각 → 2017년 경영권 복귀</div>
+          <div>• 최근 5년간 4차례 외부 자금 조달 (약 980억 원)</div>
+          <div>• 국민연금: 5% 이상 → <strong>3.96%로 축소</strong> (차익 실현)</div>
+          <div>• 타임폴리오: 코스닥액티브 ETF 상위 편입</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 지분율 변화 추이 표 -->
+  <div class="trend-card">
+    <div class="trend-card-header">📉 최대주주 등 특수관계인 지분율 변화 추이</div>
+    <table class="trend-table">
+      <thead>
+        <tr>
+          <th>시점</th>
+          <th>2017년 (경영권 복귀)</th>
+          <th>2020년</th>
+          <th>2025년 2월 (유증 전)</th>
+          <th>2026년 5월 (현재)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>대주주 합산 지분율</td>
+          <td>32.0%</td>
+          <td>26.0%</td>
+          <td class="val-down">18.10%</td>
+          <td><span class="val-now">16.58%</span></td>
+        </tr>
+        <tr>
+          <td>변화 (기준: 2017년)</td>
+          <td>—</td>
+          <td class="val-down">▼ -6.0%p</td>
+          <td class="val-down">▼ -13.9%p</td>
+          <td class="val-down">▼ -15.42%p</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="risk-box">
+    ⚠️ <strong>지배구조 리스크:</strong> 잦은 유상증자(5년간 4회, 총 980억 원)로 최대주주 지분율이 32% → 16.58%로 절반 이하로 하락. 추가 자금 조달 시 지배력이 10%대 초반까지 낮아질 수 있다는 관측도 제기됨. <strong>실적 개선 없이 유상증자가 반복될 경우 기존 주주가치 희석이 심화</strong>될 수 있으므로, 투자 시 이 점을 반드시 감안해야 함.
+  </div>
+
+  <p class="footer-note">출처: 전자공시(DART), 딜사이트, 블로터 | 2026.05 기준 | 5% 미만 개별 보유자는 미포함</p>
+</div>
+</body>
+</html>
