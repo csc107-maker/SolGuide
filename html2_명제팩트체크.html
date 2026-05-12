@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>두 명제 팩트체크</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F5F7FF;
+    padding: 32px 20px;
+  }
+
+  .header {
+    margin-bottom: 28px;
+  }
+  .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: #4A7AFF;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 6px;
+  }
+  .sub { font-size: 13px; color: #666; }
+
+  .verdict-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .verdict-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1.5px solid #E5E9FF;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .verdict-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    opacity: 0.07;
+  }
+
+  .verdict-card.partial::after { background: #FF8C00; }
+  .verdict-card.correct::after { background: #00C897; }
+
+  .claim-box {
+    background: #F8F9FF;
+    border-left: 3px solid #4A7AFF;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1A1A3E;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .verdict-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .badge-partial { background: #FFF3E0; color: #E65100; }
+  .badge-correct { background: #E8FFF6; color: #00A870; }
+  .badge-caution { background: #FFF8E1; color: #F57F17; }
+
+  .reason-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #4A7AFF;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .reason-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .reason-list li {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .reason-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #4A7AFF;
+    font-size: 12px;
+  }
+
+  .reason-list li.warn::before { color: #FF8C00; }
+  .reason-list li.ok::before { color: #00C897; }
+
+  .law-ref {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    background: #EEF2FF;
+    color: #4A7AFF;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #D0D7FF, transparent);
+    margin: 16px 0;
+  }
+
+  .conclusion {
+    background: linear-gradient(135deg, #1A1A3E, #2D3A8C);
+    border-radius: 14px;
+    padding: 20px 24px;
+    color: white;
+  }
+
+  .conclusion h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #A8B8FF;
+  }
+
+  .conclusion p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #CDD4FF;
+  }
+
+  .conclusion strong { color: #FFD166; }
+
+  .src {
+    font-size: 10px;
+    color: #AAA;
+    margin-top: 16px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">팩트체크 분석</div>
+  <h2>두 명제, 세법적으로 맞나 틀리나?</h2>
+  <p class="sub">국세기본법 조문·대법원 판례 기준 검증</p>
+</div>
+
+<div class="verdict-wrap">
+
+  <!-- 명제 1 -->
+  <div class="verdict-card partial">
+    <div class="claim-box">
+      명제 ① "부정과소 신고가산세 = 0원이면 고의성도 0%다"
+    </div>
+    <span class="verdict-badge badge-partial">⚠ 부분적으로 틀림 — 과도한 단순화</span>
+
+    <div class="reason-title">📌 세법·판례가 말하는 진실</div>
+    <ul class="reason-list">
+      <li class="warn">부정과소신고가산세(구 부당과소신고가산세)는 부과요건이 매우 엄격합니다. 단순 과실이나 중과실로는 부과 불가 (대법원 2013두12362)</li>
+      <li class="warn">요건: ① 적극적 은닉·가장 행위 ② 조세포탈 목적 ③ 납세자의 '악의(고의)' 입증 — 셋 다 충족해야만 40% 중가산세 부과</li>
+      <li>따라서 이 가산세가 0원이면 "이 세법상 부정행위의 법적 요건을 충족하지 못했다"는 의미지, "고의성이 없다"는 의미가 아닙니다</li>
+      <li class="warn">조사4국은 현재 자료 수집·검토 중 (2026.05 기준) — 최종 가산세 결정은 고지서 발행 전까지 미확정</li>
+      <li>고의성 판단은 검찰 수사·조세범처벌법 적용 여부와 별개 트랙으로 진행될 수 있음</li>
+    </ul>
+    <div class="law-ref">근거: 국세기본법 §47-3 | 대법원 2013두12362 | 조세범처벌법 §3</div>
+  </div>
+
+  <!-- 명제 2 -->
+  <div class="verdict-card correct">
+    <div class="claim-box">
+      명제 ② "고지서 미발행 = 납부 지연이 아니다"
+    </div>
+    <span class="verdict-badge badge-correct">✓ 절차적으로 맞음 — 단 중요한 단서 있음</span>
+
+    <div class="reason-title">📌 세무조사 절차 흐름</div>
+    <ul class="reason-list">
+      <li class="ok">납부지연가산세(구 납부불성실가산세)는 '납부기한 다음날'부터 기산 (국세기본법 §47-5)</li>
+      <li class="ok">납부기한은 납세고지서(고지서)가 송달된 후 30일 — 고지서가 없으면 공식 납부기한 자체가 존재하지 않음</li>
+      <li class="ok">세무조사 결과 통지 후 → 30일 이내 과세전 적부심사 → 고지서 발행 → 납부기한 부여 (국세기본법 §81-12)</li>
+      <li class="warn">단, '납부지연'과 별개로 당초 과소신고 기간에 대한 납부지연가산세(납부기한 다음날~납세고지일)는 자동 계산됨</li>
+      <li class="warn">즉 고지서 미발행 = 지금 당장 납부 지연은 아니나, 최종 고지 시 소급 이자(일 10만분의 22)가 포함되어 청구됨</li>
+    </ul>
+    <div class="law-ref">근거: 국세기본법 §47-5 | §81-12 | 국세기본법시행령 §27-4</div>
+  </div>
+</div>
+
+<div class="conclusion">
+  <h3>🎯 종합 결론</h3>
+  <p>두 명제 모두 <strong>기술적으로 일부 맞지만, 그것이 '무죄' 또는 '위험 없음'을 의미하지는 않습니다.</strong><br>
+  조사4국이 투입된 이상 최종 가산세 산출까지 수개월이 소요될 수 있으며, 조세범칙조사로 전환될 경우 <strong>형사처벌(조세포탈죄, 최대 10년 이하 징역)</strong>과 연계될 수 있습니다. 투자자·이해관계자는 '고지서 미발행 = 안전' 논리에 현혹되지 않도록 주의가 필요합니다.</p>
+</div>
+
+<div class="src">출처: 국세기본법, 대법원 판례(2013두12362·2011두29168·2019두58896), 대륜법률사무소 2026 | AnalysisBlog</div>
+
+</body>
+</html>
