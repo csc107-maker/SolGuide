@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세무조사 절차 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F0F4FF;
+    padding: 32px 20px;
+  }
+
+  .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #3A5BFF;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  h2 { font-size: 21px; font-weight: 900; color: #0D1130; margin-bottom: 4px; }
+  .sub { font-size: 13px; color: #666; margin-bottom: 32px; }
+
+  .timeline {
+    position: relative;
+    padding-left: 0;
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 60px 20px 1fr;
+    gap: 0 16px;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .tl-day {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #3A5BFF;
+    text-align: right;
+    padding-top: 14px;
+    white-space: nowrap;
+  }
+
+  .tl-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tl-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #3A5BFF;
+    flex-shrink: 0;
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-dot.active {
+    background: #3A5BFF;
+    box-shadow: 0 0 0 3px rgba(58,91,255,0.25);
+  }
+
+  .tl-dot.pending {
+    background: #E8ECFF;
+    box-shadow: 0 0 0 2px #C0C8FF;
+  }
+
+  .tl-dot.danger {
+    background: #FF4757;
+    box-shadow: 0 0 0 3px rgba(255,71,87,0.25);
+  }
+
+  .tl-connector {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(180deg, #3A5BFF 0%, #C0C8FF 100%);
+    min-height: 40px;
+  }
+
+  .tl-content {
+    background: white;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    margin-top: 6px;
+    border: 1.5px solid #E5ECFF;
+    transition: box-shadow 0.2s;
+  }
+  .tl-content:hover { box-shadow: 0 4px 20px rgba(58,91,255,0.1); }
+
+  .tl-content.current {
+    border-color: #3A5BFF;
+    background: #F5F7FF;
+  }
+
+  .tl-content.danger-card {
+    border-color: #FF4757;
+    background: #FFF5F6;
+  }
+
+  .step-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+
+  .badge-blue { background: #EEF2FF; color: #3A5BFF; }
+  .badge-green { background: #EFFFEC; color: #00A870; }
+  .badge-orange { background: #FFF3E0; color: #E65100; }
+  .badge-red { background: #FFF0F2; color: #FF4757; }
+  .badge-gray { background: #F0F0F0; color: #888; }
+
+  .step-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1A1A3E;
+    margin-bottom: 4px;
+  }
+
+  .step-desc {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .step-law {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #9AA5FF;
+    margin-top: 6px;
+  }
+
+  .now-marker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #3A5BFF;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-top: 4px;
+  }
+
+  .now-dot { width: 6px; height: 6px; background: #7DFFCB; border-radius: 50%; animation: blink 1.2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .src {
+    font-size: 10px;
+    color: #AAA;
+    margin-top: 20px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<div class="label">절차 분석</div>
+<h2>하나은행 세무조사, 지금 어느 단계?</h2>
+<p class="sub">고지서 발행까지의 전체 절차 타임라인 (국세기본법 기준)</p>
+
+<div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-day">2026.05.08</div>
+    <div class="tl-line"><div class="tl-dot active"></div><div class="tl-connector"></div></div>
+    <div>
+      <div class="tl-content current">
+        <span class="step-badge badge-blue">STEP 1</span>
+        <div class="step-title">🚨 조사4국 본사 투입 · 자료 예치</div>
+        <div class="step-desc">서울지방국세청 조사4국이 하나금융지주·하나은행 본사에 조사 인력 투입. 경영진 보수·퇴직 자문료·계열사 거래 관련 회계·세무 자료 수집 시작</div>
+        <div class="step-law">§81-3 세무조사 개시</div>
+        <div class="now-marker"><div class="now-dot"></div>현재 진행중 (2026.05 기준)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-day">조사 종료<br>+20일 이내</div>
+    <div class="tl-line"><div class="tl-dot pending"></div><div class="tl-connector"></div></div>
+    <div>
+      <div class="tl-content">
+        <span class="step-badge badge-gray">STEP 2</span>
+        <div class="step-title">📋 세무조사 결과 통지</div>
+        <div class="step-desc">조사 종료일로부터 20일 이내 납세자에게 서면 통지. 예상 고지세액·가산세 내역 포함. 이 시점에 가산세 종류(일반과소 vs 부정과소)가 잠정 확정</div>
+        <div class="step-law">§81-12 조사결과 통지</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-day">통지 후<br>30일</div>
+    <div class="tl-line"><div class="tl-dot pending"></div><div class="tl-connector"></div></div>
+    <div>
+      <div class="tl-content">
+        <span class="step-badge badge-orange">STEP 3</span>
+        <div class="step-title">⚖️ 과세전 적부심사 청구 (선택)</div>
+        <div class="step-desc">하나은행이 결과에 이의가 있을 경우 30일 이내 과세전 적부심사 청구 가능. 인용 시 세액 감액·취소, 기각 시 고지서 발행 절차 진행</div>
+        <div class="step-law">§81-15 과세전 적부심사</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-day">적부심사<br>후</div>
+    <div class="tl-line"><div class="tl-dot danger"></div><div class="tl-connector"></div></div>
+    <div>
+      <div class="tl-content danger-card">
+        <span class="step-badge badge-red">STEP 4</span>
+        <div class="step-title">🔴 납세고지서(고지서) 발행 ← 핵심 기준점</div>
+        <div class="step-desc">고지서 발행 후 30일 이내 납부기한 부여. <strong>이 시점 이후부터</strong> 납부지연가산세(일 10만분의 22) 기산. 고지서 미발행 단계에서는 공식 납부 의무가 미발생</div>
+        <div class="step-law">§47-5 납부지연가산세 | §81-12</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-day">불복 시</div>
+    <div class="tl-line"><div class="tl-dot pending"></div><div class="tl-connector" style="min-height:0"></div></div>
+    <div>
+      <div class="tl-content">
+        <span class="step-badge badge-green">STEP 5</span>
+        <div class="step-title">🏛️ 조세불복 (조세심판원·행정소송)</div>
+        <div class="step-desc">고지서 납부 후 이의신청 → 조세심판원 심판청구 → 행정소송 순으로 구제 가능. 소송 중 집행정지 신청 시 납부 유예도 가능</div>
+        <div class="step-law">§55 이의신청 | 행정소송법</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="src">출처: 국세기본법 §47-5, §81-12, §81-15 | 대륜법률사무소 세무조사 절차 가이드 | AnalysisBlog 2026.05</div>
+
+</body>
+</html>
