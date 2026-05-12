@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한광통신 경쟁사 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f9ff;
+    padding: 28px 20px;
+  }
+
+  .wrapper { max-width: 900px; margin: 0 auto; }
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 900;
+    color: #1a237e;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 5px; height: 22px;
+    background: linear-gradient(180deg, #1565c0, #42a5f5);
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .section-sub {
+    font-size: 12px;
+    color: #9e9e9e;
+    margin-bottom: 22px;
+    padding-left: 13px;
+  }
+
+  /* FEATURE COMPARISON TABLE */
+  .comp-table-wrap {
+    background: white;
+    border-radius: 16px;
+    overflow-x: auto;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 680px;
+  }
+
+  thead tr:first-child {
+    background: linear-gradient(135deg, #0d47a1, #1565c0);
+    color: white;
+  }
+
+  thead th {
+    padding: 14px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  thead th:first-child { text-align: left; min-width: 160px; }
+
+  .company-header {
+    background: #e3f2fd !important;
+    color: #0d47a1 !important;
+  }
+
+  .highlight-col {
+    background: #fffde7;
+  }
+
+  tbody tr { transition: background 0.15s; }
+  tbody tr:nth-child(odd) { background: #fafafa; }
+  tbody tr:nth-child(even) { background: white; }
+  tbody tr:hover { background: #e8f0fe; }
+
+  tbody td {
+    padding: 12px 12px;
+    font-size: 12.5px;
+    text-align: center;
+    border-bottom: 1px solid #f0f4ff;
+    color: #424242;
+  }
+
+  tbody td:first-child {
+    text-align: left;
+    font-weight: 700;
+    color: #1a237e;
+    font-size: 12px;
+    background: #f8f9ff;
+  }
+
+  .icon-yes { color: #2e7d32; font-size: 16px; font-weight: 900; }
+  .icon-no  { color: #c62828; font-size: 16px; }
+  .icon-part { color: #f57c00; font-size: 14px; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .badge-star { background: #fff9c4; color: #f57f17; border: 1px solid #f9a825; }
+  .badge-blue { background: #e3f2fd; color: #0d47a1; }
+  .badge-gray { background: #f5f5f5; color: #757575; }
+  .badge-red  { background: #ffebee; color: #c62828; }
+  .badge-green{ background: #e8f5e9; color: #2e7d32; }
+
+  /* MARKET SHARE CARDS */
+  .market-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .mc {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    text-align: center;
+  }
+
+  .mc-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #616161;
+    margin-bottom: 6px;
+  }
+
+  .mc-val {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+
+  .mc-sub {
+    font-size: 11px;
+    color: #9e9e9e;
+    line-height: 1.5;
+  }
+
+  .mc.highlight { border: 2px solid #1565c0; background: #e8f0fe; }
+  .mc.highlight .mc-val { color: #1565c0; }
+  .mc.highlight .mc-name { color: #0d47a1; }
+
+  /* SWOT */
+  .swot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .swot-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+
+  .swot-header {
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .swot-item {
+    font-size: 12px;
+    color: #424242;
+    line-height: 1.7;
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .swot-item::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .strength .swot-header { color: #1b5e20; border-color: #4caf50; }
+  .weakness .swot-header { color: #b71c1c; border-color: #ef5350; }
+  .opportunity .swot-header { color: #0d47a1; border-color: #42a5f5; }
+  .threat .swot-header { color: #e65100; border-color: #ff7043; }
+
+  .footer-note {
+    font-size: 11px;
+    color: #9e9e9e;
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .market-cards { grid-template-columns: 1fr 1fr; }
+    .swot-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="section-title">시장 점유율 & 경쟁사 비교 분석</div>
+  <div class="section-sub">국내·글로벌 광섬유·광케이블 시장 | 2026년 5월 기준</div>
+
+  <!-- 시장 규모 카드 -->
+  <div class="market-cards">
+    <div class="mc">
+      <div class="mc-name">글로벌 광섬유 시장 (2022)</div>
+      <div class="mc-val" style="color:#424242;">$61억</div>
+      <div class="mc-sub">CAGR 9.7%<br>2030년 $115억 전망</div>
+    </div>
+    <div class="mc highlight">
+      <div class="mc-name">⭐ 대한광통신 포지셔닝</div>
+      <div class="mc-val">국내 유일</div>
+      <div class="mc-sub">모재→광섬유→케이블<br>완전 수직계열화</div>
+    </div>
+    <div class="mc">
+      <div class="mc-name">미국 BEAD 프로그램</div>
+      <div class="mc-val" style="color:#e65100;">$425억</div>
+      <div class="mc-sub">약 60조 원 규모<br>2026년 본격 집행</div>
+    </div>
+  </div>
+
+  <!-- 경쟁사 비교 표 -->
+  <div class="comp-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th class="highlight-col">⭐ 대한광통신</th>
+          <th>LS전선</th>
+          <th>대한전선</th>
+          <th>가온전선</th>
+          <th>코닝 (미국)</th>
+          <th>스미토모 (일본)</th>
+        </tr>
+        <tr class="company-header">
+          <th style="background:#f8f9ff;color:#1a237e;">구분</th>
+          <th style="background:#fff9c4;color:#f57f17;">코스닥 010170</th>
+          <th>LS그룹 계열</th>
+          <th>코스피 001440</th>
+          <th>코스닥 006090</th>
+          <th>글로벌 1위</th>
+          <th>글로벌 상위</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>광섬유 모재(Preform) 자체 생산</td>
+          <td class="highlight-col"><span class="icon-yes">✅</span> 국내 유일</td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-yes">✅</span></td>
+        </tr>
+        <tr>
+          <td>광섬유 직접 생산</td>
+          <td class="highlight-col"><span class="icon-yes">✅</span></td>
+          <td><span class="icon-part">△</span></td>
+          <td><span class="icon-part">△</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-yes">✅</span></td>
+        </tr>
+        <tr>
+          <td>광케이블 완제품 생산</td>
+          <td class="highlight-col"><span class="icon-yes">✅</span></td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-yes">✅</span></td>
+        </tr>
+        <tr>
+          <td>전력 케이블 사업</td>
+          <td class="highlight-col"><span class="icon-yes">✅</span> OPGW 포함</td>
+          <td><span class="icon-yes">✅</span> 주력</td>
+          <td><span class="icon-yes">✅</span> 주력</td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-part">△</span></td>
+        </tr>
+        <tr>
+          <td>미국 현지 생산법인 보유</td>
+          <td class="highlight-col"><span class="icon-yes">✅</span> 인캡아메리카 (2026년~)</td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-part">△</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-yes">✅</span> 본사</td>
+          <td><span class="icon-yes">✅</span></td>
+        </tr>
+        <tr>
+          <td>BEAD BABA 요건 충족</td>
+          <td class="highlight-col"><span class="icon-yes">✅</span> 인캡아메리카 통해</td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-no">✗</span></td>
+        </tr>
+        <tr>
+          <td>레이저 방산 사업 (레이저 모듈)</td>
+          <td class="highlight-col"><span class="icon-yes">✅</span> 국내 유일 독점</td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-no">✗</span></td>
+        </tr>
+        <tr>
+          <td>특수광섬유 (의료·국방·레이저)</td>
+          <td class="highlight-col"><span class="icon-yes">✅</span></td>
+          <td><span class="icon-part">△</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-no">✗</span></td>
+          <td><span class="icon-yes">✅</span></td>
+          <td><span class="icon-yes">✅</span></td>
+        </tr>
+        <tr>
+          <td>현재 수익성 (2025년 기준)</td>
+          <td class="highlight-col"><span class="badge badge-red">적자 → 개선 중</span></td>
+          <td><span class="badge badge-green">흑자</span></td>
+          <td><span class="badge badge-green">흑자</span></td>
+          <td><span class="badge badge-green">흑자</span></td>
+          <td><span class="badge badge-star">고수익</span></td>
+          <td><span class="badge badge-green">흑자</span></td>
+        </tr>
+        <tr>
+          <td>AI 데이터센터 광케이블 수주</td>
+          <td class="highlight-col"><span class="badge badge-star">메타 등 빅테크 직접 수주</span></td>
+          <td><span class="badge badge-blue">수주 추진</span></td>
+          <td><span class="badge badge-gray">미확인</span></td>
+          <td><span class="badge badge-gray">미확인</span></td>
+          <td><span class="badge badge-star">최대 수혜</span></td>
+          <td><span class="badge badge-blue">수혜 중</span></td>
+        </tr>
+        <tr>
+          <td>코스닥/코스피 상장 여부</td>
+          <td class="highlight-col"><span class="badge badge-blue">코스닥</span></td>
+          <td><span class="badge badge-gray">비상장(LS 계열)</span></td>
+          <td><span class="badge badge-blue">코스피</span></td>
+          <td><span class="badge badge-blue">코스닥</span></td>
+          <td><span class="badge badge-gray">NYSE</span></td>
+          <td><span class="badge badge-gray">TYO</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SWOT 분석 -->
+  <div class="swot-grid">
+    <div class="swot-card strength">
+      <div class="swot-header">💪 강점 (Strength)</div>
+      <div class="swot-item">국내 유일 광섬유 모재→케이블 수직계열화</div>
+      <div class="swot-item">고출력 레이저 모듈 국내 독점 생산 능력</div>
+      <div class="swot-item">미국 현지 생산법인(인캡아메리카) 확보로 BEAD 수혜 직결</div>
+      <div class="swot-item">50년 이상 기술 축적, 코스닥 전기·전자 섹터 소속</div>
+      <div class="swot-item">AI 데이터센터향 초고밀도 864 Fiber 공급 역량</div>
+    </div>
+    <div class="swot-card weakness">
+      <div class="swot-header">⚠️ 약점 (Weakness)</div>
+      <div class="swot-item">3년 연속 영업적자 (2023~2025년)</div>
+      <div class="swot-item">대주주 지배력 지속 약화 (32% → 16.58%)</div>
+      <div class="swot-item">잦은 유상증자·CB 발행으로 주주가치 희석</div>
+      <div class="swot-item">글로벌 대형사 대비 절대 생산 규모 열세</div>
+      <div class="swot-item">영업활동현금흐름 마이너스 지속</div>
+    </div>
+    <div class="swot-card opportunity">
+      <div class="swot-header">🚀 기회 (Opportunity)</div>
+      <div class="swot-item">AI 데이터센터 광섬유 수요 폭증 (일반 대비 16~36배)</div>
+      <div class="swot-item">미국 BEAD 프로그램 425억 달러(60조 원) 본격 집행</div>
+      <div class="swot-item">레이저 대공무기 '천광' 양산 → 방산주 리레이팅</div>
+      <div class="swot-item">중국산 광섬유 미국 시장 퇴출 → 반사 수혜</div>
+      <div class="swot-item">글로벌 광섬유 시장 CAGR 9.7% 성장 전망</div>
+    </div>
+    <div class="swot-card threat">
+      <div class="swot-header">🔴 위협 (Threat)</div>
+      <div class="swot-item">코닝·스미토모 등 글로벌 대형사 공격적 증설</div>
+      <div class="swot-item">미중 관계 완화 시 중국산 저가 공세 재개 가능성</div>
+      <div class="swot-item">빅테크 CAPEX 삭감 리스크 (AI 버블 논란)</div>
+      <div class="swot-item">인캡아메리카 소송 등 미국 사업 불확실성</div>
+      <div class="swot-item">PBR 48배의 고밸류에이션 → 실망 시 급락 위험</div>
+    </div>
+  </div>
+
+  <p class="footer-note">출처: 블로터, 신영증권 리서치, IMARC Group, Data Bridge Market Research | 2026.05 기준</p>
+</div>
+</body>
+</html>
