@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한광통신 재무 핵심 지표</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 28px 20px;
+  }
+
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 60%, #1565c0 100%);
+    border-radius: 16px;
+    color: white;
+  }
+
+  .ticker-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .header-text h1 {
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+
+  .header-text p {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 4px solid #1565c0;
+    transition: transform 0.2s;
+  }
+
+  .card:hover { transform: translateY(-2px); }
+
+  .card.green { border-top-color: #2e7d32; }
+  .card.red   { border-top-color: #c62828; }
+  .card.orange { border-top-color: #e65100; }
+  .card.purple { border-top-color: #6a1b9a; }
+  .card.teal  { border-top-color: #00695c; }
+
+  .card-label {
+    font-size: 11px;
+    color: #757575;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .card-value {
+    font-size: 26px;
+    font-weight: 900;
+    color: #1a237e;
+    font-family: 'Roboto Mono', monospace;
+    line-height: 1.1;
+  }
+
+  .card-value.red-val { color: #c62828; }
+  .card-value.green-val { color: #2e7d32; }
+  .card-value.orange-val { color: #e65100; }
+
+  .card-sub {
+    font-size: 12px;
+    color: #9e9e9e;
+    margin-top: 6px;
+  }
+
+  .card-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-top: 6px;
+  }
+
+  .change-pos { background: #e8f5e9; color: #2e7d32; }
+  .change-neg { background: #ffebee; color: #c62828; }
+
+  .alert-box {
+    background: linear-gradient(135deg, #fff8e1, #fffde7);
+    border: 1px solid #f9a825;
+    border-left: 5px solid #f9a825;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #5d4037;
+    line-height: 1.6;
+    margin-top: 4px;
+  }
+
+  .alert-box strong { color: #e65100; }
+
+  .footer-note {
+    font-size: 11px;
+    color: #9e9e9e;
+    text-align: right;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .card-value { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="ticker-badge">KQ · 010170</div>
+    <div class="header-text">
+      <h1>대한광통신 — 핵심 재무 지표 요약</h1>
+      <p>2026년 5월 기준 | 연결 재무제표 기준</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-label">현재 주가 (2026.05.08)</div>
+      <div class="card-value">22,350<span style="font-size:14px;font-weight:600;color:#546e7a;">원</span></div>
+      <div class="card-sub">52주 최저 582원 | 52주 최고 24,450원</div>
+      <div class="card-change change-pos">▲ 52주 기준 약 3,500% 상승</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-label">시가총액 (연결)</div>
+      <div class="card-value orange-val">3,807<span style="font-size:14px;font-weight:600;color:#546e7a;">억</span></div>
+      <div class="card-sub">코스닥 상장 | 전기·전자 섹터</div>
+      <div class="card-change change-pos">▲ 대형 리레이팅 진행 중</div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-label">PBR (주가순자산비율)</div>
+      <div class="card-value" style="color:#6a1b9a;">47.95<span style="font-size:14px;font-weight:600;color:#546e7a;">배</span></div>
+      <div class="card-sub">장부가 대비 극도로 높은 프리미엄</div>
+      <div class="card-change change-neg">⚠ 미래 실적 선반영</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card red">
+      <div class="card-label">2025년 매출액 (연결)</div>
+      <div class="card-value red-val">1,394<span style="font-size:14px;font-weight:600;color:#546e7a;">억</span></div>
+      <div class="card-change change-neg">▼ 전년 대비 8.7% 감소</div>
+      <div class="card-sub">전력사업 민간경기 영향 매출 감소</div>
+    </div>
+
+    <div class="card red">
+      <div class="card-label">2025년 영업손실</div>
+      <div class="card-value red-val">-229<span style="font-size:14px;font-weight:600;color:#546e7a;">억</span></div>
+      <div class="card-change change-pos">▲ 전년(-297억) 대비 27.9% 개선</div>
+      <div class="card-sub">3년 연속 적자 → 적자 폭 축소 중</div>
+    </div>
+
+    <div class="card green">
+      <div class="card-label">2025년 순손실 (연결)</div>
+      <div class="card-value red-val">-245<span style="font-size:14px;font-weight:600;color:#546e7a;">억</span></div>
+      <div class="card-change change-pos">▲ 전년(-560억) 대비 56.3% 개선</div>
+      <div class="card-sub">손상차손 소멸·비용 절감 효과</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card teal">
+      <div class="card-label">PER (주가수익비율)</div>
+      <div class="card-value" style="color:#00695c; font-size:18px;">산출 불가</div>
+      <div class="card-sub">3년 연속 순손실로 EPS 마이너스</div>
+      <div class="card-change change-neg">⚠ 흑자 전환 이후 의미 발생</div>
+    </div>
+
+    <div class="card red">
+      <div class="card-label">ROE (자기자본이익률)</div>
+      <div class="card-value red-val" style="font-size:18px;">음수 (−)</div>
+      <div class="card-sub">지속적 순손실 → 자기자본 잠식 우려</div>
+      <div class="card-change change-neg">⚠ 수익성 회복 여부가 핵심</div>
+    </div>
+  </div>
+
+  <div class="alert-box">
+    📊 <strong>2026년 시장 컨센서스:</strong> 매출 2,200~2,500억 원 / 영업이익 100~200억 원 수준의 <strong>흑자 전환</strong> 예상. 인캡아메리카(INCAB America) 인수 효과 + 미국 BEAD 수혜 + 레이저 방산 모멘텀이 동시 반영될 경우 추가 상향 가능성. 단, 아직 '예상'이며 실적 확인이 필수 변수.
+  </div>
+
+  <p class="footer-note">출처: FnGuide CompanyGuide, Investing.com, 블로터, SK증권 추정치 | 2026.05 기준</p>
+</div>
+</body>
+</html>
