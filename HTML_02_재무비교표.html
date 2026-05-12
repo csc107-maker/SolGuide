@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한광통신 연도별 재무 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@400;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8faff;
+    padding: 28px 20px;
+  }
+
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 900;
+    color: #1a237e;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background: #1565c0;
+    border-radius: 3px;
+  }
+
+  .section-sub {
+    font-size: 12px;
+    color: #9e9e9e;
+    margin-bottom: 20px;
+    padding-left: 13px;
+  }
+
+  /* BAR CHART */
+  .bar-chart-area {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+
+  .chart-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #424242;
+    margin-bottom: 18px;
+  }
+
+  .bar-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    height: 180px;
+    padding: 0 10px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .bar-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 160px;
+    position: relative;
+  }
+
+  .bar-fill {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    min-height: 8px;
+    transition: height 0.5s ease;
+  }
+
+  .bar-label-top {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #424242;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .bar-year {
+    font-size: 12px;
+    font-weight: 700;
+    color: #616161;
+  }
+
+  .bar-est {
+    font-size: 10px;
+    color: #9e9e9e;
+  }
+
+  /* TABLE */
+  .table-area {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    background: linear-gradient(135deg, #1a237e, #1565c0);
+    color: white;
+  }
+
+  thead th {
+    padding: 14px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-align: center;
+  }
+
+  thead th:first-child { text-align: left; }
+
+  tbody tr { transition: background 0.15s; }
+  tbody tr:nth-child(even) { background: #f5f8ff; }
+  tbody tr:hover { background: #e8f0fe; }
+
+  tbody td {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #424242;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  tbody td:first-child {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    color: #1a237e;
+    text-align: left;
+  }
+
+  .val-red { color: #c62828; font-weight: 700; }
+  .val-green { color: #2e7d32; font-weight: 700; }
+  .val-blue { color: #1565c0; font-weight: 700; }
+  .val-orange { color: #e65100; font-weight: 700; }
+  .val-gray { color: #9e9e9e; font-style: italic; }
+
+  .est-badge {
+    display: inline-block;
+    background: #fff3e0;
+    color: #e65100;
+    font-size: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .trend-row td {
+    background: linear-gradient(to right, #e3f2fd, #f3e5f5) !important;
+  }
+
+  .note-box {
+    background: #e8f5e9;
+    border-left: 4px solid #2e7d32;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 12.5px;
+    color: #1b5e20;
+    line-height: 1.7;
+  }
+
+  .note-box strong { color: #1b5e20; }
+
+  .footer-note {
+    font-size: 11px;
+    color: #9e9e9e;
+    text-align: right;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="section-title">대한광통신 연도별 재무 실적 비교</div>
+  <div class="section-sub">단위: 억 원 | 연결 재무제표 기준 | E: 시장 추정치</div>
+
+  <!-- 매출 바 차트 시각화 -->
+  <div class="bar-chart-area">
+    <div class="chart-title">📊 매출액 추이 (억 원) — 2026E 흑자 전환 기대</div>
+    <div class="bar-group">
+      <!-- 2023 -->
+      <div class="bar-item">
+        <div class="bar-wrap">
+          <div class="bar-label-top">1,527</div>
+          <div class="bar-fill" style="height:130px; background: linear-gradient(180deg,#5c7cfa,#3b5bdb);"></div>
+        </div>
+        <div class="bar-year">2023</div>
+      </div>
+      <!-- 2024 -->
+      <div class="bar-item">
+        <div class="bar-wrap">
+          <div class="bar-label-top">1,528</div>
+          <div class="bar-fill" style="height:131px; background: linear-gradient(180deg,#5c7cfa,#3b5bdb);"></div>
+        </div>
+        <div class="bar-year">2024</div>
+      </div>
+      <!-- 2025 -->
+      <div class="bar-item">
+        <div class="bar-wrap">
+          <div class="bar-label-top">1,394</div>
+          <div class="bar-fill" style="height:118px; background: linear-gradient(180deg,#f06595,#c2255c);"></div>
+        </div>
+        <div class="bar-year">2025</div>
+      </div>
+      <!-- 2026E -->
+      <div class="bar-item">
+        <div class="bar-wrap">
+          <div class="bar-label-top" style="color:#2e7d32;">2,350</div>
+          <div class="bar-fill" style="height:160px; background: linear-gradient(180deg,#69db7c,#2f9e44);"></div>
+        </div>
+        <div class="bar-year" style="color:#2e7d32;">2026E</div>
+        <div class="bar-est">추정치</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#616161;">
+        <span style="width:14px;height:14px;background:linear-gradient(180deg,#5c7cfa,#3b5bdb);border-radius:3px;display:inline-block;"></span> 실적 확인
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#616161;">
+        <span style="width:14px;height:14px;background:linear-gradient(180deg,#f06595,#c2255c);border-radius:3px;display:inline-block;"></span> 매출 감소
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#2e7d32;">
+        <span style="width:14px;height:14px;background:linear-gradient(180deg,#69db7c,#2f9e44);border-radius:3px;display:inline-block;"></span> 성장 기대(E)
+      </div>
+    </div>
+  </div>
+
+  <!-- 재무 비교 표 -->
+  <div class="table-area">
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>2023년</th>
+          <th>2024년</th>
+          <th>2025년</th>
+          <th>2026년 E</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>매출액</td>
+          <td>1,527억</td>
+          <td>1,528억</td>
+          <td class="val-red">1,394억</td>
+          <td class="val-green">2,200~2,500억 <span class="est-badge">E</span></td>
+        </tr>
+        <tr>
+          <td>매출 증감률</td>
+          <td class="val-gray">—</td>
+          <td>+0.1%</td>
+          <td class="val-red">▼ -8.7%</td>
+          <td class="val-green">▲ +58~79% <span class="est-badge">E</span></td>
+        </tr>
+        <tr>
+          <td>영업이익(손실)</td>
+          <td class="val-red">-232억</td>
+          <td class="val-red">-297억</td>
+          <td class="val-red">-229억</td>
+          <td class="val-green">+100~200억 <span class="est-badge">E</span></td>
+        </tr>
+        <tr>
+          <td>영업이익률</td>
+          <td class="val-red">-15.2%</td>
+          <td class="val-red">-19.4%</td>
+          <td class="val-red">-16.4%</td>
+          <td class="val-green">+4~8% <span class="est-badge">E</span></td>
+        </tr>
+        <tr>
+          <td>당기순손실</td>
+          <td class="val-red">-295억</td>
+          <td class="val-red">-560억</td>
+          <td class="val-red">-245억</td>
+          <td class="val-green">흑자 전환 기대 <span class="est-badge">E</span></td>
+        </tr>
+        <tr class="trend-row">
+          <td>영업손실 개선율</td>
+          <td class="val-gray">기준</td>
+          <td class="val-red">▼ -27.9%</td>
+          <td class="val-orange">▲ +22.9%</td>
+          <td class="val-green">▲ 흑전 <span class="est-badge">E</span></td>
+        </tr>
+        <tr>
+          <td>순손실 개선율</td>
+          <td class="val-gray">기준</td>
+          <td class="val-red">▼ -89.8%</td>
+          <td class="val-green">▲ +56.3%</td>
+          <td class="val-green">▲ 흑전 <span class="est-badge">E</span></td>
+        </tr>
+        <tr>
+          <td>미국향 매출 YoY</td>
+          <td class="val-gray">—</td>
+          <td class="val-blue">성장세</td>
+          <td class="val-green">▲ +221%</td>
+          <td class="val-green">인캡아메리카 연결 <span class="est-badge">E</span></td>
+        </tr>
+        <tr>
+          <td>미국 거래처 수</td>
+          <td class="val-gray">—</td>
+          <td>8개</td>
+          <td class="val-blue">18개</td>
+          <td class="val-green">확대 지속 <span class="est-badge">E</span></td>
+        </tr>
+        <tr>
+          <td>PBR</td>
+          <td class="val-gray">낮음</td>
+          <td class="val-gray">낮음</td>
+          <td class="val-orange">급등 이전</td>
+          <td class="val-red">47.95배</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box">
+    ✅ <strong>분기별 개선 추이 (2025년):</strong> 1Q25 영업손실 -69억 → 2Q25 -27억 → 3Q25 -12억으로 꾸준히 축소. 비용 절감과 미국향 매출 확대가 동시에 진행되며 2026년 본격 흑자 전환 가능성 높아지는 구도. 단, 인캡아메리카 연결 편입 시점과 BEAD 수주 실현 여부가 핵심 변수.
+  </div>
+
+  <p class="footer-note">출처: 블로터, 딜사이트, SK증권 추정치, FnGuide | E: 시장 추정치, 투자 판단 근거로 사용 불가</p>
+</div>
+</body>
+</html>
