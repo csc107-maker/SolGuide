@@ -1,0 +1,64 @@
+
+<h2 class="sr-only">미국 증시와 한국 코스피 5월 11~12일 비교 차트</h2>
+<div style="padding:1rem 0;">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1.5rem;">왜 미국은 오르는데 한국은 떨어졌나 — 5월 11~12일 주요 지수 등락률</p>
+  <div style="position:relative;width:100%;height:280px;">
+    <canvas id="compChart" role="img" aria-label="5월 11일과 12일 미국·한국 주요 지수 등락률 비교. 미국 지수는 5월 11일 소폭 상승, 한국 코스피와 코스닥은 5월 12일 약 2.3% 하락.">데이터: 나스닥 +0.10%, S&P500 +0.19%, 다우 +0.19%, 코스피 -2.29%, 코스닥 -2.32%</canvas>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12px;color:var(--color-text-secondary);">
+    <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#185fa5;"></span>미국 지수 (5/11)</span>
+    <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#a32d2d;"></span>한국 지수 (5/12)</span>
+  </div>
+  <div style="margin-top:1rem;background:#fef3cd;border:0.5px solid #f0c040;border-radius:8px;padding:0.75rem 1rem;">
+    <p style="font-size:13px;color:#854f0b;margin:0;"><strong style="font-weight:500;">핵심 포인트:</strong> 미국 정규장 상승 → 미국 시간외 반도체株(샌디스크 -4.6%, 마이크론 -3.1%) 하락 → 한국 개장 시 반도체 매도 집중</p>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+new Chart(document.getElementById('compChart'), {
+  type: 'bar',
+  data: {
+    labels: ['나스닥\n(5/11)', 'S&P500\n(5/11)', '다우\n(5/11)', '코스피\n(5/12)', '코스닥\n(5/12)'],
+    datasets: [{
+      label: '등락률 (%)',
+      data: [0.10, 0.19, 0.19, -2.29, -2.32],
+      backgroundColor: [
+        '#378add','#378add','#378add','#e24b4a','#e24b4a'
+      ],
+      borderColor: [
+        '#185fa5','#185fa5','#185fa5','#a32d2d','#a32d2d'
+      ],
+      borderWidth: 1,
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => (ctx.parsed.y > 0 ? '+' : '') + ctx.parsed.y.toFixed(2) + '%'
+        }
+      }
+    },
+    scales: {
+      y: {
+        min: -3,
+        max: 1,
+        grid: { color: 'rgba(128,128,128,0.15)' },
+        ticks: {
+          callback: v => (v > 0 ? '+' : '') + v.toFixed(1) + '%',
+          color: '#888',
+          font: { size: 11 }
+        }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: '#888', font: { size: 11 } }
+      }
+    }
+  }
+});
+</script>
