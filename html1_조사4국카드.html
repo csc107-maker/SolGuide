@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울지방국세청 조사4국 특성</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F8F9FF;
+    padding: 32px 20px;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #7B61FF;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1A1A2E;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #FF4757;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1.5px solid #EBEBF5;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(123,97,255,0.12);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .card.red::before { background: linear-gradient(90deg, #FF4757, #FF6B81); }
+  .card.purple::before { background: linear-gradient(90deg, #7B61FF, #A78BFA); }
+  .card.navy::before { background: linear-gradient(90deg, #2C3E7A, #4A5DAF); }
+  .card.orange::before { background: linear-gradient(90deg, #FF8C42, #FFB347); }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1A1A2E;
+    margin-bottom: 6px;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 10px;
+  }
+
+  .tag-red { background: #FFF0F0; color: #FF4757; }
+  .tag-purple { background: #F3F0FF; color: #7B61FF; }
+  .tag-navy { background: #EFF2FF; color: #2C3E7A; }
+  .tag-orange { background: #FFF5EE; color: #FF8C42; }
+
+  .bottom-note {
+    background: linear-gradient(135deg, #1A1A2E, #2C3E7A);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: white;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .bottom-note strong {
+    color: #A78BFA;
+  }
+
+  .src {
+    font-size: 10px;
+    color: #999;
+    margin-top: 16px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<div class="section-label">국세청 조직 분석</div>
+<span class="badge">비정기·특별 전담</span>
+<h2>서울지방국세청 조사4국이란?</h2>
+<p class="subtitle">2026년 5월 하나은행에 투입된 '기업 저승사자'의 정체</p>
+
+<div class="cards-grid">
+  <div class="card red">
+    <div class="card-icon">⚡</div>
+    <div class="card-title">비정기 특별조사 전담</div>
+    <div class="card-desc">정기·일반 세무조사를 담당하는 1·2국과 달리, 탈세·비자금·부당 내부거래 혐의가 포착됐을 때만 기동하는 특수조직</div>
+    <div class="card-tag tag-red">1·2국과 다른 트랙</div>
+  </div>
+
+  <div class="card purple">
+    <div class="card-icon">🔍</div>
+    <div class="card-title">조세범칙조사 권한 보유</div>
+    <div class="card-desc">세무조사 중 범칙 정황 발견 시 조세범처벌법에 따른 범칙조사로 즉시 전환 가능. 결과를 국세청장에게 직보</div>
+    <div class="card-tag tag-purple">직보 라인 보유</div>
+  </div>
+
+  <div class="card navy">
+    <div class="card-icon">🗺️</div>
+    <div class="card-title">전국 교차조사 권한</div>
+    <div class="card-desc">서울지방국세청 소속이지만 교차조사 형식으로 전국 어디든 비정기 조사 출동 가능. 해외 역외탈세 수집도 담당</div>
+    <div class="card-tag tag-navy">전국·해외 포괄</div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-icon">📋</div>
+    <div class="card-title">이번 투입 배경</div>
+    <div class="card-desc">2022년 정기조사 후 불과 4년 만에 재투입. 경영진 고액 보수, 퇴직 자문료, 행우회 수의계약 등 비용 처리 구조 집중 검증</div>
+    <div class="card-tag tag-orange">이례적 비정기 재투입</div>
+  </div>
+</div>
+
+<div class="bottom-note">
+  ⚠️ <strong>핵심 포인트:</strong> 조사4국이 투입됐다는 사실 자체가 "이미 특정 탈루 혐의를 포착했다는 신호"로 업계는 읽습니다. 다만 조사 결과와 과세 여부는 <strong>최종 고지서 발행 시점</strong>까지 공식 확정이 아닙니다.
+</div>
+
+<div class="src">출처: 나무위키(서울지방국세청 조사4국), 경향신문, EBN뉴스 2026.05 | AnalysisBlog</div>
+
+</body>
+</html>
