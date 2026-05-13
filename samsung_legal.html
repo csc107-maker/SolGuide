@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성전자 가처분 법원 핵심 쟁점 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f5f0ff; display: flex; justify-content: center; padding: 30px 16px; }
+
+  .wrap { width: 100%; max-width: 820px; }
+
+  .top-card {
+    background: linear-gradient(135deg, #4527a0 0%, #6a1b9a 50%, #7b1fa2 100%);
+    border-radius: 18px; padding: 26px 32px; color: #fff;
+    margin-bottom: 16px; position: relative; overflow: hidden;
+  }
+  .top-card::after { content: '⚖️'; position: absolute; right: 28px; top: 50%; transform: translateY(-50%); font-size: 70px; opacity: 0.2; }
+  .top-card .badge { font-size: 11px; font-weight: 700; letter-spacing: 2px; opacity: 0.8; margin-bottom: 8px; }
+  .top-card h1 { font-size: 19px; font-weight: 900; }
+  .top-card p { font-size: 12.5px; margin-top: 6px; opacity: 0.85; }
+
+  /* Schedule */
+  .schedule-card {
+    background: #fff; border-radius: 16px; padding: 22px 26px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.07); margin-bottom: 14px;
+  }
+  .section-title { font-size: 13px; font-weight: 700; color: #4527a0; margin-bottom: 14px; letter-spacing: 0.5px; }
+  .sched-steps { display: flex; gap: 0; flex-wrap: wrap; }
+  .sched-step {
+    flex: 1; min-width: 120px; text-align: center; position: relative;
+    padding: 10px 8px;
+  }
+  .sched-step:not(:last-child)::after {
+    content: '→'; position: absolute; right: -8px; top: 50%; transform: translateY(-50%);
+    font-size: 18px; color: #ce93d8;
+  }
+  .sched-step .date { font-size: 13px; font-weight: 900; color: #6a1b9a; }
+  .sched-step .label { font-size: 11px; color: #666; margin-top: 4px; line-height: 1.4; }
+  .sched-step.today .date { color: #e53935; }
+  .sched-step.today { background: #fff5f5; border-radius: 10px; border: 1.5px solid #ffcdd2; }
+
+  /* vs table */
+  .vs-card {
+    background: #fff; border-radius: 16px; padding: 22px 26px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.07); margin-bottom: 14px;
+  }
+  .vs-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: start; }
+  .vs-col { }
+  .vs-header {
+    text-align: center; padding: 8px; border-radius: 8px;
+    font-size: 13px; font-weight: 700; margin-bottom: 10px;
+  }
+  .vs-header.blue { background: #e3f2fd; color: #1565c0; }
+  .vs-header.purple { background: #f3e5f5; color: #6a1b9a; }
+  .vs-center { display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #ccc; padding-top: 40px; }
+  .vs-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
+  .vs-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+  .vs-icon.blue { background: #dbeafe; color: #1565c0; }
+  .vs-icon.purple { background: #f3e5f5; color: #7b1fa2; }
+  .vs-item p { font-size: 12px; color: #444; line-height: 1.6; }
+
+  /* Precedent */
+  .precedent-card {
+    background: #fff; border-radius: 16px; padding: 20px 26px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.07); margin-bottom: 14px;
+    border-left: 5px solid #ffa000;
+  }
+  .prec-tag { display: inline-block; background: #fff8e1; color: #f57f17; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 3px 10px; margin-bottom: 10px; }
+  .precedent-card p { font-size: 13px; color: #444; line-height: 1.7; }
+
+  /* Expert opinion */
+  .expert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  @media(max-width: 520px) { .expert-grid { grid-template-columns: 1fr; } }
+  .expert-card {
+    background: #fff; border-radius: 14px; padding: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  }
+  .expert-card .name { font-size: 11px; font-weight: 700; color: #6a1b9a; margin-bottom: 6px; }
+  .expert-card .quote { font-size: 12px; color: #444; line-height: 1.6; font-style: italic; }
+  .expert-card .percent { font-size: 22px; font-weight: 900; color: #4527a0; margin-top: 8px; }
+
+  /* Verdict */
+  .verdict { background: linear-gradient(135deg, #f3e5f5, #ede7f6); border-radius: 16px; padding: 20px 24px; border: 1.5px solid #ce93d8; }
+  .verdict h3 { font-size: 14px; font-weight: 700; color: #4527a0; margin-bottom: 8px; }
+  .verdict p { font-size: 13px; color: #555; line-height: 1.7; }
+
+  .foot { text-align: right; font-size: 11px; color: #bdbdbd; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-card">
+    <div class="badge">⚖️ LEGAL ANALYSIS</div>
+    <h1>삼성전자 파업금지 가처분 — 법원이 판단할 핵심 쟁점</h1>
+    <p>수원지방법원 민사31부 | 신청인: 삼성전자 | 피신청인: 초기업노조·전삼노</p>
+  </div>
+
+  <div class="schedule-card">
+    <div class="section-title">📅 법원 심리 일정</div>
+    <div class="sched-steps">
+      <div class="sched-step">
+        <div class="date">4/16</div>
+        <div class="label">삼성전자<br>가처분 신청</div>
+      </div>
+      <div class="sched-step">
+        <div class="date">4/29</div>
+        <div class="label">1차 심문<br>(사측 주장)</div>
+      </div>
+      <div class="sched-step today">
+        <div class="date">5/13 🔴</div>
+        <div class="label"><strong>2차 심문<br>(노조 반박)</strong></div>
+      </div>
+      <div class="sched-step">
+        <div class="date">~5/20</div>
+        <div class="label">가처분<br>인용 여부 결정</div>
+      </div>
+      <div class="sched-step">
+        <div class="date">5/21</div>
+        <div class="label">총파업<br>예정일</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-card">
+    <div class="section-title">⚡ 핵심 쟁점: 사측 vs 노조 주장 대립</div>
+    <div class="vs-grid">
+      <div class="vs-col">
+        <div class="vs-header blue">🏢 삼성전자 사측</div>
+        <div class="vs-item">
+          <div class="vs-icon blue">①</div>
+          <p>노조법 42조 — 안전 보호시설 정상 운영 방해 금지. 반도체 공정 안전 인력(전체 5%) 파업 배제 요구</p>
+        </div>
+        <div class="vs-item">
+          <div class="vs-icon blue">②</div>
+          <p>웨이퍼 변질·장비 손상 시 수개월 복구 필요. 18일 생산중단은 수조원 손실</p>
+        </div>
+        <div class="vs-item">
+          <div class="vs-icon blue">③</div>
+          <p>성과급은 경영 의사결정 영역 — 쟁의 목적 정당성 부재</p>
+        </div>
+        <div class="vs-item">
+          <div class="vs-icon blue">④</div>
+          <p>국가 경제·수출에 미치는 연쇄 피해 강조</p>
+        </div>
+      </div>
+      <div class="vs-center">VS</div>
+      <div class="vs-col">
+        <div class="vs-header purple">👷 노조 측</div>
+        <div class="vs-item">
+          <div class="vs-icon purple">①</div>
+          <p>반도체 사업장은 노조법상 필수 공익 사업장이 아님 — 안전 인력도 파업 권리 보유</p>
+        </div>
+        <div class="vs-item">
+          <div class="vs-icon purple">②</div>
+          <p>사측의 가처분 신청은 노동 운동 위축 시도. 헌법상 집회권·파업권 침해</p>
+        </div>
+        <div class="vs-item">
+          <div class="vs-icon purple">③</div>
+          <p>OPI(초과이익성과급)는 넓은 의미의 임금 범주 — 쟁의 목적 정당성 충족</p>
+        </div>
+        <div class="vs-item">
+          <div class="vs-icon purple">④</div>
+          <p>법원 결정과 관계없이 5/21 총파업 강행 방침 유지</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="precedent-card">
+    <div class="prec-tag">📌 선례: 삼성바이오로직스 가처분 (2026.04.23 인천지법)</div>
+    <p>인천지법 제21민사부는 삼성바이오로직스의 쟁의행위 금지 가처분을 <strong>일부 인용</strong>했습니다. 완결 공정(정제작업)에 대해서만 쟁의제한 작업으로 규정했으며, 배양 등 비완결 공정은 제한 대상에서 제외했습니다. 삼성전자 가처분에도 같은 논리가 적용될 가능성이 높습니다.</p>
+  </div>
+
+  <div class="expert-grid">
+    <div class="expert-card">
+      <div class="name">박지순 / 고려대 법학전문대학원 교수</div>
+      <div class="quote">"안전 문제, 원료 변질 등에 대해 일부 인용 가능성. 가처분 신청 내용 중 인용 비율은..."</div>
+      <div class="percent">20~30%</div>
+      <div style="font-size:11px;color:#999;margin-top:2px;">예상 인용 범위</div>
+    </div>
+    <div class="expert-card">
+      <div class="name">권용 / 법무법인 다산 변호사</div>
+      <div class="quote">"노동 3권 행사이자 헌법상 집회권 제한 결과 초래. 더 엄격한 판단 필요. 쟁의행위에 큰 제한 없이..."</div>
+      <div class="percent">일부 인용</div>
+      <div style="font-size:11px;color:#999;margin-top:2px;">가능성 전망</div>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <h3>🔍 법조계 종합 전망: "일부 인용 가능성 우세"</h3>
+    <p>법조계 다수는 ① 반도체 안전 인력 유지 ② 생산시설 점거 금지 ③ 쟁의참여 강요 금지 등에 대해 법원이 <strong>제한적 범위에서 인용</strong>할 가능성에 무게를 둡니다. 다만 성과급을 파업 목적으로 삼는 것의 법적 정당성 여부가 최대 변수이며, 법원의 결정은 단순 노사 갈등을 넘어 <strong>국가 핵심 산업에서 노동권의 범위</strong>를 가르는 중요한 선례가 될 전망입니다.</p>
+  </div>
+
+  <div class="foot">출처: 파이낸셜뉴스·YTN·한국경제·나무위키 | 2026.05.13 기준 | 법적 조언 아님</div>
+</div>
+</body>
+</html>
