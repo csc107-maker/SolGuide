@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성전자 노사 보상 분석 & 해외 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0fff8; display: flex; justify-content: center; padding: 30px 16px; }
+
+  .wrap { width: 100%; max-width: 860px; }
+
+  .top-bar {
+    background: linear-gradient(135deg, #004d40 0%, #00695c 50%, #00897b 100%);
+    border-radius: 18px; padding: 24px 30px; color: #fff;
+    margin-bottom: 16px; position: relative; overflow: hidden;
+  }
+  .top-bar::after { content: '💰'; position: absolute; right: 28px; top: 50%; transform: translateY(-50%); font-size: 70px; opacity: 0.2; }
+  .top-bar .badge { font-size: 11px; font-weight: 700; letter-spacing: 2px; opacity: 0.8; margin-bottom: 6px; }
+  .top-bar h1 { font-size: 19px; font-weight: 900; }
+  .top-bar p { font-size: 12.5px; margin-top: 5px; opacity: 0.85; }
+
+  /* Demands comparison table */
+  .table-card {
+    background: #fff; border-radius: 16px;
+    overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+    margin-bottom: 16px;
+  }
+  .table-card .tc-title {
+    background: #e8f5e9; padding: 14px 22px;
+    font-size: 13px; font-weight: 700; color: #2e7d32;
+    border-bottom: 1px solid #c8e6c9;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th { padding: 10px 18px; font-size: 12px; font-weight: 700; text-align: left; background: #f9f9f9; color: #555; border-bottom: 1px solid #eee; }
+  td { padding: 12px 18px; font-size: 12.5px; color: #333; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: none; }
+  td.union { color: #c62828; font-weight: 600; }
+  td.company { color: #1565c0; font-weight: 600; }
+  td.compromise { color: #2e7d32; font-weight: 600; }
+  .diff-chip {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; margin-left: 6px;
+  }
+  .chip-red { background: #ffebee; color: #c62828; }
+  .chip-blue { background: #e3f2fd; color: #1565c0; }
+  .chip-green { background: #e8f5e9; color: #2e7d32; }
+
+  /* Scale section */
+  .scale-card {
+    background: #fff; border-radius: 16px; padding: 20px 24px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.07); margin-bottom: 16px;
+  }
+  .scale-title { font-size: 13px; font-weight: 700; color: #004d40; margin-bottom: 14px; }
+  .scale-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media(max-width: 520px) { .scale-items { grid-template-columns: 1fr; } }
+  .scale-item { text-align: center; padding: 14px; border-radius: 12px; border: 1.5px solid #e0e0e0; }
+  .scale-item.red { border-color: #ffcdd2; background: #fff9fa; }
+  .scale-item.blue { border-color: #bbdefb; background: #f8fcff; }
+  .scale-item.green { border-color: #c8e6c9; background: #f8fff8; }
+  .scale-item .num { font-size: 26px; font-weight: 900; }
+  .scale-item.red .num { color: #e53935; }
+  .scale-item.blue .num { color: #1565c0; }
+  .scale-item.green .num { color: #2e7d32; }
+  .scale-item .label { font-size: 11.5px; color: #666; margin-top: 4px; line-height: 1.4; }
+
+  /* International comparison */
+  .intl-card {
+    background: #fff; border-radius: 16px;
+    overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+    margin-bottom: 16px;
+  }
+  .intl-card .ic-title { background: #e0f2f1; padding: 14px 22px; font-size: 13px; font-weight: 700; color: #00695c; border-bottom: 1px solid #b2dfdb; }
+  .intl-item { padding: 16px 22px; border-bottom: 1px solid #f5f5f5; display: flex; gap: 16px; align-items: flex-start; }
+  .intl-item:last-child { border-bottom: none; }
+  .intl-flag { font-size: 26px; flex-shrink: 0; }
+  .intl-body .co-name { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .intl-body .co-result { font-size: 12px; color: #444; line-height: 1.6; }
+  .intl-body .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .tag-sm {
+    font-size: 10px; font-weight: 700; border-radius: 4px; padding: 2px 8px;
+    display: inline-block;
+  }
+  .tag-red { background: #ffebee; color: #b71c1c; }
+  .tag-blue { background: #e3f2fd; color: #0d47a1; }
+  .tag-green { background: #e8f5e9; color: #1b5e20; }
+  .tag-amber { background: #fff8e1; color: #e65100; }
+
+  /* Recommendation */
+  .rec-card {
+    background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
+    border-radius: 16px; padding: 22px 26px;
+    border: 1.5px solid #80cbc4;
+  }
+  .rec-card h3 { font-size: 14px; font-weight: 700; color: #00695c; margin-bottom: 12px; }
+  .rec-steps { counter-reset: step; }
+  .rec-step { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .rec-step-num {
+    width: 26px; height: 26px; background: #00897b; color: #fff;
+    border-radius: 50%; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .rec-step p { font-size: 13px; color: #333; line-height: 1.6; padding-top: 3px; }
+
+  .foot { text-align: right; font-size: 11px; color: #b0bec5; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <div class="badge">💼 COMPENSATION ANALYSIS</div>
+    <h1>노사 요구사항 비교 + 적정 보상선 + 해외 사례 분석</h1>
+    <p>삼성전자 성과급 논쟁의 '합리적 타협점'을 찾아서 | 2026.05 기준</p>
+  </div>
+
+  <div class="table-card">
+    <div class="tc-title">📊 삼성전자 노사 핵심 요구사항 비교표</div>
+    <table>
+      <thead>
+        <tr>
+          <th>쟁점 항목</th>
+          <th>노조 요구</th>
+          <th>사측 입장</th>
+          <th>합리적 타협안</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>성과급 재원</strong></td>
+          <td class="union">영업이익 15%<br><span class="diff-chip chip-red">상한 없음</span></td>
+          <td class="company">업계 1위 시 경쟁사 이상 보상<br><span class="diff-chip chip-blue">재량 지급</span></td>
+          <td class="compromise">영업이익 구간별<br>단협 명문화</td>
+        </tr>
+        <tr>
+          <td><strong>OPI 상한선</strong></td>
+          <td class="union">완전 폐지<br><span class="diff-chip chip-red">무제한 요구</span></td>
+          <td class="company">현행 유지<br>(R&D 재원 확보)</td>
+          <td class="compromise">상한 상향 조정<br>+ R&D 연계 조건</td>
+        </tr>
+        <tr>
+          <td><strong>성과급 투명성</strong></td>
+          <td class="union">산정 기준 완전 공개<br>노조 검증권 부여</td>
+          <td class="company">내부 경영 정보<br>공개 불가 입장</td>
+          <td class="compromise">제3자 검증기관<br>도입 검토</td>
+        </tr>
+        <tr>
+          <td><strong>임금 인상률</strong></td>
+          <td class="union">5.1% 기본급 인상<br>요구</td>
+          <td class="company">업계 수준<br>준수 방침</td>
+          <td class="compromise">물가 연동 자동조정<br>조항 신설</td>
+        </tr>
+        <tr>
+          <td><strong>협상 방식</strong></td>
+          <td class="union">제도화·명문화<br>단체협약 반영</td>
+          <td class="company">경영 자율성 침해<br>우려로 제도화 거부</td>
+          <td class="compromise">독일식 노사협의회<br>권한 강화 검토</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scale-card">
+    <div class="scale-title">💡 2025~2026 삼성전자 성과 vs 보상 규모 비교</div>
+    <div class="scale-items">
+      <div class="scale-item red">
+        <div class="num">11조원</div>
+        <div class="label">2025년 주주 배당금<br>(예상: 2026년 60~70조)</div>
+      </div>
+      <div class="scale-item blue">
+        <div class="num">6조원</div>
+        <div class="label">2025년 직원<br>성과급 총액</div>
+      </div>
+      <div class="scale-item green">
+        <div class="num">30조원</div>
+        <div class="label">18일 총파업 시<br>예상 손실액</div>
+      </div>
+    </div>
+    <p style="font-size:11.5px;color:#888;margin-top:12px;">※ 2026년 영업이익 급증 시 주주배당이 직원성과급의 10배 이상 차이가 날 수 있어 형평성 논란의 핵심이 됨</p>
+  </div>
+
+  <div class="intl-card">
+    <div class="ic-title">🌏 해외 유사 사례 비교 분석</div>
+
+    <div class="intl-item">
+      <div class="intl-flag">🇺🇸</div>
+      <div class="intl-body">
+        <div class="co-name">미국 UAW vs GM·포드·스텔란티스 (2023)</div>
+        <div class="co-result">동시 총파업 후 약 25% 임금 인상 합의. 핵심 전략은 '선별 파업' — 특정 공장만 단계적으로 파업해 협상력 극대화. 무차별 총파업보다 외과적 접근이 효과적임을 증명.</div>
+        <div class="tags">
+          <span class="tag-sm tag-red">40% 요구 → 25% 타결</span>
+          <span class="tag-sm tag-blue">선별 파업 전략</span>
+          <span class="tag-sm tag-green">협상 성공 사례</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="intl-item">
+      <div class="intl-flag">🇩🇪</div>
+      <div class="intl-body">
+        <div class="co-name">독일 폭스바겐 vs IG메탈 (2024~2025)</div>
+        <div class="co-result">노사 공동결정 이사회(Mitbestimmung) 제도로 노조가 경영에 직접 참여. 파업보다 이사회 발언권을 활용해 구조조정 협상. 한국과 가장 다른 노사 구조 — 제도적 참여가 파업 대체.</div>
+        <div class="tags">
+          <span class="tag-sm tag-blue">Mitbestimmung 공동결정제</span>
+          <span class="tag-sm tag-amber">파업 최소화</span>
+          <span class="tag-sm tag-green">이사회 참여권 활용</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="intl-item">
+      <div class="intl-flag">🇹🇼</div>
+      <div class="intl-body">
+        <div class="co-name">TSMC — 파업 없는 성장 모델</div>
+        <div class="co-result">스톡옵션·우리사주로 직원과 주주 이해관계 정렬. "직원이 최고 자산" 철학 제도화. 대만 반도체 = 국가 생존 프레임으로 직원들 스스로 파업에 신중. 삼성전자가 벤치마킹할 최우선 모델.</div>
+        <div class="tags">
+          <span class="tag-sm tag-green">파업 제로 문화</span>
+          <span class="tag-sm tag-blue">우리사주 이해관계 정렬</span>
+          <span class="tag-sm tag-amber">국가전략 산업 자부심</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="intl-item">
+      <div class="intl-flag">🇯🇵</div>
+      <div class="intl-body">
+        <div class="co-name">일본 춘투(春鬪) 시스템</div>
+        <div class="co-result">매년 봄 전 산업 노사 임금 협상을 일괄 진행. 2024년 역대 최고 5.1% 인상 타결. 개별 기업 파업 없이 산업 단위 협상으로 갈등 예방. 한국 노사 관계 시스템 개혁의 참고 모델.</div>
+        <div class="tags">
+          <span class="tag-sm tag-blue">산업 단위 일괄 협상</span>
+          <span class="tag-sm tag-green">5.1% 인상 타결(2024)</span>
+          <span class="tag-sm tag-amber">파업 회피 시스템</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <h3>✅ 삼성전자 노사가 나아가야 할 올바른 방향 (3단계)</h3>
+    <div class="rec-steps">
+      <div class="rec-step">
+        <div class="rec-step-num">1</div>
+        <p><strong>단기</strong>: 이재용 회장 직접 대화 나서기 — 일회성 성과급 타결이 아닌 신뢰 회복의 시작점. 18일 파업으로 낭비할 에너지를 AI 반도체 격차 회복에 써야 할 때.</p>
+      </div>
+      <div class="rec-step">
+        <div class="rec-step-num">2</div>
+        <p><strong>중기</strong>: 영업이익 연동 성과급 공식 단협 명문화 — 상한선 전면 폐지보다는 구간별 지급률을 협약에 명문화. 투명성 확보를 위한 제3자 검증 시스템 도입.</p>
+      </div>
+      <div class="rec-step">
+        <div class="rec-step-num">3</div>
+        <p><strong>장기</strong>: TSMC·독일 모델 벤치마킹 — 우리사주 확대·노사협의회 권한 강화로 직원이 주주이자 이해관계자가 되는 구조 설계. 파업보다 성장을 선택하는 문화 형성.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">출처: 아시아타임즈·전자신문·JP모건·Bloomberg·에프앤가이드 | 2026.05.13 기준</div>
+</div>
+</body>
+</html>
