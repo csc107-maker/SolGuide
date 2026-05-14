@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>운용사별 ETF 라인업 현황</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8f9ff;
+    padding: 32px 20px;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-block;
+    background: #0f4c2a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 6px;
+  }
+
+  .sub {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 28px;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-bottom: 3px solid;
+  }
+
+  .stat-card:nth-child(1) { border-color: #2563eb; }
+  .stat-card:nth-child(2) { border-color: #059669; }
+  .stat-card:nth-child(3) { border-color: #d97706; }
+  .stat-card:nth-child(4) { border-color: #7c3aed; }
+
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: #111;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  /* Table */
+  .table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  }
+
+  thead th {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 14px 16px;
+    text-align: left;
+    letter-spacing: 0.5px;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f0f0f5;
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover { background: #f0f4ff; }
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody td {
+    padding: 13px 16px;
+    font-size: 13px;
+    color: #374151;
+    vertical-align: middle;
+  }
+
+  .company-name {
+    font-weight: 700;
+    color: #111827;
+    font-size: 14px;
+  }
+
+  .type-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 2px 2px 2px 0;
+  }
+
+  .lever-badge { background: #dbeafe; color: #1e40af; }
+  .inv-badge { background: #fce7f3; color: #9d174d; }
+  .spot-badge { background: #d1fae5; color: #065f46; }
+  .futures-badge { background: #fef3c7; color: #92400e; }
+
+  .asset-tag {
+    display: inline-block;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 1px;
+  }
+
+  .samsung { border-left: 3px solid #1428a0; }
+  .hynix { border-left: 3px solid #0064ff; }
+  .both { border-left: 3px solid #6d28d9; }
+
+  /* Inflow section */
+  .inflow-card {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 2px solid #34d399;
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .inflow-item { text-align: center; }
+  .inflow-label { font-size: 12px; color: #065f46; font-weight: 600; margin-bottom: 4px; }
+  .inflow-val { font-size: 22px; font-weight: 900; color: #065f46; }
+  .inflow-sub { font-size: 11px; color: #059669; }
+  .divider-v { width: 1px; background: #6ee7b7; align-self: stretch; }
+
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    thead th, tbody td { padding: 10px 10px; font-size: 11px; }
+    .inflow-card { flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <span class="section-label">🏢 운용사 현황</span>
+  <h2>8개 운용사 · 16개 상품 동시 출시 — 누가 무엇을 내놓나</h2>
+  <p class="sub">2026년 5월 27일 국내 최초 상장 기준 | 출시 예정 상품 현황</p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">8개</div>
+      <div class="stat-label">참여 자산운용사</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">16개</div>
+      <div class="stat-label">출시 예정 상품 수</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2시간</div>
+      <div class="stat-label">의무 사전교육</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1,000만</div>
+      <div class="stat-label">기본예탁금(원)</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>자산운용사</th>
+          <th>기초자산</th>
+          <th>상품 유형</th>
+          <th>운용 방식</th>
+          <th>특징</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="both">
+          <td><div class="company-name">삼성자산운용</div></td>
+          <td>
+            <span class="asset-tag">삼성전자</span>
+            <span class="asset-tag">SK하이닉스</span>
+          </td>
+          <td><span class="type-badge lever-badge">2배 레버리지</span></td>
+          <td><span class="type-badge spot-badge">현물형</span></td>
+          <td>최대 운용사, 유동성 우위</td>
+        </tr>
+        <tr class="both">
+          <td><div class="company-name">미래에셋자산운용</div></td>
+          <td>
+            <span class="asset-tag">삼성전자</span>
+            <span class="asset-tag">SK하이닉스</span>
+          </td>
+          <td><span class="type-badge lever-badge">2배 레버리지</span></td>
+          <td><span class="type-badge spot-badge">현물형</span></td>
+          <td>글로벌 ETF 운용 경험 강점</td>
+        </tr>
+        <tr class="both">
+          <td><div class="company-name">KB자산운용</div></td>
+          <td>
+            <span class="asset-tag">삼성전자</span>
+            <span class="asset-tag">SK하이닉스</span>
+          </td>
+          <td><span class="type-badge lever-badge">2배 레버리지</span></td>
+          <td><span class="type-badge spot-badge">현물형</span></td>
+          <td>KB금융 계열 안정성</td>
+        </tr>
+        <tr class="both">
+          <td><div class="company-name">한국투자신탁운용</div></td>
+          <td>
+            <span class="asset-tag">삼성전자</span>
+            <span class="asset-tag">SK하이닉스</span>
+          </td>
+          <td><span class="type-badge lever-badge">2배 레버리지</span></td>
+          <td><span class="type-badge spot-badge">현물형</span></td>
+          <td>ACE ETF 브랜드 보유</td>
+        </tr>
+        <tr class="both">
+          <td><div class="company-name">키움투자자산운용</div></td>
+          <td>
+            <span class="asset-tag">삼성전자</span>
+            <span class="asset-tag">SK하이닉스</span>
+          </td>
+          <td><span class="type-badge lever-badge">2배 레버리지</span></td>
+          <td><span class="type-badge futures-badge">선물형</span></td>
+          <td>선물 스왑 구조 활용</td>
+        </tr>
+        <tr class="both">
+          <td><div class="company-name">하나자산운용</div></td>
+          <td>
+            <span class="asset-tag">삼성전자</span>
+            <span class="asset-tag">SK하이닉스</span>
+          </td>
+          <td><span class="type-badge lever-badge">2배 레버리지</span></td>
+          <td><span class="type-badge futures-badge">선물형</span></td>
+          <td>선물 기반 비용 구조</td>
+        </tr>
+        <tr class="hynix">
+          <td><div class="company-name">신한자산운용</div></td>
+          <td><span class="asset-tag">SK하이닉스</span></td>
+          <td>
+            <span class="type-badge lever-badge">2배 레버리지</span>
+            <span class="type-badge inv-badge">-2배 곱버스</span>
+          </td>
+          <td>
+            <span class="type-badge spot-badge">현물형</span>
+            <span class="type-badge futures-badge">선물형</span>
+          </td>
+          <td>하이닉스 집중, 인버스 라인업</td>
+        </tr>
+        <tr class="samsung">
+          <td><div class="company-name">한화자산운용</div></td>
+          <td><span class="asset-tag">삼성전자</span></td>
+          <td>
+            <span class="type-badge lever-badge">2배 레버리지</span>
+            <span class="type-badge inv-badge">-2배 곱버스</span>
+          </td>
+          <td><span class="type-badge futures-badge">선물형</span></td>
+          <td>삼성전자 집중, 인버스 포함</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="inflow-card">
+    <div class="inflow-item">
+      <div class="inflow-label">📊 미래에셋증권 추산 (소극적)</div>
+      <div class="inflow-val">1조 7천억</div>
+      <div class="inflow-sub">상장 초기 최소 유입 예상액</div>
+    </div>
+    <div class="divider-v"></div>
+    <div class="inflow-item">
+      <div class="inflow-label">🚀 미래에셋증권 추산 (적극적)</div>
+      <div class="inflow-val">5조 3천억</div>
+      <div class="inflow-sub">상장 초기 최대 유입 예상액</div>
+    </div>
+    <div class="divider-v"></div>
+    <div class="inflow-item">
+      <div class="inflow-label">🏆 홍콩 CSOP 하이닉스 ETF</div>
+      <div class="inflow-val">+750%</div>
+      <div class="inflow-sub">누적 수익률 (글로벌 단종 ETF 1위)</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
