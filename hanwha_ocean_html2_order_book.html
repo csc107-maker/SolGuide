@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화오션 2026 수주 현황</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0faf8;
+    padding: 24px 16px;
+  }
+  .wrapper {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,120,80,0.10);
+  }
+  .header {
+    background: linear-gradient(135deg, #065f46 0%, #059669 100%);
+    color: white;
+    padding: 24px 30px;
+  }
+  .header-label { font-size: 11px; letter-spacing: 2px; opacity: 0.75; margin-bottom: 6px; }
+  .header-title { font-size: 20px; font-weight: 900; }
+  .header-sub { font-size: 13px; opacity: 0.75; margin-top: 6px; }
+  .total-bar {
+    background: linear-gradient(90deg, #ecfdf5, #d1fae5);
+    padding: 16px 30px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid #d1fae5;
+  }
+  .total-item { text-align: center; }
+  .total-label { font-size: 11px; color: #6b7280; margin-bottom: 4px; }
+  .total-value { font-size: 20px; font-weight: 900; color: #065f46; }
+  .total-unit { font-size: 11px; color: #059669; font-weight: 700; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    background: #f0fdf4;
+    color: #065f46;
+    font-weight: 700;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 2px solid #a7f3d0;
+    font-size: 12px;
+  }
+  td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #f0fdf4;
+    color: #374151;
+    vertical-align: middle;
+  }
+  tr:hover td { background: #f0fdf4; }
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .tag-lng { background: #dbeafe; color: #1d4ed8; }
+  .tag-vlcc { background: #fef3c7; color: #92400e; }
+  .tag-vlac { background: #ede9fe; color: #6d28d9; }
+  .tag-wtiv { background: #dcfce7; color: #166534; }
+  .tag-defense { background: #fee2e2; color: #b91c1c; }
+  .tag-fpso { background: #fce7f3; color: #9d174d; }
+  .amount {
+    font-weight: 700;
+    color: #065f46;
+  }
+  .highlight-row td { background: #ecfdf5; }
+  .total-row td {
+    font-weight: 900;
+    background: linear-gradient(90deg, #ecfdf5, #d1fae5);
+    color: #064e3b;
+    font-size: 15px;
+  }
+  .progress-bar-wrap {
+    background: #e5e7eb;
+    border-radius: 6px;
+    height: 8px;
+    margin-top: 4px;
+    overflow: hidden;
+    min-width: 80px;
+  }
+  .progress-bar { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #059669, #34d399); }
+  .footer {
+    padding: 12px 24px;
+    font-size: 11px;
+    color: #9ca3af;
+    background: #f9fafb;
+    border-top: 1px solid #f0fdf4;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="header">
+    <div class="header-label">🚢 Order Book Update</div>
+    <div class="header-title">한화오션 2026년 수주 현황 (5월 기준)</div>
+    <div class="header-sub">총 19척 | 약 34억 4,000만 달러 (한화 약 5조 1,053억원)</div>
+  </div>
+
+  <div class="total-bar">
+    <div class="total-item">
+      <div class="total-label">총 수주 척수</div>
+      <div class="total-value">19<span class="total-unit">척</span></div>
+    </div>
+    <div class="total-item">
+      <div class="total-label">수주금액(달러)</div>
+      <div class="total-value">$34.4<span class="total-unit">억</span></div>
+    </div>
+    <div class="total-item">
+      <div class="total-label">수주금액(원화)</div>
+      <div class="total-value">5.1<span class="total-unit">조원</span></div>
+    </div>
+    <div class="total-item">
+      <div class="total-label">LNG 수주잔고(65척)</div>
+      <div class="total-value">51.6<span class="total-unit">%</span></div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>선종</th>
+        <th>척수</th>
+        <th>비중</th>
+        <th>주요 특징</th>
+        <th>예상 OPM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight-row">
+        <td><span class="tag tag-lng">LNG 운반선(LNGC)</span></td>
+        <td><strong>5척</strong></td>
+        <td>
+          26%
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:26%"></div></div>
+        </td>
+        <td>174K급, 고수익 선종 / 유럽 선주 중심</td>
+        <td class="amount">15~20%</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-vlcc">VLCC(초대형원유운반선)</span></td>
+        <td><strong>10척</strong></td>
+        <td>
+          53%
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:53%;background:linear-gradient(90deg,#d97706,#fbbf24)"></div></div>
+        </td>
+        <td>중동·인도 원유 수요 증가 수혜</td>
+        <td class="amount">10~14%</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-vlac">VLAC(암모니아운반선)</span></td>
+        <td><strong>3척</strong></td>
+        <td>
+          16%
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:16%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div>
+        </td>
+        <td>친환경 연료 전환 트렌드 수혜</td>
+        <td class="amount">12~16%</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-wtiv">WTIV(해상풍력설치선)</span></td>
+        <td><strong>1척</strong></td>
+        <td>
+          5%
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:5%;background:linear-gradient(90deg,#166534,#4ade80)"></div></div>
+        </td>
+        <td>국내 해상풍력 정책 연계</td>
+        <td class="amount">-</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-defense">특수선·방산</span></td>
+        <td colspan="2"><strong>협상 중</strong> (CPSP·KDDX·NGLS)</td>
+        <td>캐나다 잠수함 최대 60조원 규모</td>
+        <td class="amount">협상 중</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-fpso">FPSO(해양플랜트)</span></td>
+        <td colspan="2"><strong>입찰 진행 중</strong></td>
+        <td>페트로브라스·토탈에너지 프로젝트</td>
+        <td class="amount">입찰 중</td>
+      </tr>
+      <tr class="total-row">
+        <td>🏆 합계(상선)</td>
+        <td>19척</td>
+        <td>100%</td>
+        <td>2026년 5월 기준 연간 목표 진척 중</td>
+        <td>약 $34.4억</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">출처: 한화오션 전자공시(DART), 1Q26 실적발표, 각 증권사 리포트 | 투자 권유 아님</div>
+</div>
+</body>
+</html>
