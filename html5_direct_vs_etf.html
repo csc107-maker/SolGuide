@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>직접주식 vs 레버리지 ETF 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8faff;
+    padding: 32px 20px;
+  }
+
+  .container { max-width: 880px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-block;
+    background: #4c1d95;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 6px;
+  }
+
+  .sub { font-size: 13px; color: #6b7280; margin-bottom: 28px; }
+
+  /* Comparison Table */
+  .compare-table {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+  }
+
+  .compare-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .compare-table thead tr {
+    background: #f9fafb;
+  }
+
+  .compare-table thead th {
+    padding: 0;
+  }
+
+  .th-inner {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .th-icon { font-size: 28px; }
+  .th-title { font-size: 15px; font-weight: 900; }
+  .th-sub { font-size: 11px; color: #6b7280; font-weight: 500; }
+
+  .th-stock .th-title { color: #1e40af; }
+  .th-lever .th-title { color: #dc2626; }
+
+  .th-label-col {
+    background: #f9fafb;
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+    padding: 14px 20px;
+    width: 30%;
+    border-right: 1px solid #f0f0f5;
+  }
+
+  .compare-table tbody tr { border-bottom: 1px solid #f0f0f5; }
+  .compare-table tbody tr:last-child { border-bottom: none; }
+  .compare-table tbody tr:hover { background: #fafbff; }
+
+  .compare-table td {
+    padding: 14px 20px;
+    font-size: 13px;
+    color: #374151;
+    vertical-align: middle;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .pos { color: #059669; font-weight: 700; }
+  .neg { color: #dc2626; font-weight: 700; }
+  .neut { color: #374151; }
+
+  .check { color: #059669; font-size: 16px; }
+  .cross { color: #dc2626; font-size: 16px; }
+  .warn { color: #d97706; font-size: 16px; }
+
+  /* Winner Scenarios */
+  .scenario-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .scenario-card {
+    border-radius: 14px;
+    padding: 20px;
+    border: 2px solid;
+  }
+
+  .sc-stock { border-color: #3b82f6; background: #eff6ff; }
+  .sc-lever { border-color: #ef4444; background: #fef2f2; }
+
+  .sc-header {
+    font-size: 14px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sc-stock .sc-header { color: #1e40af; }
+  .sc-lever .sc-header { color: #991b1b; }
+
+  .sc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  .sc-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .sc-stock .sc-dot { background: #3b82f6; }
+  .sc-lever .sc-dot { background: #ef4444; }
+
+  /* Final verdict */
+  .verdict {
+    background: linear-gradient(135deg, #f3e8ff, #ede9fe);
+    border: 2px solid #8b5cf6;
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+
+  .verdict-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #4c1d95;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .verdict-text {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.8;
+  }
+
+  .verdict-text strong { color: #4c1d95; }
+
+  @media (max-width: 640px) {
+    .scenario-grid { grid-template-columns: 1fr; }
+    h2 { font-size: 18px; }
+    .compare-table td, .th-label-col { font-size: 12px; padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <span class="section-label">⚖️ 심층 비교 분석</span>
+  <h2>삼성전자·SK하이닉스 직접투자 vs 레버리지·인버스 ETF</h2>
+  <p class="sub">두 가지 투자 방식의 핵심 차이점을 냉정하게 분석합니다</p>
+
+  <div class="compare-table">
+    <table>
+      <thead>
+        <tr>
+          <th style="background:#f9fafb; border-right: 1px solid #f0f0f5;"></th>
+          <th>
+            <div class="th-inner th-stock">
+              <div class="th-icon">📱</div>
+              <div class="th-title">직접 주식 투자</div>
+              <div class="th-sub">삼성전자 · SK하이닉스 보통주</div>
+            </div>
+          </th>
+          <th style="border-left: 1px solid #f0f0f5;">
+            <div class="th-inner th-lever">
+              <div class="th-icon">⚡</div>
+              <div class="th-title">레버리지·인버스 ETF</div>
+              <div class="th-sub">단일종목 2배 추종 상품</div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="th-label-col">💰 수익 구조</td>
+          <td class="neut">주가 상승분 × 1배<br><small style="color:#6b7280">배당 수령 추가</small></td>
+          <td class="neut">주가 일일 변동 × 2배 (레버리지)<br><small style="color:#6b7280">음의 복리 효과 발생</small></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">📅 적합한 투자 기간</td>
+          <td><span class="pos">✅ 장기 (수개월~수년)</span></td>
+          <td><span class="neg">⚠️ 단기 (수일~4주 이내)</span></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">💸 배당 수령</td>
+          <td><span class="pos">✅ 가능 (삼성전자 약 1~2%)</span></td>
+          <td><span class="neg">❌ 불가능</span></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">📊 변동성</td>
+          <td><span class="neut">보통 (주가 변동 1:1)</span></td>
+          <td><span class="neg">매우 높음 (주가 변동 × 2)</span></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">🔻 하락장 대응</td>
+          <td><span class="neg">❌ 헷지 수단 없음</span></td>
+          <td><span class="pos">✅ 인버스·곱버스로 수익 가능</span></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">💵 운용 비용</td>
+          <td><span class="pos">✅ 없음 (매매 수수료만)</span></td>
+          <td><span class="neg">⚠️ 연 0.5~1% + 스왑 비용<br><small>(추정 연 6~7% 수준)</small></span></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">📋 진입 요건</td>
+          <td><span class="pos">✅ 별도 요건 없음</span></td>
+          <td><span class="neg">⚠️ 사전교육 2시간 + 예탁금 1천만원</span></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">👥 주주 권리</td>
+          <td><span class="pos">✅ 배당·의결권 행사 가능</span></td>
+          <td><span class="neg">❌ 불가능</span></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">🏆 장기 복리 효과</td>
+          <td><span class="pos">✅ 우호적 (양의 복리)</span></td>
+          <td><span class="neg">❌ 불리 (음의 복리 누적)</span></td>
+        </tr>
+        <tr>
+          <td class="th-label-col">🎯 추천 전략 유형</td>
+          <td><span class="pos">코어 자산 · 장기 성장 투자</span></td>
+          <td><span class="neg">단기 모멘텀 · 헷지 전술 투자</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- When each wins -->
+  <div class="scenario-title">🏅 각각의 투자 방식이 유리한 구체적 상황</div>
+  <div class="scenario-grid">
+    <div class="scenario-card sc-stock">
+      <div class="sc-header">📱 직접주식이 유리한 상황</div>
+      <div class="sc-item"><div class="sc-dot"></div>AI 반도체 슈퍼사이클의 구조적 성장 수혜를 장기적으로 누리고 싶을 때</div>
+      <div class="sc-item"><div class="sc-dot"></div>배당 수익을 지속적으로 받으면서 시세 차익을 함께 기대할 때</div>
+      <div class="sc-item"><div class="sc-dot"></div>6개월 이상 여유자금으로 운용할 수 있을 때</div>
+      <div class="sc-item"><div class="sc-dot"></div>박스권·횡보장이 예상되는 시장 환경</div>
+      <div class="sc-item"><div class="sc-dot"></div>반도체 업황의 중장기 상승 방향성을 신뢰할 때</div>
+    </div>
+    <div class="scenario-card sc-lever">
+      <div class="sc-header">⚡ 레버리지 ETF가 유리한 상황</div>
+      <div class="sc-item"><div class="sc-dot"></div>HBM 수주 발표, 실적 서프라이즈 등 단기 모멘텀이 명확할 때</div>
+      <div class="sc-item"><div class="sc-dot"></div>하락장에서 인버스·곱버스로 직접주식 포지션을 헷지할 때</div>
+      <div class="sc-item"><div class="sc-dot"></div>수일~4주 이내 단기 방향성이 강하게 보이는 추세 구간</div>
+      <div class="sc-item"><div class="sc-dot"></div>시장이 예상치 못한 악재로 급락할 것을 선제적으로 방어할 때</div>
+      <div class="sc-item"><div class="sc-dot"></div>손절 원칙과 목표 수익률이 명확하게 설정된 숙련 투자자</div>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <div class="verdict-title">🏁 종합 결론: 두 가지는 경쟁이 아닌 상호보완 관계</div>
+    <div class="verdict-text">
+      직접주식 투자와 레버리지·인버스 ETF는 어느 하나가 절대 우위에 있는 것이 아닙니다. <strong>삼성전자·SK하이닉스 직접주식이 포트폴리오의 '코어(Core)'</strong>라면, <strong>레버리지·인버스 ETF는 단기 전술적 '새틀라이트(Satellite)'</strong>입니다. 현명한 투자자는 직접주식을 중심에 두고, 명확한 단기 방향성이 보이는 구간에만 레버리지 ETF를 전술적으로 활용합니다. 레버리지 ETF를 코어 자산으로 삼는 실수는 절대 피해야 합니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
