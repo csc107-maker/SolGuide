@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>단일종목 ETF 상품 유형 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Inter:wght@700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 32px 20px;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: #1a3a8f;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .sub {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 28px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 5px solid;
+    transition: transform 0.2s;
+  }
+
+  .card:hover { transform: translateY(-3px); }
+
+  .card.lever { border-color: #2563eb; }
+  .card.inverse { border-color: #dc2626; }
+  .card.double-inv { border-color: #7c3aed; }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 4px;
+  }
+
+  .card-eng {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+
+  .lever .card-eng { color: #2563eb; }
+  .inverse .card-eng { color: #dc2626; }
+  .double-inv .card-eng { color: #7c3aed; }
+
+  .card-desc {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .example-box {
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+
+  .lever .example-box { background: #eff6ff; }
+  .inverse .example-box { background: #fef2f2; }
+  .double-inv .example-box { background: #f5f3ff; }
+
+  .example-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .lever .example-title { color: #2563eb; }
+  .inverse .example-title { color: #dc2626; }
+  .double-inv .example-title { color: #7c3aed; }
+
+  .example-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #374151;
+  }
+
+  .example-row span:last-child { font-weight: 700; }
+
+  .up { color: #2563eb !important; }
+  .down { color: #dc2626 !important; }
+
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  .lever .badge { background: #dbeafe; color: #1e40af; }
+  .inverse .badge { background: #fee2e2; color: #991b1b; }
+  .double-inv .badge { background: #ede9fe; color: #5b21b6; }
+
+  .info-bar {
+    background: #fff8e1;
+    border: 1.5px solid #fbbf24;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #78350f;
+    line-height: 1.7;
+  }
+
+  .info-bar strong { color: #92400e; }
+
+  @media (max-width: 640px) {
+    .cards { grid-template-columns: 1fr; }
+    h2 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <span class="section-label">📊 상품 유형 분석</span>
+  <h2>단일종목 레버리지·인버스 ETF, 세 가지로 구분됩니다</h2>
+  <p class="sub">삼성전자·SK하이닉스 기초자산 기준 | 일일 수익률 기반 추종 구조</p>
+
+  <div class="cards">
+    <!-- 레버리지 -->
+    <div class="card lever">
+      <span class="card-icon">📈</span>
+      <div class="card-title">2배 레버리지</div>
+      <div class="card-eng">2X LEVERAGED</div>
+      <div class="card-desc">기초자산(삼성전자·SK하이닉스)의 일일 수익률을 <strong>+2배</strong>로 추종합니다. 주가 상승 시 2배 수익, 하락 시 2배 손실.</div>
+      <div class="example-box">
+        <div class="example-title">📌 시나리오 예시 (1,000만원 투자)</div>
+        <div class="example-row"><span>주가 +5% 상승 시</span><span class="up">+100만원 (+10%)</span></div>
+        <div class="example-row"><span>주가 -5% 하락 시</span><span class="down">-100만원 (-10%)</span></div>
+        <div class="example-row"><span>주가 -20% 급락 시</span><span class="down">-400만원 (-40%)</span></div>
+      </div>
+      <div class="badge-row">
+        <span class="badge">상승추세 베팅</span>
+        <span class="badge">단기 모멘텀</span>
+        <span class="badge">고위험</span>
+      </div>
+    </div>
+
+    <!-- 인버스 -->
+    <div class="card inverse">
+      <span class="card-icon">📉</span>
+      <div class="card-title">-1배 인버스</div>
+      <div class="card-eng">-1X INVERSE</div>
+      <div class="card-desc">기초자산의 일일 수익률 <strong>역방향 1배</strong>를 추종합니다. 주가가 하락할 때 수익이 발생하는 구조.</div>
+      <div class="example-box">
+        <div class="example-title">📌 시나리오 예시 (1,000만원 투자)</div>
+        <div class="example-row"><span>주가 -5% 하락 시</span><span class="up">+50만원 (+5%)</span></div>
+        <div class="example-row"><span>주가 +5% 상승 시</span><span class="down">-50만원 (-5%)</span></div>
+        <div class="example-row"><span>주가 -20% 급락 시</span><span class="up">+200만원 (+20%)</span></div>
+      </div>
+      <div class="badge-row">
+        <span class="badge">하락 헷지</span>
+        <span class="badge">약세장 대응</span>
+        <span class="badge">고위험</span>
+      </div>
+    </div>
+
+    <!-- 곱버스 -->
+    <div class="card double-inv">
+      <span class="card-icon">⚡</span>
+      <div class="card-title">-2배 곱버스</div>
+      <div class="card-eng">-2X INVERSE (BEAR)</div>
+      <div class="card-desc">기초자산의 일일 수익률 <strong>역방향 2배</strong>를 추종합니다. 하락장에서 최대 수익, 상승 시 2배 손실의 최고위험 상품.</div>
+      <div class="example-box">
+        <div class="example-title">📌 시나리오 예시 (1,000만원 투자)</div>
+        <div class="example-row"><span>주가 -5% 하락 시</span><span class="up">+100만원 (+10%)</span></div>
+        <div class="example-row"><span>주가 +5% 상승 시</span><span class="down">-100만원 (-10%)</span></div>
+        <div class="example-row"><span>주가 +20% 급등 시</span><span class="down">-400만원 (-40%)</span></div>
+      </div>
+      <div class="badge-row">
+        <span class="badge">하락 집중 베팅</span>
+        <span class="badge">단기 공매도 대체</span>
+        <span class="badge">최고위험</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-bar">
+    ⚠️ <strong>핵심 주의사항:</strong> 세 상품 모두 <strong>일일(Daily) 수익률</strong>을 기준으로 작동합니다. 장기 보유 시 음(-)의 복리 효과로 인해 기초자산 대비 수익률이 크게 괴리될 수 있습니다. 금융당국은 이 상품들을 <strong>"단기 투자에 적합한 고위험 상품"</strong>으로 명시하고 있습니다.
+  </div>
+</div>
+</body>
+</html>
