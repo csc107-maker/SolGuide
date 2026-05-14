@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포트폴리오 비중 전략</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0fdf4;
+    padding: 32px 20px;
+  }
+
+  .container { max-width: 880px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-block;
+    background: #065f46;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 6px;
+  }
+
+  .sub { font-size: 13px; color: #6b7280; margin-bottom: 28px; }
+
+  .type-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .type-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+
+  .type-header {
+    padding: 18px 20px;
+    color: #fff;
+  }
+
+  .conservative .type-header { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+  .moderate .type-header { background: linear-gradient(135deg, #065f46, #10b981); }
+  .aggressive .type-header { background: linear-gradient(135deg, #7c2d12, #ef4444); }
+
+  .type-icon { font-size: 28px; margin-bottom: 6px; }
+  .type-name { font-size: 16px; font-weight: 900; }
+  .type-sub { font-size: 11px; opacity: 0.85; margin-top: 2px; }
+
+  .type-body { padding: 18px 20px; }
+
+  .alloc-item {
+    margin-bottom: 12px;
+  }
+
+  .alloc-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .alloc-name { font-size: 12px; color: #374151; font-weight: 600; }
+  .alloc-pct { font-size: 12px; font-weight: 900; }
+
+  .conservative .alloc-pct { color: #1e40af; }
+  .moderate .alloc-pct { color: #059669; }
+  .aggressive .alloc-pct { color: #dc2626; }
+
+  .alloc-bar { height: 8px; background: #f3f4f6; border-radius: 4px; overflow: hidden; }
+
+  .conservative .alloc-fill-lever { background: #ef4444; }
+  .conservative .alloc-fill-stock { background: #3b82f6; }
+  .conservative .alloc-fill-core { background: #bfdbfe; }
+
+  .moderate .alloc-fill-lever { background: #f59e0b; }
+  .moderate .alloc-fill-stock { background: #10b981; }
+  .moderate .alloc-fill-core { background: #a7f3d0; }
+
+  .aggressive .alloc-fill-lever { background: #dc2626; }
+  .aggressive .alloc-fill-stock { background: #f59e0b; }
+  .aggressive .alloc-fill-core { background: #fde68a; }
+
+  .alloc-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+
+  .lever-highlight {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1.5px dashed #e5e7eb;
+    text-align: center;
+  }
+
+  .lever-pct-big {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .conservative .lever-pct-big { color: #1e40af; }
+  .moderate .lever-pct-big { color: #059669; }
+  .aggressive .lever-pct-big { color: #dc2626; }
+
+  .lever-pct-label { font-size: 12px; color: #6b7280; }
+
+  .rules-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+
+  .rules-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .rule-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 13px 14px;
+  }
+
+  .rule-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #1e40af;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .rule-text { font-size: 13px; color: #374151; line-height: 1.6; }
+  .rule-text strong { color: #111827; }
+
+  .stoploss-box {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 2px solid #fbbf24;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .sl-icon { font-size: 32px; }
+  .sl-text { font-size: 13px; color: #78350f; line-height: 1.7; }
+  .sl-text strong { color: #92400e; }
+
+  @media (max-width: 640px) {
+    .type-tabs { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: 1fr; }
+    h2 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <span class="section-label">📐 포트폴리오 전략</span>
+  <h2>투자 성향별 레버리지·인버스 ETF 비중 가이드</h2>
+  <p class="sub">전문가 의견 종합 기준 | 개인 리스크 허용 범위에 따라 조정 필요</p>
+
+  <div class="type-tabs">
+    <!-- 보수형 -->
+    <div class="type-card conservative">
+      <div class="type-header">
+        <div class="type-icon">🛡️</div>
+        <div class="type-name">보수적 투자자</div>
+        <div class="type-sub">안정 추구형 · 원금 보전 우선</div>
+      </div>
+      <div class="type-body">
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">🔴 레버리지·인버스 ETF</span>
+            <span class="alloc-pct">0~3%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-lever" style="width:3%"></div>
+          </div>
+        </div>
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">📱 반도체 직접주식</span>
+            <span class="alloc-pct">10~15%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-stock" style="width:15%"></div>
+          </div>
+        </div>
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">🏦 코어자산 (채권·지수)</span>
+            <span class="alloc-pct">82~90%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-core" style="width:82%"></div>
+          </div>
+        </div>
+        <div class="lever-highlight">
+          <div class="lever-pct-big">0~3%</div>
+          <div class="lever-pct-label">레버리지 ETF 최대 비중</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 중립형 -->
+    <div class="type-card moderate">
+      <div class="type-header">
+        <div class="type-icon">⚖️</div>
+        <div class="type-name">중립적 투자자</div>
+        <div class="type-sub">위험 중립형 · 수익·안정 균형</div>
+      </div>
+      <div class="type-body">
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">🟡 레버리지·인버스 ETF</span>
+            <span class="alloc-pct">3~7%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-lever" style="width:7%"></div>
+          </div>
+        </div>
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">📱 반도체 섹터 ETF·직접주식</span>
+            <span class="alloc-pct">10~20%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-stock" style="width:20%"></div>
+          </div>
+        </div>
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">🏦 코어자산 (국내외 지수·채권)</span>
+            <span class="alloc-pct">73~87%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-core" style="width:73%"></div>
+          </div>
+        </div>
+        <div class="lever-highlight">
+          <div class="lever-pct-big">3~7%</div>
+          <div class="lever-pct-label">레버리지 ETF 권장 비중</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공격형 -->
+    <div class="type-card aggressive">
+      <div class="type-header">
+        <div class="type-icon">🎯</div>
+        <div class="type-name">공격적 투자자</div>
+        <div class="type-sub">위험 선호형 · 수익 극대화 추구</div>
+      </div>
+      <div class="type-body">
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">🔴 레버리지·인버스 ETF</span>
+            <span class="alloc-pct">최대 10%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-lever" style="width:10%"></div>
+          </div>
+        </div>
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">📱 반도체 직접주식·섹터ETF</span>
+            <span class="alloc-pct">20~30%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-stock" style="width:30%"></div>
+          </div>
+        </div>
+        <div class="alloc-item">
+          <div class="alloc-label">
+            <span class="alloc-name">🏦 코어자산 (최소 60% 유지)</span>
+            <span class="alloc-pct">60~70%</span>
+          </div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-fill alloc-fill-core" style="width:60%"></div>
+          </div>
+        </div>
+        <div class="lever-highlight">
+          <div class="lever-pct-big">≤10%</div>
+          <div class="lever-pct-label">레버리지 ETF 절대 한도</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rules-section">
+    <div class="rules-title">📋 레버리지·인버스 ETF 투자 5대 원칙</div>
+    <div class="rules-grid">
+      <div class="rule-item">
+        <div class="rule-num">1</div>
+        <div class="rule-text"><strong>손절 라인 사전 설정</strong><br>원금 대비 -15~20% 도달 시 즉시 매도 원칙 수립. 감정 개입 차단이 핵심.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">2</div>
+        <div class="rule-text"><strong>보유기간 최소화</strong><br>최대 4주 이내의 단기 포지션 유지. 음의 복리 효과는 시간이 길수록 심화.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">3</div>
+        <div class="rule-text"><strong>추세 방향 확인 후 진입</strong><br>명확한 상승 혹은 하락 추세 구간에서만 진입. 횡보장 진입 금지.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">4</div>
+        <div class="rule-text"><strong>코어 자산 훼손 금지</strong><br>레버리지 포지션은 반드시 '여유자금'으로만 운용. 은퇴·생활 자금 절대 불가.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">5</div>
+        <div class="rule-text"><strong>목표 수익 도달 시 분할 청산</strong><br>+20~30% 수익 구간에서 분할 매도. 욕심이 수익을 잃게 만드는 주요 원인.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">6</div>
+        <div class="rule-text"><strong>반도체 업황 사이클 모니터링</strong><br>HBM 수주, D램 가격, AI 서버 투자 동향을 상시 체크. 사이클 전환 시 즉시 대응.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stoploss-box">
+    <div class="sl-icon">🔔</div>
+    <div class="sl-text">
+      <strong>전문가 공통 조언:</strong> 단일종목 레버리지·인버스 ETF는 <strong>전체 포트폴리오의 10%를 절대 넘지 말 것</strong>을 강력히 권고합니다. 국내 10대 증권사 CEO 중 90%가 이 상품을 "올해 최대 시장 변수"로 지목한 만큼, 잠재적 변동성 확대를 항상 염두에 두어야 합니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
