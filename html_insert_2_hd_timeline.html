@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HD현대중공업 데이터센터 엔진 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Sans:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f7ff;
+    padding: 32px 16px;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 14px rgba(0,80,200,0.08);
+    border-left: 5px solid #0050c8;
+  }
+
+  .company-badge {
+    background: #0050c8;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+
+  .header-text h2 {
+    font-size: 17px;
+    font-weight: 900;
+    color: #0d1a3a;
+    margin-bottom: 4px;
+  }
+
+  .header-text p {
+    font-size: 12px;
+    color: #6070a0;
+    line-height: 1.6;
+  }
+
+  /* 수주 하이라이트 박스 */
+  .deal-box {
+    background: linear-gradient(135deg, #0050c8 0%, #003d99 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .deal-box::before {
+    content: '⚡';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 64px;
+    opacity: 0.12;
+  }
+
+  .deal-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #7eb3ff;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .deal-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .deal-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .deal-stat { text-align: center; }
+
+  .deal-stat-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    line-height: 1.1;
+  }
+
+  .deal-stat-label {
+    font-size: 10px;
+    color: #a0c4ff;
+    margin-top: 3px;
+  }
+
+  .deal-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.15);
+    align-self: stretch;
+  }
+
+  /* 타임라인 */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: linear-gradient(to bottom, #0050c8, #e8edff);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 8px rgba(0,80,200,0.06);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 18px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #0050c8;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #0050c8;
+  }
+
+  .timeline-item.current::before {
+    background: #ff5500;
+    box-shadow: 0 0 0 2px #ff5500;
+  }
+
+  .timeline-item.future::before {
+    background: #e8edff;
+    box-shadow: 0 0 0 2px #c0ccee;
+  }
+
+  .tl-year {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0050c8;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .tl-year.now { color: #ff5500; }
+  .tl-year.future { color: #8898cc; }
+
+  .tl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0d1a3a;
+    margin-bottom: 5px;
+  }
+
+  .tl-desc {
+    font-size: 12px;
+    color: #6070a0;
+    line-height: 1.6;
+  }
+
+  .tl-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 20px;
+    margin-top: 6px;
+  }
+
+  .tag-confirmed { background: #e8f5e9; color: #1b5e20; }
+  .tag-expected  { background: #fff3e0; color: #bf360c; }
+  .tag-outlook   { background: #e8eeff; color: #1a237e; }
+
+  /* 증권가 전망 박스 */
+  .analyst-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .analyst-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 8px rgba(0,80,200,0.06);
+  }
+
+  .analyst-firm {
+    font-size: 10px;
+    font-weight: 700;
+    color: #0050c8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .analyst-metric {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0d1a3a;
+    margin-bottom: 2px;
+  }
+
+  .analyst-year {
+    font-size: 11px;
+    color: #8898cc;
+    margin-bottom: 6px;
+  }
+
+  .analyst-note {
+    font-size: 11px;
+    color: #6070a0;
+    line-height: 1.5;
+  }
+
+  .source-note {
+    font-size: 10px;
+    color: #9aa0b4;
+    margin-top: 18px;
+    text-align: right;
+  }
+
+  @media (max-width: 480px) {
+    .deal-stats { grid-template-columns: repeat(2, 1fr); }
+    .analyst-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="company-badge">HD현대중공업</div>
+    <div class="header-text">
+      <h2>힘센엔진(HiMSEN), 바다에서 AI 데이터센터로</h2>
+      <p>선박용 중속 엔진 기술을 데이터센터 발전 분야로 확장 — 증권가 전망치 포함</p>
+    </div>
+  </div>
+
+  <!-- 수주 하이라이트 박스 -->
+  <div class="deal-box">
+    <div class="deal-label">🔖 확정 수주 (2026.04.22 DART 공시)</div>
+    <div class="deal-title">미국 AEG사(Aperion Energy Group)에 데이터센터용 발전설비 공급 — 역대 최대 엔진 계약</div>
+    <div class="deal-stats">
+      <div class="deal-stat">
+        <span class="deal-stat-value">6,271억</span>
+        <div class="deal-stat-label">계약 금액</div>
+      </div>
+      <div class="deal-divider"></div>
+      <div class="deal-stat">
+        <span class="deal-stat-value">684 MW</span>
+        <div class="deal-stat-label">총 공급 용량</div>
+      </div>
+      <div class="deal-divider"></div>
+      <div class="deal-stat">
+        <span class="deal-stat-value">33대</span>
+        <div class="deal-stat-label">22MW급 엔진</div>
+      </div>
+      <div class="deal-divider"></div>
+      <div class="deal-stat">
+        <span class="deal-stat-value">3개소</span>
+        <div class="deal-stat-label">미국 DC 사이트</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 타임라인 -->
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="tl-year">2026년 4월</div>
+      <div class="tl-title">미국 데이터센터 시장 첫 진출 공시</div>
+      <div class="tl-desc">힘센엔진(HiMSEN)이 선박 중심 시장을 넘어 AI 데이터센터 전력 인프라로 적용처 확대. 핀란드 바르질라(60~70% 점유)가 독점하던 시장에 진입.</div>
+      <span class="tl-tag tag-confirmed">✅ 확정</span>
+    </div>
+
+    <div class="timeline-item current">
+      <div class="tl-year now">2026년 하반기 (예상)</div>
+      <div class="tl-title">22MW급 엔진 생산라인 증설 결정 공시</div>
+      <div class="tl-desc">현재 엔진 사업부 가동률 120~140%로 한계. 데이터센터 추가 수주를 위해 생산능력 확충 불가피. 증설 확정 시 2027년 이후 실적 추정치 상향 트리거.</div>
+      <span class="tl-tag tag-expected">⏳ 검토 중</span>
+    </div>
+
+    <div class="timeline-item future">
+      <div class="tl-year future">2028~2030년</div>
+      <div class="tl-title">확정 수주 물량 순차 납품 시작</div>
+      <div class="tl-desc">AEG 3개 사이트에 22MW급 엔진 33대 분할 납품. 1분기 2026 HD현대마린엔진 영업이익 326억(+217%), 매출 1,335억(+60.8%) — 데이터센터 실적 반영 본격화 예고.</div>
+      <span class="tl-tag tag-expected">⏳ 2028년 시작</span>
+    </div>
+
+    <div class="timeline-item future">
+      <div class="tl-year future">2029~2030년 (CLSA 시나리오)</div>
+      <div class="tl-title">생산능력 2.2GW 확대 시 — 2조 원 매출 가능성</div>
+      <div class="tl-desc">4행정 엔진 생산능력을 2.2GW까지 늘릴 경우, 데이터센터용 엔진 단독으로 약 2조 원 매출·1조 원 영업이익 기여 가능(CLSA 추정). 조선 수주 사이클과 독립된 별도 성장 엔진 완성.</div>
+      <span class="tl-tag tag-outlook">📊 증권가 시나리오</span>
+    </div>
+
+  </div>
+
+  <!-- 증권사 전망치 -->
+  <div style="margin-bottom:16px; font-size:13px; font-weight:700; color:#0d1a3a;">📋 증권사별 데이터센터 엔진 전망</div>
+  <div class="analyst-grid">
+    <div class="analyst-card">
+      <div class="analyst-firm">CLSA</div>
+      <div class="analyst-metric">~2조원</div>
+      <div class="analyst-year">2029년 DC 엔진 매출 (증설 시나리오)</div>
+      <div class="analyst-note">영업이익 1조원 기여 가능. 4행정 엔진 생산능력 2.2GW 확대 전제.</div>
+    </div>
+    <div class="analyst-card">
+      <div class="analyst-firm">한화투자증권</div>
+      <div class="analyst-metric">26.3조원</div>
+      <div class="analyst-year">2027년 HD현대중공업 전체 매출 추정</div>
+      <div class="analyst-note">영업이익 4조2,800억 추정. 22MW 증설 확정 시 추가 상향 여지 있음.</div>
+    </div>
+    <div class="analyst-card">
+      <div class="analyst-firm">DS투자증권</div>
+      <div class="analyst-metric">120~140%</div>
+      <div class="analyst-year">현재 엔진 사업부 가동률</div>
+      <div class="analyst-note">증설 없이는 추가 수주 소화 어려운 상황. 병목이 곧 호재.</div>
+    </div>
+    <div class="analyst-card">
+      <div class="analyst-firm">키움증권</div>
+      <div class="analyst-metric">95만원</div>
+      <div class="analyst-year">목표주가 (↑ 81만→95만)</div>
+      <div class="analyst-note">힘센엔진 신규 성장동력 반영. 투자의견 '매수' 유지.</div>
+    </div>
+  </div>
+
+  <p class="source-note">출처: HD현대중공업 DART 공시(2026.04.22) · CLSA · 한화투자증권 · DS투자증권 · 키움증권 리서치 (2026.04~05)</p>
+</div>
+</body>
+</html>
