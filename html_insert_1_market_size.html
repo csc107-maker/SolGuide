@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 데이터센터 전력 수요 시장 규모</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Space+Grotesk:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 32px 16px;
+    min-width: 320px;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: #1a3faa;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #101c3d;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #5a6480;
+    margin-bottom: 28px;
+  }
+
+  /* KPI 카드 3개 */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .kpi-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px 18px;
+    box-shadow: 0 2px 12px rgba(26,63,170,0.08);
+    border-top: 4px solid #1a3faa;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(26,63,170,0.05);
+  }
+
+  .kpi-card.accent1 { border-top-color: #0066ff; }
+  .kpi-card.accent2 { border-top-color: #f04e00; }
+  .kpi-card.accent3 { border-top-color: #00a878; }
+
+  .kpi-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .kpi-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #101c3d;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .kpi-unit {
+    font-size: 13px;
+    font-weight: 700;
+    color: #5a6480;
+    margin-bottom: 6px;
+  }
+
+  .kpi-label {
+    font-size: 12px;
+    color: #7a84a0;
+    line-height: 1.5;
+  }
+
+  .kpi-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  .badge-up { background: #e8f5e9; color: #2e7d32; }
+  .badge-warn { background: #fff3e0; color: #e65100; }
+  .badge-info { background: #e3f2fd; color: #1565c0; }
+
+  /* 바 차트 섹션 */
+  .bar-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px 22px;
+    box-shadow: 0 2px 12px rgba(26,63,170,0.08);
+    margin-bottom: 20px;
+  }
+
+  .bar-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #101c3d;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    gap: 12px;
+  }
+
+  .bar-year {
+    width: 42px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #5a6480;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    background: #f0f4ff;
+    border-radius: 6px;
+    height: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    transition: width 1.2s ease;
+    background: linear-gradient(90deg, #1a3faa, #0066ff);
+  }
+
+  .bar-fill.highlight {
+    background: linear-gradient(90deg, #f04e00, #ff7c40);
+  }
+
+  .bar-gw {
+    width: 54px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 700;
+    color: #101c3d;
+    flex-shrink: 0;
+  }
+
+  /* 규제 카드 */
+  .reg-card {
+    background: #fff8f5;
+    border: 2px solid #f04e00;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .reg-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .reg-body { flex: 1; }
+
+  .reg-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #b03000;
+    margin-bottom: 6px;
+  }
+
+  .reg-text {
+    font-size: 12px;
+    color: #5a3020;
+    line-height: 1.7;
+  }
+
+  .reg-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f04e00;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  .source-note {
+    font-size: 10px;
+    color: #9aa0b4;
+    margin-top: 18px;
+    text-align: right;
+  }
+
+  @media (max-width: 520px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .kpi-value { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="section-label">📊 시장 규모 분석</div>
+  <h2>AI 데이터센터 전력 수요 — 얼마나 커지고 있나?</h2>
+  <p class="subtitle">IEA·Wood Mackenzie 데이터 기반 | 2026년 기준</p>
+
+  <!-- KPI 카드 3개 -->
+  <div class="kpi-grid">
+    <div class="kpi-card accent1">
+      <div class="kpi-icon">⚡</div>
+      <div class="kpi-value">110</div>
+      <div class="kpi-unit">GW</div>
+      <div class="kpi-label">2030년 미국 데이터센터<br>전력 용량 전망</div>
+      <span class="kpi-badge badge-up">↑ 2026년 대비 4.6배</span>
+    </div>
+
+    <div class="kpi-card accent2">
+      <div class="kpi-icon">🔌</div>
+      <div class="kpi-value">50%</div>
+      <div class="kpi-unit">점유 예상</div>
+      <div class="kpi-label">2030년까지 미국 전력<br>수요 증가분 중 DC 비중</div>
+      <span class="kpi-badge badge-warn">IEA Electricity 2026</span>
+    </div>
+
+    <div class="kpi-card accent3">
+      <div class="kpi-icon">🇰🇷</div>
+      <div class="kpi-value">53건</div>
+      <div class="kpi-unit">신청 중</div>
+      <div class="kpi-label">분산에너지특별법 시행 후<br>데이터센터 설립 신청</div>
+      <span class="kpi-badge badge-info">서울 통과: 단 1건</span>
+    </div>
+  </div>
+
+  <!-- 미국 DC 용량 바 차트 -->
+  <div class="bar-section">
+    <div class="bar-title">
+      📈 미국 데이터센터 전력 용량 성장 추이 (GW)
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-year">2024</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:18%">18GW</div>
+      </div>
+      <div class="bar-gw">18 GW</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-year">2026</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:22%">24GW</div>
+      </div>
+      <div class="bar-gw">24 GW</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-year">2028</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:58%">60~65GW</div>
+      </div>
+      <div class="bar-gw">~65 GW</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-year">2030E</div>
+      <div class="bar-track">
+        <div class="bar-fill highlight" style="width:100%">110GW (전망)</div>
+      </div>
+      <div class="bar-gw">110 GW</div>
+    </div>
+  </div>
+
+  <!-- 규제 카드 -->
+  <div class="reg-card">
+    <div class="reg-icon">⚠️</div>
+    <div class="reg-body">
+      <div class="reg-title">국내 데이터센터 전력 확보의 현실적 장벽</div>
+      <div class="reg-text">
+        분산에너지 활성화 특별법(2025년~)에 따라 10MW 이상 데이터센터는 '전력계통 영향평가'를 통과해야 합니다. 
+        사회적·경제적 영향까지 심사하기 때문에 <strong>서울 인근 통과가 사실상 불가능한 수준</strong>이 됐습니다. 
+        이로 인해 이미 전력망이 확보된 산업단지 유휴 부지의 가치가 폭등하고 있습니다.
+      </div>
+      <span class="reg-stat">🏭 철강·조선 부지 = 10MW+ 확보 최적지</span>
+    </div>
+  </div>
+
+  <p class="source-note">출처: IEA 'Electricity 2026'(2026.02) · Wood Mackenzie · 한국전력 공개 자료</p>
+</div>
+</body>
+</html>
