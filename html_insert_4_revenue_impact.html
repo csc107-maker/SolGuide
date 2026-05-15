@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3업종 데이터센터 매출 영향 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fef9f0;
+    padding: 28px 14px;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .header-label {
+    display: inline-block;
+    background: #b85c00;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #2a1800;
+    margin-bottom: 5px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: #7a6040;
+    margin-bottom: 24px;
+  }
+
+  /* 업종 카드 */
+  .sector-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .sector-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(184,92,0,0.09);
+  }
+
+  .sector-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px 16px;
+    border-bottom: 1px solid #f5ece0;
+  }
+
+  .sector-icon {
+    font-size: 30px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .si-ship { background: #e8f0ff; }
+  .si-steel { background: #ffe8e8; }
+  .si-chem { background: #e8fff2; }
+
+  .sector-name {
+    font-size: 17px;
+    font-weight: 900;
+    color: #2a1800;
+    margin-bottom: 2px;
+  }
+
+  .sector-company {
+    font-size: 11px;
+    color: #9a7050;
+  }
+
+  .sector-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid #f5ece0;
+  }
+
+  .metric-box {
+    padding: 14px 16px;
+    border-right: 1px solid #f5ece0;
+  }
+
+  .metric-box:last-child { border-right: none; }
+
+  .metric-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #b85c00;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .metric-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2a1800;
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  .metric-note {
+    font-size: 10px;
+    color: #7a6040;
+    line-height: 1.4;
+  }
+
+  .sector-bottom {
+    padding: 14px 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .insight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 11px;
+    color: #5a4020;
+    line-height: 1.5;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .insight-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #b85c00;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* 종합 시그널 박스 */
+  .signal-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 14px rgba(184,92,0,0.09);
+    margin-bottom: 16px;
+  }
+
+  .signal-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2a1800;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .signal-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #fef9f0;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+
+  .signal-num {
+    background: #b85c00;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .signal-text {
+    font-size: 12px;
+    color: #5a3a10;
+    line-height: 1.5;
+  }
+
+  .signal-strong {
+    font-weight: 700;
+    color: #2a1800;
+  }
+
+  /* 결론 바 */
+  .verdict-bar {
+    background: linear-gradient(135deg, #b85c00, #7a3a00);
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .verdict-icon { font-size: 24px; flex-shrink: 0; }
+
+  .verdict-text {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .verdict-text strong { color: #ffd090; }
+
+  .source-note {
+    font-size: 10px;
+    color: #9a8060;
+    margin-top: 16px;
+    text-align: right;
+  }
+
+  @media (max-width: 520px) {
+    .sector-body { grid-template-columns: 1fr; }
+    .metric-box { border-right: none; border-bottom: 1px solid #f5ece0; }
+    .signal-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-label">💡 종합 분석 리포트</div>
+  <h2>3업종 데이터센터 진출 — 매출에 미치는 영향은?</h2>
+  <p class="subtitle">조선·철강·석유화학 현재 수준 및 2028~2030년 전망 | 증권사 추정치 포함</p>
+
+  <div class="sector-grid">
+
+    <!-- 조선 -->
+    <div class="sector-card">
+      <div class="sector-top">
+        <div class="sector-icon si-ship">⚓</div>
+        <div>
+          <div class="sector-name">조선업 (HD현대중공업 중심)</div>
+          <div class="sector-company">선박엔진 → 데이터센터 발전설비 스핀오프</div>
+        </div>
+      </div>
+      <div class="sector-body">
+        <div class="metric-box">
+          <div class="metric-label">확정 수주</div>
+          <div class="metric-value">6,271억</div>
+          <div class="metric-note">AEG 684MW<br>2028~2030 납품</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">2028년 DC 매출</div>
+          <div class="metric-value">~2,010억</div>
+          <div class="metric-note">CLSA 추정<br>시작 시나리오</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">최대 기여 전망</div>
+          <div class="metric-value">~2조원</div>
+          <div class="metric-note">2029년, 생산 2.2GW<br>확대 시 CLSA 추정</div>
+        </div>
+      </div>
+      <div class="sector-bottom">
+        <div class="insight-item">
+          <div class="insight-dot"></div>
+          <div>조선 수주 사이클과 독립된 '제2 성장 엔진' 확보. 수익 변동성 감소 효과.</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-dot"></div>
+          <div>생산설비 가동률 120~140% — 증설 결정 여부가 최대 변수.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 철강 -->
+    <div class="sector-card">
+      <div class="sector-top">
+        <div class="sector-icon si-steel">🔩</div>
+        <div>
+          <div class="sector-name">철강업 (현대제철·동국제강·포스코)</div>
+          <div class="sector-company">유휴 부지 전환 + 고부가 특수강 공급 이중 전략</div>
+        </div>
+      </div>
+      <div class="sector-body">
+        <div class="metric-box">
+          <div class="metric-label">현재 DC 매출 비중</div>
+          <div class="metric-value">~3%</div>
+          <div class="metric-note">현대제철 봉형강<br>2026년 기준</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">목표 DC 매출 비중</div>
+          <div class="metric-value">6%</div>
+          <div class="metric-note">현대제철 봉형강<br>중기 목표</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">ESS 수주 목표</div>
+          <div class="metric-value">5.2만톤</div>
+          <div class="metric-note">현대제철 2026년<br>북미 ESS 목표</div>
+        </div>
+      </div>
+      <div class="sector-bottom">
+        <div class="insight-item">
+          <div class="insight-dot"></div>
+          <div>숫자보다 제품 믹스 변화가 핵심. 범용 철근 대신 고강도·고내열 특수강은 마진율이 다르다.</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-dot"></div>
+          <div>포항 합금철 공장 → 2조 원 DC 프로젝트. 부지 가치 재평가로 자산 효율화 가시화.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 석유화학 -->
+    <div class="sector-card">
+      <div class="sector-top">
+        <div class="sector-icon si-chem">🧪</div>
+        <div>
+          <div class="sector-name">석유화학 (LG화학·롯데케미칼 등)</div>
+          <div class="sector-company">유휴 부지·발전 인프라 임대형 접근 + 첨단소재 전환</div>
+        </div>
+      </div>
+      <div class="sector-body">
+        <div class="metric-box">
+          <div class="metric-label">직접 DC 매출</div>
+          <div class="metric-value">미미</div>
+          <div class="metric-note">현재 확정 수주<br>없음 (검토 단계)</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">LG화학 소재 목표</div>
+          <div class="metric-value">2조원</div>
+          <div class="metric-note">전자소재 2030년<br>(현재 1조원)</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">자산 잠재력</div>
+          <div class="metric-value">최고</div>
+          <div class="metric-note">여수·대산·울산<br>대규모 부지+발전설비</div>
+        </div>
+      </div>
+      <div class="sector-bottom">
+        <div class="insight-item">
+          <div class="insight-dot"></div>
+          <div>단기 직접 매출보다 부지 임대·합작 형태의 장기 수익화 가능성. 재무 여력이 관건.</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-dot"></div>
+          <div>롯데케미칼 대산공장 재편 완료 후 유휴 부지 활용 공시가 핵심 모니터링 포인트.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 투자자 모니터링 시그널 -->
+  <div class="signal-section">
+    <div class="signal-title">🔍 투자자·관심자가 체크해야 할 시그널 4가지</div>
+    <div class="signal-grid">
+      <div class="signal-item">
+        <div class="signal-num">1</div>
+        <div class="signal-text">
+          <span class="signal-strong">HD현대중공업 증설 공시</span><br>
+          힘센엔진 22MW 라인 증설 결정 여부. 확정 시 2027년 이후 실적 추정치 상향.
+        </div>
+      </div>
+      <div class="signal-item">
+        <div class="signal-num">2</div>
+        <div class="signal-text">
+          <span class="signal-strong">동국홀딩스 연내 DC 사업 발표</span><br>
+          "연내 구체적 성과" 발표 여부. 포항·인천 부지 규모와 계약 구조가 핵심.
+        </div>
+      </div>
+      <div class="signal-item">
+        <div class="signal-num">3</div>
+        <div class="signal-text">
+          <span class="signal-strong">현대제철 유휴 부지 공식 발표</span><br>
+          인천 제강공장 부지 활용 계획 공식화 시, 자산 가치 재평가 트리거.
+        </div>
+      </div>
+      <div class="signal-item">
+        <div class="signal-num">4</div>
+        <div class="signal-text">
+          <span class="signal-strong">석유화학 사업 재편 완료 후 부지 공시</span><br>
+          롯데케미칼 대산 합병(2026.09 예정) 후 잔여 부지 활용 계획이 다음 모멘텀.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결론 -->
+  <div class="verdict-bar">
+    <div class="verdict-icon">📌</div>
+    <div class="verdict-text">
+      <strong>결론적으로</strong>, 3업종 모두 지금 당장의 극적인 매출 폭발보다는 <strong>2028~2030년을 향한 장기 포트폴리오 전환의 길목</strong>에 있습니다. 조선은 엔진 기술 스핀오프로 가장 빠른 수익화가 예상되고, 철강은 제품 믹스 고도화를 통한 이익률 개선, 석유화학은 보유 자산 효율화의 방향으로 각자의 루트를 걷고 있습니다.
+    </div>
+  </div>
+
+  <p class="source-note">출처: DART 공시 · CLSA · 한화투자증권 · 현대제철 IR · 서울경제 · 헤럴드경제 · 인사이트코리아 (2026.02~05)</p>
+</div>
+</body>
+</html>
