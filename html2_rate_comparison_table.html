@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한미 기준금리 비교 표</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F4F6FB;
+    padding: 32px 20px;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .section-header .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1A3A6E, #2E5AAD);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .section-header h2 {
+    font-size: 21px;
+    font-weight: 900;
+    color: #111;
+  }
+
+  .section-header h2 .hl { color: #C0392B; }
+
+  /* 비교 카드 */
+  .compare-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: stretch;
+  }
+
+  .country-card {
+    flex: 1;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 18px;
+    border: 2px solid;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+
+  .country-card.korea { border-color: #1A3A6E; }
+  .country-card.usa { border-color: #C0392B; }
+
+  .country-card .flag { font-size: 28px; margin-bottom: 4px; }
+
+  .country-card .country-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .country-card .rate {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  .country-card.korea .rate { color: #1A3A6E; }
+  .country-card.usa .rate { color: #C0392B; }
+
+  .country-card .rate-label {
+    font-size: 11px;
+    color: #aaa;
+    margin-bottom: 10px;
+  }
+
+  .country-card .status-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+
+  .korea .status-pill { background: #EBF0FA; color: #1A3A6E; }
+  .usa .status-pill { background: #FDF0EF; color: #C0392B; }
+
+  .country-card .detail {
+    font-size: 11.5px;
+    color: #666;
+    line-height: 1.6;
+    text-align: left;
+    margin-top: 8px;
+  }
+
+  /* 차이 배지 */
+  .gap-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 72px;
+    text-align: center;
+  }
+
+  .gap-badge .gap-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #D4820A;
+    line-height: 1;
+  }
+
+  .gap-badge .gap-label {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .gap-badge .gap-arrow {
+    font-size: 24px;
+    color: #D4820A;
+    margin: 4px 0;
+  }
+
+  /* 역사적 금리 표 */
+  .table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1.5px solid #E0E5F0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+  }
+
+  .table-title {
+    background: linear-gradient(135deg, #1A3A6E, #2E5AAD);
+    color: #fff;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: #F0F3FA;
+  }
+
+  th {
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1A3A6E;
+    text-align: center;
+    border-bottom: 1px solid #E0E5F0;
+    letter-spacing: 0.3px;
+  }
+
+  td {
+    padding: 11px 14px;
+    font-size: 12.5px;
+    color: #333;
+    text-align: center;
+    border-bottom: 1px solid #F0F3FA;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr.highlight td {
+    background: #FFFBEA;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .rate-kr { color: #1A3A6E; font-weight: 700; }
+  .rate-us { color: #C0392B; font-weight: 700; }
+  .gap-col { color: #D4820A; font-weight: 700; }
+  .gap-col.big { color: #C0392B; }
+
+  .effect-pill {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+
+  .effect-pill.bad { background: #FDF0EF; color: #C0392B; }
+  .effect-pill.ok { background: #EBF0FA; color: #1A3A6E; }
+  .effect-pill.warn { background: #FEF7EC; color: #D4820A; }
+
+  /* 환율 영향 카드 */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  @media (max-width: 560px) {
+    .impact-grid { grid-template-columns: 1fr; }
+    .compare-row { flex-direction: column; }
+    .gap-badge { flex-direction: row; gap: 10px; padding: 12px 0; }
+  }
+
+  .impact-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    border: 1.5px solid #E8EBF2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    text-align: center;
+  }
+
+  .impact-card .emoji { font-size: 22px; margin-bottom: 6px; }
+  .impact-card h4 { font-size: 12px; font-weight: 800; color: #111; margin-bottom: 5px; }
+  .impact-card p { font-size: 11px; color: #666; line-height: 1.6; }
+
+  .source {
+    text-align: right;
+    font-size: 10px;
+    color: #bbb;
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="section-header">
+    <div class="badge">한미 기준금리 비교 분석</div>
+    <h2>금리 차이 <span class="hl">1.0~1.25%p</span>가 환율을 흔든다</h2>
+  </div>
+
+  <!-- 비교 카드 -->
+  <div class="compare-row">
+    <div class="country-card korea">
+      <div class="flag">🇰🇷</div>
+      <div class="country-name">대한민국 · 한국은행</div>
+      <div class="rate">2.50%</div>
+      <div class="rate-label">기준금리 (2026.04 기준)</div>
+      <div class="status-pill">7회 연속 동결</div>
+      <div class="detail">
+        ▸ 2024년 10월 피벗 후 4차례 인하<br>
+        ▸ 인플레이션 2.2%(2026.03) 목표 초과<br>
+        ▸ 신현송 신임 총재 물가 안정 우선 천명<br>
+        ▸ 다음 결정: <strong>2026년 5월 28일</strong>
+      </div>
+    </div>
+
+    <div class="gap-badge">
+      <div class="gap-arrow">↕</div>
+      <div class="gap-num">▲1.0<br>~1.25%p</div>
+      <div class="gap-label">금리차</div>
+    </div>
+
+    <div class="country-card usa">
+      <div class="flag">🇺🇸</div>
+      <div class="country-name">미국 · 연방준비제도 (Fed)</div>
+      <div class="rate">3.5~<br>3.75%</div>
+      <div class="rate-label">기준금리 (2026.03 동결)</div>
+      <div class="status-pill">동결 유지</div>
+      <div class="detail">
+        ▸ CPI 3.3%(2026.03) — 목표치 상회<br>
+        ▸ 호르무즈 봉쇄로 유가·물가 압력 지속<br>
+        ▸ JP모건·도이치뱅크: 9월 이후 첫 인하 전망<br>
+        ▸ 신임 의장 케빈 워시 5월 취임
+      </div>
+    </div>
+  </div>
+
+  <!-- 역사적 금리 비교 표 -->
+  <div class="table-wrap">
+    <div class="table-title">📊 한미 기준금리 흐름과 환율 영향 (2024~2026)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>시기</th>
+          <th>한국 금리</th>
+          <th>미국 금리</th>
+          <th>금리차</th>
+          <th>원달러 환율 수준</th>
+          <th>환율 영향</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2024년 초</td>
+          <td class="rate-kr">3.50%</td>
+          <td class="rate-us">5.25~5.50%</td>
+          <td class="gap-col big">▲ 2.0%p↑</td>
+          <td>1,320~1,360원</td>
+          <td><span class="effect-pill bad">원화 약세</span></td>
+        </tr>
+        <tr>
+          <td>2024년 10월</td>
+          <td class="rate-kr">3.25%<br><small>(피벗 시작)</small></td>
+          <td class="rate-us">4.75~5.00%</td>
+          <td class="gap-col big">▲ 1.75%p</td>
+          <td>1,360~1,420원</td>
+          <td><span class="effect-pill bad">원화 약세</span></td>
+        </tr>
+        <tr>
+          <td>2024년 12월</td>
+          <td class="rate-kr">3.00%</td>
+          <td class="rate-us">4.25~4.50%</td>
+          <td class="gap-col">▲ 1.25~1.5%p</td>
+          <td>1,420~1,480원</td>
+          <td><span class="effect-pill bad">원화 추가 약세</span></td>
+        </tr>
+        <tr>
+          <td>2025년 5월</td>
+          <td class="rate-kr">2.75%<br><small>(선제 인하)</small></td>
+          <td class="rate-us">3.75~4.00%</td>
+          <td class="gap-col">▲ 1.0~1.25%p</td>
+          <td>1,420~1,450원</td>
+          <td><span class="effect-pill warn">원화 약세 촉발</span></td>
+        </tr>
+        <tr>
+          <td>2025년 12월</td>
+          <td class="rate-kr">2.50%</td>
+          <td class="rate-us">3.50~3.75%</td>
+          <td class="gap-col">▲ 1.0~1.25%p</td>
+          <td>1,460~1,500원</td>
+          <td><span class="effect-pill bad">원화 약세 지속</span></td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>2026년 4~5월</strong><br><small>현재</small></td>
+          <td class="rate-kr">2.50%</td>
+          <td class="rate-us">3.50~3.75%</td>
+          <td class="gap-col">▲ 1.0~1.25%p</td>
+          <td><strong>1,445~1,485원</strong></td>
+          <td><span class="effect-pill warn">변동성 지속</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 환율 영향 -->
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="emoji">💵</div>
+      <h4>달러 자산 매력 증가</h4>
+      <p>금리 차이가 유지되면 달러 예금·채권이 원화 자산보다 수익률이 높아 자금이 달러 쪽으로 이동</p>
+    </div>
+    <div class="impact-card">
+      <div class="emoji">🏭</div>
+      <h4>기업 달러 환전 기피</h4>
+      <p>수출 기업들이 달러를 원화로 바꾸지 않고 달러 그대로 보유. 국내 달러 공급 감소로 환율 상승</p>
+    </div>
+    <div class="impact-card">
+      <div class="emoji">📉</div>
+      <h4>수입 물가 상승 악순환</h4>
+      <p>환율 상승→수입물가 오름→인플레이션→한은 금리 인하 어려움→한미 금리 차 유지의 악순환</p>
+    </div>
+  </div>
+
+  <div class="source">출처: 한국은행 기준금리 추이 / 연방준비제도 / 나무위키 기준금리 / KB국민은행 리서치 / TossBank FOMC 분석 | 2026.05 기준</div>
+</div>
+</body>
+</html>
