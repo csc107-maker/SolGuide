@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>금리·환율 시나리오 전망</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F3F5FA;
+    padding: 32px 20px;
+  }
+
+  .wrap { max-width: 780px; margin: 0 auto; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+
+  .section-header .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #2C3E6E, #1A6B8A);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .section-header h2 {
+    font-size: 21px;
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 5px;
+  }
+
+  .section-header h2 span { color: #C0392B; }
+  .section-header p { font-size: 13px; color: #666; }
+
+  /* 시나리오 카드 */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 600px) {
+    .scenario-grid { grid-template-columns: 1fr; }
+  }
+
+  .scenario-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1.5px solid #E0E5F2;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+
+  .scenario-card:hover { transform: translateY(-3px); }
+
+  .scenario-header {
+    padding: 18px 18px 14px;
+    text-align: center;
+  }
+
+  .sc-1 .scenario-header { background: linear-gradient(135deg, #1E7E4A, #27AE60); }
+  .sc-2 .scenario-header { background: linear-gradient(135deg, #D4820A, #E8A723); }
+  .sc-3 .scenario-header { background: linear-gradient(135deg, #C0392B, #E74C3C); }
+
+  .scenario-header .scenario-label {
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .scenario-header h3 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+
+  .scenario-header .prob {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+  }
+
+  .scenario-body {
+    padding: 16px 16px;
+  }
+
+  .scenario-body .rate-forecast {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F8F9FC;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+  }
+
+  .rate-forecast .rf-item { text-align: center; }
+
+  .rate-forecast .rf-label {
+    font-size: 10px;
+    color: #aaa;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .rate-forecast .rf-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .rf-arrow { font-size: 18px; color: #ddd; }
+
+  .scenario-body ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .scenario-body li {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.6;
+    padding: 4px 0;
+    border-bottom: 1px solid #F0F3FA;
+    display: flex;
+    gap: 6px;
+  }
+
+  .scenario-body li:last-child { border-bottom: none; }
+  .scenario-body li .bullet { flex-shrink: 0; }
+
+  .trigger-section {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #EEE;
+  }
+
+  .trigger-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #aaa;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+  }
+
+  .trigger-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin: 2px;
+    font-weight: 600;
+  }
+
+  .sc-1 .trigger-tag { background: #EBF7F2; color: #1E7E4A; }
+  .sc-2 .trigger-tag { background: #FEF7EC; color: #D4820A; }
+  .sc-3 .trigger-tag { background: #FDF0EF; color: #C0392B; }
+
+  /* 환율 전망 바 */
+  .rate-range-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 22px;
+    border: 1.5px solid #E0E5F2;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+  }
+
+  .rr-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rate-bar-wrap {
+    position: relative;
+    height: 38px;
+    background: linear-gradient(90deg, #EBF7F2 0%, #FEF7EC 40%, #FDF0EF 75%, #FDECEB 100%);
+    border-radius: 20px;
+    margin-bottom: 8px;
+    overflow: visible;
+  }
+
+  .rate-bar-label {
+    position: absolute;
+    top: -16px;
+    font-size: 10px;
+    color: #888;
+    font-weight: 600;
+    transform: translateX(-50%);
+  }
+
+  .rate-bar-dot {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .rate-bar-dot.current {
+    background: #D4820A;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.3); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .rate-bar-dot.low { background: #1E7E4A; }
+  .rate-bar-dot.high { background: #C0392B; }
+
+  .rate-scale {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #888;
+    padding: 0 4px;
+  }
+
+  /* 체크리스트 */
+  .checklist-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 20px;
+    border: 1.5px solid #E0E5F2;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  }
+
+  .checklist-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .checklist-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #F0F3FA;
+  }
+
+  .checklist-row:last-child { border-bottom: none; }
+
+  .cl-status {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .cl-status.done { background: #1E7E4A; color: #fff; }
+  .cl-status.wait { background: #FEF7EC; color: #D4820A; border: 1.5px solid #D4820A; }
+  .cl-status.no { background: #FDF0EF; color: #C0392B; border: 1.5px solid #C0392B; }
+
+  .cl-text h4 { font-size: 13px; font-weight: 700; color: #111; }
+  .cl-text p { font-size: 11.5px; color: #666; margin-top: 2px; }
+
+  .source {
+    text-align: right;
+    font-size: 10px;
+    color: #bbb;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="section-header">
+    <div class="badge">2026년 하반기 전망</div>
+    <h2>환율·금리 <span>3가지 시나리오</span>와 주목할 조건들</h2>
+    <p>미 연준 인하 시점, 중동 정세, 통화스와프 여부가 핵심 변수</p>
+  </div>
+
+  <!-- 시나리오 3개 -->
+  <div class="scenario-grid">
+
+    <!-- 낙관 -->
+    <div class="scenario-card sc-1">
+      <div class="scenario-header">
+        <div class="scenario-label">시나리오 A</div>
+        <h3>🌤 낙관 시나리오</h3>
+        <div class="prob">실현 가능성 25%</div>
+      </div>
+      <div class="scenario-body">
+        <div class="rate-forecast">
+          <div class="rf-item">
+            <span class="rf-label">연말 환율</span>
+            <span class="rf-val" style="color:#1E7E4A;">1,350~1,400원</span>
+          </div>
+          <div class="rf-arrow">→</div>
+          <div class="rf-item">
+            <span class="rf-label">한국 금리</span>
+            <span class="rf-val">2.00~2.25%</span>
+          </div>
+        </div>
+        <ul>
+          <li><span class="bullet">✅</span>미 연준 9월 이후 2~3회 금리 인하 실현</li>
+          <li><span class="bullet">✅</span>한미 통화 스와프 협정 체결 성사</li>
+          <li><span class="bullet">✅</span>중동 정세 협상 진전·유가 안정</li>
+          <li><span class="bullet">✅</span>외국인 자금 유입 지속, 서학개미 매수 둔화</li>
+        </ul>
+        <div class="trigger-section">
+          <div class="trigger-label">KEY TRIGGER</div>
+          <span class="trigger-tag">통화스와프 체결</span>
+          <span class="trigger-tag">연준 2~3회 인하</span>
+          <span class="trigger-tag">중동 휴전</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 기본 -->
+    <div class="scenario-card sc-2">
+      <div class="scenario-header">
+        <div class="scenario-label">시나리오 B</div>
+        <h3>☁️ 기본 시나리오</h3>
+        <div class="prob">실현 가능성 55%</div>
+      </div>
+      <div class="scenario-body">
+        <div class="rate-forecast">
+          <div class="rf-item">
+            <span class="rf-label">연말 환율</span>
+            <span class="rf-val" style="color:#D4820A;">1,400~1,480원</span>
+          </div>
+          <div class="rf-arrow">→</div>
+          <div class="rf-item">
+            <span class="rf-label">한국 금리</span>
+            <span class="rf-val">2.25~2.50%</span>
+          </div>
+        </div>
+        <ul>
+          <li><span class="bullet">🟡</span>연준 9월 이후 1회 인하 또는 동결</li>
+          <li><span class="bullet">🟡</span>한국은행 11월 0.25%p 인하 1회</li>
+          <li><span class="bullet">🟡</span>중동 정세 불안 지속·유가 변동성</li>
+          <li><span class="bullet">🟡</span>외국인 코스피 매수, 서학개미 달러 수요 공존</li>
+        </ul>
+        <div class="trigger-section">
+          <div class="trigger-label">KEY TRIGGER</div>
+          <span class="trigger-tag">한은 11월 1회 인하</span>
+          <span class="trigger-tag">환율 변동성 지속</span>
+          <span class="trigger-tag">코스피 8,000 부근</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 비관 -->
+    <div class="scenario-card sc-3">
+      <div class="scenario-header">
+        <div class="scenario-label">시나리오 C</div>
+        <h3>⛈️ 비관 시나리오</h3>
+        <div class="prob">실현 가능성 20%</div>
+      </div>
+      <div class="scenario-body">
+        <div class="rate-forecast">
+          <div class="rf-item">
+            <span class="rf-label">연말 환율</span>
+            <span class="rf-val" style="color:#C0392B;">1,500~1,550원</span>
+          </div>
+          <div class="rf-arrow">→</div>
+          <div class="rf-item">
+            <span class="rf-label">한국 금리</span>
+            <span class="rf-val">2.50% 동결</span>
+          </div>
+        </div>
+        <ul>
+          <li><span class="bullet">❌</span>연준 연내 금리 동결 (인하 없음)</li>
+          <li><span class="bullet">❌</span>중동 전쟁 확전·호르무즈 봉쇄 심화</li>
+          <li><span class="bullet">❌</span>미국 스태그플레이션 현실화</li>
+          <li><span class="bullet">❌</span>7월 관세 유예 종료 후 무역 갈등 재점화</li>
+        </ul>
+        <div class="trigger-section">
+          <div class="trigger-label">KEY TRIGGER</div>
+          <span class="trigger-tag">연준 동결 지속</span>
+          <span class="trigger-tag">유가 $120+</span>
+          <span class="trigger-tag">관세 재개</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 환율 범위 바 -->
+  <div class="rate-range-box">
+    <div class="rr-title">📊 2026년 하반기 원달러 환율 예상 범위</div>
+    <div class="rate-bar-wrap">
+      <div class="rate-bar-label" style="left: 15%;">낙관<br>1,350</div>
+      <div class="rate-bar-label" style="left: 50%;">현재<br>1,480</div>
+      <div class="rate-bar-label" style="left: 88%;">비관<br>1,550</div>
+      <div class="rate-bar-dot low" style="left: 15%;"></div>
+      <div class="rate-bar-dot current" style="left: 50%;"></div>
+      <div class="rate-bar-dot high" style="left: 88%;"></div>
+    </div>
+    <div class="rate-scale">
+      <span>1,300원</span>
+      <span>1,350원</span>
+      <span>1,400원</span>
+      <span>1,450원</span>
+      <span>1,480원</span>
+      <span>1,500원</span>
+      <span>1,550원</span>
+    </div>
+  </div>
+
+  <!-- 환율 안정 조건 체크리스트 -->
+  <div class="checklist-box">
+    <div class="checklist-title">🧭 환율 안정을 위한 조건 체크리스트</div>
+
+    <div class="checklist-row">
+      <div class="cl-status done">✓</div>
+      <div class="cl-text">
+        <h4>외국인 국내 주식 순매수 전환</h4>
+        <p>2025년 5월부터 순매수 전환 — 완료. 외국인 보유 비중 32.9%로 5년 8개월 최고.</p>
+      </div>
+    </div>
+
+    <div class="checklist-row">
+      <div class="cl-status wait">⏳</div>
+      <div class="cl-text">
+        <h4>미 연준 금리 인하 사이클 재개</h4>
+        <p>JP모건·도이치뱅크 등 9월 이후 첫 인하 전망. 아직 미실현 — 관망 중.</p>
+      </div>
+    </div>
+
+    <div class="checklist-row">
+      <div class="cl-status wait">⏳</div>
+      <div class="cl-text">
+        <h4>한미 통화 스와프 협정 체결</h4>
+        <p>서울-워싱턴 협의 진행 중. 체결 시 원화 변동성 구조적 완화 기대 — 미실현.</p>
+      </div>
+    </div>
+
+    <div class="checklist-row">
+      <div class="cl-status no">✕</div>
+      <div class="cl-text">
+        <h4>중동 지정학 리스크 완화</h4>
+        <p>미국-이란 협상 교착 상태 지속. 브렌트유 $100+ 유지 — 미완료.</p>
+      </div>
+    </div>
+
+    <div class="checklist-row">
+      <div class="cl-status wait">⏳</div>
+      <div class="cl-text">
+        <h4>서학개미 달러 수요 둔화</h4>
+        <p>금감원 해외투자 마케팅 제한 후 일부 둔화. 구조적 수요는 지속 — 부분 진행 중.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="source">출처: KB국민은행 리서치 / 한국은행 / TossBank FOMC 분석 / Bloomberg / JP모건 전망 | 2026.05 기준 ※ 투자 권유 아님, 참고용</div>
+</div>
+</body>
+</html>
