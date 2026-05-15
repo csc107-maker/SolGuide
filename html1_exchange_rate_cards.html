@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>환율 불안 핵심 원인 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F7F8FC;
+    padding: 32px 20px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .section-header .badge {
+    display: inline-block;
+    background: #1A3A6E;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .section-header h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #111;
+    line-height: 1.4;
+  }
+
+  .section-header h2 span { color: #C0392B; }
+
+  .section-header p {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #666;
+  }
+
+  /* 상단 현황 바 */
+  .status-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .status-item {
+    flex: 1;
+    min-width: 140px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 1.5px solid #E8EBF2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .status-item .label {
+    font-size: 11px;
+    color: #888;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .status-item .value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1A3A6E;
+    line-height: 1;
+  }
+
+  .status-item .value.red { color: #C0392B; }
+  .status-item .value.green { color: #1E7E4A; }
+
+  .status-item .change {
+    font-size: 11px;
+    color: #C0392B;
+    font-weight: 600;
+  }
+
+  .status-item .change.up::before { content: "▲ "; }
+  .status-item .change.down::before { content: "▼ "; }
+  .status-item .change.down { color: #1E7E4A; }
+
+  /* 원인 카드 그리드 */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .cause-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 20px;
+    border: 1.5px solid #E8EBF2;
+    box-shadow: 0 4px 16px rgba(26,58,110,0.06);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .cause-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(26,58,110,0.12);
+  }
+
+  .cause-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .cause-card.blue::before { background: #1A3A6E; }
+  .cause-card.red::before { background: #C0392B; }
+  .cause-card.amber::before { background: #D4820A; }
+  .cause-card.teal::before { background: #16697A; }
+
+  .cause-card .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .cause-card .num {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #aaa;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .cause-card h3 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .cause-card p {
+    font-size: 12.5px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .cause-card .tag {
+    display: inline-block;
+    margin-top: 12px;
+    background: #F0F3FA;
+    color: #1A3A6E;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .cause-card.red .tag { background: #FDF0EF; color: #C0392B; }
+  .cause-card.amber .tag { background: #FEF7EC; color: #D4820A; }
+  .cause-card.teal .tag { background: #EBF7F9; color: #16697A; }
+
+  /* 하단 설명 */
+  .bottom-note {
+    background: #1A3A6E;
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+  }
+
+  .bottom-note .icon { font-size: 22px; flex-shrink: 0; }
+
+  .bottom-note p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .bottom-note strong { color: #FFD700; }
+
+  .source {
+    text-align: right;
+    font-size: 10px;
+    color: #bbb;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="section-header">
+  <div class="badge">2026년 5월 현재 시장 현황</div>
+  <h2>코스피는 오르는데, 환율은 왜 <span>안 내려올까?</span></h2>
+  <p>한국 금융시장 핵심 지표 및 환율 불안 원인 분석</p>
+</div>
+
+<!-- 현황 바 -->
+<div class="status-bar">
+  <div class="status-item">
+    <div class="label">코스피</div>
+    <div class="value green">7,844</div>
+    <div class="change up" style="color:#1E7E4A;">8,000선 도전 중</div>
+  </div>
+  <div class="status-item">
+    <div class="label">원달러 환율</div>
+    <div class="value red">1,480원</div>
+    <div class="change up">1,500원대 경계</div>
+  </div>
+  <div class="status-item">
+    <div class="label">한국은행 기준금리</div>
+    <div class="value">2.50%</div>
+    <div class="change" style="color:#888;">7회 연속 동결</div>
+  </div>
+  <div class="status-item">
+    <div class="label">미 연준 기준금리</div>
+    <div class="value">3.50~3.75%</div>
+    <div class="change" style="color:#888;">동결 유지 중</div>
+  </div>
+</div>
+
+<!-- 원인 카드 4개 -->
+<div class="cards-grid">
+  <div class="cause-card blue">
+    <div class="num">CAUSE 01</div>
+    <div class="icon">📈</div>
+    <h3>한미 금리 역전<br>42개월의 구조적 문제</h3>
+    <p>미국 금리(3.5~3.75%)가 한국 금리(2.5%)보다 약 1.0~1.25%p 높습니다. 달러 자산이 더 유리해 기업들이 수출 달러를 원화로 환전하지 않고 보유합니다.</p>
+    <span class="tag">금리차 1.0~1.25%p</span>
+  </div>
+
+  <div class="cause-card red">
+    <div class="num">CAUSE 02</div>
+    <div class="icon">🌏</div>
+    <h3>서학개미의<br>폭발적 달러 수요</h3>
+    <p>2025년 1~11월 한국인의 미국 주식 순매수액 663억 달러(약 98조 원). 외국인이 공급하는 달러를 개인투자자가 다시 흡수하는 구조가 형성됐습니다.</p>
+    <span class="tag">역대 최대 해외 투자국</span>
+  </div>
+
+  <div class="cause-card amber">
+    <div class="num">CAUSE 03</div>
+    <div class="icon">🛢️</div>
+    <h3>중동 지정학 리스크<br>유가 급등·달러 안전수요</h3>
+    <p>미국-이란 전쟁 장기화로 호르무즈 해협 불안. 브렌트유 배럴당 100달러 돌파, 안전자산 달러 수요 급증으로 아시아 통화 전반이 약세 압력을 받고 있습니다.</p>
+    <span class="tag">유가 $100/배럴 이상</span>
+  </div>
+
+  <div class="cause-card teal">
+    <div class="num">CAUSE 04</div>
+    <div class="icon">🏦</div>
+    <h3>외국인 환헤지 투자<br>실제 달러 환전 수요 제한</h3>
+    <p>외국인이 국내 주식을 살 때 파생상품·환헤지 전략을 병행하면 실제 달러→원화 환전이 기대보다 적게 일어납니다. 주가 상승 = 환율 하락 공식이 항상 성립하지 않는 이유입니다.</p>
+    <span class="tag">외국인 보유 비중 32.9%</span>
+  </div>
+</div>
+
+<!-- 하단 설명 -->
+<div class="bottom-note">
+  <div class="icon">💡</div>
+  <p>
+    외국인이 <strong>21조 원</strong> 넘게 국내 주식을 순매수해도 환율이 잡히지 않는 것은, 
+    구조적 달러 수요(서학개미·금리차·유가)가 공급을 상쇄하기 때문입니다. 
+    <strong>통화 스와프 협정 체결</strong>이 현재 시장의 중기 안정화 기대 포인트입니다.
+  </p>
+</div>
+
+<div class="source">출처: 한국은행 / 나무위키 2025-2026 고환율 사태 / Bloomberg / TradingEconomics | 2026.05 기준</div>
+
+</body>
+</html>
