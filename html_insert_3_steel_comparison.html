@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>철강 3사 데이터센터 전략 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f4f9f4;
+    padding: 28px 14px;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .header-label {
+    display: inline-block;
+    background: #1a6e3c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0d2818;
+    margin-bottom: 5px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: #5a7060;
+    margin-bottom: 24px;
+  }
+
+  /* 회사 카드 3개 */
+  .company-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .company-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(26,110,60,0.09);
+  }
+
+  .company-header {
+    padding: 14px 16px 12px;
+    color: #fff;
+  }
+
+  .ch-posco { background: linear-gradient(135deg, #1a4fa0, #0d3070); }
+  .ch-hyundai { background: linear-gradient(135deg, #c44000, #8b2d00); }
+  .ch-dongkuk { background: linear-gradient(135deg, #1a6e3c, #0d4a28); }
+
+  .company-name {
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 3px;
+  }
+
+  .company-sub {
+    font-size: 10px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  .company-body {
+    padding: 14px 16px;
+  }
+
+  .strategy-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .strategy-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .strategy-text {
+    font-size: 12px;
+    color: #2a3a2a;
+    line-height: 1.5;
+  }
+
+  .kpi-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  .pill-posco { background: #e8eeff; color: #1a4fa0; }
+  .pill-hyundai { background: #fff0e8; color: #c44000; }
+  .pill-dongkuk { background: #e8f5ed; color: #1a6e3c; }
+
+  /* 비교표 */
+  .comparison-table {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(26,110,60,0.09);
+    margin-bottom: 16px;
+  }
+
+  .table-header {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    background: #0d2818;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .th-cell {
+    padding: 12px 14px;
+    text-align: center;
+  }
+
+  .th-cell:first-child { text-align: left; }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    border-bottom: 1px solid #f0f4f0;
+    transition: background 0.2s;
+  }
+
+  .table-row:hover { background: #f4f9f4; }
+  .table-row:last-child { border-bottom: none; }
+
+  .td-cell {
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #2a3a2a;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .td-cell:first-child {
+    text-align: left;
+    justify-content: flex-start;
+    font-weight: 700;
+    color: #0d2818;
+    font-size: 11px;
+  }
+
+  .check-yes { color: #1a6e3c; font-size: 16px; }
+  .check-part { color: #e06c00; font-size: 16px; }
+  .check-no { color: #ccc; font-size: 16px; }
+
+  .badge-sm {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+
+  .badge-high { background: #d4edda; color: #155724; }
+  .badge-mid  { background: #fff3cd; color: #856404; }
+  .badge-low  { background: #f8d7da; color: #721c24; }
+
+  .source-note {
+    font-size: 10px;
+    color: #9aa0b4;
+    text-align: right;
+  }
+
+  @media (max-width: 560px) {
+    .company-grid { grid-template-columns: 1fr; }
+    .table-header, .table-row { grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr; }
+    .th-cell, .td-cell { padding: 10px 8px; font-size: 11px; }
+    .td-cell:first-child { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-label">🏭 철강업 분석</div>
+  <h2>철강 3사의 데이터센터 진입 전략 비교</h2>
+  <p class="subtitle">포스코홀딩스 · 현대제철 · 동국제강 — 접근 방식과 강점 비교 (2026년 기준)</p>
+
+  <!-- 회사 카드 -->
+  <div class="company-grid">
+
+    <div class="company-card">
+      <div class="company-header ch-posco">
+        <div class="company-name">포스코홀딩스</div>
+        <div class="company-sub">POSCO Holdings</div>
+      </div>
+      <div class="company-body">
+        <div class="strategy-item">
+          <div class="strategy-icon">🔩</div>
+          <div class="strategy-text">고기능 후판·특수강 데이터센터 건자재 공급</div>
+        </div>
+        <div class="strategy-item">
+          <div class="strategy-icon">⚡</div>
+          <div class="strategy-text">포스코인터내셔널 통해 에너지 인프라 연계</div>
+        </div>
+        <div class="strategy-item">
+          <div class="strategy-icon">📊</div>
+          <div class="strategy-text">1Q2026 철강부문 영업이익 3,450억 (YoY -23.8%)</div>
+        </div>
+        <span class="kpi-pill pill-posco">고부가 특수강 전략</span>
+      </div>
+    </div>
+
+    <div class="company-card">
+      <div class="company-header ch-hyundai">
+        <div class="company-name">현대제철</div>
+        <div class="company-sub">Hyundai Steel</div>
+      </div>
+      <div class="company-body">
+        <div class="strategy-item">
+          <div class="strategy-icon">🏗️</div>
+          <div class="strategy-text">구조재·비구조재 통합 공급 체계 — 국내 유일</div>
+        </div>
+        <div class="strategy-item">
+          <div class="strategy-icon">🗺️</div>
+          <div class="strategy-text">인천 폐쇄 공장 유휴 부지 활용 논의 중</div>
+        </div>
+        <div class="strategy-item">
+          <div class="strategy-icon">📈</div>
+          <div class="strategy-text">봉형강 DC 매출 3% → 6% 목표. ESS 5.2만톤 수주</div>
+        </div>
+        <span class="kpi-pill pill-hyundai">부지 + 강재 이중 전략</span>
+      </div>
+    </div>
+
+    <div class="company-card">
+      <div class="company-header ch-dongkuk">
+        <div class="company-name">동국제강·동국홀딩스</div>
+        <div class="company-sub">Dongkuk Steel</div>
+      </div>
+      <div class="company-body">
+        <div class="strategy-item">
+          <div class="strategy-icon">🔑</div>
+          <div class="strategy-text">국내 유일 3m 폭 대형 H형강 '디-메가빔' 개발</div>
+        </div>
+        <div class="strategy-item">
+          <div class="strategy-icon">🏭</div>
+          <div class="strategy-text">인천·포항 공장 부지 데이터센터 전환 공식 추진</div>
+        </div>
+        <div class="strategy-item">
+          <div class="strategy-icon">💡</div>
+          <div class="strategy-text">연내 구체적 성과 발표 예고 (2026.02 공시)</div>
+        </div>
+        <span class="kpi-pill pill-dongkuk">부지 직접 전환 선도</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 비교표 -->
+  <div class="comparison-table">
+    <div class="table-header">
+      <div class="th-cell">비교 항목</div>
+      <div class="th-cell">포스코</div>
+      <div class="th-cell">현대제철</div>
+      <div class="th-cell">동국제강</div>
+    </div>
+
+    <div class="table-row">
+      <div class="td-cell">유휴 부지 직접 전환</div>
+      <div class="td-cell"><span class="check-part">△</span></div>
+      <div class="td-cell"><span class="check-part">△ 논의 중</span></div>
+      <div class="td-cell"><span class="check-yes">✓ 공식 추진</span></div>
+    </div>
+
+    <div class="table-row">
+      <div class="td-cell">DC 특화 강재 개발</div>
+      <div class="td-cell"><span class="check-yes">✓</span></div>
+      <div class="td-cell"><span class="check-yes">✓ 통합 공급</span></div>
+      <div class="td-cell"><span class="check-yes">✓ 디-메가빔</span></div>
+    </div>
+
+    <div class="table-row">
+      <div class="td-cell">기존 전력 인프라 활용</div>
+      <div class="td-cell"><span class="check-yes">✓ 대용량</span></div>
+      <div class="td-cell"><span class="check-yes">✓ 인천 부지</span></div>
+      <div class="td-cell"><span class="check-yes">✓ 포항·인천</span></div>
+    </div>
+
+    <div class="table-row">
+      <div class="td-cell">북미 수출 ESS 강재</div>
+      <div class="td-cell"><span class="check-part">△</span></div>
+      <div class="td-cell"><span class="check-yes">✓ 5.2만톤 목표</span></div>
+      <div class="td-cell"><span class="check-no">✗</span></div>
+    </div>
+
+    <div class="table-row">
+      <div class="td-cell">DC 매출 단기 가시성</div>
+      <div class="td-cell"><span class="badge-sm badge-mid">중간</span></div>
+      <div class="td-cell"><span class="badge-sm badge-high">높음</span></div>
+      <div class="td-cell"><span class="badge-sm badge-high">높음</span></div>
+    </div>
+
+    <div class="table-row">
+      <div class="td-cell">DC 매출 장기 포텐셜</div>
+      <div class="td-cell"><span class="badge-sm badge-high">높음</span></div>
+      <div class="td-cell"><span class="badge-sm badge-high">높음</span></div>
+      <div class="td-cell"><span class="badge-sm badge-mid">중간</span></div>
+    </div>
+
+    <div class="table-row">
+      <div class="td-cell">본업 수익성 (1Q26)</div>
+      <div class="td-cell"><span class="badge-sm badge-mid">부진 중</span></div>
+      <div class="td-cell"><span class="badge-sm badge-low">철강 적자</span></div>
+      <div class="td-cell"><span class="badge-sm badge-mid">회복세</span></div>
+    </div>
+
+  </div>
+
+  <p class="source-note">출처: 각 사 IR자료 · DART 공시 · EBN뉴스 · 헤럴드경제 · 인사이트코리아 (2026.02~05)</p>
+</div>
+</body>
+</html>
