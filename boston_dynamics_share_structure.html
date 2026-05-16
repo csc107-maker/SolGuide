@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보스턴 다이나믹스 지분 구조</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 28px 20px;
+    min-height: auto;
+  }
+
+  .widget-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(30, 60, 160, 0.10);
+  }
+
+  .header {
+    background: linear-gradient(120deg, #1a3a8f 0%, #2563eb 60%, #38bdf8 100%);
+    padding: 28px 32px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::after {
+    content: 'BD';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    color: rgba(255,255,255,0.07);
+    position: absolute;
+    right: 20px;
+    top: -10px;
+    line-height: 1;
+    letter-spacing: -4px;
+  }
+
+  .header-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.65);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .header-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .header-sub {
+    margin-top: 6px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .body-section {
+    padding: 28px 32px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* Donut Chart */
+  .chart-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+
+  .donut-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  svg.donut { transform: rotate(-90deg); }
+
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .donut-center .val {
+    font-size: 13px;
+    font-weight: 900;
+    color: #1a3a8f;
+    line-height: 1;
+  }
+
+  .donut-center .lbl {
+    font-size: 10px;
+    color: #64748b;
+    margin-top: 2px;
+  }
+
+  /* Shareholders list */
+  .shareholders {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sh-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sh-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sh-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .sh-pct {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1a3a8f;
+    min-width: 48px;
+    text-align: right;
+  }
+
+  .sh-bar-wrap {
+    width: 100%;
+    height: 6px;
+    background: #e8eef8;
+    border-radius: 99px;
+    margin-top: 3px;
+  }
+
+  .sh-bar {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 1s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* HMG Detail */
+  .hmg-detail {
+    background: #f0f4ff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+
+  .hmg-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a3a8f;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .hmg-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #dce8ff;
+  }
+
+  .hmg-row:last-child { border-bottom: none; }
+
+  .hmg-co {
+    font-size: 12px;
+    color: #475569;
+    font-weight: 600;
+  }
+
+  .hmg-pct {
+    font-size: 13px;
+    font-weight: 800;
+    color: #2563eb;
+  }
+
+  .hmg-arrow {
+    font-size: 11px;
+    color: #94a3b8;
+  }
+
+  /* Valuation pills */
+  .val-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .val-pill {
+    background: #eff6ff;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 99px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .val-pill .icon { font-size: 14px; }
+
+  .val-pill.highlight {
+    background: #1a3a8f;
+    border-color: #1a3a8f;
+    color: #fff;
+  }
+
+  .footer-note {
+    margin-top: 20px;
+    font-size: 10.5px;
+    color: #94a3b8;
+    line-height: 1.6;
+    padding-top: 16px;
+    border-top: 1px solid #e8eef8;
+  }
+
+  /* Animate bars */
+  @keyframes growBar {
+    from { width: 0; }
+  }
+
+  .sh-bar { animation: growBar 1.2s cubic-bezier(.4,0,.2,1) forwards; }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="header">
+    <div class="header-label">🤖 지분 구조 분석 | 2026년 기준</div>
+    <div class="header-title">보스턴 다이나믹스<br>주주 구성 한눈에 보기</div>
+    <div class="header-sub">2021년 현대차그룹 인수 → 2022년 HMG Global 설립 → 2025년 대규모 유상증자</div>
+  </div>
+
+  <div class="body-section">
+    <div class="section-label">📊 직접 주주 지분율 (2026년 기준)</div>
+
+    <div class="chart-row">
+      <!-- SVG Donut -->
+      <div class="donut-wrap" style="width:120px;height:120px;">
+        <svg class="donut" width="120" height="120" viewBox="0 0 120 120">
+          <!-- HMG Global 56.5% -->
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#1a3a8f" stroke-width="20"
+            stroke-dasharray="177.5 137.7" stroke-dashoffset="0"/>
+          <!-- 정의선 22.6% -->
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#2563eb" stroke-width="20"
+            stroke-dasharray="71.0 244.2" stroke-dashoffset="-177.5"/>
+          <!-- 현대글로비스 11.25% -->
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#38bdf8" stroke-width="20"
+            stroke-dasharray="35.3 279.9" stroke-dashoffset="-248.5"/>
+          <!-- 소프트뱅크 9.5% -->
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#fbbf24" stroke-width="20"
+            stroke-dasharray="29.8 285.4" stroke-dashoffset="-283.8"/>
+        </svg>
+        <div class="donut-center">
+          <div class="val">BD</div>
+          <div class="lbl">지분율</div>
+        </div>
+      </div>
+
+      <div class="shareholders">
+        <div class="sh-item">
+          <div class="sh-dot" style="background:#1a3a8f;"></div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="sh-name">HMG Global (현대차·기아·모비스)</span>
+              <span class="sh-pct">56.5%</span>
+            </div>
+            <div class="sh-bar-wrap"><div class="sh-bar" style="width:56.5%;background:#1a3a8f;"></div></div>
+          </div>
+        </div>
+        <div class="sh-item">
+          <div class="sh-dot" style="background:#2563eb;"></div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="sh-name">정의선 회장 (개인)</span>
+              <span class="sh-pct">22.6%</span>
+            </div>
+            <div class="sh-bar-wrap"><div class="sh-bar" style="width:22.6%;background:#2563eb;"></div></div>
+          </div>
+        </div>
+        <div class="sh-item">
+          <div class="sh-dot" style="background:#38bdf8;"></div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="sh-name" style="color:#0284c7;font-weight:800;">현대글로비스 ⭐</span>
+              <span class="sh-pct" style="color:#0284c7;">11.25%</span>
+            </div>
+            <div class="sh-bar-wrap"><div class="sh-bar" style="width:11.25%;background:#38bdf8;"></div></div>
+          </div>
+        </div>
+        <div class="sh-item">
+          <div class="sh-dot" style="background:#fbbf24;"></div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="sh-name">소프트뱅크</span>
+              <span class="sh-pct" style="color:#d97706;">9.5%</span>
+            </div>
+            <div class="sh-bar-wrap"><div class="sh-bar" style="width:9.5%;background:#fbbf24;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HMG Global 내부 구조 -->
+    <div class="hmg-detail">
+      <div class="hmg-title">🏢 HMG Global LLC 내부 구성 (SPC — 보스턴다이나믹스 56.5% 보유)</div>
+      <div class="hmg-row">
+        <span class="hmg-co">현대자동차</span>
+        <span class="hmg-arrow">HMG Global의 →</span>
+        <span class="hmg-pct">49.5%</span>
+      </div>
+      <div class="hmg-row">
+        <span class="hmg-co">기아</span>
+        <span class="hmg-arrow">HMG Global의 →</span>
+        <span class="hmg-pct">30.5%</span>
+      </div>
+      <div class="hmg-row">
+        <span class="hmg-co">현대모비스</span>
+        <span class="hmg-arrow">HMG Global의 →</span>
+        <span class="hmg-pct">20.0%</span>
+      </div>
+    </div>
+
+    <!-- 기업가치 밴드 -->
+    <div class="section-label">💰 시장 추정 기업가치 밴드 (IPO 기준)</div>
+    <div class="val-row">
+      <div class="val-pill"><span class="icon">📉</span> 하단 12조 원</div>
+      <div class="val-pill highlight"><span class="icon">🎯</span> 중간 30~45조 원</div>
+      <div class="val-pill"><span class="icon">🚀</span> 상단 100조 원+</div>
+    </div>
+    <div style="margin-top:10px;font-size:11.5px;color:#64748b;line-height:1.7;">
+      ※ 2021년 인수 당시 기업가치: <strong>약 1조 2,000억 원</strong> → 2025년 유상증자 후 추정: <strong>약 3조 1,000억 원</strong> → IPO 시 최대 <strong>128조 원</strong>까지 거론
+    </div>
+
+    <div class="footer-note">
+      📌 출처: iM증권(2026.01), 비즈한국(2026.03), 뉴스핌(2026.05), 딜사이트(2026.04) / 본 자료는 정보 제공 목적이며 투자 권유가 아닙니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
