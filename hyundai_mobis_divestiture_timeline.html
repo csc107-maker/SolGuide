@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>현대모비스 사업부 매각 타임라인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fef9f0;
+    padding: 28px 20px;
+  }
+
+  .widget-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(180, 100, 0, 0.10);
+  }
+
+  .header {
+    background: linear-gradient(120deg, #92400e 0%, #d97706 60%, #fbbf24 100%);
+    padding: 26px 32px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.65);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .header-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.35;
+  }
+
+  .header-sub {
+    margin-top: 5px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.78);
+  }
+
+  .body-section {
+    padding: 28px 32px;
+  }
+
+  /* Summary chips */
+  .chips-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+
+  .chip {
+    background: #fef3c7;
+    border: 1.5px solid #fde68a;
+    border-radius: 99px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #92400e;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .chip.red {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #b91c1c;
+  }
+
+  .chip.blue {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1d4ed8;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 36px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 6px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #d97706, #fbbf24 40%, #e2e8f0);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 22px;
+    opacity: 0;
+    transform: translateX(-12px);
+    animation: fadeSlide 0.5s forwards;
+  }
+
+  .tl-item:nth-child(1) { animation-delay: 0.1s; }
+  .tl-item:nth-child(2) { animation-delay: 0.25s; }
+  .tl-item:nth-child(3) { animation-delay: 0.4s; }
+  .tl-item:nth-child(4) { animation-delay: 0.55s; }
+  .tl-item:nth-child(5) { animation-delay: 0.7s; }
+  .tl-item:nth-child(6) { animation-delay: 0.85s; }
+
+  @keyframes fadeSlide {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -29px;
+    top: 4px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: #d97706;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #d97706;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    z-index: 1;
+  }
+
+  .tl-dot.completed { background: #16a34a; box-shadow: 0 0 0 2px #16a34a; }
+  .tl-dot.inprogress { background: #d97706; box-shadow: 0 0 0 2px #d97706; }
+  .tl-dot.planned { background: #94a3b8; box-shadow: 0 0 0 2px #94a3b8; }
+  .tl-dot.risk { background: #dc2626; box-shadow: 0 0 0 2px #dc2626; }
+
+  .tl-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+  }
+
+  .tl-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 4px;
+  }
+
+  .tl-desc {
+    font-size: 12.5px;
+    color: #475569;
+    line-height: 1.65;
+  }
+
+  .tl-badge {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 10.5px;
+    font-weight: 700;
+  }
+
+  .badge-done { background: #dcfce7; color: #15803d; }
+  .badge-ing { background: #fef3c7; color: #b45309; }
+  .badge-plan { background: #f1f5f9; color: #475569; }
+  .badge-risk { background: #fef2f2; color: #b91c1c; }
+
+  /* Divest table */
+  .divest-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 12.5px;
+  }
+
+  .divest-table th {
+    background: #fffbeb;
+    color: #92400e;
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 2px solid #fde68a;
+  }
+
+  .divest-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+  }
+
+  .divest-table tr:hover td { background: #fffbeb; }
+
+  .status-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .footer-note {
+    margin-top: 22px;
+    font-size: 10.5px;
+    color: #94a3b8;
+    line-height: 1.6;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="header">
+    <div class="header-label">📦 매각 타임라인 분석 | 2025~2026</div>
+    <div class="header-title">현대모비스<br>사업부 매각 흐름 & 현황</div>
+    <div class="header-sub">2026년 상반기 연쇄 매각 진행 중 — 목적: 로보틱스·SDV 전환 자원 확보</div>
+  </div>
+
+  <div class="body-section">
+
+    <div class="chips-row">
+      <div class="chip">💰 램프 사업부 매출 약 5,000억/년</div>
+      <div class="chip red">🔥 노조 강력 반발 중</div>
+      <div class="chip blue">🤖 미래 투자 재원 확보 목적</div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">
+      📅 주요 사건 타임라인
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot completed">✓</div>
+        <div class="tl-date">2025년 하반기</div>
+        <div class="tl-title">보스턴 다이나믹스 대규모 유상증자 참여</div>
+        <div class="tl-desc">현대모비스, HMG Global 통해 약 1,465억 원 추가 투자. 전체 유상증자 규모 약 1조 3,000억 원. 보스턴다이나믹스 기업가치 3.1조 원으로 상향.</div>
+        <span class="tl-badge badge-done">✅ 완료</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot completed">✓</div>
+        <div class="tl-date">2026년 1월</div>
+        <div class="tl-title">OP모빌리티(프랑스)와 램프 사업부 매각 MOU 체결</div>
+        <div class="tl-desc">자회사 유니투스·현대IHL 지분 및 자산 매각 방식 검토. CES 2026에서 아틀라스 공개, 그룹 주가 동반 급등 시작.</div>
+        <span class="tl-badge badge-done">✅ MOU 완료</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot inprogress"></div>
+        <div class="tl-date">2026년 4월~5월 (현재)</div>
+        <div class="tl-title">램프 사업부 매각 협상 막바지 + 노조 파업·삭발 투쟁</div>
+        <div class="tl-desc">유니투스 노조 위로금(1억 5,000만 원) 합의 후 파업 철회. 현대IHL 노조는 삭발 투쟁 지속. 금속노조 본사 앞 결의대회 개최.</div>
+        <span class="tl-badge badge-ing">🔄 협상 진행 중</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot inprogress"></div>
+        <div class="tl-date">2026년 상반기 예정</div>
+        <div class="tl-title">범퍼 사업부 매각 검토 본격화</div>
+        <div class="tl-desc">내부 '롤렉스 프로젝트' 운영 중. 딜로이트 안진 "배터리 시스템 제조 법인 추가 매각 가능성 높다" 언급.</div>
+        <span class="tl-badge badge-ing">🔄 검토 중</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot planned"></div>
+        <div class="tl-date">2026년 6월 — ⚠️ 데드라인</div>
+        <div class="tl-title">소프트뱅크 풋옵션 만료 + 보스턴 다이나믹스 IPO 결정 시점</div>
+        <div class="tl-desc">소프트뱅크 잔여 지분(9.5%) 현대차에 되팔 수 있는 풋옵션 만료. IPO 추진 공식화 여부 결정 시점.</div>
+        <span class="tl-badge badge-risk">⚠️ 핵심 분기점</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot planned"></div>
+        <div class="tl-date">2026년 말~2027년 상반기 (예상)</div>
+        <div class="tl-title">보스턴 다이나믹스 나스닥 상장 추진 (예비심사 → 공모)</div>
+        <div class="tl-desc">예비심사 청구 및 주관사 선정 후 하반기 공모 절차 예상. 매각 대금은 로보틱스·AI반도체·자율주행 투자에 투입 계획.</div>
+        <span class="tl-badge badge-plan">📅 예정</span>
+      </div>
+
+    </div>
+
+    <!-- 매각 대상 현황 표 -->
+    <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:1.5px;text-transform:uppercase;margin-top:26px;margin-bottom:12px;">
+      📋 매각 대상 현황 요약
+    </div>
+    <table class="divest-table">
+      <tr>
+        <th>사업부</th>
+        <th>매수 대상</th>
+        <th>매출 규모</th>
+        <th>현황</th>
+      </tr>
+      <tr>
+        <td><strong>램프 사업부</strong></td>
+        <td>OP모빌리티 (프랑스)</td>
+        <td>약 5,000억/년</td>
+        <td><span class="status-dot" style="background:#d97706;"></span>협상 막바지</td>
+      </tr>
+      <tr>
+        <td><strong>범퍼 사업부</strong></td>
+        <td>미정</td>
+        <td>약 9,000억/년</td>
+        <td><span class="status-dot" style="background:#2563eb;"></span>검토 중</td>
+      </tr>
+      <tr>
+        <td><strong>배터리 시스템 제조</strong></td>
+        <td>미정</td>
+        <td>미공개</td>
+        <td><span class="status-dot" style="background:#94a3b8;"></span>가능성 거론</td>
+      </tr>
+      <tr>
+        <td><strong>미국 오하이오 BSA 설비</strong></td>
+        <td>스텔란티스</td>
+        <td>미공개</td>
+        <td><span class="status-dot" style="background:#94a3b8;"></span>논의 중</td>
+      </tr>
+      <tr>
+        <td><strong>경주물류센터·대호로지스</strong></td>
+        <td>미정</td>
+        <td>미공개</td>
+        <td><span class="status-dot" style="background:#d97706;"></span>진행 중</td>
+      </tr>
+    </table>
+
+    <div class="footer-note">
+      📌 출처: 한국금융신문(2026.04), 비즈중앙(2026.05), 디지털데일리(2026.05), 딜사이트(2026.05) / 투자 정보 제공 목적이며 투자 권유가 아닙니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
