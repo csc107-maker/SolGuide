@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업종별 등락률 분석표</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f7ff;
+    padding: 24px 16px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .section-header .badge {
+    display: inline-block;
+    background: #0d47a1;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .section-header h2 { font-size: 20px; font-weight: 900; color: #0d47a1; }
+  .section-header p { font-size: 12px; color: #777; margin-top: 5px; }
+
+  /* 주요 종목 테이블 */
+  .table-wrap {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    background: #0d47a1;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 12px 14px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  thead th:first-child { text-align: left; }
+
+  tbody tr:nth-child(even) { background: #f8fbff; }
+  tbody tr:hover { background: #e8f0fe; }
+
+  tbody td {
+    padding: 12px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid #e8eef8;
+    text-align: center;
+    vertical-align: middle;
+  }
+  tbody td:first-child { text-align: left; font-weight: 700; color: #1a237e; }
+
+  .stock-name { font-size: 14px; font-weight: 900; color: #0d47a1; }
+  .sector-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    background: #e8eaf6;
+    color: #5c6bc0;
+    padding: 2px 7px;
+    border-radius: 8px;
+    margin-left: 5px;
+    white-space: nowrap;
+  }
+
+  .change-red { color: #d32f2f; font-weight: 900; font-size: 14px; }
+  .change-green { color: #2e7d32; font-weight: 900; font-size: 14px; }
+
+  /* 등락 바 */
+  .bar-cell { width: 120px; }
+  .bar-inner { height: 10px; border-radius: 5px; display: inline-block; vertical-align: middle; }
+  .bar-red { background: linear-gradient(90deg, #d32f2f, #ef9a9a); }
+  .bar-green { background: linear-gradient(90deg, #43a047, #a5d6a7); }
+
+  .price-cell { font-size: 12px; color: #555; }
+
+  /* 분리선 */
+  .divider-row td {
+    background: #e8f0fe !important;
+    font-size: 11px;
+    font-weight: 900;
+    color: #1565c0;
+    letter-spacing: 1px;
+    padding: 7px 14px;
+    text-align: left;
+    border-bottom: 2px solid #90caf9;
+  }
+
+  /* 요인 분석 카드 */
+  .reason-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 500px) { .reason-grid { grid-template-columns: 1fr; } }
+
+  .reason-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .reason-card.fall { border-top: 4px solid #d32f2f; }
+  .reason-card.rise { border-top: 4px solid #2e7d32; }
+
+  .reason-card h3 {
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .reason-card.fall h3 { color: #b71c1c; }
+  .reason-card.rise h3 { color: #1b5e20; }
+
+  .reason-list { list-style: none; }
+  .reason-list li {
+    font-size: 12px;
+    color: #444;
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee;
+    line-height: 1.5;
+  }
+  .reason-list li:last-child { border-bottom: none; }
+  .reason-list li::before { content: "• "; font-weight: 900; }
+  .reason-card.fall .reason-list li::before { color: #d32f2f; }
+  .reason-card.rise .reason-list li::before { color: #2e7d32; }
+
+  /* 키 인사이트 */
+  .insight-box {
+    background: linear-gradient(135deg, #e3f2fd, #e8eaf6);
+    border-radius: 12px;
+    padding: 18px;
+    border-left: 5px solid #1565c0;
+  }
+  .insight-box h3 { font-size: 14px; font-weight: 900; color: #0d47a1; margin-bottom: 10px; }
+  .insight-box p { font-size: 12px; color: #333; line-height: 1.8; }
+  .insight-box strong { color: #d32f2f; }
+
+  .source-note {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="section-header">
+  <div class="badge">📊 종목·업종 분석 리포트</div>
+  <h2>5월 15일 — 급락 vs 상승 업종 완전 비교</h2>
+  <p>한국거래소 마감 기준 · 출처: 각 언론사 보도 종합</p>
+</div>
+
+<!-- 테이블 -->
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>종목명</th>
+        <th>업종</th>
+        <th>종가</th>
+        <th>등락률</th>
+        <th>등락 시각화</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 급락 -->
+      <tr class="divider-row">
+        <td colspan="5">🔴 주요 급락 종목 (당일 외국인·기관 집중 매도)</td>
+      </tr>
+
+      <tr>
+        <td><span class="stock-name">삼성전자</span><span class="sector-tag">반도체</span></td>
+        <td>반도체</td>
+        <td class="price-cell">270,500원</td>
+        <td><span class="change-red">▼ -8.61%</span></td>
+        <td class="bar-cell"><div class="bar-inner bar-red" style="width:100%"></div></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">SK하이닉스</span><span class="sector-tag">반도체</span></td>
+        <td>반도체</td>
+        <td class="price-cell">1,819,000원</td>
+        <td><span class="change-red">▼ -7.66%</span></td>
+        <td class="bar-cell"><div class="bar-inner bar-red" style="width:89%"></div></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">LG디스플레이</span><span class="sector-tag">디스플레이</span></td>
+        <td>디스플레이</td>
+        <td class="price-cell">-</td>
+        <td><span class="change-red">▼ -8%대</span></td>
+        <td class="bar-cell"><div class="bar-inner bar-red" style="width:93%"></div></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">에코프로</span><span class="sector-tag">2차전지</span></td>
+        <td>2차전지</td>
+        <td class="price-cell">130,700원</td>
+        <td><span class="change-red">▼ -8.15%</span></td>
+        <td class="bar-cell"><div class="bar-inner bar-red" style="width:95%"></div></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">두산에너빌리티</span><span class="sector-tag">원전</span></td>
+        <td>원전·에너지</td>
+        <td class="price-cell">110,900원</td>
+        <td><span class="change-red">▼ -5.29%</span></td>
+        <td class="bar-cell"><div class="bar-inner bar-red" style="width:62%"></div></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">미래에셋증권</span><span class="sector-tag">증권</span></td>
+        <td>금융·증권</td>
+        <td class="price-cell">69,700원</td>
+        <td><span class="change-red">▼ 하락</span></td>
+        <td class="bar-cell"><div class="bar-inner bar-red" style="width:40%"></div></td>
+      </tr>
+
+      <!-- 상승 -->
+      <tr class="divider-row">
+        <td colspan="5">🟢 상승 종목 (순환매·테마 수혜)</td>
+      </tr>
+
+      <tr>
+        <td><span class="stock-name">두산로보틱스</span><span class="sector-tag">로봇</span></td>
+        <td>피지컬 AI·로봇</td>
+        <td class="price-cell">127,400원</td>
+        <td><span class="change-green">▲ +19.29%</span></td>
+        <td class="bar-cell"><div class="bar-inner bar-green" style="width:100%"></div></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">휴림로봇</span><span class="sector-tag">로봇</span></td>
+        <td>피지컬 AI·로봇</td>
+        <td class="price-cell">13,120원</td>
+        <td><span class="change-green">▲ +3.88%</span></td>
+        <td class="bar-cell"><div class="bar-inner bar-green" style="width:20%"></div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 요인 분석 -->
+<div class="reason-grid">
+  <div class="reason-card fall">
+    <h3>🔴 급락 핵심 원인</h3>
+    <ul class="reason-list">
+      <li>외국인 5.6조 옵션 만기일 대규모 매도</li>
+      <li>미-이란 협상 불확실성 재부각</li>
+      <li>미·일 인플레이션 쇼크로 채권금리 급등</li>
+      <li>삼성전자 노조 18일간 총파업 예고</li>
+      <li>단기 급등 후 차익실현 매물 동시 출회</li>
+    </ul>
+  </div>
+  <div class="reason-card rise">
+    <h3>🟢 로봇주 상승 원인</h3>
+    <ul class="reason-list">
+      <li>반도체 매도 자금의 로봇 테마 순환매</li>
+      <li>미-중 정상회담 후 AI·자동화 산업 기대</li>
+      <li>피지컬 AI 성장 모멘텀 지속</li>
+      <li>외국인 대량 매도 대상 외 소형주 선방</li>
+      <li>두산로보틱스 52주 신고가 경신</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 키 인사이트 -->
+<div class="insight-box">
+  <h3>💡 핵심 인사이트 — "K자 장세의 역설"</h3>
+  <p>
+    이날 폭락의 역설은, 코스피·코스닥 전체 시총의 <strong>약 50%를 차지하는 삼성전자·SK하이닉스</strong>에 자금이 극단적으로 집중되어 있던 상황에서, 이 두 종목이 동반 급락하자 지수 전체가 폭락한 것입니다.
+    반면 상대적으로 시총이 적은 <strong>로봇 테마주</strong>는 이 폭풍을 피해 상승하는 차별화된 흐름을 보였습니다.
+    증권가는 "코스피 8,000선 재안착까지는 시간이 필요하다"는 분석을 내놓고 있습니다.
+  </p>
+</div>
+
+<div class="source-note">📰 자료: 한국거래소, 서울신문, 네이트뉴스, 민심뉴스, CBC뉴스, 머니투데이 2026.05.15 보도 종합</div>
+
+</body>
+</html>
