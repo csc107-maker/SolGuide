@@ -1,0 +1,61 @@
+
+<h2 class="sr-only">AI 추론 KV 캐시 메모리 계층 구조 — G1(HBM)에서 G3.5(KV 캐시 SSD)까지 4단계 설명</h2>
+<div style="padding: 1.5rem 0;">
+  <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 1.25rem;">엔비디아 ICMSP 기준 AI 추론 메모리 계층 (G1 → G3.5)</p>
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+
+    <div style="display: grid; grid-template-columns: 80px 1fr auto auto; align-items: center; gap: 12px; background: #E6F1FB; border: 0.5px solid #B5D4F4; border-radius: var(--border-radius-lg); padding: 14px 18px;">
+      <span style="font-size: 12px; font-weight: 500; color: #0C447C; background: #B5D4F4; border-radius: var(--border-radius-md); padding: 4px 8px; text-align: center;">G1</span>
+      <div>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: #0C447C;">GPU HBM</p>
+        <p style="margin: 0; font-size: 12px; color: #185FA5;">최고 속도 · 최소 용량 · 가장 비싼 비용</p>
+      </div>
+      <span style="font-size: 12px; color: #185FA5; font-weight: 500;">~80–288 GB</span>
+      <span style="font-size: 11px; color: #185FA5; background: #B5D4F4; border-radius: var(--border-radius-md); padding: 3px 8px;">ns 지연</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 80px 1fr auto auto; align-items: center; gap: 12px; background: #EAF3DE; border: 0.5px solid #C0DD97; border-radius: var(--border-radius-lg); padding: 14px 18px;">
+      <span style="font-size: 12px; font-weight: 500; color: #27500A; background: #C0DD97; border-radius: var(--border-radius-md); padding: 4px 8px; text-align: center;">G2</span>
+      <div>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: #27500A;">CPU DRAM</p>
+        <p style="margin: 0; font-size: 12px; color: #3B6D11;">HBM 보조 · 중간 속도 · 스테이징 역할</p>
+      </div>
+      <span style="font-size: 12px; color: #3B6D11; font-weight: 500;">~1–4 TB</span>
+      <span style="font-size: 11px; color: #3B6D11; background: #C0DD97; border-radius: var(--border-radius-md); padding: 3px 8px;">~100 ns</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 80px 1fr auto auto; align-items: center; gap: 12px; background: #FAEEDA; border: 0.5px solid #FAC775; border-radius: var(--border-radius-lg); padding: 14px 18px;">
+      <span style="font-size: 12px; font-weight: 500; color: #633806; background: #FAC775; border-radius: var(--border-radius-md); padding: 4px 8px; text-align: center;">G3</span>
+      <div>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: #633806;">로컬 NVMe SSD</p>
+        <p style="margin: 0; font-size: 12px; color: #854F0B;">노드 종속 · 확장 어려움 · 워밍 KV 캐시</p>
+      </div>
+      <span style="font-size: 12px; color: #854F0B; font-weight: 500;">~수십 TB</span>
+      <span style="font-size: 11px; color: #854F0B; background: #FAC775; border-radius: var(--border-radius-md); padding: 3px 8px;">~µs</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 80px 1fr auto auto; align-items: center; gap: 12px; background: #EEEDFE; border: 2px solid #AFA9EC; border-radius: var(--border-radius-lg); padding: 14px 18px; position: relative;">
+      <span style="position: absolute; top: -10px; left: 96px; font-size: 11px; font-weight: 500; background: #534AB7; color: #EEEDFE; border-radius: var(--border-radius-md); padding: 2px 10px;">NEW</span>
+      <span style="font-size: 12px; font-weight: 500; color: #26215C; background: #AFA9EC; border-radius: var(--border-radius-md); padding: 4px 8px; text-align: center;">G3.5</span>
+      <div>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: #26215C;">KV 캐시 SSD (ICMS)</p>
+        <p style="margin: 0; font-size: 12px; color: #534AB7;">팟 단위 공유 · RDMA 가속 · 에이전틱 AI 전용</p>
+      </div>
+      <span style="font-size: 12px; color: #534AB7; font-weight: 500;">페타바이트급</span>
+      <span style="font-size: 11px; color: #534AB7; background: #AFA9EC; border-radius: var(--border-radius-md); padding: 3px 8px;">예측 가능</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 80px 1fr auto auto; align-items: center; gap: 12px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 18px;">
+      <span style="font-size: 12px; font-weight: 500; color: var(--color-text-secondary); background: var(--color-background-tertiary); border-radius: var(--border-radius-md); padding: 4px 8px; text-align: center;">G4</span>
+      <div>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: var(--color-text-primary);">네트워크 스토리지 (기존 엔터프라이즈)</p>
+        <p style="margin: 0; font-size: 12px; color: var(--color-text-secondary);">지속 보관 · 높은 지연 · KV 캐시 비적합</p>
+      </div>
+      <span style="font-size: 12px; color: var(--color-text-secondary); font-weight: 500;">무제한</span>
+      <span style="font-size: 11px; color: var(--color-text-secondary);">ms~</span>
+    </div>
+  </div>
+
+  <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 1rem 0 0; text-align: right;">출처: NVIDIA ICMSP 공식 발표 (2026.01), 삼성반도체 기술 블로그 (2026.04)</p>
+</div>
