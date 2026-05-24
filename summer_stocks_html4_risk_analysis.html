@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>여름 계절주 리스크 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #F7F8FC;
+    --white: #fff;
+    --text: #1A1A2E;
+    --muted: #6B7896;
+    --border: #E2E8F0;
+    --r1: #E53E3E;
+    --r2: #ED8936;
+    --r3: #48BB78;
+    --header: #1A3A6B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    padding: 32px 20px 44px;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; }
+
+  .sec-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .sec-badge {
+    display: inline-block;
+    background: #E53E3E;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .sec-header h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--header);
+    margin-bottom: 6px;
+  }
+
+  .sec-header p {
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  /* Summary strip */
+  .summary-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .ss-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    border: 1.5px solid var(--border);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .ss-icon { font-size: 28px; margin-bottom: 8px; }
+
+  .ss-level {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .ss-desc { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+
+  .high-risk { border-top: 4px solid var(--r1); }
+  .mid-risk  { border-top: 4px solid var(--r2); }
+  .low-risk  { border-top: 4px solid var(--r3); }
+
+  /* Risk cards */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 600px) {
+    .risk-grid { grid-template-columns: 1fr; }
+    .summary-strip { grid-template-columns: 1fr; }
+  }
+
+  .risk-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 20px;
+    border: 1.5px solid var(--border);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  }
+
+  .risk-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .risk-number {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .risk-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .risk-sub {
+    font-size: 11.5px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .risk-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .affected-stocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .aff-chip {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: #F0F4FF;
+    color: #2D4AAA;
+  }
+
+  .risk-level-bar {
+    margin-top: 8px;
+  }
+
+  .rlb-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .rlb-track {
+    height: 6px;
+    background: #EEF0F5;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .rlb-fill { height: 100%; border-radius: 6px; }
+
+  .r-high .risk-number { background: #FEE2E2; color: var(--r1); }
+  .r-high .rlb-fill    { background: var(--r1); }
+
+  .r-mid .risk-number  { background: #FEEBC8; color: var(--r2); }
+  .r-mid .rlb-fill     { background: var(--r2); }
+
+  .r-low .risk-number  { background: #C6F6D5; color: var(--r3); }
+  .r-low .rlb-fill     { background: var(--r3); }
+
+  /* Strategy table */
+  .strategy-box {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+    margin-bottom: 16px;
+  }
+
+  .strategy-box table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  .strategy-box th {
+    background: var(--header);
+    color: #fff;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-align: left;
+  }
+
+  .strategy-box td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .strategy-box tr:last-child td { border-bottom: none; }
+  .strategy-box tr:hover td { background: #F8FAFF; }
+
+  .strategy-box td:first-child {
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .note {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 10px;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="sec-header">
+    <div class="sec-badge">⚠️ RISK ANALYSIS</div>
+    <h2>여름 계절주 투자 리스크 완전 분석</h2>
+    <p>계절주의 기회 뒤에는 반드시 변수가 있다 — 5가지 핵심 리스크</p>
+  </div>
+
+  <!-- Summary strip -->
+  <div class="summary-strip">
+    <div class="ss-card high-risk">
+      <div class="ss-icon">🌧️</div>
+      <div class="ss-level" style="color:#E53E3E">고위험</div>
+      <div class="ss-desc">날씨 · 유가 · 지정학 리스크는 통제 불가 외부 변수</div>
+    </div>
+    <div class="ss-card mid-risk">
+      <div class="ss-icon">📦</div>
+      <div class="ss-level" style="color:#ED8936">중위험</div>
+      <div class="ss-desc">원재료 가격 · 내수 소비 위축은 사전 데이터 모니터링 가능</div>
+    </div>
+    <div class="ss-card low-risk">
+      <div class="ss-icon">📅</div>
+      <div class="ss-level" style="color:#48BB78">관리 가능</div>
+      <div class="ss-desc">타이밍 리스크는 매도 기준 사전 설정으로 관리 가능</div>
+    </div>
+  </div>
+
+  <!-- Risk Cards -->
+  <div class="risk-grid">
+
+    <div class="risk-card r-high">
+      <div class="risk-card-header">
+        <div class="risk-number">R1</div>
+        <div>
+          <div class="risk-title">날씨 리스크</div>
+          <div class="risk-sub">장마 기간 · 폭염 일수</div>
+        </div>
+      </div>
+      <div class="risk-desc">장마가 길거나 기온이 낮으면 아이스크림·에어컨·맥주 모두 직격탄. 특히 장마 기간이 2주 이상 길어지면 빙과 매출이 예상 대비 -15~20% 하락하는 사례가 반복됨.</div>
+      <div class="affected-stocks">
+        <span class="aff-chip">롯데웰푸드</span>
+        <span class="aff-chip">빙그레</span>
+        <span class="aff-chip">하이트진로</span>
+        <span class="aff-chip">삼성전자(에어컨)</span>
+      </div>
+      <div class="risk-level-bar">
+        <div class="rlb-label"><span>리스크 강도</span><span>매우 높음</span></div>
+        <div class="rlb-track"><div class="rlb-fill" style="width:90%"></div></div>
+      </div>
+    </div>
+
+    <div class="risk-card r-high">
+      <div class="risk-card-header">
+        <div class="risk-number">R2</div>
+        <div>
+          <div class="risk-title">원재료 가격 리스크</div>
+          <div class="risk-sub">코코아 · 원당 · 원유 가격</div>
+        </div>
+      </div>
+      <div class="risk-desc">빙그레 2025 1Q 영업이익 -36.1%의 주요 원인이 코코아·커피 원재료 가격 급등이었음. 매출은 늘어도 원가 부담으로 이익이 줄어드는 구조. 원재료 가격 추이 선행 확인 필수.</div>
+      <div class="affected-stocks">
+        <span class="aff-chip">빙그레</span>
+        <span class="aff-chip">롯데웰푸드</span>
+        <span class="aff-chip">롯데칠성음료</span>
+      </div>
+      <div class="risk-level-bar">
+        <div class="rlb-label"><span>리스크 강도</span><span>높음</span></div>
+        <div class="rlb-track"><div class="rlb-fill" style="width:78%"></div></div>
+      </div>
+    </div>
+
+    <div class="risk-card r-high">
+      <div class="risk-card-header">
+        <div class="risk-number">R3</div>
+        <div>
+          <div class="risk-title">유류비 · 지정학 리스크</div>
+          <div class="risk-sub">국제 유가 · 중동 정세</div>
+        </div>
+      </div>
+      <div class="risk-desc">중동 전쟁 격화 시 유가 급등 → 항공유 비용 상승 → LCC 수익성 급락. 유류할증료 인상 시 단거리 패키지 여행 수요 위축. 호르무즈 해협 리스크 상시 모니터링 필요.</div>
+      <div class="affected-stocks">
+        <span class="aff-chip">하나투어</span>
+        <span class="aff-chip">제주항공</span>
+        <span class="aff-chip">모두투어</span>
+        <span class="aff-chip">진에어</span>
+      </div>
+      <div class="risk-level-bar">
+        <div class="rlb-label"><span>리스크 강도</span><span>높음</span></div>
+        <div class="rlb-track"><div class="rlb-fill" style="width:82%"></div></div>
+      </div>
+    </div>
+
+    <div class="risk-card r-mid">
+      <div class="risk-card-header">
+        <div class="risk-number">R4</div>
+        <div>
+          <div class="risk-title">내수 소비 위축 리스크</div>
+          <div class="risk-sub">경기 침체 · 소비 심리</div>
+        </div>
+      </div>
+      <div class="risk-desc">고물가·고금리 장기화 시 여름 여행·레저·외식 소비가 먼저 줄어듦. 특히 프리미엄 여행 상품이나 고가 아이스크림 수요가 예상보다 부진할 수 있음. 소비자심리지수(CSI) 추이 확인 권장.</div>
+      <div class="affected-stocks">
+        <span class="aff-chip">하나투어</span>
+        <span class="aff-chip">파라다이스</span>
+        <span class="aff-chip">아모레퍼시픽</span>
+      </div>
+      <div class="risk-level-bar">
+        <div class="rlb-label"><span>리스크 강도</span><span>중간</span></div>
+        <div class="rlb-track"><div class="rlb-fill" style="width:55%"></div></div>
+      </div>
+    </div>
+
+    <div class="risk-card r-mid">
+      <div class="risk-card-header">
+        <div class="risk-number">R5</div>
+        <div>
+          <div class="risk-title">선반영 · 타이밍 리스크</div>
+          <div class="risk-sub">"소문에 사고 뉴스에 팔아라"</div>
+        </div>
+      </div>
+      <div class="risk-desc">여름 계절주는 시장에 잘 알려진 테마. 이미 5~6월에 주가가 크게 오른 뒤 7~8월 실적 발표 시 하락하는 역설이 자주 발생. 늦게 진입할수록 손실 위험이 높아짐.</div>
+      <div class="affected-stocks">
+        <span class="aff-chip">전 계절주 공통</span>
+      </div>
+      <div class="risk-level-bar">
+        <div class="rlb-label"><span>리스크 강도</span><span>중간</span></div>
+        <div class="rlb-track"><div class="rlb-fill" style="width:62%"></div></div>
+      </div>
+    </div>
+
+    <div class="risk-card r-low">
+      <div class="risk-card-header">
+        <div class="risk-number">R6</div>
+        <div>
+          <div class="risk-title">경쟁 심화 리스크</div>
+          <div class="risk-sub">OTA 진출 · 신규 경쟁자</div>
+        </div>
+      </div>
+      <div class="risk-desc">여행 업종은 트립닷컴·아고다 등 글로벌 OTA의 한국향 패키지 직판 확대로 기존 여행사의 마진이 압박받는 구조. 빙과도 프리미엄 수입 브랜드 성장이 내수 잠식 요인.</div>
+      <div class="affected-stocks">
+        <span class="aff-chip">하나투어</span>
+        <span class="aff-chip">모두투어</span>
+        <span class="aff-chip">빙그레(프리미엄 경쟁)</span>
+      </div>
+      <div class="risk-level-bar">
+        <div class="rlb-label"><span>리스크 강도</span><span>낮음~중간</span></div>
+        <div class="rlb-track"><div class="rlb-fill" style="width:40%"></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Strategy Table -->
+  <div class="strategy-box">
+    <table>
+      <thead>
+        <tr>
+          <th>투자 성향</th>
+          <th>추천 종목 조합</th>
+          <th>리스크 관리 전략</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🛡️ 안정형</td>
+          <td>롯데웰푸드 + 빙그레 + LG전자</td>
+          <td>5월 선취매 → 2Q 실적 발표 전 분할 매도. 원재료 가격 급등 시 즉시 비중 축소.</td>
+        </tr>
+        <tr>
+          <td>⚖️ 중위험</td>
+          <td>하이트진로 + 롯데칠성음료 + 아모레퍼시픽</td>
+          <td>목표 수익률(+15~20%) 사전 설정. 날씨 악화 시 손절 기준 준수.</td>
+        </tr>
+        <tr>
+          <td>🎯 공격형</td>
+          <td>하나투어 + 제주항공 + 모두투어</td>
+          <td>포지션 크기 제한(포트폴리오의 10~15% 이하). 유가 모니터링 주간 필수. 손절 -10% 기준 엄수.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note">⚠️ 위 리스크 분석은 공개된 데이터와 애널리스트 리포트를 참고한 참고 자료입니다.<br>실제 투자 결정은 개인의 판단과 책임 하에 이루어져야 합니다.</p>
+
+</div>
+</body>
+</html>
