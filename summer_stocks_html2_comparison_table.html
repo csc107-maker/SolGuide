@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>여름 계절주 핵심 종목 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #F4F7FF;
+    --white: #FFFFFF;
+    --primary: #1A3A6B;
+    --accent: #FF5733;
+    --accent2: #0073E6;
+    --green: #00A86B;
+    --yellow: #F5A623;
+    --red: #E53E3E;
+    --text: #1A1A2E;
+    --muted: #6B7A99;
+    --border: #DDE3F0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    padding: 32px 16px 40px;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .section-header .label {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .section-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+
+  .section-header p {
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .table-wrap {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(26,58,107,0.1);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead {
+    background: var(--primary);
+    color: white;
+  }
+
+  thead th {
+    padding: 14px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  thead th:first-child { text-align: left; padding-left: 20px; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover { background: #F8FAFF; }
+  tbody tr:last-child { border-bottom: none; }
+
+  td {
+    padding: 14px 12px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td:first-child {
+    text-align: left;
+    padding-left: 20px;
+  }
+
+  .company-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .company-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .company-name {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .company-code {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .sector-chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+
+  .stars {
+    color: #F5A623;
+    font-size: 12px;
+  }
+
+  .risk-chip {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .risk-low { background: #E6FAF0; color: var(--green); }
+  .risk-mid { background: #FFF5DC; color: #C07D00; }
+  .risk-high { background: #FEE8E8; color: var(--red); }
+
+  .timing-chip {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #EBF4FF;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+
+  .point-text {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .row-divider {
+    background: #F0F4FC;
+  }
+
+  .row-divider td {
+    padding: 6px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 1px;
+    text-align: left;
+  }
+
+  .note {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* colored sector chips */
+  .s-ice { background: #FFE8E0; color: #D44D1B; }
+  .s-ap { background: #E0EDFF; color: #1456CC; }
+  .s-drink { background: #E0FAF2; color: #007A55; }
+  .s-travel { background: #FFF5DC; color: #B87A00; }
+  .s-beauty { background: #FDE8F7; color: #B5277D; }
+  .s-leisure { background: #EEEAFF; color: #5E48CC; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="section-header">
+    <div class="label">📊 STOCK COMPARISON</div>
+    <h2>2026 여름 계절주 핵심 종목 비교표</h2>
+    <p>섹터별 대표 종목의 수혜 강도 · 투자 타이밍 · 리스크를 한눈에</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:220px">종목명</th>
+          <th>섹터</th>
+          <th>수혜 강도</th>
+          <th>선취매 시점</th>
+          <th>리스크</th>
+          <th>핵심 투자 포인트</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- 빙과 그룹 -->
+        <tr class="row-divider"><td colspan="6">🍦 빙과 · 냉동 디저트</td></tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#FFF0EB">🍦</div>
+              <div>
+                <div class="company-name">롯데웰푸드</div>
+                <div class="company-code">280360 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-ice">빙과 1위</span></td>
+          <td><span class="stars">★★★★★</span></td>
+          <td><span class="timing-chip">4~5월 선취매</span></td>
+          <td><span class="risk-chip risk-mid">중간</span></td>
+          <td class="point-text">국내 점유율 40.9%. 인도·러시아 해외 수출 성장세. 원재료 가격 변수 주시</td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#FFF0EB">🍌</div>
+              <div>
+                <div class="company-name">빙그레</div>
+                <div class="company-code">005180 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-ice">빙과 2위</span></td>
+          <td><span class="stars">★★★★★</span></td>
+          <td><span class="timing-chip">4~5월 선취매</span></td>
+          <td><span class="risk-chip risk-mid">중간</span></td>
+          <td class="point-text">해태아이스크림 합병 완료. 합산 점유율로 롯데 추월 가능. 시너지 확인이 관건</td>
+        </tr>
+
+        <!-- 가전 그룹 -->
+        <tr class="row-divider"><td colspan="6">❄️ 에어컨 · 냉방 가전</td></tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#EBF4FF">❄️</div>
+              <div>
+                <div class="company-name">삼성전자</div>
+                <div class="company-code">005930 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-ap">종합 가전</span></td>
+          <td><span class="stars">★★★☆☆</span></td>
+          <td><span class="timing-chip">5월 이전</span></td>
+          <td><span class="risk-chip risk-low">낮음</span></td>
+          <td class="point-text">2025 Q1 에어컨 판매 +50%. AI 에어컨으로 프리미엄화. 시총 희석 효과 주의</td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#EBF4FF">🌬️</div>
+              <div>
+                <div class="company-name">LG전자</div>
+                <div class="company-code">066570 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-ap">종합 가전</span></td>
+          <td><span class="stars">★★★☆☆</span></td>
+          <td><span class="timing-chip">5월 이전</span></td>
+          <td><span class="risk-chip risk-low">낮음</span></td>
+          <td class="point-text">2025 연간 매출 89조 역대 최대. 냉난방공조 B2B 확대. H&A 2Q 계절 효과</td>
+        </tr>
+
+        <!-- 주류 그룹 -->
+        <tr class="row-divider"><td colspan="6">🍺 맥주 · 주류</td></tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#E6FAF2">🍺</div>
+              <div>
+                <div class="company-name">하이트진로</div>
+                <div class="company-code">000080 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-drink">종합 주류</span></td>
+          <td><span class="stars">★★★★☆</span></td>
+          <td><span class="timing-chip">5~6월</span></td>
+          <td><span class="risk-chip risk-mid">중간</span></td>
+          <td class="point-text">테라·켈리 여름 캠페인. 소주(참이슬) 안정 수익. 맥주 점유율 회복 여부가 핵심</td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#E6FAF2">🥤</div>
+              <div>
+                <div class="company-name">롯데칠성음료</div>
+                <div class="company-code">005300 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-drink">음료·주류</span></td>
+          <td><span class="stars">★★★★☆</span></td>
+          <td><span class="timing-chip">5~6월</span></td>
+          <td><span class="risk-chip risk-mid">중간</span></td>
+          <td class="point-text">클라우드·크러시 + 펩시·밀키스 동시 수혜. 무알코올 크러시제로로 신규 수요층 공략</td>
+        </tr>
+
+        <!-- 여행 그룹 -->
+        <tr class="row-divider"><td colspan="6">✈️ 여행 · 항공</td></tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#FFF5DC">✈️</div>
+              <div>
+                <div class="company-name">하나투어</div>
+                <div class="company-code">039130 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-travel">여행사</span></td>
+          <td><span class="stars">★★★★★</span></td>
+          <td><span class="timing-chip">5~6월 초</span></td>
+          <td><span class="risk-chip risk-high">높음</span></td>
+          <td class="point-text">목표주가 61,000원(현재 37,300원). 애널리스트 6인 매수. 유가·지정학 리스크 주의</td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#FFF5DC">🛫</div>
+              <div>
+                <div class="company-name">제주항공</div>
+                <div class="company-code">089590 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-travel">LCC 항공</span></td>
+          <td><span class="stars">★★★★★</span></td>
+          <td><span class="timing-chip">5~6월</span></td>
+          <td><span class="risk-chip risk-high">높음</span></td>
+          <td class="point-text">여름 탑승률 연간 최고조. 단, 유류비·안전 이슈 리스크. 손절 기준 사전 설정 필수</td>
+        </tr>
+
+        <!-- 뷰티 그룹 -->
+        <tr class="row-divider"><td colspan="6">🧴 K-뷰티 · 자외선차단</td></tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#FDE8F7">🌸</div>
+              <div>
+                <div class="company-name">아모레퍼시픽</div>
+                <div class="company-code">090430 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-beauty">K-뷰티</span></td>
+          <td><span class="stars">★★★☆☆</span></td>
+          <td><span class="timing-chip">4~5월</span></td>
+          <td><span class="risk-chip risk-mid">중간</span></td>
+          <td class="point-text">라네즈 썬케어 미국·동남아 수출 호조. 여름 전후 수출 매출 집중. 환율 변수 주의</td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-icon" style="background:#FDE8F7">🏭</div>
+              <div>
+                <div class="company-name">코스맥스</div>
+                <div class="company-code">192820 · KOSPI</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="sector-chip s-beauty">화장품 ODM</span></td>
+          <td><span class="stars">★★★☆☆</span></td>
+          <td><span class="timing-chip">4~5월</span></td>
+          <td><span class="risk-mid risk-chip">중간</span></td>
+          <td class="point-text">수주 기반으로 안정적. 여름 자외선차단·워터프루프 주문 집중. 직접 브랜드 대비 방어적</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note">* 주가·목표주가는 2026년 5월 기준 참고 수치이며, 실제 투자 전 반드시 최신 정보를 확인하세요.<br>⚠️ 이 자료는 투자 정보 제공 목적이며 투자 결과에 대한 책임은 투자자 본인에게 있습니다.</p>
+
+</div>
+</body>
+</html>
