@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>운용사별 상품 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 24px 16px;
+  }
+  
+  .wrap { max-width: 860px; margin: 0 auto; }
+  
+  .hd {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .hd .tag {
+    display: inline-block;
+    background: #1a56db;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .hd h2 { font-size: 20px; font-weight: 900; color: #1a1a2e; margin-bottom: 4px; }
+  .hd p { font-size: 12.5px; color: #6b7280; }
+  
+  /* 탭 */
+  .tabs {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 9px;
+    border: none;
+    background: transparent;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #9ca3af;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, #1a56db, #6366f1);
+    color: #fff;
+  }
+  
+  /* 상품 그리드 */
+  .products-grid {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .products-grid.show { display: grid; }
+  
+  .prod-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-left: 4px solid #e5e7eb;
+    transition: transform 0.2s;
+  }
+  .prod-card:hover { transform: translateY(-2px); }
+  .prod-card.samsung-card { border-left-color: #1a56db; }
+  .prod-card.hynix-card   { border-left-color: #10b981; }
+  
+  .pc-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .pc-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .pc-logo.blue { background: linear-gradient(135deg, #1a56db, #4f46e5); }
+  .pc-logo.green { background: linear-gradient(135deg, #10b981, #059669); }
+  
+  .pc-name-wrap .pc-brand { font-size: 10px; font-weight: 700; color: #9ca3af; }
+  .pc-name-wrap .pc-name { font-size: 13px; font-weight: 800; color: #1a1a2e; }
+  
+  .pc-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .chip {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: #f3f4f6;
+    color: #374151;
+  }
+  .chip.blue  { background: #eff6ff; color: #1d4ed8; }
+  .chip.green { background: #ecfdf5; color: #065f46; }
+  .chip.orange{ background: #fff7ed; color: #c2410c; }
+  .chip.gray  { background: #f9fafb; color: #6b7280; }
+  
+  .pc-size { font-size: 15px; font-weight: 900; color: #1a1a2e; margin-bottom: 2px; }
+  .pc-size-label { font-size: 11px; color: #9ca3af; }
+  
+  /* 비교 테이블 */
+  .compare-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 16px;
+  }
+  
+  .compare-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .compare-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 16px;
+    background: linear-gradient(135deg, #1a56db, #6366f1);
+    border-radius: 4px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  
+  thead th {
+    background: #f8f9ff;
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 800;
+    color: #374151;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  thead th:first-child { text-align: left; }
+  
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f3f4f6;
+    text-align: center;
+    color: #4b5563;
+  }
+  tbody td:first-child { text-align: left; font-weight: 600; color: #1a1a2e; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #f8f9ff; }
+  
+  .good { color: #10b981; font-weight: 700; }
+  .bad  { color: #ef4444; font-weight: 700; }
+  .mid  { color: #f59e0b; font-weight: 700; }
+  
+  /* 요약 통계 */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  .stat-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+  .stat-num { font-size: 22px; font-weight: 900; color: #1a56db; }
+  .stat-lbl { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+  
+  @media (max-width: 600px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  
+  <div class="hd">
+    <div class="tag">🏦 상품 현황</div>
+    <h2>8개 운용사 16종 ETF 한눈에 비교</h2>
+    <p>2026년 5월 27일 동시 상장 — 현물형 vs 선물형 구조 선택이 핵심</p>
+  </div>
+  
+  <!-- 요약 통계 -->
+  <div class="stats-row" style="margin-bottom:16px;">
+    <div class="stat-box">
+      <div class="stat-num">16종</div>
+      <div class="stat-lbl">동시 상장 ETF</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">2.8조</div>
+      <div class="stat-lbl">신탁원본 총액</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">10만명</div>
+      <div class="stat-lbl">사전교육 신청자</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:#ef4444">±60%</div>
+      <div class="stat-lbl">하루 최대 손익폭</div>
+    </div>
+  </div>
+  
+  <!-- 탭 -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('all')">전체 상품</button>
+    <button class="tab-btn" onclick="showTab('samsung')">삼성전자</button>
+    <button class="tab-btn" onclick="showTab('hynix')">SK하이닉스</button>
+  </div>
+  
+  <!-- 상품 카드 -->
+  <div class="products-grid show" id="tab-all">
+    <div class="prod-card samsung-card">
+      <div class="pc-header">
+        <div class="pc-logo blue">S</div>
+        <div class="pc-name-wrap">
+          <div class="pc-brand">삼성자산운용</div>
+          <div class="pc-name">KODEX 삼성전자 레버리지</div>
+        </div>
+      </div>
+      <div class="pc-chips">
+        <span class="chip blue">현물형</span>
+        <span class="chip">2배 추종</span>
+        <span class="chip orange">삼성전자</span>
+      </div>
+      <div class="pc-size">약 2,960억원</div>
+      <div class="pc-size-label">신탁원본 규모 (삼성전자 레버리지 합산 5,920억)</div>
+    </div>
+    
+    <div class="prod-card hynix-card">
+      <div class="pc-header">
+        <div class="pc-logo green">M</div>
+        <div class="pc-name-wrap">
+          <div class="pc-brand">미래에셋자산운용</div>
+          <div class="pc-name">TIGER SK하이닉스 레버리지</div>
+        </div>
+      </div>
+      <div class="pc-chips">
+        <span class="chip green">현물+현금형</span>
+        <span class="chip">2배 추종</span>
+        <span class="chip" style="background:#f0fdf4;color:#065f46">SK하이닉스</span>
+      </div>
+      <div class="pc-size">약 3,735억원</div>
+      <div class="pc-size-label">신탁원본 규모 (SK하이닉스 레버리지 합산 7,470억)</div>
+    </div>
+    
+    <div class="prod-card samsung-card">
+      <div class="pc-header">
+        <div class="pc-logo blue">K</div>
+        <div class="pc-name-wrap">
+          <div class="pc-brand">KB자산운용</div>
+          <div class="pc-name">KBSTAR 삼성전자 레버리지</div>
+        </div>
+      </div>
+      <div class="pc-chips">
+        <span class="chip blue">현물형</span>
+        <span class="chip">2배 추종</span>
+        <span class="chip orange">삼성전자</span>
+      </div>
+      <div class="pc-size-label">삼성전자 레버리지 ETF 중 하나</div>
+    </div>
+    
+    <div class="prod-card hynix-card">
+      <div class="pc-header">
+        <div class="pc-logo green">S</div>
+        <div class="pc-name-wrap">
+          <div class="pc-brand">신한자산운용</div>
+          <div class="pc-name">SOL SK하이닉스 레버리지</div>
+        </div>
+      </div>
+      <div class="pc-chips">
+        <span class="chip green">현물형</span>
+        <span class="chip">2배 추종</span>
+        <span class="chip" style="background:#f0fdf4;color:#065f46">SK하이닉스</span>
+      </div>
+      <div class="pc-size-label">+ 곱버스(인버스 2배) 동시 출시</div>
+    </div>
+    
+    <div class="prod-card samsung-card">
+      <div class="pc-header">
+        <div class="pc-logo blue">K</div>
+        <div class="pc-name-wrap">
+          <div class="pc-brand">키움투자자산운용</div>
+          <div class="pc-name">히어로즈 삼성전자 선물 레버리지</div>
+        </div>
+      </div>
+      <div class="pc-chips">
+        <span class="chip orange">선물형</span>
+        <span class="chip">2배 추종</span>
+        <span class="chip orange">삼성전자</span>
+      </div>
+      <div class="pc-size-label">롤오버 비용 발생 주의</div>
+    </div>
+    
+    <div class="prod-card hynix-card">
+      <div class="pc-header">
+        <div class="pc-logo green">H</div>
+        <div class="pc-name-wrap">
+          <div class="pc-brand">한화자산운용</div>
+          <div class="pc-name">PLUS 삼성전자 레버리지·곱버스</div>
+        </div>
+      </div>
+      <div class="pc-chips">
+        <span class="chip blue">현물형</span>
+        <span class="chip">레버리지+인버스</span>
+        <span class="chip orange">삼성전자</span>
+      </div>
+      <div class="pc-size-label">레버리지 + 곱버스 2종 세트 출시</div>
+    </div>
+  </div>
+  
+  <!-- 현물 vs 선물 비교 테이블 -->
+  <div class="compare-box">
+    <div class="compare-title">현물형 vs 선물형 레버리지 ETF 구조 비교</div>
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th>현물형 레버리지</th>
+          <th>선물형 레버리지</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>운용 방식</td>
+          <td>현물 100% + 선물 100%</td>
+          <td>선물 계약 100%만</td>
+        </tr>
+        <tr>
+          <td>추적 정확도</td>
+          <td class="good">높음</td>
+          <td class="mid">베이시스 영향</td>
+        </tr>
+        <tr>
+          <td>롤오버 비용</td>
+          <td class="good">낮음</td>
+          <td class="bad">직접 노출</td>
+        </tr>
+        <tr>
+          <td>장기 보유 적합성</td>
+          <td class="mid">단기 권장</td>
+          <td class="bad">더 부적합</td>
+        </tr>
+        <tr>
+          <td>유동성</td>
+          <td class="good">높음</td>
+          <td class="mid">보통</td>
+        </tr>
+        <tr>
+          <td>추적 오차 장기 누적</td>
+          <td class="mid">있음</td>
+          <td class="bad">더 크게 누적</td>
+        </tr>
+        <tr>
+          <td>대표 상품</td>
+          <td>TIGER, KODEX, KBSTAR, SOL</td>
+          <td>히어로즈, 하나</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+
+<script>
+  function showTab(type) {
+    const btns = document.querySelectorAll('.tab-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    
+    const cards = document.querySelectorAll('.prod-card');
+    cards.forEach(c => {
+      if (type === 'all') {
+        c.style.display = 'block';
+        btns[0].classList.add('active');
+      } else if (type === 'samsung') {
+        c.style.display = c.classList.contains('samsung-card') ? 'block' : 'none';
+        btns[1].classList.add('active');
+      } else {
+        c.style.display = c.classList.contains('hynix-card') ? 'block' : 'none';
+        btns[2].classList.add('active');
+      }
+    });
+  }
+</script>
+</body>
+</html>
