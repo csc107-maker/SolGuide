@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="한국 폐배터리 종목 재무분석 — 성일하이텍 & 새빗켐 PER·PBR·ROE" />
+<meta property="og:description" content="성일하이텍(365340), 새빗켐(107600) 2022~2026E 재무지표 심층 분석 대시보드" />
+<meta property="og:image" content="https://via.placeholder.com/1200x630/1b5e20/ffffff?text=Korea+Battery+Recycling" />
+<meta property="og:url" content="https://your-blog.com/korea-battery-recycling-stocks" />
+<title>한국 폐배터리 종목 재무분석 대시보드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0f7f0; padding: 24px 16px; }
+  .container { max-width: 820px; margin: 0 auto; }
+
+  .top-banner {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 60%, #43a047 100%);
+    border-radius: 18px;
+    padding: 28px 28px 24px;
+    color: white;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .top-banner::after {
+    content: '🇰🇷';
+    position: absolute;
+    right: 24px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 64px;
+    opacity: 0.15;
+  }
+  .top-banner .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    font-size: 10px; font-weight: 700;
+    padding: 3px 12px; border-radius: 20px;
+    letter-spacing: 1px; margin-bottom: 10px;
+  }
+  .top-banner h2 { font-size: 20px; font-weight: 900; line-height: 1.4; margin-bottom: 6px; }
+  .top-banner p { font-size: 12px; opacity: 0.85; }
+
+  .stock-section { margin-bottom: 20px; }
+  .stock-label {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .stock-label-badge {
+    width: 8px; height: 36px; border-radius: 4px;
+  }
+  .stock-label h3 { font-size: 16px; font-weight: 800; color: #1a1a2e; }
+  .stock-label span { font-size: 12px; color: #666; display: block; font-family: 'DM Mono', monospace; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .kpi-box {
+    background: white;
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .kpi-label-s { font-size: 10px; color: #888; font-weight: 600; margin-bottom: 5px; }
+  .kpi-val { font-size: 16px; font-weight: 800; font-family: 'DM Mono', monospace; }
+  .kpi-sub { font-size: 10px; margin-top: 2px; }
+
+  .finance-table-wrap {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 14px;
+    overflow-x: auto;
+  }
+  .finance-table-wrap h4 {
+    font-size: 13px; font-weight: 700; color: #333;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 460px; }
+  th {
+    font-size: 11px; font-weight: 700; padding: 9px 10px;
+    text-align: center; color: white;
+  }
+  td { font-size: 12px; padding: 9px 10px; text-align: center; border-bottom: 1px solid #f0f0f0; font-family: 'DM Mono', monospace; }
+  td:first-child { text-align: left; font-family: 'Noto Sans KR', sans-serif; font-weight: 600; color: #333; }
+  tr:last-child td { border-bottom: none; }
+  .red { color: #c62828; font-weight: 700; }
+  .green { color: #2e7d32; font-weight: 700; }
+  .blue { color: #1565c0; font-weight: 700; }
+  .orange { color: #e65100; font-weight: 700; }
+  .na { color: #bbb; }
+
+  .per-explain {
+    background: #fffde7;
+    border-left: 4px solid #f9a825;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.7;
+  }
+  .per-explain strong { color: #e65100; }
+
+  .indicator-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .indicator-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .indicator-card .ind-label { font-size: 11px; font-weight: 700; color: #555; margin-bottom: 6px; }
+  .indicator-card .ind-desc { font-size: 10px; color: #888; line-height: 1.5; margin-top: 6px; }
+  .ind-value { font-size: 22px; font-weight: 900; font-family: 'DM Mono', monospace; }
+
+  .divider { height: 1px; background: linear-gradient(90deg, #c8e6c9, #a5d6a7, #c8e6c9); margin: 20px 0; border-radius: 2px; }
+
+  .source-note { font-size: 10px; color: #aaa; text-align: center; padding-top: 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="top-banner">
+    <div class="tag">📊 KOREA STOCKS DEEP DIVE</div>
+    <h2>한국 폐배터리 종목<br>재무지표 심층 분석 (2026)</h2>
+    <p>성일하이텍(365340) · 새빗켐(107600) — PER·PBR·ROE 총정리</p>
+  </div>
+
+  <!-- 성일하이텍 -->
+  <div class="stock-section">
+    <div class="stock-label">
+      <div class="stock-label-badge" style="background:#1565c0;"></div>
+      <div>
+        <h3>성일하이텍 (365340)</h3>
+        <span>KOSDAQ | 국내 최대 폐배터리 리사이클링 전문기업</span>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-box">
+        <div class="kpi-label-s">현재주가 (2026.05.28)</div>
+        <div class="kpi-val" style="color:#1565c0;">63,300원</div>
+        <div class="kpi-sub" style="color:#2e7d32;">▲ +0.64%</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label-s">52주 최고/최저</div>
+        <div class="kpi-val" style="color:#333; font-size:13px;">85,500<br>/ 30,350</div>
+        <div class="kpi-sub" style="color:#888;">원</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label-s">PER (2025A)</div>
+        <div class="kpi-val red">적자</div>
+        <div class="kpi-sub" style="color:#c62828;">산출 불가</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label-s">PBR 추정 (2025)</div>
+        <div class="kpi-val orange">~1.1~1.4배</div>
+        <div class="kpi-sub" style="color:#888;">추정치</div>
+      </div>
+    </div>
+
+    <div class="finance-table-wrap">
+      <h4><i class="ti ti-report-money" style="color:#1565c0;"></i> 성일하이텍 연간 실적 추이 (한화투자증권·IBK 리서치)</h4>
+      <table>
+        <tr style="background:#1565c0;">
+          <th style="text-align:left; border-radius:8px 0 0 0;">구분 (십억원)</th>
+          <th>2022A</th>
+          <th>2023A</th>
+          <th>2024A</th>
+          <th>2025E</th>
+          <th>2026E</th>
+        </tr>
+        <tr>
+          <td>매출액</td>
+          <td class="green">270</td>
+          <td>247</td>
+          <td class="red">137</td>
+          <td>176~184</td>
+          <td class="green">237~299</td>
+        </tr>
+        <tr>
+          <td>영업이익</td>
+          <td class="green">48</td>
+          <td class="red">-8</td>
+          <td class="red">-73</td>
+          <td class="red">-44</td>
+          <td class="green">+7</td>
+        </tr>
+        <tr>
+          <td>EBITDA</td>
+          <td class="green">58</td>
+          <td>6</td>
+          <td class="red">-52</td>
+          <td class="red">-13</td>
+          <td class="green">+37</td>
+        </tr>
+        <tr>
+          <td>영업이익률(%)</td>
+          <td class="green">17.8%</td>
+          <td class="red">-3.2%</td>
+          <td class="red">-53.3%</td>
+          <td class="red">적자</td>
+          <td class="green">+2.3%</td>
+        </tr>
+        <tr>
+          <td>PER</td>
+          <td class="green">흑자기</td>
+          <td class="na">N/A(적자)</td>
+          <td class="na">N/A(적자)</td>
+          <td class="na">N/A(적자)</td>
+          <td class="orange">흑자전환기</td>
+        </tr>
+        <tr>
+          <td>ROE</td>
+          <td class="green">양수</td>
+          <td class="red">음수</td>
+          <td class="red">음수</td>
+          <td class="red">음수</td>
+          <td class="orange">소폭 회복</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="per-explain">
+    ⚠️ <strong>PER(주가수익비율)</strong>은 적자 기업에서는 의미가 없습니다. 성일하이텍은 2023년부터 적자 전환되어 2026E 흑자 전환이 예상되는 시점에서야 비로소 PER 비교가 가능합니다. 현재는 <strong>PBR(주가순자산비율)</strong>과 <strong>EV/EBITDA</strong>로 밸류에이션을 평가하는 것이 적합합니다.
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 새빗켐 -->
+  <div class="stock-section">
+    <div class="stock-label">
+      <div class="stock-label-badge" style="background:#00897b;"></div>
+      <div>
+        <h3>새빗켐 (107600)</h3>
+        <span>KOSDAQ | 폐양극재 재활용 → 전구체 복합액 생산 전문</span>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-box">
+        <div class="kpi-label-s">현재주가 (2026.05)</div>
+        <div class="kpi-val" style="color:#00897b;">37,350원</div>
+        <div class="kpi-sub" style="color:#2e7d32;">▲ +0.95%</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label-s">시가총액</div>
+        <div class="kpi-val" style="color:#333; font-size:14px;">~881억원</div>
+        <div class="kpi-sub" style="color:#c62828;">고점 대비 급락</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label-s">PER</div>
+        <div class="kpi-val red">적자</div>
+        <div class="kpi-sub" style="color:#c62828;">산출 불가</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label-s">PBR 추정</div>
+        <div class="kpi-val orange">~0.8~1.2배</div>
+        <div class="kpi-sub" style="color:#888;">추정치</div>
+      </div>
+    </div>
+
+    <div class="finance-table-wrap">
+      <h4><i class="ti ti-report-money" style="color:#00897b;"></i> 새빗켐 주요 재무 현황 (FnGuide, 전자공시 기반)</h4>
+      <table>
+        <tr style="background:#00897b;">
+          <th style="text-align:left; border-radius:8px 0 0 0;">구분</th>
+          <th>2022A</th>
+          <th>2023A</th>
+          <th>2024A</th>
+          <th>2025 3Q누적</th>
+          <th>평가</th>
+        </tr>
+        <tr>
+          <td>매출액 증감</td>
+          <td class="green">고성장기</td>
+          <td>둔화</td>
+          <td>부진</td>
+          <td class="green">+22.8% YoY</td>
+          <td>회복 조짐</td>
+        </tr>
+        <tr>
+          <td>영업이익</td>
+          <td class="green">흑자</td>
+          <td class="red">적자</td>
+          <td class="red">적자</td>
+          <td class="red">-40.5% 확대</td>
+          <td class="red">악화</td>
+        </tr>
+        <tr>
+          <td>PER</td>
+          <td class="green">유효</td>
+          <td class="na">N/A</td>
+          <td class="na">N/A</td>
+          <td class="na">N/A</td>
+          <td class="na">—</td>
+        </tr>
+        <tr>
+          <td>PBR</td>
+          <td class="na">—</td>
+          <td class="na">—</td>
+          <td class="na">—</td>
+          <td class="orange">~0.8~1.2 추정</td>
+          <td>장부가 수준</td>
+        </tr>
+        <tr>
+          <td>ROE</td>
+          <td class="green">양수</td>
+          <td class="red">음수</td>
+          <td class="red">음수</td>
+          <td class="red">음수(적자)</td>
+          <td class="red">지속 부진</td>
+        </tr>
+        <tr>
+          <td>최대주주 변경</td>
+          <td class="na">—</td>
+          <td class="na">—</td>
+          <td class="na">—</td>
+          <td class="orange">LX인베스트먼트 PEF</td>
+          <td class="orange">리스크↑</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PER PBR ROE 설명 카드 -->
+  <div class="indicator-row">
+    <div class="indicator-card">
+      <div class="ind-label">📊 PER란?</div>
+      <div class="ind-value" style="color:#1565c0;">주가<br>÷EPS</div>
+      <div class="ind-desc">주가수익비율. 적자 기업에는 적용 불가. 폐배터리 기업들은 흑자 전환 후 비교 가능.</div>
+    </div>
+    <div class="indicator-card">
+      <div class="ind-label">📋 PBR란?</div>
+      <div class="ind-value" style="color:#00897b;">주가<br>÷BPS</div>
+      <div class="ind-desc">주가순자산비율. 1 미만이면 자산보다 싸게 거래 중. 적자 기업 밸류에이션에 활용.</div>
+    </div>
+    <div class="indicator-card">
+      <div class="ind-label">💰 ROE란?</div>
+      <div class="ind-value" style="color:#e65100;">순이익<br>÷자본</div>
+      <div class="ind-desc">자기자본이익률. 적자 시 음수. 폐배터리 기업들은 메탈가 회복 시 급격히 개선 예상.</div>
+    </div>
+  </div>
+
+  <p class="source-note">출처: 한화투자증권 리서치(2025.03), IBK투자증권 리서치(2025), FnGuide CompanyGuide, 금융감독원 전자공시, 한국경제 Markets (2026.05) | 투자 권유 아님</p>
+</div>
+</body>
+</html>
