@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="글로벌 폐배터리 리사이클링 시장 규모 & 성장 전망" />
+<meta property="og:description" content="2022~2035년 글로벌 리튬이온 배터리 재활용 시장 규모, CAGR 19%, 주요 성장 드라이버 시각화" />
+<meta property="og:image" content="https://via.placeholder.com/1200x630/1a1a2e/ffffff?text=Battery+Recycling+Market" />
+<meta property="og:url" content="https://your-blog.com/battery-recycling-market" />
+<title>글로벌 폐배터리 리사이클링 시장 전망</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .header-card {
+    background: linear-gradient(135deg, #1a237e 0%, #1565c0 50%, #0288d1 100%);
+    border-radius: 20px;
+    padding: 32px;
+    color: white;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .header-card::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .header-card h1 {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .header-card p {
+    font-size: 13px;
+    opacity: 0.85;
+    position: relative;
+    z-index: 1;
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .kpi-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 4px solid;
+    transition: transform 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-3px); }
+  .kpi-card:nth-child(1) { border-color: #1565c0; }
+  .kpi-card:nth-child(2) { border-color: #00897b; }
+  .kpi-card:nth-child(3) { border-color: #f57c00; }
+  .kpi-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+    font-family: 'DM Mono', monospace;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+  .kpi-label {
+    font-size: 11px;
+    color: #666;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .chart-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .chart-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chart-title i { color: #1565c0; font-size: 18px; }
+  .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bar-year {
+    width: 40px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #555;
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    background: #eef2ff;
+    border-radius: 8px;
+    height: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    transition: width 1.5s cubic-bezier(.17,.67,.83,.67);
+    animation: growBar 1.5s ease-out forwards;
+  }
+  @keyframes growBar {
+    from { width: 0 !important; }
+  }
+  .bar-val {
+    width: 70px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+  }
+  .driver-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .driver-card {
+    background: white;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .driver-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .driver-card h3 { font-size: 12px; font-weight: 700; color: #222; margin-bottom: 4px; }
+  .driver-card p { font-size: 11px; color: #666; line-height: 1.5; }
+  .source-note {
+    font-size: 10px;
+    color: #999;
+    text-align: center;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-card">
+    <div class="badge">📊 Market Intelligence 2026</div>
+    <h1>글로벌 폐배터리 리사이클링<br>시장 규모 & 성장 전망</h1>
+    <p>CAGR 19.11% — '도시의 유전'이 열리고 있습니다</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">🌏</div>
+      <div class="kpi-value" style="color:#1565c0;">$69.5M</div>
+      <div class="kpi-label">2022년 기준<br>시장 규모</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📈</div>
+      <div class="kpi-value" style="color:#00897b;">19.1%</div>
+      <div class="kpi-label">연평균 성장률<br>(CAGR 예측)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">⚡</div>
+      <div class="kpi-value" style="color:#f57c00;">21%</div>
+      <div class="kpi-label">NMC 배터리<br>CAGR 2026~35</div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title"><i class="ti ti-chart-bar"></i> 시장 규모 성장 추이 (단위: 억 달러 추정)</div>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <span class="bar-year">2022</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:6%; background:linear-gradient(90deg,#bbdefb,#1565c0);">기준</div>
+        </div>
+        <span class="bar-val">$0.7억</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-year">2024</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:12%; background:linear-gradient(90deg,#90caf9,#1565c0);">▲</div>
+        </div>
+        <span class="bar-val">~$1.0억</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-year">2026</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:22%; background:linear-gradient(90deg,#42a5f5,#1565c0);">▲▲</div>
+        </div>
+        <span class="bar-val">~$1.9억</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-year">2028</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:40%; background:linear-gradient(90deg,#1e88e5,#0d47a1);">성장 가속</div>
+        </div>
+        <span class="bar-val">~$2.7억</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-year">2030</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:65%; background:linear-gradient(90deg,#1565c0,#0d47a1);">골든타임</div>
+        </div>
+        <span class="bar-val">~$3.8억</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-year">2035</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:100%; background:linear-gradient(90deg,#0d47a1,#01579b);">최대 수혜기</div>
+        </div>
+        <span class="bar-val">~$7.5억+</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="driver-grid">
+    <div class="driver-card">
+      <div class="driver-icon-box" style="background:#e3f2fd;">🔋</div>
+      <div>
+        <h3>EV 배터리 수명 도래</h3>
+        <p>2015~17년 보급 전기차 배터리가 2025~27년 수명 만료 → 대규모 폐배터리 물량 급증</p>
+      </div>
+    </div>
+    <div class="driver-card">
+      <div class="driver-icon-box" style="background:#e8f5e9;">🌿</div>
+      <div>
+        <h3>EU 배터리 규정</h3>
+        <p>2031년 재활용 리튬 16% 의무화, 2036년 80%까지 단계적 강화 예정</p>
+      </div>
+    </div>
+    <div class="driver-card">
+      <div class="driver-icon-box" style="background:#fff3e0;">🇺🇸</div>
+      <div>
+        <h3>미국 IRA 정책 수혜</h3>
+        <p>국내산 재활용 소재 사용 시 세금 혜택 — 완성차 OEM의 리사이클러 파트너십 확대</p>
+      </div>
+    </div>
+    <div class="driver-card">
+      <div class="driver-icon-box" style="background:#fce4ec;">⚙️</div>
+      <div>
+        <h3>기술 혁신 — 95%+ 회수율</h3>
+        <p>습식제련(하이드로) 기술로 Li·Ni·Co 95~98% 회수, 채굴 대비 비용 절감 가속</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="source-note">출처: Fortune Business Insights, GMInsights, 한화투자증권, 포스코인터내셔널 매거진 (2025~2026) | 시장 규모 수치는 추정치이며 공식 리서치 보고서와 차이가 있을 수 있습니다.</p>
+</div>
+</body>
+</html>
