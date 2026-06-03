@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta property="og:title" content="중동 리스크 시나리오별 투자 전략 — 강세 vs 약세 분석 (2026.06)" />
+<meta property="og:description" content="중동 교착상태 속 미국 증시 투자 전략: 강세·약세 시나리오와 섹터별 대응 방법을 분석합니다." />
+<meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=630&fit=crop" />
+<meta property="og:url" content="https://blog.naver.com/your-blog/investment-strategy-middle-east-2026" />
+<title>시나리오별 투자 전략 카드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f5ff;
+    padding: 28px 16px;
+  }
+  .container { max-width: 820px; margin: 0 auto; }
+
+  /* ─── THUMBNAIL ─── */
+  .thumbnail {
+    background: linear-gradient(135deg, #0d1f54 0%, #1a3c8f 50%, #0a2244 100%);
+    border-radius: 20px;
+    padding: 42px 40px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 220px;
+    justify-content: center;
+  }
+  .thumbnail::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(99,102,241,0.25) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(232,51,42,0.18) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .thumb-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .thumb-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 2;
+  }
+  .thumb-title span { color: #fbbf24; }
+  .thumb-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    max-width: 500px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+  }
+  .thumb-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+    position: relative;
+    z-index: 2;
+  }
+  .thumb-tag {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.8);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .thumb-deco {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 100px;
+    color: rgba(255,255,255,0.04);
+    z-index: 1;
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .section-header .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .tag.bull { background: #e8f9ee; color: #1db954; }
+  .tag.bear { background: #ffeaea; color: #e84040; }
+  .tag.sector { background: #eef2ff; color: #6366f1; }
+  .section-header h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #0d1f54;
+  }
+
+  /* ─── SCENARIO COLUMNS ─── */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 600px) { .scenario-grid { grid-template-columns: 1fr; } }
+  .scenario-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  }
+  .scenario-card.bull { border-top: 5px solid #1db954; }
+  .scenario-card.bear { border-top: 5px solid #e84040; }
+  .scenario-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0d1f54;
+    margin-bottom: 16px;
+  }
+  .scenario-title i { font-size: 22px; }
+  .bull .scenario-title i { color: #1db954; }
+  .bear .scenario-title i { color: #e84040; }
+  .factor-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .factor-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13px;
+    color: #3a4a6a;
+    line-height: 1.5;
+  }
+  .factor-list li .dot2 {
+    min-width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+  }
+  .bull .factor-list li .dot2 { background: #1db954; }
+  .bear .factor-list li .dot2 { background: #e84040; }
+  .prob-bar {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .prob-label { font-size: 11px; color: #9aaabb; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-outer {
+    width: 100%;
+    height: 8px;
+    background: #eef2ff;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .prob-inner-bull { height: 100%; background: linear-gradient(90deg, #1db954, #2bdb6d); border-radius: 4px; width: 47%; }
+  .prob-inner-bear { height: 100%; background: linear-gradient(90deg, #e84040, #ff6060); border-radius: 4px; width: 53%; }
+  .prob-value { font-size: 13px; font-weight: 700; }
+  .bull .prob-value { color: #1db954; }
+  .bear .prob-value { color: #e84040; }
+
+  /* ─── SECTOR TABLE ─── */
+  .sector-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    margin-top: 8px;
+  }
+  .sector-header {
+    background: linear-gradient(90deg, #1a3c8f, #6366f1);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sector-header i { color: #fff; font-size: 18px; }
+  .sector-header span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .sector-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f0f4ff;
+    gap: 14px;
+  }
+  .sector-row:last-child { border-bottom: none; }
+  .sector-icon { font-size: 22px; min-width: 30px; }
+  .sector-info { flex: 1; }
+  .sector-name { font-size: 13px; font-weight: 700; color: #1a1f40; }
+  .sector-desc { font-size: 11.5px; color: #7a8aaa; margin-top: 2px; }
+  .sector-signal {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .signal-buy { background: #e8f9ee; color: #1db954; }
+  .signal-watch { background: #fff8e1; color: #f59e0b; }
+  .signal-avoid { background: #ffeaea; color: #e84040; }
+
+  .source-tag {
+    margin-top: 18px;
+    text-align: right;
+    font-size: 10px;
+    color: #aab5cc;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- THUMBNAIL -->
+  <div class="thumbnail">
+    <div class="thumb-deco"><i class="ti ti-world"></i></div>
+    <div class="thumb-date">2026.06.03 — 글로벌 마켓 분석</div>
+    <div class="thumb-title">중동 교착상태 속<br><span>미국 증시</span> 어디로?</div>
+    <div class="thumb-desc">S&P 500 · 다우존스 하락 출발 예고 — 이란 쿠웨이트 공항 피격, 브렌트유 +2.6% 급등 속 AI 반도체 랠리와의 힘겨루기</div>
+    <div class="thumb-tags">
+      <span class="thumb-tag">#SP500</span>
+      <span class="thumb-tag">#중동리스크</span>
+      <span class="thumb-tag">#브렌트유</span>
+      <span class="thumb-tag">#AI반도체</span>
+      <span class="thumb-tag">#마벨테크</span>
+      <span class="thumb-tag">#미국주식</span>
+    </div>
+  </div>
+
+  <!-- SCENARIO SECTION -->
+  <div class="section-header">
+    <div class="tag sector"><i class="ti ti-arrows-split"></i> 시나리오 분석</div>
+    <h3>강세 vs 약세 — 두 가지 시나리오</h3>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card bull">
+      <div class="scenario-title">
+        <i class="ti ti-trending-up"></i> 🟢 강세 시나리오
+      </div>
+      <ul class="factor-list">
+        <li><div class="dot2"></div>미-이란 협상 재개 → 유가 하락 → 연준 금리 인하 기대 복귀</li>
+        <li><div class="dot2"></div>AI 빅테크 실적 서프라이즈 지속 (HPE, MRVL, 브로드컴)</li>
+        <li><div class="dot2"></div>S&P 500 9주 연속 상승 모멘텀 유지</li>
+        <li><div class="dot2"></div>고용지표 안정 → 연착륙 시나리오 강화</li>
+      </ul>
+      <div class="prob-bar">
+        <div class="prob-label">시장 반영 확률 (Polymarket)</div>
+        <div class="prob-outer"><div class="prob-inner-bull"></div></div>
+        <div class="prob-value">47% — 강세 오픈 가능성</div>
+      </div>
+    </div>
+
+    <div class="scenario-card bear">
+      <div class="scenario-title">
+        <i class="ti ti-trending-down"></i> 🔴 약세 시나리오
+      </div>
+      <ul class="factor-list">
+        <li><div class="dot2"></div>호르무즈해협 봉쇄 장기화 → 브렌트유 $110+ 돌파</li>
+        <li><div class="dot2"></div>인플레이션 재점화 → 연준 금리 인하 전면 취소</li>
+        <li><div class="dot2"></div>OECD 경고대로 글로벌 성장 둔화 현실화</li>
+        <li><div class="dot2"></div>밀·비료 가격 폭등 → 신흥국 식량 위기</li>
+      </ul>
+      <div class="prob-bar">
+        <div class="prob-label">시장 반영 확률 (Polymarket)</div>
+        <div class="prob-outer"><div class="prob-inner-bear"></div></div>
+        <div class="prob-value">53% — 하락 오픈 우세</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTOR WATCH -->
+  <div class="section-header">
+    <div class="tag sector"><i class="ti ti-eye"></i> 섹터 전략</div>
+    <h3>지금 주목해야 할 섹터</h3>
+  </div>
+
+  <div class="sector-wrap">
+    <div class="sector-header">
+      <i class="ti ti-layout-grid"></i>
+      <span>섹터별 투자 신호 — 중동 리스크 국면 기준</span>
+    </div>
+
+    <div class="sector-row">
+      <div class="sector-icon" style="color:#6366f1">💻</div>
+      <div class="sector-info">
+        <div class="sector-name">AI·반도체 (NVDA, MRVL, AVGO)</div>
+        <div class="sector-desc">지정학 악재를 압도하는 AI 모멘텀. 실적·투자 확대 사이클 지속</div>
+      </div>
+      <span class="sector-signal signal-buy">관심 ★★★</span>
+    </div>
+
+    <div class="sector-row">
+      <div class="sector-icon" style="color:#f59e0b">⛽</div>
+      <div class="sector-info">
+        <div class="sector-name">에너지 (XOM, CVX)</div>
+        <div class="sector-desc">유가 상승 직접 수혜. 중동 분쟁 장기화 시 추가 강세 기대</div>
+      </div>
+      <span class="sector-signal signal-buy">관심 ★★</span>
+    </div>
+
+    <div class="sector-row">
+      <div class="sector-icon" style="color:#1db954">🛡️</div>
+      <div class="sector-info">
+        <div class="sector-name">방위산업 (LMT, RTX, NOC)</div>
+        <div class="sector-desc">지정학 리스크 고조 시 방산 예산 확대 기대감</div>
+      </div>
+      <span class="sector-signal signal-watch">관망 ★★</span>
+    </div>
+
+    <div class="sector-row">
+      <div class="sector-icon" style="color:#3b82f6">🏪</div>
+      <div class="sector-info">
+        <div class="sector-name">방어주 (WMT, JNJ, PG)</div>
+        <div class="sector-desc">리스크 오프 국면 안전자산 선호. 변동성 헤지용</div>
+      </div>
+      <span class="sector-signal signal-watch">관망 ★</span>
+    </div>
+
+    <div class="sector-row">
+      <div class="sector-icon" style="color:#e84040">✈️</div>
+      <div class="sector-info">
+        <div class="sector-name">항공 (DAL, UAL, AAL)</div>
+        <div class="sector-desc">유가 상승 직격탄. 쿠웨이트 공항 폐쇄로 추가 불안</div>
+      </div>
+      <span class="sector-signal signal-avoid">주의 ⚠</span>
+    </div>
+
+    <div class="sector-row">
+      <div class="sector-icon" style="color:#e84040">🚢</div>
+      <div class="sector-info">
+        <div class="sector-name">해운 (ZIM, MATX)</div>
+        <div class="sector-desc">호르무즈해협 봉쇄 리스크 직접 노출. 물류 비용 급등</div>
+      </div>
+      <span class="sector-signal signal-avoid">주의 ⚠</span>
+    </div>
+  </div>
+
+  <div class="source-tag">※ 이 자료는 투자 권유가 아닙니다. 출처: Reuters, CNN, CNBC, Benzinga | 2026.06.03</div>
+</div>
+</body>
+</html>
