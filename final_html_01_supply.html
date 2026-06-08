@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta property="og:title" content="젠슨 황 방한 × 김정호 교수 — GPU와 메모리의 전쟁"/>
+<meta property="og:description" content="HBM 없이 GPU는 무용지물. 엔비디아가 한국을 찾는 구조적 이유와 메모리 중심 미래를 분석합니다."/>
+<meta property="og:image" content="https://via.placeholder.com/1200x630/0d1b3e/90caf9?text=Jensen+Huang+Korea+%C3%97+HBM+Future"/>
+<meta property="og:url" content="https://yourblog.com/jensen-huang-korea-hbm-kimjungho"/>
+<title>HBM 공급망 구조 카드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+.supply-widget{
+  font-family:'Noto Sans KR',sans-serif;
+  background:linear-gradient(140deg,#f0f7ff 0%,#e8f4fd 55%,#f5fff5 100%);
+  border:1px solid #cce0f8;
+  border-radius:22px;
+  padding:38px 34px;
+  max-width:760px;
+  margin:32px auto;
+  box-shadow:0 10px 40px rgba(21,101,192,.10);
+}
+.sw-tag{font-size:12px;font-weight:700;letter-spacing:2px;color:#1565c0;text-transform:uppercase;margin-bottom:6px}
+.sw-title{font-size:22px;font-weight:900;color:#0d1b3e;margin-bottom:8px;line-height:1.3}
+.sw-sub{font-size:13px;color:#5a7fa0;margin-bottom:30px;line-height:1.65}
+
+/* 핵심 인용구 박스 */
+.quote-box{
+  background:linear-gradient(135deg,#0d1b3e,#1a3a6b);
+  border-radius:16px;
+  padding:22px 26px;
+  margin-bottom:28px;
+  position:relative;
+  overflow:hidden;
+}
+.quote-box::before{
+  content:'"';
+  position:absolute;
+  top:-10px;left:14px;
+  font-size:100px;
+  color:rgba(255,255,255,.08);
+  font-family:Georgia,serif;
+  line-height:1;
+}
+.quote-box .q-text{font-size:15px;color:#e3f2fd;line-height:1.75;font-weight:600;position:relative}
+.quote-box .q-source{font-size:11px;color:#90caf9;margin-top:10px;font-weight:700;letter-spacing:0.5px}
+
+/* 공급망 플로우 */
+.flow-wrap{display:flex;align-items:stretch;gap:0;margin-bottom:28px;flex-wrap:wrap}
+.flow-node{
+  flex:1;min-width:130px;
+  background:#fff;border-radius:16px;padding:20px 14px;
+  text-align:center;border:2px solid #e0ecf8;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;
+}
+.flow-node:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(21,101,192,.15)}
+.flow-node.core{border-color:#1565c0;background:linear-gradient(135deg,#e3f2fd,#f3e5f5)}
+.fn-icon{font-size:30px;margin-bottom:10px;display:block}
+.fn-label{font-size:10px;font-weight:700;letter-spacing:1px;color:#90a4ae;text-transform:uppercase;margin-bottom:4px}
+.fn-name{font-size:14px;font-weight:800;color:#0d1b3e;margin-bottom:5px}
+.fn-desc{font-size:11px;color:#607d8b;line-height:1.5}
+.flow-arrow{display:flex;align-items:center;padding:0 6px;color:#90caf9;font-size:20px;font-weight:900;flex-shrink:0}
+
+/* 핵심 수치 행 */
+.kpi-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.kpi-card{
+  flex:1;min-width:130px;
+  background:#fff;border-radius:14px;padding:18px 16px;
+  border-left:4px solid #1565c0;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.kpi-card.green{border-left-color:#2e7d32}
+.kpi-card.orange{border-left-color:#e65100}
+.kpi-card.purple{border-left-color:#6a1b9a}
+.kpi-num{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:#0d1b3e;line-height:1;margin-bottom:5px}
+.kpi-label{font-size:11px;color:#78909c;font-weight:600;line-height:1.5}
+
+/* 병목 배너 */
+.bottleneck{
+  background:linear-gradient(135deg,#fff3e0,#fce4ec);
+  border:2px solid #ff8f00;
+  border-radius:14px;
+  padding:18px 22px;
+  display:flex;align-items:flex-start;gap:14px;
+}
+.bottleneck .b-icon{font-size:28px;flex-shrink:0;margin-top:2px}
+.bottleneck .b-title{font-size:14px;font-weight:800;color:#bf360c;margin-bottom:5px}
+.bottleneck .b-text{font-size:13px;color:#6d4c41;line-height:1.65}
+
+.src-note{font-size:11px;color:#90a4ae;margin-top:18px;text-align:right}
+
+@media(max-width:600px){
+  .flow-wrap{flex-direction:column}
+  .flow-arrow{transform:rotate(90deg);justify-content:center;padding:4px}
+  .supply-widget{padding:24px 16px}
+}
+</style>
+</head>
+<body>
+<div class="supply-widget">
+  <div class="sw-tag">🔗 공급망 구조 분석</div>
+  <div class="sw-title">GPU는 HBM 없이 달릴 수 없다</div>
+  <p class="sw-sub">젠슨 황이 7개월 만에 다시 한국을 찾은 이유 — AI 가속기의 실제 성능은 GPU 코어가 아닌 HBM 대역폭이 결정합니다.</p>
+
+  <div class="quote-box">
+    <div class="q-text">삼성전자와 SK하이닉스는 사실상 엔비디아가 필요로 하는 규모의 HBM을 생산할 수 있는 지구상 유일한 회사들이다. 이번 방한 빈도 자체가 한국이 엔비디아 비즈니스의 구조적 핵심임을 말해준다.</div>
+    <div class="q-source">📰 출처: CryptoBriefing · TechTimes (2026.06.05)</div>
+  </div>
+
+  <div class="flow-wrap">
+    <div class="flow-node">
+      <span class="fn-icon">🧠</span>
+      <div class="fn-label">설계</div>
+      <div class="fn-name">NVIDIA GPU</div>
+      <div class="fn-desc">Rubin GPU<br>연산 처리 담당</div>
+    </div>
+    <div class="flow-arrow">⟶</div>
+    <div class="flow-node core">
+      <span class="fn-icon">⚡</span>
+      <div class="fn-label">핵심 병목</div>
+      <div class="fn-name">HBM4 메모리</div>
+      <div class="fn-desc">SK하이닉스·삼성<br>데이터 공급 통로</div>
+    </div>
+    <div class="flow-arrow">⟶</div>
+    <div class="flow-node">
+      <span class="fn-icon">🏭</span>
+      <div class="fn-label">패키징</div>
+      <div class="fn-name">TSMC CoWoS</div>
+      <div class="fn-desc">GPU+HBM<br>결합 패키징</div>
+    </div>
+    <div class="flow-arrow">⟶</div>
+    <div class="flow-node">
+      <span class="fn-icon">🌐</span>
+      <div class="fn-label">납품</div>
+      <div class="fn-name">AI 데이터센터</div>
+      <div class="fn-desc">빅테크·클라우드<br>최종 사용</div>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-num">7개월</div>
+      <div class="kpi-label">젠슨 황<br>방한 주기</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-num">3.3TB/s</div>
+      <div class="kpi-label">삼성 HBM4<br>메모리 대역폭</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-num">60~70%</div>
+      <div class="kpi-label">SK하이닉스<br>HBM4 점유 전망</div>
+    </div>
+    <div class="kpi-card purple">
+      <div class="kpi-num">Q3 2026</div>
+      <div class="kpi-label">Vera Rubin<br>상업 출하 예정</div>
+    </div>
+  </div>
+
+  <div class="bottleneck">
+    <div class="b-icon">🚨</div>
+    <div>
+      <div class="b-title">핵심 병목 = 한국 독점 구조</div>
+      <div class="b-text">삼성전자 + SK하이닉스가 전 세계 HBM의 90% 이상을 공급합니다. 엔비디아가 아무리 뛰어난 GPU를 설계해도 HBM 공급이 막히면 출하 자체가 불가능합니다. 이것이 젠슨 황이 직접 서울을 찾는 이유입니다.</div>
+    </div>
+  </div>
+  <div class="src-note">출처: TechTimes, CryptoBriefing, 하나증권, UBS (2026.06) | 투자 권유 아님</div>
+</div>
+</body>
+</html>
