@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>구글 TPU vs 엔비디아 GPU — AI 반도체 경쟁 비교 분석 2026</title>
+  <meta property="og:title" content="구글 TPU vs 엔비디아 GPU — AI 반도체 경쟁 분석 2026" />
+  <meta property="og:description" content="구글 TPU Ironwood·Icefish vs 엔비디아 GPU Blackwell·Rubin의 성능, 가격, 생태계, 전략을 9개 항목으로 비교 분석합니다." />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/FFF3E0/BF360C?text=Google+TPU+vs+NVIDIA+GPU+2026" />
+  <meta property="og:url" content="https://blog.example.com/google-tpu-vs-nvidia-gpu-2026" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #FFF8F0;
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      color: #1A1A2E;
+      padding: 20px 14px;
+    }
+    .widget {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px rgba(191, 54, 12, 0.12);
+      overflow: hidden;
+    }
+    /* ── HEADER ── */
+    .wg-header {
+      background: linear-gradient(135deg, #BF360C 0%, #E64A19 50%, #FF7043 100%);
+      padding: 22px 28px 18px;
+      color: #fff;
+    }
+    .eyebrow {
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wg-header h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .wg-header p { font-size: 0.74rem; opacity: 0.9; }
+    .source-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+    /* ── KPI METRICS ── */
+    .metrics-band {
+      background: #FFF3E0;
+      padding: 16px 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .kpi {
+      background: #FFFFFF;
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .kpi-val {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #BF360C;
+      line-height: 1.1;
+      margin-bottom: 3px;
+    }
+    .kpi-label {
+      font-size: 0.6rem;
+      color: #78909C;
+      line-height: 1.3;
+    }
+    /* ── TABLE ── */
+    .table-wrap { padding: 20px 22px; overflow-x: auto; }
+    .table-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #37474F;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .cmp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.76rem;
+    }
+    .cmp-table th {
+      padding: 11px 12px;
+      font-weight: 700;
+      border-bottom: 2px solid #ECEFF1;
+      white-space: nowrap;
+    }
+    .th-label {
+      text-align: left;
+      background: #FAFAFA;
+      color: #546E7A;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      min-width: 120px;
+    }
+    .th-google {
+      text-align: center;
+      background: #E8F0FE;
+      color: #1565C0;
+      min-width: 180px;
+    }
+    .th-nvidia {
+      text-align: center;
+      background: #E8F5E9;
+      color: #2E7D32;
+      min-width: 180px;
+    }
+    .th-google small, .th-nvidia small {
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 400;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+    .cmp-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #F5F5F5;
+      vertical-align: middle;
+    }
+    .td-label {
+      font-weight: 700;
+      color: #37474F;
+      background: #FAFAFA;
+      font-size: 0.73rem;
+    }
+    .td-google { text-align: center; }
+    .td-nvidia { text-align: center; }
+    .cmp-table tr:hover td { background: #FFFBF7; }
+    .cmp-table tr:hover .td-label { background: #F5F5F5; }
+    /* ── BADGES ── */
+    .b {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.64rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .b-blue { background: #E8F0FE; color: #1565C0; }
+    .b-green { background: #E8F5E9; color: #2E7D32; }
+    .b-red { background: #FCE8E6; color: #C62828; }
+    .b-orange { background: #FFF3E0; color: #E65100; }
+    .b-gray { background: #ECEFF1; color: #546E7A; }
+    .b-gold { background: #FFF8E1; color: #F57F17; }
+    .win { font-size: 0.85rem; }
+    /* ── ANALYSIS BOX ── */
+    .analysis-box {
+      margin: 0 22px 22px;
+      background: linear-gradient(135deg, #FFF3E0, #FBE9E7);
+      border-left: 4px solid #E64A19;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 16px;
+      font-size: 0.76rem;
+      color: #37474F;
+      line-height: 1.65;
+    }
+    .analysis-box strong { color: #BF360C; }
+    /* ── FOOTER ── */
+    .wg-footer {
+      padding: 11px 24px;
+      background: #FFF8F0;
+      border-top: 1px solid #FFE0B2;
+      font-size: 0.61rem;
+      color: #BCAAA4;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .metrics-band { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+
+    <!-- HEADER -->
+    <div class="wg-header">
+      <div class="eyebrow"><i class="ti ti-chart-bar"></i> Competitive Analysis</div>
+      <h2>구글 TPU vs 엔비디아 GPU — AI 반도체 경쟁 분석</h2>
+      <p>2026년 최신 기준 | 성능·가격·생태계·전략 9개 항목 비교</p>
+      <span class="source-pill">
+        <i class="ti ti-file-text"></i>
+        Yahoo Finance · TechCrunch · io-fund · Lighthouse Canton · TrendForce (2026)
+      </span>
+    </div>
+
+    <!-- KPI BAND -->
+    <div class="metrics-band">
+      <div class="kpi">
+        <span class="kpi-val">$2,159억</span>
+        <span class="kpi-label">NVIDIA FY2026<br>총 매출</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-val">4.6PF</span>
+        <span class="kpi-label">Ironwood<br>성능 (PetaFLOPS)</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-val">2.8×</span>
+        <span class="kpi-label">TPU 8t<br>가성비 향상</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-val">~80%</span>
+        <span class="kpi-label">NVIDIA AI 가속기<br>시장 점유율</span>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <div class="table-title">
+        <i class="ti ti-table" style="color:#E64A19;"></i>
+        세대별 항목 비교표 (2026년 기준)
+      </div>
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th class="th-label">비교 항목</th>
+            <th class="th-google">
+              🔵 Google TPU
+              <small>Ironwood (7세대) / Icefish (10세대 계획)</small>
+            </th>
+            <th class="th-nvidia">
+              🟢 NVIDIA GPU
+              <small>Blackwell B200/GB200 / Rubin (2026 H2)</small>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-label">현재 플래그십</td>
+            <td class="td-google">
+              <span class="b b-blue">Ironwood (TPU 7)</span><br>
+              <span style="font-size:0.63rem; color:#888; margin-top:3px; display:block;">8세대 8t/8i 출시 예정 (2026)</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="b b-green">Blackwell B200/GB200</span><br>
+              <span style="font-size:0.63rem; color:#888; margin-top:3px; display:block;">Rubin 램프업 지연 가능성</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-label">성능 (PetaFLOPS)</td>
+            <td class="td-google">
+              <span class="win">🏆</span>
+              <span class="b b-blue">≈4.6 PF</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="b b-green">≈4.0~5.0 PF</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-label">AI 추론 비용</td>
+            <td class="td-google">
+              <span class="win">🏆</span>
+              <span class="b b-gold">GPU 대비 최대 4× 저렴</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="b b-orange">상대적 고비용</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-label">소프트웨어 생태계</td>
+            <td class="td-google">
+              <span class="b b-red">XLA (제한적 오픈소스)</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="win">🏆</span>
+              <span class="b b-green">CUDA (업계 표준)</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-label">클러스터 확장성</td>
+            <td class="td-google">
+              <span class="win">🏆</span>
+              <span class="b b-blue">100만+ TPU 연결</span><br>
+              <span style="font-size:0.62rem; color:#888; display:block; margin-top:2px;">광학 스위칭 기술</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="b b-orange">랙스케일 분산 구성</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-label">주요 외부 고객</td>
+            <td class="td-google">
+              <span class="b b-blue">Anthropic · Meta · OpenAI(일부)</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="b b-green">Meta · MS · AWS · 거의 전 AI 기업</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-label">차세대 전략</td>
+            <td class="td-google">
+              <span class="b b-blue">Icefish (TPU 10세대)</span><br>
+              <span style="font-size:0.62rem; color:#888; display:block; margin-top:2px;">삼성+인텔+TSMC 멀티팹</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="b b-green">Vera Rubin (2026 H2)</span><br>
+              <span style="font-size:0.62rem; color:#888; display:block; margin-top:2px;">HBM4 기반 고대역폭</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-label">Rubin 램프업 리스크</td>
+            <td class="td-google">
+              <span class="b b-gray">해당 없음</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="b b-orange">Q3 2026 지연 우려</span><br>
+              <span style="font-size:0.62rem; color:#888; display:block; margin-top:2px;">TrendForce: 29%→22% 하향</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-label">중장기 위협 평가</td>
+            <td class="td-google">
+              <span class="b b-blue">↑ 추론 시장 구조적 성장</span>
+            </td>
+            <td class="td-nvidia">
+              <span class="b b-green">단기 지배 유지</span>
+              <span class="b b-orange" style="margin-left:4px;">중장기 압박</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ANALYSIS BOX -->
+    <div class="analysis-box">
+      <strong>📌 핵심 분석:</strong>
+      구글 TPU는 <strong>AI 추론(Inference) 비용에서 GPU 대비 최대 4배 우위</strong>로 특화 영역에서 강력하지만, <strong>CUDA 소프트웨어 생태계</strong>는 엔비디아의 가장 강력한 방어막입니다.
+      2028년 Icefish 양산이 본격화되면 구글 클라우드 내 추론 워크로드 중심으로 GPU 대체가 가속화될 전망입니다.
+      IDC는 추론이 2026년 이후 AI 컴퓨팅 수요의 <strong>75% 이상</strong>을 차지할 것으로 전망합니다.
+    </div>
+
+    <!-- FOOTER -->
+    <div class="wg-footer">
+      <i class="ti ti-info-circle"></i>
+      본 분석은 공개 자료 기반이며 투자 권유가 아닙니다. | Yahoo Finance, TechCrunch, io-fund, Lighthouse Canton, TrendForce (2026)
+    </div>
+
+  </div>
+</body>
+</html>
