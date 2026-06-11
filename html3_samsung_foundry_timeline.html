@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>삼성 파운드리 턴어라운드 타임라인 2022–2028</title>
+  <meta property="og:title" content="삼성 파운드리 턴어라운드 타임라인 2022–2028" />
+  <meta property="og:description" content="4nm 수율 부진에서 구글·테슬라 수주까지 — 삼성전자 파운드리 반등의 역사를 타임라인으로 정리합니다." />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/E8F5E9/1B5E20?text=Samsung+Foundry+Turnaround+2022-2028" />
+  <meta property="og:url" content="https://blog.example.com/samsung-foundry-turnaround-timeline" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #F0FBF4;
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      color: #1A2E1A;
+      padding: 20px 14px;
+    }
+    .widget {
+      max-width: 740px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px rgba(27, 94, 32, 0.12);
+      overflow: hidden;
+    }
+    /* ── HEADER ── */
+    .wg-header {
+      background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 60%, #43A047 100%);
+      padding: 22px 28px 18px;
+      color: #fff;
+    }
+    .eyebrow {
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wg-header h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .wg-header p { font-size: 0.74rem; opacity: 0.9; }
+    .source-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+    /* ── LEGEND ── */
+    .legend-bar {
+      background: #F1F8F1;
+      padding: 10px 24px;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #E0F0E0;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.68rem;
+      color: #546E7A;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-red    { background: #D32F2F; }
+    .dot-orange { background: #F57C00; }
+    .dot-yellow { background: #FBC02D; }
+    .dot-green  { background: #388E3C; }
+    .dot-blue   { background: #1565C0; }
+    /* ── TIMELINE ── */
+    .timeline-wrap {
+      padding: 24px 28px 20px 24px;
+      position: relative;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 52px;
+      top: 24px;
+      bottom: 20px;
+      width: 2px;
+      background: linear-gradient(to bottom, #D32F2F, #F57C00, #FBC02D, #388E3C, #388E3C, #1565C0, #1565C0, #1565C0);
+    }
+    .tl-entry {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .tl-entry:last-child { margin-bottom: 0; }
+    /* Date column */
+    .tl-date {
+      flex-shrink: 0;
+      width: 64px;
+      text-align: right;
+    }
+    .tl-year {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #37474F;
+      display: block;
+    }
+    .tl-quarter {
+      font-size: 0.6rem;
+      color: #90A4AE;
+      display: block;
+    }
+    /* Dot */
+    .tl-dot {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: #fff;
+      position: relative;
+      z-index: 2;
+    }
+    /* Phase colors */
+    .phase-struggle  { background: #D32F2F; }
+    .phase-struggle2 { background: #F57C00; }
+    .phase-pivot     { background: #FBC02D; }
+    .phase-pivot2    { background: #F9A825; }
+    .phase-recovery  { background: #43A047; }
+    .phase-recovery2 { background: #2E7D32; }
+    .phase-growth    { background: #1565C0; }
+    .phase-target    { background: #0D47A1; }
+    /* Content */
+    .tl-content {
+      flex: 1;
+      background: #FAFAFA;
+      border-radius: 10px;
+      padding: 12px 14px;
+      border-left: 3px solid transparent;
+    }
+    .tl-content.c-red    { border-color: #D32F2F; background: #FFF5F5; }
+    .tl-content.c-orange { border-color: #F57C00; background: #FFF8F0; }
+    .tl-content.c-yellow { border-color: #FBC02D; background: #FFFFF0; }
+    .tl-content.c-green  { border-color: #43A047; background: #F2FFF3; }
+    .tl-content.c-blue   { border-color: #1565C0; background: #F0F4FF; }
+    .tl-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .c-red    .tl-title { color: #B71C1C; }
+    .c-orange .tl-title { color: #E65100; }
+    .c-yellow .tl-title { color: #F57F17; }
+    .c-green  .tl-title { color: #1B5E20; }
+    .c-blue   .tl-title { color: #0D47A1; }
+    .tl-desc {
+      font-size: 0.69rem;
+      color: #546E7A;
+      line-height: 1.6;
+    }
+    .tl-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      margin-bottom: 5px;
+    }
+    .tag-red    { background: #FFEBEE; color: #C62828; }
+    .tag-orange { background: #FFF3E0; color: #E65100; }
+    .tag-yellow { background: #FFFDE7; color: #F57F17; }
+    .tag-green  { background: #E8F5E9; color: #2E7D32; }
+    .tag-blue   { background: #E8EAF6; color: #283593; }
+    /* ── KPI ROW ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 0 24px 20px;
+    }
+    .kpi-box {
+      background: #F8FFF8;
+      border: 1px solid #C8E6C9;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .kpi-v {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1B5E20;
+      display: block;
+    }
+    .kpi-l {
+      font-size: 0.62rem;
+      color: #78909C;
+      margin-top: 2px;
+    }
+    /* ── FOOTER ── */
+    .wg-footer {
+      padding: 11px 24px;
+      background: #F1F8F1;
+      border-top: 1px solid #C8E6C9;
+      font-size: 0.61rem;
+      color: #A5D6A7;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wg-footer span { color: #78909C; }
+  </style>
+</head>
+<body>
+  <div class="widget">
+
+    <!-- HEADER -->
+    <div class="wg-header">
+      <div class="eyebrow"><i class="ti ti-timeline"></i> Foundry Turnaround</div>
+      <h2>삼성 파운드리 턴어라운드 타임라인 2022–2028</h2>
+      <p>4nm 수율 위기에서 구글·테슬라 수주까지 — 반등의 6년 경로</p>
+      <span class="source-pill">
+        <i class="ti ti-database"></i>
+        Counterpoint Research · EBC Financial · GlobalEconomic · 테크월드 (2026)
+      </span>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend-bar">
+      <div class="legend-item"><span class="legend-dot dot-red"></span> 위기 (Struggle)</div>
+      <div class="legend-item"><span class="legend-dot dot-orange"></span> 전환 모색 (Pivot)</div>
+      <div class="legend-item"><span class="legend-dot dot-yellow"></span> 기반 구축 (Foundation)</div>
+      <div class="legend-item"><span class="legend-dot dot-green"></span> 반등 (Recovery)</div>
+      <div class="legend-item"><span class="legend-dot dot-blue"></span> 성장 목표 (Growth Target)</div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="timeline-wrap">
+      <div class="timeline-line"></div>
+
+      <!-- 2022 -->
+      <div class="tl-entry">
+        <div class="tl-date"><span class="tl-year">2022</span><span class="tl-quarter">연간</span></div>
+        <div class="tl-dot phase-struggle"><i class="ti ti-alert-triangle" style="font-size:0.6rem;"></i></div>
+        <div class="tl-content c-red">
+          <span class="tl-tag tag-red"><i class="ti ti-alert-triangle"></i> 위기</span>
+          <div class="tl-title">4nm 수율 30%대 — 파운드리 암흑기</div>
+          <div class="tl-desc">갤럭시 GOS 성능 조작 사건으로 수율 실태 노출. 퀄컴 등 주요 고객이 TSMC로 이탈 시작. 파운드리 신뢰도 급락.</div>
+        </div>
+      </div>
+
+      <!-- 2023 -->
+      <div class="tl-entry">
+        <div class="tl-date"><span class="tl-year">2023</span><span class="tl-quarter">연간</span></div>
+        <div class="tl-dot phase-struggle2"></div>
+        <div class="tl-content c-orange">
+          <span class="tl-tag tag-orange"><i class="ti ti-rotate-clockwise"></i> 전환 모색</span>
+          <div class="tl-title">3nm GAA 도입 — 기술 전환 난항</div>
+          <div class="tl-desc">3nm GAA(SF3E) 양산 시도했으나 수율 개선 지지부진. 고객 이탈 지속. 파운드리 사업부 적자 심화. 체질 개선 시작.</div>
+        </div>
+      </div>
+
+      <!-- 2024 -->
+      <div class="tl-entry">
+        <div class="tl-date"><span class="tl-year">2024</span><span class="tl-quarter">연간</span></div>
+        <div class="tl-dot phase-pivot"></div>
+        <div class="tl-content c-yellow">
+          <span class="tl-tag tag-yellow"><i class="ti ti-hammer"></i> 기반 구축</span>
+          <div class="tl-title">2nm SF2 개발 착수 · 파운드리 독립 가속화</div>
+          <div class="tl-desc">DS부문 체제 개편. 2nm GAA(SF2) 공정 기반 고객 유치 전략 수립. 미국 텍사스 테일러 팹 건설 지속. 전영현 부회장 DS부문장 취임.</div>
+        </div>
+      </div>
+
+      <!-- 2025 Q4 -->
+      <div class="tl-entry">
+        <div class="tl-date"><span class="tl-year">2025</span><span class="tl-quarter">Q4</span></div>
+        <div class="tl-dot phase-pivot2"></div>
+        <div class="tl-content c-yellow">
+          <span class="tl-tag tag-yellow"><i class="ti ti-cpu"></i> 기반 구축</span>
+          <div class="tl-title">2nm GAA(SF2) 양산 본격 개시</div>
+          <div class="tl-desc">엑시노스 2600, 마이크로BT 채굴 ASIC 등 SF2 초도 물량 양산 진입. 2nm 수율 안정화 작업 시작. HBM4 베이스 다이 4nm 공정 적용 성공.</div>
+        </div>
+      </div>
+
+      <!-- 2026 Q1 -->
+      <div class="tl-entry">
+        <div class="tl-date"><span class="tl-year">2026</span><span class="tl-quarter">Q1</span></div>
+        <div class="tl-dot phase-recovery"></div>
+        <div class="tl-content c-green">
+          <span class="tl-tag tag-green"><i class="ti ti-trending-up"></i> 반등</span>
+          <div class="tl-title">가동률 80% 돌파 · 수율 55~60% 진입</div>
+          <div class="tl-desc">평택 P2·P3 라인 가동률 1년 최고치 회복. 2nm SF2 수율 55~60% 보고. 퀄컴·AMD·구글 협상 테이블 가동. 2026년 흑자전환 목표 앞당김 (EBC, GlobalEconomic).</div>
+        </div>
+      </div>
+
+      <!-- 2026 Q2 -->
+      <div class="tl-entry">
+        <div class="tl-date"><span class="tl-year">2026</span><span class="tl-quarter">Q2</span></div>
+        <div class="tl-dot phase-recovery2"></div>
+        <div class="tl-content c-green">
+          <span class="tl-tag tag-green"><i class="ti ti-star"></i> 반등 가속</span>
+          <div class="tl-title">테슬라 $165억 수주 확정 · 구글 Icefish 협의 개시</div>
+          <div class="tl-desc">테슬라 AI6 칩 165억 달러 SF2 수주 확정 (2027년 H2 양산). 구글 Icefish 10세대 TPU I/O 다이 협의 보도 (The Information, 2026.06.11). AMD, 퀄컴과도 동시 협의.</div>
+        </div>
+      </div>
+
+      <!-- 2027 -->
+      <div class="tl-entry">
+        <div class="tl-date"><span class="tl-year">2027</span><span class="tl-quarter">목표</span></div>
+        <div class="tl-dot phase-growth"></div>
+        <div class="tl-content c-blue">
+          <span class="tl-tag tag-blue"><i class="ti ti-building-factory-2"></i> 성장 목표</span>
+          <div class="tl-title">텍사스 테일러 팹 풀가동 · 점유율 20% 도전</div>
+          <div class="tl-desc">미국 테일러 팹 2nm 양산 가동. 테슬라 AI5·AI6 동시 생산. 파운드리 점유율 20% 달성 목표. 엔비디아 제2 파운드리 파트너 가능성 거론.</div>
+        </div>
+      </div>
+
+      <!-- 2028 -->
+      <div class="tl-entry">
+        <div class="tl-date"><span class="tl-year">2028</span><span class="tl-quarter">목표</span></div>
+        <div class="tl-dot phase-target"></div>
+        <div class="tl-content c-blue">
+          <span class="tl-tag tag-blue"><i class="ti ti-rocket"></i> 성장 목표</span>
+          <div class="tl-title">구글 Icefish 양산 목표 · 글로벌 2위 굳히기</div>
+          <div class="tl-desc">구글 Icefish TPU 10세대 I/O 다이 양산 예정. Intel과 구글 TPU 300만 개 이상 공동 생산 협의. 삼성 파운드리 글로벌 점유율 2위 위치 공고화 목표.</div>
+        </div>
+      </div>
+
+    </div><!-- /.timeline-wrap -->
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi-box">
+        <span class="kpi-v">80%↑</span>
+        <span class="kpi-l">2026 Q1 가동률</span>
+      </div>
+      <div class="kpi-box">
+        <span class="kpi-v">55~60%</span>
+        <span class="kpi-l">2nm SF2 수율</span>
+      </div>
+      <div class="kpi-box">
+        <span class="kpi-v">$165억</span>
+        <span class="kpi-l">테슬라 수주 규모</span>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="wg-footer">
+      <i class="ti ti-info-circle"></i>
+      <span>Counterpoint Research · EBC Financial Group · 테크월드 · GlobalEconomic 보도 기반 / 투자 권유 아님</span>
+    </div>
+
+  </div>
+</body>
+</html>
