@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>삼성전자 주가 영향 분석 — 구글 Icefish 협의 보도 (2026.06.12)</title>
+  <meta property="og:title" content="삼성전자 주가 영향 분석 — 구글 Icefish 협의 (2026.06.12)" />
+  <meta property="og:description" content="구글의 차세대 AI 칩 'Icefish' 삼성 위탁 협의 보도가 6월 12일 삼성전자 주가에 미칠 영향을 상승·하락 요인 및 목표가 관점에서 분석합니다." />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/EDE7F6/4527A0?text=Samsung+Electronics+Stock+Analysis+2026.06.12" />
+  <meta property="og:url" content="https://blog.example.com/samsung-stock-google-icefish-june-12-2026" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #F3EEFF;
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      color: #1A1A2E;
+      padding: 20px 14px;
+    }
+    .widget {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px rgba(69, 39, 160, 0.13);
+      overflow: hidden;
+    }
+    /* ── HEADER ── */
+    .wg-header {
+      background: linear-gradient(135deg, #4527A0 0%, #5E35B1 60%, #7E57C2 100%);
+      padding: 22px 28px 18px;
+      color: #fff;
+    }
+    .eyebrow {
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wg-header h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .wg-header p { font-size: 0.74rem; opacity: 0.9; }
+    .source-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+    /* ── PRICE BAND ── */
+    .price-band {
+      background: linear-gradient(135deg, #EDE7F6, #D1C4E9);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .price-main {
+      flex: 1;
+      min-width: 200px;
+    }
+    .price-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #7E57C2;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .price-value {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #311B92;
+      line-height: 1;
+    }
+    .price-sub {
+      font-size: 0.72rem;
+      color: #7986CB;
+      margin-top: 3px;
+    }
+    .price-stats {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.6);
+      border-radius: 8px;
+      padding: 8px 12px;
+      text-align: center;
+      min-width: 90px;
+    }
+    .stat-v {
+      font-size: 0.9rem;
+      font-weight: 800;
+      display: block;
+    }
+    .stat-v.up { color: #C62828; }
+    .stat-v.dn { color: #1565C0; }
+    .stat-v.neutral { color: #37474F; }
+    .stat-l {
+      font-size: 0.6rem;
+      color: #78909C;
+      margin-top: 2px;
+    }
+    /* ── IMPACT SCORE ── */
+    .impact-row {
+      padding: 14px 24px;
+      background: #FAFAFA;
+      border-bottom: 1px solid #EDE7F6;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .impact-label {
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: #546E7A;
+    }
+    .impact-badge {
+      background: #E8F5E9;
+      color: #1B5E20;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 2px solid #A5D6A7;
+    }
+    .impact-desc {
+      font-size: 0.68rem;
+      color: #78909C;
+    }
+    /* ── FACTORS SECTION ── */
+    .factors-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .factor-col {
+      padding: 20px 18px;
+    }
+    .factor-col.bull {
+      background: #F9FFF9;
+      border-right: 1px solid #E8F5E9;
+    }
+    .factor-col.bear { background: #FFFBFB; }
+    .factor-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .factor-title.bull-t { color: #1B5E20; }
+    .factor-title.bear-t { color: #B71C1C; }
+    .factor-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.71rem;
+      line-height: 1.55;
+      color: #424242;
+    }
+    .factor-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.62rem;
+      color: #fff;
+      margin-top: 1px;
+    }
+    .fi-bull { background: #388E3C; }
+    .fi-bear { background: #C62828; }
+    .factor-text strong { font-weight: 700; }
+    /* ── TARGET BOX ── */
+    .target-section {
+      padding: 18px 24px;
+      background: #F8F4FF;
+      border-top: 1px solid #EDE7F6;
+    }
+    .target-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #4527A0;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .target-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .tg-box {
+      background: #fff;
+      border: 1px solid #D1C4E9;
+      border-radius: 10px;
+      padding: 11px 10px;
+      text-align: center;
+    }
+    .tg-v {
+      font-size: 1rem;
+      font-weight: 800;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .tg-v.cur { color: #4527A0; }
+    .tg-v.res { color: #1B5E20; }
+    .tg-v.avg { color: #E65100; }
+    .tg-l {
+      font-size: 0.6rem;
+      color: #90A4AE;
+    }
+    /* Spectrum bar */
+    .spectrum-wrap {
+      margin-bottom: 6px;
+    }
+    .spectrum-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.62rem;
+      color: #90A4AE;
+      margin-bottom: 4px;
+    }
+    .spectrum-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: linear-gradient(to right, #D32F2F 0%, #FBC02D 50%, #388E3C 100%);
+      position: relative;
+    }
+    .spectrum-marker {
+      position: absolute;
+      top: -4px;
+      width: 18px;
+      height: 18px;
+      background: #311B92;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transform: translateX(-50%);
+    }
+    /* ── ANALYST ROW ── */
+    .analyst-row {
+      padding: 12px 24px;
+      background: #FFF8E1;
+      border-top: 1px solid #FFE082;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .analyst-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #795548;
+    }
+    .analyst-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+    .analyst-badge.sell {
+      background: #FCE8E6;
+      color: #C62828;
+    }
+    .analyst-tp {
+      font-size: 0.68rem;
+      color: #795548;
+    }
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      margin: 0 24px 20px;
+      background: #FFF9C4;
+      border: 1px solid #F9A825;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.66rem;
+      color: #5D4037;
+      line-height: 1.55;
+      display: flex;
+      gap: 7px;
+    }
+    /* ── FOOTER ── */
+    .wg-footer {
+      padding: 10px 24px;
+      background: #F3EEFF;
+      border-top: 1px solid #EDE7F6;
+      font-size: 0.61rem;
+      color: #B0BEC5;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    /* Responsive */
+    @media (max-width: 520px) {
+      .factors-section { grid-template-columns: 1fr; }
+      .factor-col.bull { border-right: none; border-bottom: 1px solid #E8F5E9; }
+      .target-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+
+    <!-- HEADER -->
+    <div class="wg-header">
+      <div class="eyebrow"><i class="ti ti-chart-candle"></i> Stock Impact Analysis</div>
+      <h2>삼성전자 주가 영향 분석 — 구글 Icefish 협의 보도</h2>
+      <p>2026년 6월 12일 한국 시장 개장 시 영향 전망</p>
+      <span class="source-pill">
+        <i class="ti ti-coins"></i>
+        Investing.com · Naver Finance · The Information (2026.06.11~12)
+      </span>
+    </div>
+
+    <!-- PRICE BAND -->
+    <div class="price-band">
+      <div class="price-main">
+        <div class="price-label">삼성전자 (005930) — 전일 종가</div>
+        <div class="price-value">299,000<span style="font-size:1.1rem;">원</span></div>
+        <div class="price-sub">2026.06.11 · KOSPI 7,744.06</div>
+      </div>
+      <div class="price-stats">
+        <div class="stat-box">
+          <span class="stat-v dn">-1.16%</span>
+          <span class="stat-l">전일 등락</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-v neutral">302,500</span>
+          <span class="stat-l">06.10 종가</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-v neutral">274,603</span>
+          <span class="stat-l">애널 평균<br>목표가</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPACT SCORE -->
+    <div class="impact-row">
+      <div class="impact-label">뉴스 주가 영향 전망</div>
+      <div class="impact-badge">📈 단기 상승 모멘텀</div>
+      <div class="impact-desc">예상 변동폭 <strong>+1.5% ~ +3.5%</strong> | 저항선 307,000~309,000원</div>
+    </div>
+
+    <!-- FACTORS -->
+    <div class="factors-section">
+
+      <!-- BULLISH FACTORS -->
+      <div class="factor-col bull">
+        <div class="factor-title bull-t">
+          <i class="ti ti-trending-up" style="font-size:1rem;"></i>
+          상승 촉매 요인 (5)
+        </div>
+
+        <div class="factor-item">
+          <div class="factor-icon fi-bull"><i class="ti ti-check"></i></div>
+          <div class="factor-text"><strong>구글 빅테크의 기술 공식 검토</strong><br>2nm SF2 기술력 신뢰도 재확인</div>
+        </div>
+        <div class="factor-item">
+          <div class="factor-icon fi-bull"><i class="ti ti-check"></i></div>
+          <div class="factor-text"><strong>수주 확대 서사 강화</strong><br>테슬라→AMD→구글로 이어지는 빅테크 수주 스토리</div>
+        </div>
+        <div class="factor-item">
+          <div class="factor-icon fi-bull"><i class="ti ti-check"></i></div>
+          <div class="factor-text"><strong>HBM·패키징 연계 기대</strong><br>메모리 I/O 다이 = HBM 기술 수요 연계</div>
+        </div>
+        <div class="factor-item">
+          <div class="factor-icon fi-bull"><i class="ti ti-check"></i></div>
+          <div class="factor-text"><strong>TSMC 대체재 프리미엄</strong><br>TSMC 용량 부족→삼성 파운드리 가치 상승</div>
+        </div>
+        <div class="factor-item">
+          <div class="factor-icon fi-bull"><i class="ti ti-check"></i></div>
+          <div class="factor-text"><strong>기술적 반등 여지</strong><br>6월 10~11일 누적 -7.2% 과매도 구간</div>
+        </div>
+      </div>
+
+      <!-- BEARISH FACTORS -->
+      <div class="factor-col bear">
+        <div class="factor-title bear-t">
+          <i class="ti ti-trending-down" style="font-size:1rem;"></i>
+          하락 위험 요인 (4)
+        </div>
+
+        <div class="factor-item">
+          <div class="factor-icon fi-bear"><i class="ti ti-x"></i></div>
+          <div class="factor-text"><strong>아직 협의 단계</strong><br>계약 미확정 · 단독 보도 의존 · 불확실성 존재</div>
+        </div>
+        <div class="factor-item">
+          <div class="factor-icon fi-bear"><i class="ti ti-x"></i></div>
+          <div class="factor-text"><strong>삼성 역할은 보조적</strong><br>주 프로세서는 TSMC · I/O 다이만 담당</div>
+        </div>
+        <div class="factor-item">
+          <div class="factor-icon fi-bear"><i class="ti ti-x"></i></div>
+          <div class="factor-text"><strong>2028년까지 실적 기여 없음</strong><br>단기 실적에 직접 반영 불가 · 테마성 상승 한계</div>
+        </div>
+        <div class="factor-item">
+          <div class="factor-icon fi-bear"><i class="ti ti-x"></i></div>
+          <div class="factor-text"><strong>갭업 후 차익실현 매물</strong><br>단기 급등 시 기관·외인 매도 가능성</div>
+        </div>
+      </div>
+
+    </div><!-- /.factors-section -->
+
+    <!-- TARGET SECTION -->
+    <div class="target-section">
+      <div class="target-title">
+        <i class="ti ti-target" style="color:#4527A0;"></i>
+        단기 목표가 및 시나리오 분석
+      </div>
+      <div class="target-grid">
+        <div class="tg-box">
+          <span class="tg-v cur">299,000원</span>
+          <span class="tg-l">전일 종가 기준</span>
+        </div>
+        <div class="tg-box">
+          <span class="tg-v res">307,000~<br>309,000원</span>
+          <span class="tg-l">단기 저항선 예상</span>
+        </div>
+        <div class="tg-box">
+          <span class="tg-v avg">274,603원</span>
+          <span class="tg-l">애널리스트 평균<br>12개월 목표가</span>
+        </div>
+      </div>
+      <!-- Sentiment Spectrum -->
+      <div class="spectrum-wrap">
+        <div class="spectrum-label">
+          <span>매도 압력 ↑</span>
+          <span>중립</span>
+          <span>↑ 매수 우위</span>
+        </div>
+        <div class="spectrum-bar">
+          <!-- 현재 센티먼트 위치: 약 68% (bullish 우위) -->
+          <div class="spectrum-marker" style="left: 68%;"></div>
+        </div>
+      </div>
+      <div style="font-size:0.63rem; color:#78909C; margin-top:6px;">
+        센티먼트 위치: 단기 매수 우위 구간 (협의 뉴스 상승 모멘텀 반영)
+      </div>
+    </div>
+
+    <!-- ANALYST ROW -->
+    <div class="analyst-row">
+      <div class="analyst-label">📊 애널리스트 컨센서스 (Investing.com 기준)</div>
+      <span class="analyst-badge">매수 36명</span>
+      <span class="analyst-badge sell">매도 1명</span>
+      <span class="analyst-tp">평균 목표가: 274,603원 | 상단 360,000원 / 하단 140,000원</span>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer">
+      <i class="ti ti-alert-triangle" style="font-size:1rem; color:#F9A825; flex-shrink:0; margin-top:2px;"></i>
+      <span><strong>⚠️ 투자 유의사항:</strong> 본 분석은 정보 제공 목적이며 투자 권유가 아닙니다. 주가는 다양한 외부 변수에 영향을 받으며 예측이 틀릴 수 있습니다. 투자에 따른 모든 손익의 책임은 투자자 본인에게 있습니다. 본 내용을 투자 결정의 유일한 근거로 삼지 마세요.</span>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="wg-footer">
+      <i class="ti ti-info-circle"></i>
+      Investing.com · Naver Finance · The Information · Reuters 기반 분석 | 2026.06.12
+    </div>
+
+  </div>
+</body>
+</html>
