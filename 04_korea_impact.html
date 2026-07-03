@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>메타發 충격파, 국내 증시 영향 리포트</title>
+
+<meta property="og:title" content="메타發 충격파 - 삼성전자·SK하이닉스 국내 증시 영향 리포트" />
+<meta property="og:description" content="코스피 7.89% 급락, 국내 5대 증권사가 진단한 메타 클라우드 사업의 반도체 섹터 영향" />
+<meta property="og:image" content="썸네일 이미지 URL" />
+<meta property="og:url" content="페이지 URL" />
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif; background:#F5F6FA; color:#151C33; padding:28px 16px 36px; line-height:1.55; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  .eyebrow { display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; letter-spacing:.04em;
+    color:#B5342F; background:#FCEAEA; border:1px solid #F3CCC8; padding:5px 12px; border-radius:999px; margin-bottom:14px; }
+  h1 { font-size:25px; font-weight:800; letter-spacing:-0.02em; color:#10162B; margin-bottom:6px; }
+  .subhead { font-size:14px; color:#5B6478; font-weight:500; margin-bottom:22px; }
+
+  .hero-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:8px; }
+  @media (max-width:680px){ .hero-grid{ grid-template-columns:repeat(2,1fr); } }
+  .stat-card { background:#FFFFFF; border:1px solid #E1E4EE; border-radius:14px; padding:15px 13px; }
+  .stat-label { font-size:11.5px; color:#5B6478; font-weight:600; margin-bottom:7px; }
+  .stat-value { font-family:'Roboto Mono',monospace; font-size:20px; font-weight:800; color:#B5342F; letter-spacing:-0.02em; }
+  .stat-sub { font-size:11px; color:#8489A3; font-weight:600; margin-top:4px; }
+  .stat-down .stat-value { color: #B5342F; } /* 국내 관행: 하락은 파란색이 맞으나 본 위젯에서는 급락 강조를 위해 경고색(적)을 통일 사용 — 하단 범례 참고 */
+
+  .legend { font-size:11px; color:#8489A3; margin:2px 0 20px; display:flex; align-items:center; gap:6px; }
+  .legend .box { width:9px; height:9px; border-radius:2px; background:#B5342F; display:inline-block; }
+
+  .sec-title { font-size:15px; font-weight:800; color:#10162B; margin:22px 0 12px; display:flex; align-items:center; gap:7px; }
+  .sec-title i { color:#2F5FC4; font-size:17px; }
+
+  .flow-strip { display:flex; gap:10px; margin-bottom:8px; }
+  @media (max-width:600px){ .flow-strip{ flex-direction:column; } }
+  .flow-card { flex:1; background:#EAF0FC; border:1px solid #C9D8F5; border-radius:12px; padding:13px 15px; }
+  .flow-num { font-family:'Roboto Mono',monospace; font-size:18px; font-weight:800; color:#2F5FC4; }
+  .flow-label { font-size:11.5px; color:#4A5B85; font-weight:600; margin-top:3px; }
+
+  /* analyst quote table */
+  .quote-list { display:flex; flex-direction:column; gap:8px; }
+  .quote-card { background:#FFFFFF; border:1px solid #E1E4EE; border-radius:12px; padding:13px 15px; display:flex; gap:12px; }
+  .quote-firm { flex-shrink:0; width:92px; }
+  .firm-name { font-size:12.5px; font-weight:800; color:#10162B; }
+  .firm-analyst { font-size:11px; color:#8489A3; margin-top:2px; }
+  .quote-body { font-size:12.5px; color:#3A425C; line-height:1.6; border-left:2px solid #E1E4EE; padding-left:12px; }
+  .quote-tag { display:inline-block; font-size:10px; font-weight:800; padding:2px 7px; border-radius:5px; margin-bottom:5px; }
+  .quote-tag.bull { background:#FCEAEA; color:#B5342F; }
+  .quote-tag.bear { background:#EAF0FC; color:#2F5FC4; }
+
+  /* calendar */
+  .cal-row { display:flex; align-items:center; gap:12px; background:#FFFFFF; border:1px solid #E1E4EE; border-radius:10px; padding:10px 14px; margin-bottom:7px; }
+  .cal-date { font-family:'Roboto Mono',monospace; font-size:12.5px; font-weight:800; color:#2F3E9E; width:70px; flex-shrink:0; }
+  .cal-desc { font-size:12.5px; color:#3A425C; }
+
+  .footnote-tiny { font-size:11px; color:#8489A3; margin:8px 0 6px; line-height:1.6; }
+  .src-footer { margin-top:22px; padding-top:14px; border-top:1px dashed #D5D9E5; font-size:11.5px; color:#8489A3; line-height:1.7; }
+  .src-footer b { color:#5B6478; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="eyebrow"><i class="ti ti-alert-octagon"></i>META 심층분석 · 04</span>
+  <h1>메타發 충격파, 국내 증시는 왜 흔들렸나</h1>
+  <div class="subhead">2026년 7월 2일(목) 코스피 하루 낙폭 기준 올해 최대 — 원인과 증권가 시각을 정리했습니다</div>
+
+  <div class="hero-grid">
+    <div class="stat-card stat-down">
+      <div class="stat-label">코스피</div>
+      <div class="stat-value">▼ 7.89%</div>
+      <div class="stat-sub">7,648.09 마감 (-655.32p)</div>
+    </div>
+    <div class="stat-card stat-down">
+      <div class="stat-label">코스닥</div>
+      <div class="stat-value">▼ 6.74%</div>
+      <div class="stat-sub">866.72 마감 (-62.63p)</div>
+    </div>
+    <div class="stat-card stat-down">
+      <div class="stat-label">삼성전자</div>
+      <div class="stat-value">▼ 9.06%</div>
+      <div class="stat-sub">286,000원 마감</div>
+    </div>
+    <div class="stat-card stat-down">
+      <div class="stat-label">SK하이닉스</div>
+      <div class="stat-value">▼ 14.57%</div>
+      <div class="stat-sub">2,187,000원 마감</div>
+    </div>
+  </div>
+  <div class="legend"><span class="box"></span>국내 관행상 하락은 파란색으로 표기하나, 본 위젯은 낙폭의 심각성을 강조하기 위해 경고색(적색)으로 통일 표기했습니다.</div>
+
+  <div class="sec-title"><i class="ti ti-arrows-left-right"></i>수급 동향 (2026.07.02, 코스피+코스닥 합산)</div>
+  <div class="flow-strip">
+    <div class="flow-card">
+      <div class="flow-num">−4.41조원</div>
+      <div class="flow-label">외국인 순매도 · 10거래일 연속 매도 우위</div>
+    </div>
+    <div class="flow-card">
+      <div class="flow-num">SK하이닉스 최대</div>
+      <div class="flow-label">외국인 순매도 상위 1위(약 1.66조원), 2위 삼성전자(약 1.47조원)</div>
+    </div>
+  </div>
+
+  <div class="sec-title"><i class="ti ti-message-2"></i>국내 5대 증권사, 이렇게 진단했다</div>
+  <div class="quote-list">
+    <div class="quote-card">
+      <div class="quote-firm"><div class="firm-name">하나증권</div><div class="firm-analyst">강재구 연구원</div></div>
+      <div class="quote-body"><span class="quote-tag bull">긍정적 해석</span>&quot;수요 둔화가 아니라, 대규모 인프라를 활용해 새로운 독점적 수익을 창출하려는 영리한 전략&quot;</div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-firm"><div class="firm-name">삼성증권</div><div class="firm-analyst">문준호 연구원</div></div>
+      <div class="quote-body"><span class="quote-tag bull">긍정적 해석</span>&quot;유휴 캐파가 존재한다는 해석은 오해. 단기 임대로 추가수익을 추구하는 건 합리적이며 AI CapEx의 ROI를 개선시키는 전략&quot;</div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-firm"><div class="firm-name">미래에셋증권</div><div class="firm-analyst">김성근 연구원</div></div>
+      <div class="quote-body"><span class="quote-tag bull">영향 제한적</span>&quot;빅테크 CapEx 수혜 분야엔 부정적일 수 있으나, 본업이 클라우드인 구글·아마존·MS·오라클의 투자 계획엔 영향 제한적&quot;</div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-firm"><div class="firm-name">키움증권</div><div class="firm-analyst">한지영 연구원</div></div>
+      <div class="quote-body"><span class="quote-tag bear">경계론</span>&quot;메타가 컴퓨팅 파워의 &#39;구매자&#39;에서 &#39;판매자&#39;로 바뀔 수 있다는 해석 자체가 시장 불안을 키운 요인&quot;</div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-firm"><div class="firm-name">미래에셋증권</div><div class="firm-analyst">서상영 연구원</div></div>
+      <div class="quote-body"><span class="quote-tag bear">경계론</span>&quot;빅테크 과잉투자 논란과 반도체 수요 피크아웃 가능성을 동시에 자극한 이벤트&quot;</div>
+    </div>
+  </div>
+  <div class="footnote-tiny">※ 5개 증권사 의견이 정확히 반으로 갈렸다는 점 자체가, 이번 사안의 해석이 아직 시장 컨센서스로 수렴되지 않았음을 보여줍니다.</div>
+
+  <div class="sec-title"><i class="ti ti-calendar-event"></i>다음 관전 포인트</div>
+  <div class="cal-row"><div class="cal-date">07.07(화)</div><div class="cal-desc">삼성전자 2분기 잠정실적 발표</div></div>
+  <div class="cal-row"><div class="cal-date">07.10(금)</div><div class="cal-desc">SK하이닉스 미국 ADR 상장</div></div>
+  <div class="cal-row"><div class="cal-date">07.29(수)</div><div class="cal-desc">SK하이닉스 2분기 확정실적 발표</div></div>
+  <div class="cal-row"><div class="cal-date">7월 말</div><div class="cal-desc">메타·MS·구글·아마존 2분기 실적 및 하반기 CapEx 코멘트 발표</div></div>
+
+  <div class="src-footer">
+    <b>자료 출처</b> · 한국거래소, 서울경제(2026.07.02), 헤럴드경제(2026.07.02), 아주경제(2026.07.02), 이슈밸리(2026.07.02), 톱스타뉴스(2026.07.02), EBN(2026.07.02) — 국내 증권사 리서치 코멘트는 각 사가 언론 인터뷰를 통해 공개한 발언을 재인용한 것입니다.<br>
+    최종 확인 2026.07.03 · 개별 종목 언급은 정보 제공 목적이며 매수·매도 추천이 아닙니다.
+  </div>
+
+</div>
+</body>
+</html>
