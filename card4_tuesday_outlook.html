@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>화요일 코스피 체크포인트 & 이번 주 캘린더</title>
+
+<meta property="og:title" content="화요일(7월 7일) 코스피 체크포인트 - 이번 주 캘린더와 3대 리스크 요인" />
+<meta property="og:description" content="삼성전자 실적 발표일, SK하이닉스 ADR 상장일과 함께 화요일 코스피를 좌우할 체크포인트를 정리했습니다." />
+<meta property="og:image" content="https://your-blog-domain.com/images/tuesday-outlook-thumbnail.png" />
+<meta property="og:url" content="https://your-blog-domain.com/tuesday-kospi-checkpoint" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  .two-card * { box-sizing: border-box; }
+  .two-card {
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+    max-width:720px; margin:24px auto; background:#FFF8F5; border-radius:22px; overflow:hidden;
+    border:1px solid #F7DCCB; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 12px 32px rgba(120,45,10,0.10);
+    color:#3A1C0B;
+  }
+  .two-head { position:relative; padding:28px 28px 26px;
+    background:linear-gradient(135deg,#7C2D12 0%,#C2410C 55%,#F0640F 100%); color:#FFF1E8; }
+  .two-head::after { content:""; position:absolute; left:-50px; bottom:-70px; width:220px; height:220px;
+    border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%); }
+  .two-eyebrow { display:inline-flex; align-items:center; gap:6px; font-size:12px; letter-spacing:0.14em;
+    font-weight:700; text-transform:uppercase; color:#FFD7BE; background:rgba(255,255,255,0.12);
+    padding:5px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.25); }
+  .two-title { margin:16px 0 6px; font-size:24px; font-weight:800; line-height:1.35; letter-spacing:-0.01em; }
+  .two-sub { font-size:13.5px; color:#FFDCC7; font-weight:500; }
+
+  .two-body { padding:24px 26px 8px; }
+  .two-section-label { font-size:12.5px; font-weight:800; color:#C2410C; text-transform:uppercase; letter-spacing:0.08em;
+    display:flex; align-items:center; gap:6px; margin-bottom:14px; }
+
+  .two-week { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:6px; }
+  .two-day { background:#FFFFFF; border:1px solid #F7DCCB; border-radius:14px; padding:10px 8px; text-align:center; position:relative; }
+  .two-day.active { background:#FFF1E8; border:2px solid #C2410C; }
+  .two-day .dow { font-size:10px; font-weight:700; color:#B37256; text-transform:uppercase; }
+  .two-day .dnum { font-family:'JetBrains Mono','Roboto Mono',monospace; font-size:16px; font-weight:800; color:#7C2D12; margin:2px 0; }
+  .two-day .devt { font-size:10.5px; color:#7C2D12; font-weight:600; line-height:1.35; min-height:28px; }
+  .two-day .dpin { position:absolute; top:-8px; right:-6px; background:#C2410C; color:#fff; font-size:9px; font-weight:800;
+    padding:2px 6px; border-radius:999px; }
+
+  .two-divider { height:1px; background:#F7DCCB; margin:20px 0; }
+
+  .two-scenario { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+  .two-scen-item { display:flex; gap:12px; background:#FFFFFF; border:1px solid #F7DCCB; border-radius:14px; padding:13px 14px; align-items:flex-start; }
+  .two-scen-icon { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:17px; color:#fff; }
+  .two-scen-icon.up { background:#D92D20; }
+  .two-scen-icon.mid { background:#B45309; }
+  .two-scen-icon.down { background:#1570EF; }
+  .two-scen-txt b { display:block; font-size:13.5px; color:#3A1C0B; margin-bottom:2px; }
+  .two-scen-txt span { font-size:12.5px; color:#8A5A3E; line-height:1.55; }
+
+  .two-risk { display:grid; grid-template-columns:1fr; gap:10px; }
+  .two-risk-item { display:flex; gap:10px; background:#FFF1E8; border:1px solid #F5C9A8; border-radius:14px; padding:12px 14px; }
+  .two-risk-num { font-family:'JetBrains Mono','Roboto Mono',monospace; font-weight:800; color:#C2410C; font-size:14px; flex-shrink:0; }
+  .two-risk-txt b { display:block; font-size:13px; color:#7C2D12; margin-bottom:2px; }
+  .two-risk-txt span { font-size:12px; color:#8A5A3E; line-height:1.55; }
+
+  .two-jpm { margin-top:16px; background:#FFFFFF; border:1px dashed #C2410C; border-radius:14px; padding:14px 16px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  .two-jpm-lbl { font-size:12px; font-weight:700; color:#B37256; text-transform:uppercase; }
+  .two-jpm-vals { display:flex; gap:14px; }
+  .two-jpm-vals div { text-align:center; }
+  .two-jpm-vals b { display:block; font-family:'JetBrains Mono','Roboto Mono',monospace; font-size:16px; color:#7C2D12; }
+  .two-jpm-vals span { font-size:10px; color:#B37256; font-weight:700; }
+
+  .two-foot { padding:18px 26px 24px; font-size:11.5px; color:#B37256; line-height:1.6;
+    border-top:1px solid #F7DCCB; margin-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+  @media (max-width:560px) {
+    .two-week { grid-template-columns:repeat(5,1fr); gap:5px; }
+    .two-day { padding:7px 3px; }
+    .two-day .devt { font-size:9px; min-height:32px; }
+    .two-title { font-size:19px; }
+    .two-body, .two-foot { padding-left:18px; padding-right:18px; }
+    .two-jpm { flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="two-card">
+  <div class="two-head">
+    <span class="two-eyebrow"><i class="ti ti-calendar-week"></i>&nbsp;THIS WEEK · KOSPI CHECKPOINT</span>
+    <div class="two-title">화요일(7월 7일), 코스피는<br/>무엇을 보고 움직일까요?</div>
+    <div class="two-sub">삼성전자 실적 발표일 기준 이번 주 캘린더 &amp; 체크포인트</div>
+  </div>
+
+  <div class="two-body">
+    <div class="two-section-label"><i class="ti ti-calendar-week"></i>&nbsp;이번 주 캘린더</div>
+    <div class="two-week">
+      <div class="two-day">
+        <div class="dow">MON</div><div class="dnum">7.6</div>
+        <div class="devt">코스피 8051 마감</div>
+      </div>
+      <div class="two-day active">
+        <div class="dpin">오늘</div>
+        <div class="dow">TUE</div><div class="dnum">7.7</div>
+        <div class="devt">삼성전자<br/>잠정실적</div>
+      </div>
+      <div class="two-day">
+        <div class="dow">WED</div><div class="dnum">7.8</div>
+        <div class="devt">실적 후폭풍<br/>확인 구간</div>
+      </div>
+      <div class="two-day">
+        <div class="dow">THU</div><div class="dnum">7.9</div>
+        <div class="devt">-</div>
+      </div>
+      <div class="two-day">
+        <div class="dow">FRI</div><div class="dnum">7.10</div>
+        <div class="devt">SK하이닉스<br/>나스닥 상장(목표)</div>
+      </div>
+    </div>
+
+    <div class="two-divider"></div>
+
+    <div class="two-section-label"><i class="ti ti-git-branch"></i>&nbsp;삼성전자 실적, 3가지 시나리오</div>
+    <div class="two-scenario">
+      <div class="two-scen-item">
+        <div class="two-scen-icon up"><i class="ti ti-trending-up"></i></div>
+        <div class="two-scen-txt"><b>컨센서스 상회 (85.6조원 이상)</b><span>메모리 업황 강세 재확인 → 저가 매수 전환 촉매 기대</span></div>
+      </div>
+      <div class="two-scen-item">
+        <div class="two-scen-icon mid"><i class="ti ti-arrows-horizontal"></i></div>
+        <div class="two-scen-txt"><b>컨센서스 부합</b><span>기대감 선반영 → '소문에 사고 뉴스에 팔아라' 단기 차익실현 가능성</span></div>
+      </div>
+      <div class="two-scen-item">
+        <div class="two-scen-icon down"><i class="ti ti-trending-down"></i></div>
+        <div class="two-scen-txt"><b>컨센서스 하회</b><span>성과급 충당금 등 일회성 비용 반영 시 → 단기 변동성 확대 가능</span></div>
+      </div>
+    </div>
+
+    <div class="two-divider"></div>
+
+    <div class="two-section-label"><i class="ti ti-alert-triangle"></i>&nbsp;함께 살펴야 할 3대 리스크</div>
+    <div class="two-risk">
+      <div class="two-risk-item">
+        <div class="two-risk-num">01</div>
+        <div class="two-risk-txt"><b>美 대중(對中) 반도체 수출통제</b><span>4월 삼성전자·SK하이닉스 中공장 'VEU' 지위 철회, 美하원 규제법안 22건 통과</span></div>
+      </div>
+      <div class="two-risk-item">
+        <div class="two-risk-num">02</div>
+        <div class="two-risk-txt"><b>애플의 중국산 메모리 조달 검토설</b><span>CXMT·YMTC發 조달 검토 보도, 최종 결정 여부는 미확인</span></div>
+      </div>
+      <div class="two-risk-item">
+        <div class="two-risk-num">03</div>
+        <div class="two-risk-txt"><b>AI 투자 고점 논란</b><span>6월 23일 코스피 -9.99% 급락 전례, BofA "과도한 프로스" 경계론</span></div>
+      </div>
+    </div>
+
+    <div class="two-jpm">
+      <div class="two-jpm-lbl"><i class="ti ti-building-bank"></i> JP모건 12개월 코스피 전망</div>
+      <div class="two-jpm-vals">
+        <div><b>8,000</b><span>약세</span></div>
+        <div><b>12,500</b><span>기본</span></div>
+        <div><b>15,000</b><span>강세</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-foot">
+    <span>자료: 대신증권·KIEP·전자신문·이투데이·JP모건 종합</span>
+    <span>2026.07.06 기준 · 투자 참고용, 매수·매도 추천 아님</span>
+  </div>
+</div>
+
+</body>
+</html>
