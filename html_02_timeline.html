@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7일간의 롤러코스터 — 코스피·삼성전자·SK하이닉스 타임라인</title>
+<meta property="og:title" content="7일간의 롤러코스터: 코스피·삼성전자·SK하이닉스 타임라인 (7/2~7/9)" />
+<meta property="og:description" content="메타 쇼크부터 검은 수요일, SK하이닉스 ADR 흥행까지. 일주일간 무슨 일이 있었는지 날짜별로 정리했습니다." />
+<meta property="og:image" content="https://example.com/images/thumbnail-kospi-timeline.png" />
+<meta property="og:url" content="https://example.com/blog/meta-canada-bofa-openai-ai-bubble" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #F6F7FB;
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    color: #16213E;
+    padding: 28px 16px 40px;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  .head { margin-bottom: 6px; }
+  .head-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #C08A2E;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .head-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 700;
+    font-size: 23px;
+    letter-spacing: -0.02em;
+  }
+  .head-desc {
+    font-size: 13px;
+    color: #7A8296;
+    margin-top: 8px;
+    margin-bottom: 26px;
+    line-height: 1.6;
+  }
+
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, #D64545, #2563C7 45%, #16213E 55%, #2563C7 78%, #D64545);
+    opacity: 0.35;
+  }
+
+  .item { position: relative; padding-bottom: 26px; }
+  .item:last-child { padding-bottom: 0; }
+
+  .dot {
+    position: absolute;
+    left: -30px; top: 3px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #16213E;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .dot.up { border-color: #D64545; }
+  .dot.down { border-color: #2563C7; }
+  .dot.event { border-color: #C08A2E; }
+  .dot i { font-size: 9px; }
+  .dot.up i { color: #D64545; }
+  .dot.down i { color: #2563C7; }
+  .dot.event i { color: #C08A2E; }
+
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E2E5ED;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .row-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .date-tag {
+    font-size: 12px;
+    font-weight: 700;
+    color: #16213E;
+    background: #EEF0F6;
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+  .day-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 100px;
+  }
+  .day-badge.today { background: #16213E; color: #fff; }
+  .day-badge.crash { background: #FCEBEA; color: #B23A2E; }
+  .day-badge.rebound { background: #FCEBEA; color: #B23A2E; }
+  .day-badge.neutral { background: #F1EADA; color: #8A6A15; }
+
+  .headline {
+    font-size: 15px;
+    font-weight: 700;
+    color: #16213E;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .stat-chip {
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip.r { background: #FDEDEC; color: #C0392B; }
+  .stat-chip.b { background: #EAF1FC; color: #2054B0; }
+  .stat-chip.n { background: #F3F4F8; color: #4B5468; }
+
+  .desc {
+    font-size: 12.5px;
+    color: #5B6478;
+    line-height: 1.6;
+  }
+  .desc b { color: #16213E; }
+
+  .foot-note {
+    margin-top: 18px;
+    font-size: 11px;
+    color: #A2A8B8;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="head">
+      <div class="head-eyebrow">Timeline · 2026.07.02 – 07.09</div>
+      <div class="head-title">7일간의 롤러코스터</div>
+    </div>
+    <div class="head-desc">메타 쇼크로 시작해 검은 수요일을 거쳐 SK하이닉스 ADR 흥행까지 — 하루하루 무엇이 지수를 움직였는지 정리했습니다.</div>
+
+    <div class="timeline">
+
+      <div class="item">
+        <div class="dot down"><i class="ti ti-point-filled"></i></div>
+        <div class="card">
+          <div class="row-top">
+            <span class="date-tag">7.2 (목)</span>
+            <span class="day-badge crash">메타 쇼크</span>
+          </div>
+          <div class="headline">메타 '클라우드 진출' 소식에 반도체주 폭락</div>
+          <div class="stat-row">
+            <span class="stat-chip b">코스피 -7.89%</span>
+            <span class="stat-chip b">삼성전자 -9.06%</span>
+            <span class="stat-chip b">SK하이닉스 -14.57%</span>
+          </div>
+          <div class="desc">코스피 시총 <b>534조원</b> 하루 만에 증발. SK하이닉스는 <b>17년 만의 최대 낙폭</b>(2008년 금융위기 -12.73%도 넘어섬). 매도 사이드카 발동.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="dot up"><i class="ti ti-point-filled"></i></div>
+        <div class="card">
+          <div class="row-top">
+            <span class="date-tag">7.3 (금)</span>
+            <span class="day-badge rebound">즉각 반등</span>
+          </div>
+          <div class="headline">앤트로픽-삼성 파운드리 협력설에 낙폭 대부분 회복</div>
+          <div class="stat-row">
+            <span class="stat-chip r">삼성전자 +8.22%</span>
+            <span class="stat-chip r">SK하이닉스 +10.88%</span>
+          </div>
+          <div class="desc">앤트로픽이 삼성 2나노 공정·첨단 패키징 활용을 검토 중이라는 보도가 투심 개선. 코스피 7,800선 회복.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="dot event"><i class="ti ti-point-filled"></i></div>
+        <div class="card">
+          <div class="row-top">
+            <span class="date-tag">7.7 (화)</span>
+            <span class="day-badge neutral">실적 발표</span>
+          </div>
+          <div class="headline">삼성전자 2분기 잠정실적 — 영업이익 89.4조원</div>
+          <div class="stat-row">
+            <span class="stat-chip n">전분기 대비 +56.21%</span>
+            <span class="stat-chip n">전년 동기 대비 +1,810.26%</span>
+          </div>
+          <div class="desc">매출 171조원. 엔비디아 최근 분기 영업이익(약 81.9조원)을 넘어서는 수치로 시장 컨센서스(85.6조~90.1조원) 상단 부합.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="dot down"><i class="ti ti-point-filled"></i></div>
+        <div class="card">
+          <div class="row-top">
+            <span class="date-tag">7.8 (수)</span>
+            <span class="day-badge crash">검은 수요일</span>
+          </div>
+          <div class="headline">'반도체 피크아웃' 공포 + 美-이란 갈등 재고조</div>
+          <div class="stat-row">
+            <span class="stat-chip b">코스피 -5.35%</span>
+            <span class="stat-chip b">삼성전자 -6.25%</span>
+            <span class="stat-chip b">SK하이닉스 -5.68%</span>
+          </div>
+          <div class="desc">코스피 시총 7주 만에 6,000조원 붕괴. <b>바로 이날</b> 메타 캐나다 데이터센터(13조원)·BofA 오픈AI 대출(5.2억달러) 뉴스가 동시에 발표됨.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="dot up"><i class="ti ti-point-filled"></i></div>
+        <div class="card">
+          <div class="row-top">
+            <span class="date-tag">7.9 (목)</span>
+            <span class="day-badge today">오늘</span>
+          </div>
+          <div class="headline">SK하이닉스 ADR 흥행 소식에 재반등</div>
+          <div class="stat-row">
+            <span class="stat-chip r">코스피 +3.7%↑</span>
+            <span class="stat-chip r">SK하이닉스 +8.04%</span>
+            <span class="stat-chip r">삼성전자 +3.96%</span>
+          </div>
+          <div class="desc">나스닥 ADR 수요예측에 공모 물량의 <b>7배 이상</b>(약 260조원) 청약 몰림. 이번 반등은 메타·BofA 뉴스보다 ADR 흥행이 직접 동력.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="foot-note">자료: 한국거래소 · 한국경제 · 파이낸셜뉴스 · 헤럴드경제 · MBC뉴스 · 서울신문 종합 (등락률은 각 거래일 종가 기준)</div>
+
+  </div>
+</body>
+</html>
