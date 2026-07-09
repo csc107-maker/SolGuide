@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>팩트체크: 메타 캐나다 데이터센터 vs BofA 오픈AI 대출</title>
+<meta property="og:title" content="팩트체크: 메타 캐나다 13조원 데이터센터 vs BofA 오픈AI 대출" />
+<meta property="og:description" content="같은 날 나온 두 개의 AI 투자 뉴스, 핵심 수치와 놓치기 쉬운 맥락을 한눈에 정리했습니다." />
+<meta property="og:image" content="https://example.com/images/thumbnail-meta-bofa-factcheck.png" />
+<meta property="og:url" content="https://example.com/blog/meta-canada-bofa-openai-ai-bubble" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #F6F7FB;
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    color: #16213E;
+    padding: 28px 16px 40px;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  /* ── Header ───────────────────────────── */
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .head-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: #16213E;
+  }
+  .head-title span { color: #C08A2E; }
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1.5px solid #C08A2E;
+    color: #96701F;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 5px 11px;
+    border-radius: 100px;
+    transform: rotate(-2deg);
+    background: #FBF6EA;
+  }
+
+  /* ── Comparison grid ──────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 620px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E2E5ED;
+    border-radius: 14px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .card.meta::before { background: #2563C7; }
+  .card.bofa::before { background: #16A085; }
+
+  .card-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .card.meta .card-eyebrow { color: #2563C7; }
+  .card.bofa .card-eyebrow { color: #16A085; }
+  .card-eyebrow i { font-size: 16px; }
+
+  .card-icon-badge {
+    width: 42px; height: 42px;
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 21px;
+    margin-bottom: 12px;
+  }
+  .card.meta .card-icon-badge { background: #EAF1FC; color: #2563C7; }
+  .card.bofa .card-icon-badge { background: #E7F6F1; color: #16A085; }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #16213E;
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 12.5px;
+    color: #7A8296;
+    margin-bottom: 16px;
+  }
+
+  .big-stat {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 900;
+    font-size: 34px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 2px;
+  }
+  .card.meta .big-stat { color: #16213E; }
+  .card.bofa .big-stat { color: #16213E; }
+  .big-stat-label {
+    font-size: 12.5px;
+    color: #7A8296;
+    margin-bottom: 16px;
+  }
+
+  .fact-list { list-style: none; }
+  .fact-list li {
+    display: flex;
+    gap: 8px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    padding: 8px 0;
+    border-top: 1px dashed #E7E9F1;
+    color: #3A4152;
+  }
+  .fact-list li:first-child { border-top: none; }
+  .fact-list li i {
+    color: #B7BCCB;
+    font-size: 15px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .fact-list b { color: #16213E; font-weight: 700; }
+
+  .caution {
+    margin-top: 14px;
+    background: #FBF6EA;
+    border: 1px solid #EFE0BC;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #7A5D14;
+    display: flex;
+    gap: 8px;
+  }
+  .caution i { font-size: 16px; margin-top: 1px; color: #C08A2E; flex-shrink: 0; }
+  .caution b { color: #5C4610; }
+
+  /* ── Bottom teaser strip ──────────────── */
+  .teaser {
+    margin-top: 18px;
+    background: #16213E;
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .teaser-text {
+    color: #F6F7FB;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .teaser-text b { color: #FF8A7A; font-weight: 700; }
+  .teaser-badge {
+    flex-shrink: 0;
+    background: #2A3A63;
+    color: #C9D3EE;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .source-line {
+    margin-top: 12px;
+    font-size: 11px;
+    color: #A2A8B8;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="head">
+      <div class="head-title">두 개의 뉴스, <span>팩트체크</span></div>
+      <div class="stamp"><i class="ti ti-rubber-stamp"></i>CROSS-CHECKED · 2026.07.08</div>
+    </div>
+
+    <div class="grid">
+
+      <!-- Meta Card -->
+      <div class="card meta">
+        <div class="card-eyebrow"><i class="ti ti-building-factory-2"></i>DATA CENTER</div>
+        <div class="card-icon-badge"><i class="ti ti-server-2"></i></div>
+        <div class="card-title">메타, 캐나다 앨버타 데이터센터</div>
+        <div class="card-sub">7월 8일(현지시간) 공식 블로그 발표</div>
+
+        <div class="big-stat">약 13조원</div>
+        <div class="big-stat-label">약 90억~91.8억 달러 · 매체별 13조~13.8조원 환산</div>
+
+        <ul class="fact-list">
+          <li><i class="ti ti-bolt"></i><span><b>1GW급</b> 규모, 연면적 약 27만㎡ — 메타 <b>33번째</b> 데이터센터이자 첫 캐나다 진출</span></li>
+          <li><i class="ti ti-clock"></i><span>완공까지 <b>2~3년</b>, 건설 절정기 인력 약 3,000명</span></li>
+          <li><i class="ti ti-leaf"></i><span>100% 재생에너지 + 폐쇄형 순환 액체냉각 방식</span></li>
+        </ul>
+
+        <div class="caution">
+          <i class="ti ti-alert-triangle"></i>
+          <div><b>놓치기 쉬운 맥락 —</b> 이 발표에도 불구하고 메타 주가는 연초 대비 약 <b>-9%</b>, 같은 기간 나스닥은 <b>+11%</b>(CNBC). 투자는 느는데 주가는 시장을 못 따라가는 중.</div>
+        </div>
+      </div>
+
+      <!-- BofA Card -->
+      <div class="card bofa">
+        <div class="card-eyebrow"><i class="ti ti-building-bank"></i>CREDIT LINE</div>
+        <div class="card-icon-badge"><i class="ti ti-credit-card"></i></div>
+        <div class="card-title">BofA → 오픈AI(챗GPT) 신용공여</div>
+        <div class="card-sub">7월 8일 로이터·블룸버그 동시 보도</div>
+
+        <div class="big-stat">5.2억 달러</div>
+        <div class="big-stat-label">약 7,100억원 규모 · BofA의 오픈AI向 첫 대출</div>
+
+        <ul class="fact-list">
+          <li><i class="ti ti-arrow-back-up"></i><span>BofA는 앞서 오픈AI의 대출 요청을 <b>한 차례 거절</b>했던 이력 — 이번이 '유턴'</span></li>
+          <li><i class="ti ti-report-money"></i><span>2025년 이후 AI 기업 자금조달의 약 <b>60%(약 5,000억 달러)</b>에 관여</span></li>
+          <li><i class="ti ti-target-arrow"></i><span>목적은 오픈AI·앤트로픽 <b>IPO 주관사</b> 자리 확보 포석 성격이 짙음</span></li>
+        </ul>
+
+        <div class="caution">
+          <i class="ti ti-alert-triangle"></i>
+          <div><b>놓치기 쉬운 맥락 —</b> 오픈AI의 전체 자금조달 규모(수십억~1,200억 달러 단위)에 비하면 5.2억 달러는 상대적으로 소액. "신용을 전면 신뢰"라기보다 관계 구축용 성격.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="teaser">
+      <div class="teaser-text">그런데 이 두 뉴스가 나온 <b>바로 그날</b>, 코스피는 반도체 피크아웃 공포로 5.35% 급락했습니다.</div>
+      <div class="teaser-badge"><i class="ti ti-arrow-down"></i>같은 날, 정반대 반응</div>
+    </div>
+
+    <div class="source-line">자료: Reuters · Bloomberg · CNBC · Benzinga · Yahoo Finance · 위키트리 (2026.07.08~09 보도 종합)</div>
+
+  </div>
+</body>
+</html>
