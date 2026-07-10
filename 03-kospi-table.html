@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>코스피·코스닥 마감 데이터</title>
+
+<meta property="og:title" content="7월 10일 코스피 2.52% 급등 마감 데이터 총정리" />
+<meta property="og:description" content="코스피 7,475.94 마감, 코스닥 5.47% 급등 — 매매주체별 수급 동향까지 표로 정리했습니다." />
+<meta property="og:image" content="https://yourblog.com/images/sk-hynix-nasdaq-thumbnail.png" />
+<meta property="og:url" content="https://yourblog.com/sk-hynix-nasdaq-debut-0710" />
+<meta property="og:type" content="article" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: #F7F9FC;
+    padding: 28px 16px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+
+  .eyebrow {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    color: #C89B3C; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #E0332F; }
+  h2.title { font-size: 23px; font-weight: 800; color: #0B1730; margin-bottom: 18px; }
+
+  .idx-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  @media (max-width: 640px){ .idx-row{ grid-template-columns: 1fr; } }
+
+  .idx-card {
+    background: #FFFFFF; border: 1px solid #E7EAF2; border-radius: 14px; padding: 18px 20px;
+    border-left: 5px solid #E0332F;
+  }
+  .idx-card .name { font-size: 13.5px; font-weight: 700; color: #5B6478; margin-bottom: 6px; }
+  .idx-card .close-row { display: flex; align-items: baseline; gap: 10px; }
+  .idx-card .close { font-family: 'Roboto Mono', monospace; font-size: 30px; font-weight: 700; color: #0B1730; }
+  .idx-card .chg { font-family: 'Roboto Mono', monospace; font-size: 15px; font-weight: 700; color: #E0332F; display: flex; align-items: center; gap: 3px;}
+  .idx-card .range { font-size: 12px; color: #A2A9BB; margin-top: 8px; }
+
+  table {
+    width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px;
+    overflow: hidden; border: 1px solid #E7EAF2; margin-bottom: 18px;
+  }
+  thead tr { background: #0B1730; }
+  thead th {
+    color: #fff; font-size: 12.5px; font-weight: 700; text-align: left;
+    padding: 12px 14px; font-family: 'Roboto Mono', monospace; letter-spacing: 0.03em;
+  }
+  tbody td {
+    padding: 12px 14px; font-size: 13.5px; color: #2C3550; border-top: 1px solid #EFF1F6;
+  }
+  tbody tr:nth-child(even) { background: #FAFBFD; }
+  td.num { font-family: 'Roboto Mono', monospace; text-align: right; font-weight: 700; }
+  td.pos { color: #E0332F; }
+  td.neg { color: #1E4FD6; }
+  td.label { font-weight: 700; color: #0B1730; }
+
+  .stock-flow {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  @media (max-width: 640px){ .stock-flow{ grid-template-columns: 1fr; } }
+  .flow-box { background: #FFFFFF; border: 1px solid #E7EAF2; border-radius: 14px; padding: 16px 18px; }
+  .flow-box h4 { font-size: 13.5px; font-weight: 800; color: #0B1730; margin-bottom: 10px; display:flex; align-items:center; gap:6px;}
+  .flow-item { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-top: 1px dashed #EFF1F6; font-size: 13px; }
+  .flow-item:first-of-type { border-top: none; }
+  .flow-item .fname { color: #45506B; }
+  .flow-item .fval { font-family: 'Roboto Mono', monospace; font-weight: 700; }
+  .flow-box.sell h4 i { color: #1E4FD6; }
+  .flow-box.buy h4 i { color: #E0332F; }
+
+  .footnote { margin-top: 16px; font-size: 11.5px; color: #A2A9BB; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>2026.07.10 FRI · CLOSE</div>
+    <h2 class="title">코스피·코스닥 마감 데이터</h2>
+
+    <div class="idx-row">
+      <div class="idx-card">
+        <div class="name">KOSPI 코스피</div>
+        <div class="close-row">
+          <div class="close">7,475.94</div>
+          <div class="chg"><i class="ti ti-arrow-up-right"></i>+184.03 (+2.52%)</div>
+        </div>
+        <div class="range">개장 7,552.49(+3.57%) · 장중 고점 7,704.93(+5.66%) · 매수 사이드카 발동</div>
+      </div>
+      <div class="idx-card">
+        <div class="name">KOSDAQ 코스닥</div>
+        <div class="close-row">
+          <div class="close">837.43</div>
+          <div class="chg"><i class="ti ti-arrow-up-right"></i>+43.43 (+5.47%)</div>
+        </div>
+        <div class="range">코스닥150 선물 급등 · 매수 사이드카 발동</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>매매주체</th><th style="text-align:right">코스피 순매수·순매도</th><th>비고</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">기관</td><td class="num pos">+1조 1,319억원</td><td>ETF 관련 금융투자 매수 대부분</td></tr>
+        <tr><td class="label">개인</td><td class="num neg">-7,728억원</td><td>차익 실현 추정</td></tr>
+        <tr><td class="label">외국인</td><td class="num neg">-3,299억원</td><td>SK하이닉스 집중 매도</td></tr>
+      </tbody>
+    </table>
+
+    <div class="stock-flow">
+      <div class="flow-box sell">
+        <h4><i class="ti ti-trending-down"></i>외국인 순매도 상위</h4>
+        <div class="flow-item"><span class="fname">SK하이닉스</span><span class="fval">-1조 7,181억원</span></div>
+      </div>
+      <div class="flow-box buy">
+        <h4><i class="ti ti-trending-up"></i>외국인 순매수 상위</h4>
+        <div class="flow-item"><span class="fname">삼성전자</span><span class="fval">+1,937억원</span></div>
+        <div class="flow-item"><span class="fname">삼성전기</span><span class="fval">+1,503억원</span></div>
+        <div class="flow-item"><span class="fname">삼성전자우</span><span class="fval">+1,102억원</span></div>
+        <div class="flow-item"><span class="fname">SK스퀘어</span><span class="fval">+1,086억원</span></div>
+      </div>
+    </div>
+
+    <div class="footnote">SOURCE: 머니투데이·한국경제 보도 종합, 2026.7.10 장 마감 기준 · 단위 억원은 반올림 값</div>
+  </div>
+</body>
+</html>
