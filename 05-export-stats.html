@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>한국 반도체 수출 데이터 | 2026년 6월</title>
+
+<meta property="og:title" content="6월 수출 사상 첫 1000억 달러 돌파, 반도체가 견인" />
+<meta property="og:description" content="산업통상자원부·관세청 공식 통계로 보는 2026년 6월 한국 반도체 수출 핵심 지표" />
+<meta property="og:image" content="https://yourblog.com/images/sk-hynix-nasdaq-thumbnail.png" />
+<meta property="og:url" content="https://yourblog.com/sk-hynix-nasdaq-debut-0710" />
+<meta property="og:type" content="article" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: #F7F9FC;
+    padding: 28px 16px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+
+  .eyebrow {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    color: #C89B3C; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #E0332F; }
+  h2.title { font-size: 23px; font-weight: 800; color: #0B1730; margin-bottom: 4px; }
+  .sub { font-size: 13.5px; color: #5B6478; margin-bottom: 22px; }
+
+  .hero-stat {
+    background: #0B1730; border-radius: 16px; padding: 24px; color: #fff;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    margin-bottom: 16px;
+  }
+  .hero-stat .l .k { font-size: 13px; color: #9FB0D8; margin-bottom: 6px; }
+  .hero-stat .l .v { font-family: 'Roboto Mono', monospace; font-size: 34px; font-weight: 800; }
+  .hero-stat .l .v span { font-size: 16px; color: #9FB0D8; font-weight: 500; }
+  .hero-stat .r { text-align: right; }
+  .hero-stat .r .badge {
+    background: #E0332F; padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700;
+    font-family: 'Roboto Mono', monospace; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .hero-stat .r .cap { font-size: 12px; color: #9FB0D8; margin-top: 8px; }
+
+  .grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 18px; }
+  @media (max-width: 720px){ .grid4 { grid-template-columns: repeat(2,1fr); } }
+  .stat {
+    background: #fff; border: 1px solid #E7EAF2; border-radius: 12px; padding: 15px;
+    border-left: 4px solid #C89B3C;
+  }
+  .stat .k { font-size: 12px; color: #5B6478; margin-bottom: 6px; font-weight: 600; }
+  .stat .v { font-family: 'Roboto Mono', monospace; font-size: 20px; font-weight: 700; color: #0B1730; }
+  .stat .d { font-size: 11px; color: #E0332F; font-weight: 700; margin-top: 3px; }
+
+  .price-table {
+    background: #fff; border: 1px solid #E7EAF2; border-radius: 14px; padding: 18px 20px;
+  }
+  .price-table h4 { font-size: 14px; font-weight: 800; color: #0B1730; margin-bottom: 12px; display:flex; align-items:center; gap:6px;}
+  .price-row { display: grid; grid-template-columns: 1.2fr 1fr auto 1fr; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px dashed #EFF1F6; }
+  .price-row:first-of-type { border-top: none; }
+  .price-row .pname { font-size: 13.5px; font-weight: 700; color: #2C3550; }
+  .price-row .pval { font-family: 'Roboto Mono', monospace; font-size: 14px; color: #5B6478; text-align: center; }
+  .price-row .parrow { color: #C89B3C; text-align: center; }
+  .price-row .pval.now { color: #E0332F; font-weight: 700; }
+
+  .footnote { margin-top: 16px; font-size: 11.5px; color: #A2A9BB; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>2026년 6월 수출입 동향</div>
+    <h2 class="title">숫자로 보는 K-반도체 수출</h2>
+    <div class="sub">산업통상자원부·관세청 공동 발표 (2026.7.1) 기준</div>
+
+    <div class="hero-stat">
+      <div class="l">
+        <div class="k">6월 전체 수출액</div>
+        <div class="v">$1,022.5<span>억 (+70.9% YoY)</span></div>
+      </div>
+      <div class="r">
+        <div class="badge"><i class="ti ti-trophy"></i>월 1,000억 달러 최초 돌파</div>
+        <div class="cap">독일·중국·미국 이어 세계 4번째</div>
+      </div>
+    </div>
+
+    <div class="grid4">
+      <div class="stat">
+        <div class="k">6월 반도체 수출</div>
+        <div class="v">$448.2억</div>
+        <div class="d">+199.5% YoY · 최초 400억$ 돌파</div>
+      </div>
+      <div class="stat">
+        <div class="k">상반기 반도체 수출</div>
+        <div class="v">$1,924억</div>
+        <div class="d">+162.6% · 작년 연간실적 이미 초과</div>
+      </div>
+      <div class="stat">
+        <div class="k">6월 무역수지</div>
+        <div class="v">$361.5억</div>
+        <div class="d">사상 첫 300억$ 돌파 흑자</div>
+      </div>
+      <div class="stat">
+        <div class="k">전체 수출 中 반도체 비중</div>
+        <div class="v">43.8%</div>
+        <div class="d">반도체 편중도 심화</div>
+      </div>
+    </div>
+
+    <div class="price-table">
+      <h4><i class="ti ti-chart-line"></i>메모리 고정거래가격 추이 (3월 → 6월)</h4>
+      <div class="price-row">
+        <div class="pname">DDR5 D램 (16Gb)</div>
+        <div class="pval">$31.0</div>
+        <div class="parrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="pval now">$40.0</div>
+      </div>
+      <div class="price-row">
+        <div class="pname">낸드플래시 (128Gb)</div>
+        <div class="pval">$17.7</div>
+        <div class="parrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="pval now">$28.8</div>
+      </div>
+    </div>
+
+    <div class="footnote">SOURCE: 산업통상자원부·관세청 「2026년 6월 및 상반기 수출입 동향」(2026.7.1 발표) · 가격 데이터는 업계 보도 종합</div>
+  </div>
+</body>
+</html>
