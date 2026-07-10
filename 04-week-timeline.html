@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>이번 주 증시 캘린더 | 7월 10일~16일</title>
+
+<meta property="og:title" content="다음 주 미국 증시 캘린더 — CPI·어닝시즌 총정리" />
+<meta property="og:description" content="6월 CPI, 케빈 워시 의회 증언, JP모건·넷플릭스·TSMC 실적까지 — 7월 10일~16일 증시 일정 타임라인" />
+<meta property="og:image" content="https://yourblog.com/images/sk-hynix-nasdaq-thumbnail.png" />
+<meta property="og:url" content="https://yourblog.com/sk-hynix-nasdaq-debut-0710" />
+<meta property="og:type" content="article" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: #F7F9FC;
+    padding: 28px 16px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  .eyebrow {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    color: #C89B3C; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #E0332F; }
+  h2.title { font-size: 23px; font-weight: 800; color: #0B1730; margin-bottom: 4px; }
+  .sub { font-size: 13.5px; color: #5B6478; margin-bottom: 24px; }
+
+  .rail { position: relative; padding-left: 28px; }
+  .rail::before {
+    content: ''; position: absolute; left: 9px; top: 6px; bottom: 6px; width: 2px;
+    background: linear-gradient(#E0332F, #C89B3C, #1E4FD6);
+  }
+
+  .day {
+    position: relative; margin-bottom: 18px;
+    opacity: 0; transform: translateX(-10px);
+    animation: slide 0.5s ease forwards;
+  }
+  .day:nth-child(1){animation-delay:.03s}.day:nth-child(2){animation-delay:.11s}
+  .day:nth-child(3){animation-delay:.19s}.day:nth-child(4){animation-delay:.27s}
+  .day:nth-child(5){animation-delay:.35s}
+  @keyframes slide { to { opacity:1; transform: translateX(0);} }
+
+  .day::before {
+    content: ''; position: absolute; left: -28px; top: 4px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; border: 3px solid #E0332F;
+  }
+  .day.today::before { border-color: #E0332F; box-shadow: 0 0 0 4px #FDECEC; }
+  .day.mid::before { border-color: #C89B3C; }
+  .day.end::before { border-color: #1E4FD6; }
+
+  .card {
+    background: #FFFFFF; border: 1px solid #E7EAF2; border-radius: 14px; padding: 16px 18px;
+  }
+  .card .datehead {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .card .datenum {
+    font-family: 'Roboto Mono', monospace; font-weight: 800; font-size: 15px; color: #0B1730;
+  }
+  .card .dow { font-size: 12.5px; color: #8890A3; font-weight: 700; }
+  .card .flag {
+    font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 999px;
+    background: #FDECEC; color: #E0332F; font-family: 'Roboto Mono', monospace;
+  }
+  .evlist { display: flex; flex-direction: column; gap: 6px; }
+  .ev { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: #3A4460; }
+  .ev i { color: #C89B3C; margin-top: 2px; font-size: 14px; flex-shrink:0; }
+  .ev b { color: #0B1730; }
+
+  .footnote { margin-top: 10px; font-size: 11.5px; color: #A2A9BB; line-height: 1.6; padding-left: 28px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>WEEK AHEAD</div>
+    <h2 class="title">이번 주 증시 캘린더</h2>
+    <div class="sub">2026년 7월 10일(금) ~ 7월 16일(목) · 실적·물가지표·연준 이벤트 총정리</div>
+
+    <div class="rail">
+      <div class="day today">
+        <div class="card">
+          <div class="datehead"><span class="datenum">7.10</span><span class="dow">금요일</span><span class="flag">TODAY</span></div>
+          <div class="evlist">
+            <div class="ev"><i class="ti ti-building-skyscraper"></i><span><b>SK하이닉스</b> 나스닥 조건부 거래 개시 (SKHYV)</span></div>
+            <div class="ev"><i class="ti ti-plane"></i><span><b>델타항공</b> 2분기 실적 발표</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="card">
+          <div class="datehead"><span class="datenum">7.13</span><span class="dow">월요일</span></div>
+          <div class="evlist">
+            <div class="ev"><i class="ti ti-refresh"></i><span><b>SK하이닉스</b> 정규 티커 'SKHY' 전환 거래 개시</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day mid">
+        <div class="card">
+          <div class="datehead"><span class="datenum">7.14</span><span class="dow">화요일</span><span class="flag" style="background:#FBF3E2;color:#C89B3C;">KEY EVENT</span></div>
+          <div class="evlist">
+            <div class="ev"><i class="ti ti-report-money"></i><span><b>6월 CPI</b> 발표 — 이번 주 최대 변수</span></div>
+            <div class="ev"><i class="ti ti-microphone"></i><span>케빈 워시 연준 의장 <b>의회 증언</b></span></div>
+            <div class="ev"><i class="ti ti-building-bank"></i><span>JP모건·BofA·골드만삭스·웰스파고·씨티 실적</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day mid">
+        <div class="card">
+          <div class="datehead"><span class="datenum">7.15</span><span class="dow">수요일</span></div>
+          <div class="evlist">
+            <div class="ev"><i class="ti ti-report-money"></i><span><b>6월 PPI(생산자물가지수)</b> 발표</span></div>
+            <div class="ev"><i class="ti ti-cpu"></i><span>ASML·모건스탠리·블랙록·존슨앤드존슨 실적</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day end">
+        <div class="card">
+          <div class="datehead"><span class="datenum">7.16</span><span class="dow">목요일</span></div>
+          <div class="evlist">
+            <div class="ev"><i class="ti ti-cpu"></i><span><b>TSMC</b> 실적 — 글로벌 파운드리 업황 가늠자</span></div>
+            <div class="ev"><i class="ti ti-shopping-cart"></i><span><b>6월 소매판매</b> 발표</span></div>
+            <div class="ev"><i class="ti ti-device-tv"></i><span>넷플릭스·유나이티드헬스·GE에어로스페이스 실적</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">SOURCE: Reuters(Wall Street's Week Ahead) · Charles Schwab 투자자 캘린더 종합 · 일정은 현지 사정에 따라 변경될 수 있습니다.</div>
+  </div>
+</body>
+</html>
